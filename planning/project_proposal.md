@@ -13,6 +13,7 @@ To provide a medium where college students can search for recipes that are orien
 
 ## Expected Features List
 
+- Figma Page: https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Project-Planning?node-id=0%3A1
 - Log In/Sign Up Page
 - Home Page: Carousel bar with quick meal options that align with time of day.
 - Below Home Page: Contains dropdown menu to select from categories. Lists the recipes from the database.
