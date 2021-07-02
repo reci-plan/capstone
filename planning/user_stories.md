@@ -19,28 +19,47 @@ To provide a place that college students can use to plan out their meals using a
 ## User Stories
 
 1. Saved Section:
+
  -As a student, I want to create a profile, so that I can keep track of and create a catalogue of my favorite recipes.
+ 
  -As a student, I want to a place to store my favorite go-to-meals so that I can easily access them.
  
+ 
 2. Categories/Display:
+
  -As a student, I want to see a list of recipes categorized by difficulty, expense, and type, so I can search for the ones that align with my abilities and values.
+
  -As a student, I want to search for meals with low preparation times so that I can make a fast lunch before my next class
+
  -As a student, I want to be able to view a list of meal that are trending / have been liked the most.
+ 
  -As a student, I want to view other meals that are similar to the current recipe I am viewing.
+ 
  -As a student, I want to be able to view in detail with pictures and words the steps in making each meal so that a new cook like me can follow them
  
+ 
 3. Customized:
+
 -As a student, I want to see recipes recommended to me based on the time of day, so I can easily find what I need without spending time searching and thinking of what to make.
+
 -As a student, I want to be able to choose a meal customized at the current time so that I can find a meal whenever my schedule allows.
+
 -As a student, I would prefer for there to be a section for me to view meals that correspond to my current time (breakfast, lunch, or dinner).
 
+
 4. Community:
+
 -As a student, I want to comment on and rate recipes (as well as see the comments and ratings on the recipe page), so I can see what other users' experiences are with them.
+
 -As a student, I would like to be able to share the current recipe via a link / social media.
 
+
 5. Randomly Generator
+
 -As a student, I want to randomly generate a meal to make so that I can try something new and am not always eating the same thing
+
 -As a student, I want to randomly generate a meal plan for the entire day so that I don't have to waste time to look through meals to choose from
+
 -As a student, I would like to be able to generate recipes that are based on either my location or a location I enter.
 
 
