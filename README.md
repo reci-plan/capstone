@@ -2,13 +2,13 @@
 
 # SITE Capstone Project
 
-SITE Course Year: **20__**
+SITE Course Year: **2021**
 
-Cohort: **Add Company Sponsor Name**
+Cohort: **CourseHero**
 
-Team Member Names:**Insert Team Member Names**
+Team Member Names:**Maritza Padilla, Andrew Lee, Ann Wang**
 
-Mentors Names: **Insert Professional Mentor Names**
+Mentors Names: **Lisa Felten, Thinh Vu, Varun Patel**
 
 ## Project Overview
 
