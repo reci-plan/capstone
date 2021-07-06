@@ -14,7 +14,8 @@ To provide a place that college students can use to plan out their meals using a
 
 1. Abigail is a recent high school graduate entering college. She is from NYC and going to school out of state in California. Being in a completely different environment than her home, she is not familiar with any of the local restaurants. Abigail has never cooked for herself before at home and she wants to start cooking for herself but she does not know where to start. 
 
-2. John is a 20 year old college student living in an apartment in LA. As a working student, he doesn't have the time to prepare meals. He eats at the take out place by his job, which has taken a toll on his wallet and health. He's noticed his grogginess and fatigue taking a toll on his productivity, and he wants to be more mindful and in control of what he puts in his body.Abigail is a recent high school graduate entering college. She is from NYC and going to school out of state in California. Being in a completely different environment than her home, she is not familiar with any of the local restaurants. Abigail has never cooked for herself before at home and she wants to start cooking for herself but she does not know where to start. 
+2. John is a 20 year old college student living in an apartment in LA. As a working student, he doesn't have the time to prepare meals. He eats at the take out place by his job, which has taken a toll on his wallet and health. He's noticed his grogginess and fatigue taking a toll on his productivity, and he wants to be more mindful and in control of what he puts in his body.
+
 
 ## User Stories
 
