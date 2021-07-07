@@ -24,7 +24,9 @@ To provide a place where working people can quickly and easily access inexpensiv
 
  a) As a worker, I want to create a profile, so that I can keep track of and create a catalogue of my favorite recipes.
  
- b) As a worker, I want to a place to store my favorite go-to-meals so that I can easily access them.
+ b) As a worker, I want to a place to add/delete my favorite go-to-meals so that I can easily access them.
+ 
+ c) As a worker, I want to add/delete my generated meal plans so that I can easily access them.
  
  
 2. Categories/Display:
