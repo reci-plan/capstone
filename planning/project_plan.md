@@ -1,6 +1,6 @@
 # Project Plan
 
-Pod Members: **Add Pod Members Names**
+Pod Members: Maritza Padilla, Ann Wang, Andrew Lee
 
 ## Problem Statement and Description
 
@@ -54,6 +54,7 @@ User Personas
 ![Saved Meal Plans](https://i.imgur.com/Z0biOeG.png)
 ![All Recipes](https://i.imgur.com/Aa5rSuC.png)
 
+https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Reciplan-Wireframes
 ## Endpoints
 
 ![Endpoints](https://i.imgur.com/N2qEjWj.png)
