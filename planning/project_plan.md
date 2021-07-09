@@ -74,6 +74,12 @@ Figma link to all pages at top.
 4. Saved Recipes Page
 5. Detailed Recipe Page
 
+
+## Wireframes
+
+[https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Project-Planning?node-id=0%3A1](https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Project-Planning?node-id=0%3A1)
+
+
 ## Data Model
 - Users table to store data about the user
 - Profile table to personalize user's experience (potential stretch, useful with Community Page implementation)
@@ -90,9 +96,5 @@ Figma link to all pages at top.
 ## Endpoints
 
 ![Endpoints](https://i.imgur.com/N2qEjWj.png)
-
-## Wireframes
-
-[https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Project-Planning?node-id=0%3A1](https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Project-Planning?node-id=0%3A1)
 
 ***Don't forget to set up your Issues, Milestones, and Project Board!***
