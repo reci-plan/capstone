@@ -1,6 +1,6 @@
 # Project Plan
 
-Pod Members: Maritza Padilla, Ann Wang, Andrew Lee
+Pod Members: **Maritza Padilla, Andrew Lee, Ann Wang**
 
 ## Problem Statement and Description
 
@@ -17,38 +17,69 @@ User Personas
 3. April is a 35 year old entrepreneur living in the Silicon Valley. She frequently finds it difficult deciding what to eat on a given day, and it takes too much time sifting through websites with seemingly endless possibilities, which causes her to skip meals from indecision. As a busy overthinker, she wishes she didn't have to think so much when it came to meal planning.
 
 ## User Stories
+
 1. Saved Section:
-- As a worker, I want to create a profile, so that I can keep track of and create a catalogue of my favorite recipes.
-- As a worker, I want to a place to store my favorite go-to-meals so that I can easily access them.
+
+ a) As a worker, I want to create a profile, so that I can keep track of and create a catalogue of my favorite recipes.
+ 
+ b) As a worker, I want to a place to add/delete my favorite go-to-meals so that I can easily access them.
+ 
+ c) As a worker, I want to add/delete my generated meal plans so that I can easily access them.
+ 
+ 
 2. Categories/Display:
-- As a worker, I want to see a list of recipes categorized by difficulty, expense, and type, so I can search for the ones that align with my abilities and values.
-- As a worker, I want to search for meals with low preparation times so that I can make a fast lunch before my next class
-- As a worker, I want to be able to view a list of meal that are trending / have been liked the most.
-- As a worker, I want to view other meals that are similar to the current recipe I am viewing.
-- As a worker, I want to be able to view in detail with pictures and words the steps in making each meal so that a new cook like me can follow them
+
+ a) As a worker, I want to see a list of recipes categorized by difficulty, expense, and type, so I can search for the ones that align with my abilities and values.
+
+ b) As a worker, I want to search for meals with low preparation times so that I can make a fast lunch before my next meeting.
+
+ c) As a worker, I want to be able to view a list of meal that are trending / have been liked the most.
+ 
+ d) As a worker, I want to view other meals that are similar to the current recipe I am viewing.
+ 
+ e) As a worker, I want to be able to view in detail with pictures and words the steps in making each meal so that a new cook like me can follow them
+ 
+ 
 3. Customized:
-- As a worker, I want to see recipes recommended to me based on the time of day, so I can easily find what I need without spending time searching and thinking of what to make.
-- As a worker, I want to be able to choose a meal customized at the current time so that I can find a meal whenever my schedule allows.
-- As a worker, I would prefer for there to be a section for me to view meals that correspond to my current time (breakfast, lunch, or dinner).
+
+a) As a worker, I want to see recipes recommended to me based on the time of day, so I can easily find what I need without spending time searching and thinking of what to make.
+
+b) As a worker, I want to be able to choose a meal customized at the current time so that I can find a meal whenever my schedule allows.
+
+c) As a worker, I would prefer for there to be a section for me to view meals that correspond to my current time (breakfast, lunch, or dinner).
+
+
 4. Community:
-- As a worker, I want to comment on and rate recipes (as well as see the comments and ratings on the recipe page), so I can see what other users' experiences are with them.
-- As a worker, I would like to be able to share the current recipe via a link / social media.
-5. Random Generator
-- As a worker, I want to randomly generate a meal to make so that I can try something new and am not always eating the same thing
-- As a worker, I want to randomly generate a meal plan for the entire day so that I don't have to waste time to look through meals to choose from
-- As a worker, I would like to be able to generate recipes that are based on either my location or a location I enter.
+
+a) As a worker, I want to comment on and rate recipes (as well as see the comments and ratings on the recipe page), so I can see what other users' experiences are with them.
+
+b) As a worker, I would like to be able to share the current recipe via a link / social media.
+
+
+5. Randomly Generator
+
+a) As a worker, I want to randomly generate a meal to make so that I can try something new and am not always eating the same thing
+
+b) As a worker, I want to randomly generate a meal plan for the entire day so that I don't have to waste time to look through meals to choose from
+
+c) As a worker, I would like to be able to generate recipes that are based on either my location or a location I enter.
+
 
 ## Pages/Screens
 
+Figma link to all pages at top.
 1. Landing Page
 2. Random Generator Page
 3. Random Generator - Popup
 4. Saved Recipes Page
 5. Detailed Recipe Page
-   
-Wireframes of pages: https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Reciplan-Wireframes
 
 ## Data Model
+- Users table to store data about the user
+- Profile table to personalize user's experience (potential stretch, useful with Community Page implementation)
+- Saved recipes to list recipes saved by user id.
+- Saved meal plans to store information about each randomly generated plan
+- All recipes to locally store information about recipes from spoonacular API.
 
 ![Users](https://i.imgur.com/j7in6FO.png)
 ![Profile](https://i.imgur.com/ZZVcbp7.png)
@@ -56,9 +87,12 @@ Wireframes of pages: https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Reciplan-
 ![Saved Meal Plans](https://i.imgur.com/Z0biOeG.png)
 ![All Recipes](https://i.imgur.com/Aa5rSuC.png)
 
-https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Reciplan-Wireframes
 ## Endpoints
 
 ![Endpoints](https://i.imgur.com/N2qEjWj.png)
+
+## Wireframes
+
+[https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Project-Planning?node-id=0%3A1](https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Project-Planning?node-id=0%3A1)
 
 ***Don't forget to set up your Issues, Milestones, and Project Board!***
