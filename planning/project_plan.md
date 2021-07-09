@@ -45,6 +45,8 @@ User Personas
 3. Random Generator - Popup
 4. Saved Recipes Page
 5. Detailed Recipe Page
+   
+Wireframes of pages: https://www.figma.com/file/YcJPGl7WVPll2vzwucj80y/Reciplan-Wireframes
 
 ## Data Model
 
