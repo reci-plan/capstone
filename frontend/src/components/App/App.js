@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./components/Home/Home";
-import Register from "./components/Register/Register";
-import Login from "./components/Login/Login";
-import Navbar from "./components/Navbar/Navbar";
-import Experiment from "./components/Experiment";
-import apiClient from "./services/apiClient";
 
+import Home from '../Home/Home'
+import Register from "../Register/Register";
+import Login from "../Login/Login";
+import Navbar from "../Navbar/Navbar";
+import apiClient from "../../services/apiClient";
+
+import './App.css'
 function App() {
   const [user, setUser] = useState({});
 
@@ -34,7 +35,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="App">
       <BrowserRouter>
         <Navbar user={user} setUser={setUser} />
         <Routes>
@@ -47,7 +48,6 @@ function App() {
             path="/login"
             element={<Login user={user} setUser={setUser} />}
           />
-          <Route path="/experiment" element={<Experiment />} />
         </Routes>
       </BrowserRouter>
     </div>
