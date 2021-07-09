@@ -1,19 +1,25 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import apiClient from "../../services/apiClient"
 import logo from '../../assets/logo.svg'
 import search from '../../assets/search-icon.svg'
 import wheel from '../../assets/wheel-icon.svg'
 import close from '../../assets/close.svg'
+import user from '../../assets/user.svg'
 
 import './Navbar.css'
 
-export default function Navbar() {
+export default function Navbar({ user, setUser }) {
   const [isSearch, setIsSearch] = useState(false)
 
   const handleOnClick = () => {
     isSearch ? setIsSearch(false) : setIsSearch(true)
   }
+
+  const handleLogout = async () => {
+    await apiClient.logout();
+    setUser({});
+  };  
   return (
     <div className="Navbar">
       <Link to='/' className="logo-link">
@@ -39,7 +45,15 @@ export default function Navbar() {
         <Link to='/wheel' className="wheel-link">
           <img src={wheel} alt="Wheel icon"></img>
         </Link>
-        <Link to='/login' className="login-link">Login</Link>
+
+        {user?.email ?
+          <div onClick={handleLogout}>
+            <img src={user} alt='User button'></img>
+          </div>
+          
+          : 
+          <Link to='/login' className="login-link">Login</Link>
+        }
       </div>
       
     </div>
