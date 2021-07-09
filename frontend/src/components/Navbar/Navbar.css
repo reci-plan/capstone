@@ -1,0 +1,34 @@
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100vw;
+  /* overflow: hidden; */
+}
+
+.navbar-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navbar-right a {
+  margin: 5px;
+}
+.logo-link {
+  width: 100px;
+}
+.search-btn {
+  cursor: pointer;
+}
+.search-btn, .wheel-link {
+  width: 30px;
+}
+.logo-link img, .search-btn img, .wheel-link img {
+  width: 100%;
+}
+.login-link {
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  font-family: 'Josefin Sans', sans-serif;
+}
