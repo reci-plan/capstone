@@ -62,6 +62,9 @@ export default function Login({ user, setUser }) {
         </div>
         <button onClick={handleLogin}> login </button>
       </div>
+      <div className='login-footer'>
+        <p>Don't have an account? Register <Link to="/register">here</Link>.</p>
+      </div>
     </div>
   );
 }

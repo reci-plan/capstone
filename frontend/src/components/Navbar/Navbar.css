@@ -12,6 +12,7 @@
   align-items: center;
 }
 .navbar-right a {
+  text-decoration: none;
   margin: 5px;
 }
 .logo-link {

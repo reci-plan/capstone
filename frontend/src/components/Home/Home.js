@@ -8,6 +8,16 @@ export default function Home({ user }) {
             <Link to="/experiment">
                 <div style={{ margin: "20px" }}> experiment page </div>
             </Link>
+            {user.email ? (
+                <>
+                    <div> username: {user.username}</div>
+                    <div> first_name: {user.first_name}</div>
+                    <div> last_name: {user.last_name}</div>
+                    <div> email: {user.email}</div>
+                </>
+            ) : (
+                <> </>
+            )}
         </div>
     );
 }
