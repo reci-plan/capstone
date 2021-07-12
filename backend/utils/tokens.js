@@ -6,7 +6,7 @@ const generateToken = (data) =>
 
 const createUserJwt = (user) => {
     const payload = {
-        email: user.email,
+        username: user.username,
         is_admin: user.is_admin || false,
     };
 
