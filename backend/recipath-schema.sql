@@ -9,6 +9,17 @@ CREATE TABLE users (
     created_at      TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE all_recipes (
+    id              SERIAL PRIMARY KEY,
+    title           TEXT NOT NULL,
+    category        TEXT NOT NULL,
+    image_url       TEXT NOT NULL,
+    prep_time       INTEGER NOT NULL,
+    description     TEXT,
+    rating          INTEGER NOT NULL,
+    expense         INTEGER NOT NULL
+);
+
 CREATE TABLE profile (
     id              SERIAL PRIMARY KEY,
     user_id         INTEGER NOT NULL,
@@ -22,7 +33,7 @@ CREATE TABLE saved_recipes (
     id              SERIAL PRIMARY KEY,
     user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     recipe_id       INTEGER NOT NULL REFERENCES all_recipes(id) ON DELETE CASCADE,
-    date            TIMESTAMP NOT NULL DEFAULT NOW(),
+    date            TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE saved_meal_plans (
@@ -37,18 +48,7 @@ CREATE TABLE saved_meal_plans (
     time2           TEXT NOT NULL,
     time3           TEXT,
     time4           TEXT,
-    date            TIMESTAMP NOT NULL DEFAULT NOW(),
-);
-
-CREATE TABLE all_recipes (
-    id              SERIAL PRIMARY KEY,
-    title           TEXT NOT NULL,
-    category        TEXT NOT NULL,
-    image_url       TEXT NOT NULL,
-    prep_time       INTEGER NOT NULL,
-    description     TEXT,
-    rating          INTEGER NOT NULL,
-    expense         INTEGER NOT NULL
+    date            TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE categories (
