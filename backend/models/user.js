@@ -26,7 +26,7 @@ class User {
 
         requiredFields.forEach((field) => {
             if (!credentials[field]) {
-                throw new BadRequestError(`${field} not in db`);
+                throw new BadRequestError(`${field} not in request.body`);
             }
         });
 
