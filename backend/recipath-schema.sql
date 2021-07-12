@@ -20,26 +20,24 @@ CREATE TABLE profile (
 
 CREATE TABLE saved_recipes (
     id              SERIAL PRIMARY KEY,
-    user_id         INTEGER NOT NULL,
-    recipe_id       INTEGER NOT NULL,
+    user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    recipe_id       INTEGER NOT NULL REFERENCES all_recipes(id) ON DELETE CASCADE,
     date            TIMESTAMP NOT NULL DEFAULT NOW(),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE saved_meal_plans (
     id              SERIAL PRIMARY KEY,
     title           TEXT NOT NULL,
-    user_id         INTEGER NOT NULL,
-    recipe_id1      INTEGER NOT NULL,
-    recipe_id2      INTEGER NOT NULL,
-    recipe_id3      INTEGER,
-    recipe_id4      INTEGER,
+    user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    recipe_id1      INTEGER NOT NULL REFERENCES all_recipes(id) ON DELETE CASCADE,
+    recipe_id2      INTEGER NOT NULL REFERENCES all_recipes(id) ON DELETE CASCADE,
+    recipe_id3      INTEGER REFERENCES all_recipes(id) ON DELETE CASCADE,
+    recipe_id4      INTEGER REFERENCES all_recipes(id) ON DELETE CASCADE,
     time1           TEXT NOT NULL,
     time2           TEXT NOT NULL,
     time3           TEXT,
     time4           TEXT,
     date            TIMESTAMP NOT NULL DEFAULT NOW(),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE all_recipes (
@@ -47,7 +45,7 @@ CREATE TABLE all_recipes (
     title           TEXT NOT NULL,
     category        TEXT NOT NULL,
     image_url       TEXT NOT NULL,
-    prep_time       INT NOT NULL,
+    prep_time       INTEGER NOT NULL,
     description     TEXT,
     rating          INTEGER NOT NULL,
     expense         INTEGER NOT NULL
