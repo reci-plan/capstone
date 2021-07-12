@@ -14,7 +14,17 @@ export default function Register({ user, setUser }) {
     last_name: "",
   });
 
+  const [errors, setErrors] = useState({});
+
   const handleInputChange = (e) => {
+    if (e.target.name === "email") {
+      if (e.target.value.indexOf("@") === -1) {
+        setErrors((e) => ({ ...e, email: "Please enter a valid email." }));
+      } else {
+        setErrors((e) => ({ ...e, email: null }));
+      }
+    }
+
     setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
   };
 
@@ -31,7 +41,7 @@ export default function Register({ user, setUser }) {
       apiClient.setToken(data.token);
     }
     if (error) {
-      console.log(error);
+      setErrors((prevState) => ({ ...prevState, form: error }));
     }
   };
 
@@ -44,8 +54,9 @@ export default function Register({ user, setUser }) {
 
   return (
     <div className="Register">
-      Register page{" "}
+      Register page
       <div>
+        {errors.form}
         <div>
           first name:
           <input
@@ -75,6 +86,7 @@ export default function Register({ user, setUser }) {
             value={form.email}
             onChange={handleInputChange}
           />
+          {errors.email}
         </div>
         <div>
           username:

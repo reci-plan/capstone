@@ -9,7 +9,19 @@ export default function Login({ user, setUser }) {
     password: "",
   });
 
+  const [errors, setErrors] = useState({});
+
   const handleInputChange = (e) => {
+    if (e.target.name === "email") {
+      if (e.target.value.indexOf("@") === -1) {
+        setErrors((prevState) => ({
+          ...prevState,
+          email: "Please enter a valid email.",
+        }));
+      } else {
+        setErrors((prevState) => ({ ...prevState, email: null }));
+      }
+    }
     setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
   };
 
@@ -25,7 +37,7 @@ export default function Login({ user, setUser }) {
     }
 
     if (error) {
-      console.log(error);
+      setErrors((prevState) => ({ ...prevState, form: error }));
     }
   };
 
@@ -40,6 +52,7 @@ export default function Login({ user, setUser }) {
     <div className="Login">
       <div>
         Login page
+        <div> {errors.form} </div>
         <div>
           email:
           <input
@@ -49,6 +62,7 @@ export default function Login({ user, setUser }) {
             value={form.email}
             onChange={handleInputChange}
           />
+          {errors.email}
         </div>
         <div>
           password:
@@ -62,8 +76,10 @@ export default function Login({ user, setUser }) {
         </div>
         <button onClick={handleLogin}> login </button>
       </div>
-      <div className='login-footer'>
-        <p>Don't have an account? Register <Link to="/register">here</Link>.</p>
+      <div className="login-footer">
+        <p>
+          Don't have an account? Register <Link to="/register">here</Link>.
+        </p>
       </div>
     </div>
   );
