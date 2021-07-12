@@ -8,12 +8,26 @@ router.get("/", (req, res) => {
   res.status(201).json({ hello: "hello" });
 });
 
+// router.get("/search/:food", async (req, res, next) => {
+//   try {
+//     const { food } = req.params;
+//     const result = await axios.get(
+//       `${BASE_RECIPES_URL}/complexSearch?apiKey=${API_KEY}&query=${food}?`
+//     );
+
+//     res.status(201).json({ results: result.data });
+//   } catch (e) {
+//     next(e);
+//   }
+// });
+
 router.get("/search/:food", async (req, res, next) => {
   try {
     const { food } = req.params;
-    const result = await axios.get(
-      `${BASE_RECIPES_URL}/complexSearch?apiKey=${API_KEY}&query=${food}?`
-    );
+
+    const result = await axios.get(`
+      ${BASE_RECIPES_URL}/complexSearch?apiKey=${API_KEY}&query=${food}&instructionsRequired=true&addRecipeInformation=true&cuisine=American,Italian&maxReadyTime=60&sort=price&sortDirection=asc&limitLicense=true
+    `);
 
     res.status(201).json({ results: result.data });
   } catch (e) {
