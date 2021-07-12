@@ -18,13 +18,13 @@
 .logo-link {
   width: 100px;
 }
-.search-btn {
+.search-btn, .user-btn {
   cursor: pointer;
 }
-.search-btn, .wheel-link {
+.search-btn, .wheel-link, .user-btn {
   width: 30px;
 }
-.logo-link img, .search-btn img, .wheel-link img {
+.logo-link img, .search-btn img, .wheel-link img, .user-btn img {
   width: 100%;
 }
 .login-link {
