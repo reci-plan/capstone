@@ -5,7 +5,7 @@ import logo from '../../assets/logo.svg'
 import search from '../../assets/search-icon.svg'
 import wheel from '../../assets/wheel-icon.svg'
 import close from '../../assets/close.svg'
-import user from '../../assets/user.svg'
+import userlogo from '../../assets/user.svg'
 
 import './Navbar.css'
 
@@ -47,8 +47,8 @@ export default function Navbar({ user, setUser }) {
         </Link>
 
         {user?.email ?
-          <div onClick={handleLogout}>
-            <img src={user} alt='User button'></img>
+          <div onClick={handleLogout} className="user-btn">
+            <img src={userlogo} alt='User button'></img>
           </div>
           
           : 
