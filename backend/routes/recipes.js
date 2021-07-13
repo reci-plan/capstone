@@ -23,15 +23,7 @@ router.get("/search/:food", async (req, res, next) => {
   }
 });
 
-router.get("/logRandom", async (req, res, next) => {
-  try {
-    const result = await RandomRecipe.getAllInRandomDb();
-    return res.status(201).json({ recipes: result });
-  } catch (e) {
-    next(e);
-  }
-});
-
+// get api random endpoint then insert it to our all_recipes
 router.get("/getRandom", async (req, res, next) => {
   try {
     const result = await axios.get(`
@@ -45,16 +37,16 @@ router.get("/getRandom", async (req, res, next) => {
   }
 });
 
-router.get("/getRandomData", async (req, res, next) => {
+// select all from all_recipes and return it
+router.get("/logRandom", async (req, res, next) => {
   try {
-    const result = await axios.get(`
-      ${BASE_RECIPES_URL}/random?apiKey=${API_KEY}&number=2
-    `);
-    res.status(201).json({ result: result.data });
+    const result = await RandomRecipe.getAllInRandomDb();
+    return res.status(201).json({ recipes: result });
   } catch (e) {
     next(e);
   }
 });
+
 
 router.get("/summarize/:id", async (req, res, next) => {
   try {

@@ -27,8 +27,6 @@ class RandomRecipe {
                 description: r.instructions,
                 image_url: r.image ? r.image : "no_image",
                 rating: parseInt(r.spoonacularScore),
-                // description: r.summary,
-                // steps: [r.steps.forEach()]
             });
         });
 
