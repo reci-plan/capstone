@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 
 import './Home.css'
+import home from '../../assets/home.png'
 export default function Home({ user }) {
     return (
         <div className="Home">
-            Home page
-            <Link to="/experiment">
-                <div style={{ margin: "20px" }}> experiment page </div>
-            </Link>
+            <img src={home} alt="Kitchen background"></img>
             {user.email ? (
                 <>
                     <div> username: {user.username}</div>

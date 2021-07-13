@@ -1,0 +1,36 @@
+.Login {
+  padding-top: 100px;
+  background-color: aliceblue;
+  font-family: 'Lato', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.Login > div {
+  display: flex;
+  justify-content: baseline;
+  flex-direction: column;
+}
+.section-title {
+  font-size: 30px;
+  font-weight: 350;
+}
+input {
+  border: none;
+  width: 300px;
+  padding: 15px;
+  border-radius: 20px;
+  margin: 20px 0;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.btn {
+  width: 50px;
+}

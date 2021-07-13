@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 import apiClient from "../../services/apiClient";
 
+import './Register.css'
 export default function Register({ user, setUser }) {
   const navigate = useNavigate();
 
