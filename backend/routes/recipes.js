@@ -27,7 +27,7 @@ router.get("/search/:food", async (req, res, next) => {
 router.get("/getRandom", async (req, res, next) => {
   try {
     const result = await axios.get(`
-      ${BASE_RECIPES_URL}/random?apiKey=${API_KEY}&number=10
+      ${BASE_RECIPES_URL}/random?apiKey=${API_KEY}&number=5
     `);
 
     const arr = await RandomRecipe.extractInfo(result.data);

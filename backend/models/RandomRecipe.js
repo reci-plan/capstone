@@ -30,6 +30,8 @@ class RandomRecipe {
             });
         });
 
+        // console.log("supposed to look like this:", [category[0]]);
+        console.log(category);
         let result_arr = [];
         for (let i = 0; i < arr.length; i++) {
             const queryString = `
@@ -39,7 +41,7 @@ class RandomRecipe {
             `;
             const results = await db.query(queryString, [
                 arr[i].title,
-                [category[i]],
+                category[i],
                 arr[i].image_url,
                 arr[i].prep_time,
                 arr[i].description,
@@ -48,6 +50,7 @@ class RandomRecipe {
             ]);
             result_arr.push(results.rows);
         }
+        // console.log(result_arr[0][0].category);
         return result_arr;
     }
 }

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
 
-import './Home.css'
+import "./Home.css";
 export default function Home({ user }) {
     return (
         <div className="Home">
@@ -18,6 +19,7 @@ export default function Home({ user }) {
             ) : (
                 <> </>
             )}
+            <DisplayAllRecipes />
         </div>
     );
 }
