@@ -20,3 +20,15 @@
   background-color: #E1B5A1;
   font-size: 15px;
 }
+.input-name {
+  display: flex;
+  width: 100%;
+}
+.input-name input {
+  width: 38%;
+}
+.form div {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}

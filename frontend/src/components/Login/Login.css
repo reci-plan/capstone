@@ -20,7 +20,7 @@
 }
 input {
   border: none;
-  width: 300px;
+  width: 90%;
   padding: 15px;
   border-radius: 20px;
   margin: 20px 0;
@@ -30,6 +30,7 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 .btn {
   cursor: pointer;

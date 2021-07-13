@@ -60,23 +60,21 @@ export default function Register({ user, setUser }) {
       <div>
         <span className="section-title">Register</span>
         <div className="form">
-          <div>
-            <input
-              type="text"
-              name="first_name"
-              placeholder="first name"
-              value={form.first_name}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              name="last_name"
-              placeholder="last name"
-              value={form.last_name}
-              onChange={handleInputChange}
-            />
+          <div className="input-name">
+              <input
+                type="text"
+                name="first_name"
+                placeholder="first name"
+                value={form.first_name}
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="last_name"
+                placeholder="last name"
+                value={form.last_name}
+                onChange={handleInputChange}
+              />
           </div>
           <div>
             <input
