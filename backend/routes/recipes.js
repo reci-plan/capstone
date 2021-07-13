@@ -47,44 +47,44 @@ router.get("/logRandom", async (req, res, next) => {
   }
 });
 
+// Ignore these
+// router.get("/summarize/:id", async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const result = await axios.get(
+//       `${BASE_RECIPES_URL}/${id}/summary?apiKey=${API_KEY}`
+//     );
 
-router.get("/summarize/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const result = await axios.get(
-      `${BASE_RECIPES_URL}/${id}/summary?apiKey=${API_KEY}`
-    );
+//     res.status(201).json({ results: result.data });
+//   } catch (e) {
+//     next(e);
+//   }
+// });
 
-    res.status(201).json({ results: result.data });
-  } catch (e) {
-    next(e);
-  }
-});
+// router.get("/similar/:id", async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const result = await axios.get(
+//       `${BASE_RECIPES_URL}/${id}/similar?apiKey=${API_KEY}`
+//     );
 
-router.get("/similar/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const result = await axios.get(
-      `${BASE_RECIPES_URL}/${id}/similar?apiKey=${API_KEY}`
-    );
+//     res.status(201).json({ results: result.data });
+//   } catch (e) {
+//     next(e);
+//   }
+// });
 
-    res.status(201).json({ results: result.data });
-  } catch (e) {
-    next(e);
-  }
-});
+// router.get("/stats/:id", async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const result = await axios.get(
+//       `${BASE_RECIPES_URL}/${id}/tasteWidget.json?apiKey=${API_KEY}`
+//     );
 
-router.get("/stats/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const result = await axios.get(
-      `${BASE_RECIPES_URL}/${id}/tasteWidget.json?apiKey=${API_KEY}`
-    );
-
-    res.status(201).json({ results: result.data });
-  } catch (e) {
-    next(e);
-  }
-});
+//     res.status(201).json({ results: result.data });
+//   } catch (e) {
+//     next(e);
+//   }
+// });
 
 module.exports = router;
