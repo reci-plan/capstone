@@ -5,6 +5,7 @@ import apiClient from "../../services/apiClient";
 import './Login.css'
 import blueberry from '../../assets/blueberry.png'
 
+
 export default function Login({ user, setUser }) {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -76,7 +77,7 @@ export default function Login({ user, setUser }) {
             />
           </div>
           <div>{errors.form}</div>
-          <button className="btn" onClick={handleLogin}>login</button>
+          <button className="btn login-btn" onClick={handleLogin}>login</button>
 
           <div className="login-footer">
             <p>

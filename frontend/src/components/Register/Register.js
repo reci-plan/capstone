@@ -4,6 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
 import './Register.css'
+import orange from '../../assets/orange.png'
+
 export default function Register({ user, setUser }) {
   const navigate = useNavigate();
 
@@ -54,62 +56,59 @@ export default function Register({ user, setUser }) {
   }, [user]);
 
   return (
-    <div className="Register">
-      Register page
+    <div className="Register" style={{backgroundImage: `url(${orange})`}}>
       <div>
-        {errors.form}
-        <div>
-          first name:
-          <input
-            type="text"
-            name="first_name"
-            placeholder="first_name"
-            value={form.first_name}
-            onChange={handleInputChange}
-          />
+        <span className="section-title">Register</span>
+        <div className="form">
+          <div>
+            <input
+              type="text"
+              name="first_name"
+              placeholder="first name"
+              value={form.first_name}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              name="last_name"
+              placeholder="last name"
+              value={form.last_name}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <input
+              type="email"
+              name="email"
+              placeholder="email"
+              value={form.email}
+              onChange={handleInputChange}
+            />
+            {errors.email}
+          </div>
+          <div>
+            <input
+              type="text"
+              name="username"
+              placeholder="username"
+              value={form.username}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              name="password"
+              placeholder="password"
+              value={form.password}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>{errors.form}</div>
+          <button className="btn register-btn" onClick={handleSubmit}>register</button>
         </div>
-        <div>
-          last name:
-          <input
-            type="text"
-            name="last_name"
-            placeholder="last_name"
-            value={form.last_name}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          email:
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter a valid email"
-            value={form.email}
-            onChange={handleInputChange}
-          />
-          {errors.email}
-        </div>
-        <div>
-          username:
-          <input
-            type="text"
-            name="username"
-            placeholder="username"
-            value={form.username}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          password:
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={form.password}
-            onChange={handleInputChange}
-          />
-        </div>
-        <button onClick={handleSubmit}> register </button>
       </div>
     </div>
   );
