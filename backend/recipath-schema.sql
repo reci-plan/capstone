@@ -12,7 +12,7 @@ CREATE TABLE users (
 CREATE TABLE all_recipes (
     id              SERIAL PRIMARY KEY,
     title           TEXT NOT NULL,
-    category        TEXT NOT NULL,
+    category        TEXT ARRAY,
     image_url       TEXT NOT NULL,
     prep_time       INTEGER NOT NULL,
     description     TEXT,
