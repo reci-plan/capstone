@@ -26,12 +26,24 @@ router.get("/search/:food", async (req, res, next) => {
 // get api complexsearch endpoint then insert it to our all_recipes
 router.get("/getRecipes", async (req, res, next) => {
   try {
+    // convert array to string with a comma in between each element
+    const typesToString = [
+      "breakfast",
+      "main course",
+      "side dish",
+      "salad",
+      "appetizer",
+      "soup",
+      "finger food",
+      "drink",
+    ].join(", ");
+
     const result = await axios.get(`
-      ${BASE_RECIPES_URL}/complexSearch?apiKey=${API_KEY}&instructionsRequired=true&addRecipeInformation=true&maxReadyTime=60&sort=price&sortDirection=asc&limitLicense=true&number=5
+      ${BASE_RECIPES_URL}/complexSearch?apiKey=${API_KEY}&instructionsRequired=true&addRecipeInformation=true&maxReadyTime=60&sort=price&sortDirection=asc&limitLicense=true&number=5&type=${typesToString}
     `);
-    const test = await Recipe.extractInfo(result.data);
-    // const arr = await RandomRecipe.extractInfo(result.data);
-    res.status(201).json({ result: test });
+    const recipes = await Recipe.extractInfo(result.data);
+    // res.status(201).json({ result: recipes });
+    res.status(201).json({ result: result.data });
   } catch (e) {
     next(e);
   }
