@@ -11,13 +11,38 @@ class RandomRecipe {
 
         const category = [];
 
-        data.recipes.forEach(async (r, idx) => {
-            category.push({
-                vegetarian: r.vegetarian,
-                vegan: r.vegan,
-                glutenFree: r.glutenFree,
-                dairyFree: r.dairyFree,
-            });
+        console.log("all results", data.results)
+
+        const sum = (2*(2*(2*1 + 1) + 0) + 1)
+        console.log(sum)
+        
+        /**
+         * 1101
+         * 1000
+         * 0011
+         * 0001
+         * 0011
+         * 0000
+         * 0011
+         * 0000
+         * 1010
+         * 0000
+         */
+        
+        data.results.forEach(async (r, idx) => {
+            category.push(
+                // {
+                // vegetarian: r.vegetarian,
+                // vegan: r.vegan,
+                // glutenFree: r.glutenFree,
+                // dairyFree: r.dairyFree,
+                // }
+                (2*(2*(2*(r.vegetarian ? 1 : 0) + (r.vegan ? 1 : 0)) + (r.glutenFree ? 1 : 0)) + (r.dairyFree ? 1 : 0))
+              
+                // r.dishTypes['breakfast'] ? 1 >> 2 : 0 >> 2 + 
+                // r.dishTypes['main course'] ? 1 >> 2 : 0 >> 2 +
+                // r.dishTypes['side dish'] ? 1 >> 2 : 0 >> 2
+            );
 
             arr.push({
                 id: r.id,

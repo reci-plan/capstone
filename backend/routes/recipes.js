@@ -26,10 +26,10 @@ router.get("/search/:food", async (req, res, next) => {
 // get api random endpoint then insert it to our all_recipes
 router.get("/getRandom", async (req, res, next) => {
   try {
-    const result = await axios.get(`
-      ${BASE_RECIPES_URL}/random?apiKey=${API_KEY}&number=5
-    `);
-
+    const url = `
+      ${BASE_RECIPES_URL}/complexSearch?apiKey=${API_KEY}&instructionsRequired=true&addRecipeInformation=true&maxReadyTime=60&sort=price&sortDirection=asc&limitLicense=true
+    `
+    const result = await axios.get(url);
     const arr = await RandomRecipe.extractInfo(result.data);
     res.status(201).json({ result: arr });
   } catch (e) {
