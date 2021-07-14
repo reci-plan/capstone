@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function DisplayAllRecipes() {
     const [recipes, setRecipes] = useState([]);
+    const [minutes, setMinutes] = useState(45);
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -37,12 +38,24 @@ export default function DisplayAllRecipes() {
     return (
         <div>
             <h2> DisplayAllRecipes component </h2>
-            {recipes.map((r) => (
+            <button onClick={() => setMinutes(10)}> 10 Minutes </button>
+            <button onClick={() => setMinutes(20)}> 20 Minutes </button>
+            <button onClick={() => setMinutes(30)}> 30 Minutes </button>
+            <button onClick={() => setMinutes(45)}> 45 Minutes </button>
+            {/*{recipes.map((r) => (
                 <p>
                     id: {r.id}, title: {r.title}, categories:
-                    {fixObj(r.category[0])}
+                    {fixObj(r.category[0])}, prepTime: {r.prep_time}
                 </p>
-            ))}
+            ))}*/}
+            {recipes
+                .filter((r) => r.prep_time <= minutes)
+                .sort((a, b) => a.prep_time - b.prep_time)
+                .map((r) => (
+                    <p>
+                        {r.title}, {r.prep_time}{" "}
+                    </p>
+                ))}
         </div>
     );
 }
