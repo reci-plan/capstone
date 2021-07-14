@@ -4,7 +4,7 @@ const axios = require("axios");
 
 const { API_KEY, BASE_RECIPES_URL } = require("../config");
 
-const RandomRecipe = require("../models/RandomRecipe");
+const Recipe = require("../models/Recipe");
 
 router.get("/", (req, res) => {
   res.status(201).json({ hello: "hello" });
@@ -23,15 +23,15 @@ router.get("/search/:food", async (req, res, next) => {
   }
 });
 
-// get api random endpoint then insert it to our all_recipes
-router.get("/getRandom", async (req, res, next) => {
+// get api complexsearch endpoint then insert it to our all_recipes
+router.get("/getRecipes", async (req, res, next) => {
   try {
     const result = await axios.get(`
-      ${BASE_RECIPES_URL}/random?apiKey=${API_KEY}&number=5
+      ${BASE_RECIPES_URL}/complexSearch?apiKey=${API_KEY}&instructionsRequired=true&addRecipeInformation=true&maxReadyTime=60&sort=price&sortDirection=asc&limitLicense=true&number=5
     `);
-
-    const arr = await RandomRecipe.extractInfo(result.data);
-    res.status(201).json({ result: arr });
+    const test = await Recipe.extractInfo(result.data);
+    // const arr = await RandomRecipe.extractInfo(result.data);
+    res.status(201).json({ result: test });
   } catch (e) {
     next(e);
   }
@@ -40,7 +40,7 @@ router.get("/getRandom", async (req, res, next) => {
 // select all from all_recipes and return it
 router.get("/logRandom", async (req, res, next) => {
   try {
-    const result = await RandomRecipe.getAllInRandomDb();
+    const result = await Recipe.getAllRecipes();
     return res.status(201).json({ recipes: result });
   } catch (e) {
     next(e);
