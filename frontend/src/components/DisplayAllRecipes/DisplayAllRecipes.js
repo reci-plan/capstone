@@ -1,6 +1,8 @@
 import apiClient from "../../services/apiClient";
 import { useState, useEffect } from "react";
 
+import PutIntoCategories from "./PutIntoCategories/PutIntoCategories";
+
 export default function DisplayAllRecipes() {
     const [recipes, setRecipes] = useState([]);
     const [minutes, setMinutes] = useState(45);
@@ -38,24 +40,34 @@ export default function DisplayAllRecipes() {
     return (
         <div>
             <h2> DisplayAllRecipes component </h2>
-            <button onClick={() => setMinutes(10)}> 10 Minutes </button>
+            {/*     <button onClick={() => setMinutes(10)}> 10 Minutes </button>
             <button onClick={() => setMinutes(20)}> 20 Minutes </button>
             <button onClick={() => setMinutes(30)}> 30 Minutes </button>
-            <button onClick={() => setMinutes(45)}> 45 Minutes </button>
-            {/*{recipes.map((r) => (
-                <p>
-                    id: {r.id}, title: {r.title}, categories:
-                    {fixObj(r.category[0])}, prepTime: {r.prep_time}
-                </p>
-            ))}*/}
-            {recipes
-                .filter((r) => r.prep_time <= minutes)
-                .sort((a, b) => a.prep_time - b.prep_time)
-                .map((r) => (
-                    <p>
-                        {r.title}, {r.prep_time}{" "}
-                    </p>
-                ))}
+            <button onClick={() => setMinutes(45)}> 45 Minutes </button>*/}
+            <div>
+                <div style={{ border: "1px solid black" }}>
+                    less than 10 minutes recipes
+                </div>
+                <PutIntoCategories recipes={recipes} rangeA={0} rangeB={10} />
+            </div>
+            <div>
+                <div style={{ border: "1px solid black" }}>
+                    less than 20 minutes recipes
+                </div>
+                <PutIntoCategories recipes={recipes} rangeA={11} rangeB={20} />
+            </div>
+            <div>
+                <div style={{ border: "1px solid black" }}>
+                    less than 30 minutes recipes
+                </div>
+                <PutIntoCategories recipes={recipes} rangeA={21} rangeB={30} />
+            </div>{" "}
+            <div>
+                <div style={{ border: "1px solid black" }}>
+                    less than 45 minutes recipes
+                </div>
+                <PutIntoCategories recipes={recipes} rangeA={31} rangeB={45} />
+            </div>
         </div>
     );
 }

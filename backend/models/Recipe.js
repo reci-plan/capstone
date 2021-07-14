@@ -31,6 +31,8 @@ class Recipe {
             });
         });
 
+        // console.log("supposed to look like this:", [category[0]]);
+        // console.log(category);
         let result_arr = [];
         for (let i = 0; i < arr.length; i++) {
             const queryString = `
