@@ -18,7 +18,7 @@ export default function Profile({ user }) {
         };
         fetchRecipes();
     }, []);
-
+    console.log(saved);
     return (
         <div>
             {errors}
