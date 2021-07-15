@@ -21,8 +21,6 @@ class Save {
 
   // Recipe is an object.
   static async saveRecipe(user, recipe) {
-    console.log(recipe);
-
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
     }
@@ -33,6 +31,18 @@ class Save {
 
     if (!recipe.hasOwnProperty("title")) {
       throw new BadRequestError(`Missing title in request body.`);
+    }
+
+    console.log("The recipe", recipe);
+    const isExisting = await db.query(
+      `SELECT * FROM all_recipes
+      JOIN saved_recipes ON all_recipes.id = saved_recipes.recipe_id
+      WHERE recipe_id = (SELECT id FROM all_recipes WHERE id = $1) `,
+      [recipe.id]
+    );
+    console.log("isExisting.rows: ", isExisting.rows);
+    if (isExisting.rows.length > 0) {
+      throw new BadRequestError("Cannot insert duplicate.");
     }
 
     const results = await db.query(

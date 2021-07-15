@@ -4,18 +4,20 @@ import apiClient from "../../../services/apiClient";
 import { useDataLayerValue } from "../../../context/DataLayer";
 
 export default function PutIntoCategories({ recipes, rangeA, rangeB, user }) {
-    const [{ colors }, dispatch] = useDataLayerValue();
+    const [{ colors, test }, dispatch] = useDataLayerValue();
 
     useEffect(() => {
         dispatch({ type: "SET_COLORS", colors: [1, 2, 3, 4, 5] });
     }, []);
 
-    console.log(colors);
+    // console.log(colors);
 
     const handleClick = async (r) => {
         const { data, error } = await apiClient.saveRecipe(r);
+
         if (data) {
-            console.log("hi");
+            console.log("hi", data);
+            // dispatch({type: "SET_SAVED", saved: })
         }
 
         if (error) {

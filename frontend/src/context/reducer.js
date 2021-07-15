@@ -8,6 +8,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "SET_COLORS":
       return { ...state, colors: action.colors };
+    case "SET_SAVED":
+      return { ...state, saved: action.saved };
     default:
       return state;
   }
