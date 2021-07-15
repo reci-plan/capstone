@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
+
+import './Home.css'
+import home from '../../assets/home.png'
 import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
 
-import "./Home.css";
 export default function Home({ user }) {
     return (
-        <div className="Home">
-            Home page
-            <Link to="/experiment">
-                <div style={{ margin: "20px" }}> experiment page </div>
-            </Link>
+        <div className="Home" style={{backgroundImage: `url(${home})`}}>
             {user.email ? (
                 <>
                     <div> username: {user.username}</div>
@@ -19,6 +17,12 @@ export default function Home({ user }) {
             ) : (
                 <> </>
             )}
+            {/* {recipes.length > 0 ? 
+                recipes.map(element => (
+                    <RecipeCard recipeInfo={element}/>
+                )): null
+            } */}
+
             <DisplayAllRecipes />
         </div>
     );

@@ -10,6 +10,7 @@ import apiClient from "../../services/apiClient";
 import './App.css'
 function App() {
   const [user, setUser] = useState({});
+  // const [recipes, setRecipes] = useState({})
 
   // Remain logged in
   useEffect(() => {
@@ -34,12 +35,27 @@ function App() {
     tokenValid();
   }, []);
 
+  // useEffect(() => {
+  //   const fetchAllRecipes = async () => {
+  //     const { data, error } = await apiClient.recipes()
+  //     if (data) {
+  //       setRecipes(data.result.results);
+  //     }
+  //     if (error) {
+  //       console.log(`${error} ----------- App.js`);
+  //     }
+  //   }
+
+  //   fetchAllRecipes()
+  // }, [])
+
+  
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar user={user} setUser={setUser} />
         <Routes>
-          <Route path="/" element={<Home user={user}/>} />
+          <Route path="/" element={<Home user={user} />} />
           <Route
             path="/register"
             element={<Register user={user} setUser={setUser} />}

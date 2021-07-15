@@ -23,7 +23,6 @@ export default function DisplayAllRecipes() {
         fetchRecipes();
     }, []);
 
-    console.log(recipes);
 
     const fixObj = (categories_obj) => {
         const arr = [];

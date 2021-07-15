@@ -41,6 +41,13 @@ class User {
             );
         }
 
+        const existingUsername = await User.fetchUserByUsername(credentials.username);
+        if (existingUsername) {
+            throw new BadRequestError(
+                `User already exists: ${credentials.username}`
+            );
+        }
+
         const hashedPassword = await bcrypt.hash(
             credentials.password,
             BCRYPT_WORK_FACTOR
@@ -87,11 +94,23 @@ class User {
 
     static async fetchUserByEmail(email) {
         if (!email) {
-            throw new BadRequestError("no email provided");
+            throw new BadRequestError("No email provided");
         }
 
         const result = await db.query(`SELECT * FROM users WHERE email = $1`, [
             email.toLowerCase(),
+        ]);
+
+        return result.rows[0];
+    }
+
+    static async fetchUserByUsername(username) {
+        if (!username) {
+            throw new BadRequestError("No username provided");
+        }
+
+        const result = await db.query(`SELECT * FROM users WHERE username = $1`, [
+            username
         ]);
 
         return result.rows[0];

@@ -69,6 +69,7 @@ class ApiCalls {
             method: `GET`,
         });
     }
+    
 }
 
 const API = new ApiCalls(
