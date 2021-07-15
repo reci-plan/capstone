@@ -8,12 +8,6 @@ class Save {
       throw new UnauthorizedError(`No user logged in.`);
     }
 
-    // const query = `
-    //   SELECT * FROM saved_recipes
-    //   WHERE user_id = (
-    //     SELECT id FROM users WHERE username = $1
-    //   )
-    // `;
     const query = `
       SELECT * FROM all_recipes
       JOIN saved_recipes ON all_recipes.id = saved_recipes.recipe_id

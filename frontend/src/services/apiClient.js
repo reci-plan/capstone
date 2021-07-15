@@ -73,6 +73,14 @@ class ApiCalls {
     async fetchSavedRecipes() {
         return await this.request({ endpoint: `save/recipes`, method: `GET` });
     }
+
+    async saveRecipe(cur_recipe) {
+        return await this.request({
+            endpoint: `save/recipe`,
+            method: `POST`,
+            data: cur_recipe,
+        });
+    }
 }
 
 const API = new ApiCalls(
