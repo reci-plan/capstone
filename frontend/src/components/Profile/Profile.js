@@ -35,8 +35,8 @@ export default function Profile({ user }) {
             <div> email: {user.email}</div>
 
             <h3> Your saved recipes </h3>
+                {/*.sort((a, b) => a.date - b.date)*/}
             {saved
-                .sort((a, b) => a.date - b.date)
                 .map((s) => (
                     <div>
                         Title: {s.title}, prep_time: {s.prep_time}, date:{" "}
