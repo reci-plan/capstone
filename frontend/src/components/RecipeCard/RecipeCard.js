@@ -7,7 +7,7 @@ import budgetIcon from '../../assets/budget-icon.svg'
 import timeIcon from '../../assets/time-icon.svg'
 
 export default function RecipeCard({ recipeInfo }) {
-  const limit = 15
+  const limit = 17
   return (
       <div className="RecipeCard">
         <div className="card-img">

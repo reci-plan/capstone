@@ -9,14 +9,14 @@ export default function Home({ user }) {
         <div className="Home" style={{backgroundImage: `url(${home})`}}>
             <div className="home-header">
                 {user.email ? (
-                    <>
+                    <div>
                         <div>Good morning, {user.first_name}</div>
-                        <div>Here are some categories of recipes you may like!</div>
-                    </>
+                        {/* <div>Here are some categories of recipes you may like!</div> */}
+                    </div>
                 ) : (
                     <div>
                         <span>Good morning!</span>
-                        <div>Login to see a list of recommendations!</div>
+                        {/* <div>Login to see a list of recommendations!</div> */}
                     </div>
                 )}
             </div>
