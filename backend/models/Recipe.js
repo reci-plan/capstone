@@ -1,7 +1,7 @@
 const db = require("../db");
 
-class RandomRecipe {
-    static async getAllInRandomDb() {
+class Recipe {
+    static async getAllRecipes() {
         const results = await db.query(`SELECT * FROM all_recipes`);
         return results.rows;
     }
@@ -11,52 +11,28 @@ class RandomRecipe {
 
         const category = [];
 
-        console.log("all results", data.results)
-
-        const sum = (2*(2*(2*1 + 1) + 0) + 1)
-        console.log(sum)
-        
-        /**
-         * 1101
-         * 1000
-         * 0011
-         * 0001
-         * 0011
-         * 0000
-         * 0011
-         * 0000
-         * 1010
-         * 0000
-         */
-        
         data.results.forEach(async (r, idx) => {
-            category.push(
-                // {
-                // vegetarian: r.vegetarian,
-                // vegan: r.vegan,
-                // glutenFree: r.glutenFree,
-                // dairyFree: r.dairyFree,
-                // }
-                (2*(2*(2*(r.vegetarian ? 1 : 0) + (r.vegan ? 1 : 0)) + (r.glutenFree ? 1 : 0)) + (r.dairyFree ? 1 : 0))
-              
-                // r.dishTypes['breakfast'] ? 1 >> 2 : 0 >> 2 + 
-                // r.dishTypes['main course'] ? 1 >> 2 : 0 >> 2 +
-                // r.dishTypes['side dish'] ? 1 >> 2 : 0 >> 2
-            );
+            category.push({
+                vegetarian: r.vegetarian,
+                vegan: r.vegan,
+                glutenFree: r.glutenFree,
+                dairyFree: r.dairyFree,
+            });
 
             arr.push({
                 id: r.id,
                 title: r.title,
                 expense: parseInt(r.pricePerServing),
                 prep_time: parseInt(r.readyInMinutes),
-                description: r.instructions,
+                // description: r.instructions,
+                description: "placeholder",
                 image_url: r.image ? r.image : "no_image",
                 rating: parseInt(r.spoonacularScore),
             });
         });
 
         // console.log("supposed to look like this:", [category[0]]);
-        console.log(category);
+        // console.log(category);
         let result_arr = [];
         for (let i = 0; i < arr.length; i++) {
             const queryString = `
@@ -66,7 +42,7 @@ class RandomRecipe {
             `;
             const results = await db.query(queryString, [
                 arr[i].title,
-                category[i],
+                [category[i]],
                 arr[i].image_url,
                 arr[i].prep_time,
                 arr[i].description,
@@ -80,4 +56,4 @@ class RandomRecipe {
     }
 }
 
-module.exports = RandomRecipe;
+module.exports = Recipe;
