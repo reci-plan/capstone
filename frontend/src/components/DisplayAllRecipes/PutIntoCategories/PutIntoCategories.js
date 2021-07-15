@@ -9,7 +9,7 @@ export default function PutIntoCategories({ recipes, rangeA, rangeB }) {
                 .slice(0, 25)
                 .map((r) => (
                     <p>
-                        {r.title}, {r.prep_time}
+                        {r.title}, {r.prep_time} <button> save </button>
                     </p>
                 ))}
         </>
