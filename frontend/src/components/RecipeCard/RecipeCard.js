@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './RecipeCard.css'
 
@@ -7,7 +8,12 @@ import budgetIcon from '../../assets/budget-icon.svg'
 import timeIcon from '../../assets/time-icon.svg'
 
 export default function RecipeCard({ recipeInfo }) {
+  const [saved, setSaved] = useState(false)
   const limit = 17
+  
+  const handleOnSave = () => {
+    saved ? setSaved(false) : setSaved(true)
+  }
   return (
       <div className="RecipeCard">
         <div className="card-img">
@@ -30,8 +36,13 @@ export default function RecipeCard({ recipeInfo }) {
         </div>
         <div className="card-links">
           <Link to=''>View more &#187;</Link>
-          <button className="save-btn">
-            <img src={heart} alt="Heart to save recipe"></img>
+          <button className="save-btn" onClick={handleOnSave}>
+            {saved ?
+              <img src={heartFill} alt="Solid Heart to unsave recipe"></img> :
+              <img src={heart} alt="Heart to save recipe"></img>
+            }
+           
+            
           </button>
         </div>
        

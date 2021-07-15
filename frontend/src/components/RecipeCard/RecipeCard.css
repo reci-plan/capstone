@@ -38,6 +38,7 @@
   align-items: center;
 }
 .save-btn {
+  cursor: pointer;
   border: none;
   background-color: transparent;
 }
