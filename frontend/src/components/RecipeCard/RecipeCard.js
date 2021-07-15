@@ -22,7 +22,7 @@ export default function RecipeCard({ recipeInfo }) {
         <div className="card-info">
           <div className="card-title">
             {(recipeInfo.title).length > limit ?
-            (recipeInfo.title).substring(0, limit) + '...' : recipeInfo.title
+              (recipeInfo.title).substring(0, limit) + '...' : recipeInfo.title
             }
           </div>
           <div className="card-tips">
@@ -35,14 +35,12 @@ export default function RecipeCard({ recipeInfo }) {
           </div>
         </div>
         <div className="card-links">
-          <Link to=''>View more &#187;</Link>
+          <Link to={`recipes/${recipeInfo.api_id}`}>View more &#187;</Link>
           <button className="save-btn" onClick={handleOnSave}>
             {saved ?
               <img src={heartFill} alt="Solid Heart to unsave recipe"></img> :
               <img src={heart} alt="Heart to save recipe"></img>
             }
-           
-            
           </button>
         </div>
        

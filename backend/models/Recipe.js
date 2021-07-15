@@ -6,30 +6,17 @@ class Recipe {
         return results.rows;
     }
 
-    /**
-     * 0001
-     * 0011
-     * 0000
-     * 0011
-     * 1010
-     * 1000
-     */
     static async extractInfo(data) {
         const arr = [];
-        console.log(data.results)
         const category = [];
 
         data.results.forEach(async (r, idx) => {
-            
-            console.log()
-            category.push(
-                // vegetarian: r.vegetarian,
-                // vegan: r.vegan,
-                // glutenFree: r.glutenFree,
-                // dairyFree: r.dairyFree,
-                (2*(2*(2*(r.vegetarian ? 1 : 0) + (r.vegan ? 1 : 0)) + (r.glutenFree ? 1 : 0)) + (r.dairyFree ? 1 : 0))
-                
-            );
+            category.push({
+                vegetarian: r.vegetarian,
+                vegan: r.vegan,
+                glutenFree: r.glutenFree,
+                dairyFree: r.dairyFree
+            });
 
             arr.push({
                 id: r.id,
@@ -49,18 +36,19 @@ class Recipe {
         let result_arr = [];
         for (let i = 0; i < arr.length; i++) {
             const queryString = `
-            INSERT INTO all_recipes (title, category, image_url, prep_time, description, rating, expense)
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
-                RETURNING id, title, category, image_url, prep_time, description, rating, expense
+            INSERT INTO all_recipes (api_id, title, category, image_url, prep_time, description, rating, expense)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                RETURNING id, api_id, title, category, image_url, prep_time, description, rating, expense
             `;
             const results = await db.query(queryString, [
+                arr[i].id,
                 arr[i].title,
                 [category[i]],
                 arr[i].image_url,
                 arr[i].prep_time,
                 arr[i].description,
                 arr[i].rating,
-                arr[i].expense,
+                arr[i].expense
             ]);
             result_arr.push(results.rows);
         }

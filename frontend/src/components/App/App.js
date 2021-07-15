@@ -5,6 +5,7 @@ import Home from '../Home/Home'
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Navbar from "../Navbar/Navbar";
+import IndividualRecipe from "../IndividualRecipe/IndividualRecipe";
 import apiClient from "../../services/apiClient";
 
 import './App.css'
@@ -34,21 +35,6 @@ function App() {
     };
     tokenValid();
   }, []);
-
-  // useEffect(() => {
-  //   const fetchAllRecipes = async () => {
-  //     const { data, error } = await apiClient.recipes()
-  //     if (data) {
-  //       setRecipes(data.result.results);
-  //     }
-  //     if (error) {
-  //       console.log(`${error} ----------- App.js`);
-  //     }
-  //   }
-
-  //   fetchAllRecipes()
-  // }, [])
-
   
   return (
     <div className="App">
@@ -63,6 +49,10 @@ function App() {
           <Route
             path="/login"
             element={<Login user={user} setUser={setUser} />}
+          />
+           <Route
+            path="/recipes/:recipeId"
+            element={<IndividualRecipe />}
           />
         </Routes>
       </BrowserRouter>

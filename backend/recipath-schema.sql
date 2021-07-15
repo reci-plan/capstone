@@ -11,6 +11,7 @@ CREATE TABLE users (
 
 CREATE TABLE all_recipes (
     id              SERIAL PRIMARY KEY,
+    api_id          INTEGER NOT NULL,
     title           TEXT NOT NULL,
     category        TEXT ARRAY,
     image_url       TEXT NOT NULL,

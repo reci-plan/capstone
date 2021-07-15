@@ -56,7 +56,7 @@ export default function DisplayAllRecipes() {
                 <PutIntoCategories recipes={recipes} rangeA={21} rangeB={30} />
             </div>
             <div className="display-section">
-                <div className="display-title">Time: &#60; 45 minutes</div>
+                <div className="display-title">Under 45 minutes</div>
                 <PutIntoCategories recipes={recipes} rangeA={31} rangeB={45} />
             </div>
         </div>
