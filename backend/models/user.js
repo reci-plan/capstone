@@ -85,7 +85,19 @@ class User {
         throw new UnauthorizedError("Bad password/email");
     }
 
-    static async fetchUserByUsername(email) {
+    static async fetchUserByEmail(email) {
+        if (!email) {
+            throw new BadRequestError("No email provided");
+        }
+
+        const result = await db.query(`SELECT * FROM users WHERE email = $1`, [
+            email.toLowerCase(),
+        ]);
+
+        return result.rows[0];
+    }
+
+    static async fetchUserByUsername(username) {
         if (!username) {
             throw new BadRequestError("No username provided");
         }
