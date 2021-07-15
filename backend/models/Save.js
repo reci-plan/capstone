@@ -1,5 +1,22 @@
 const db = require("../db");
 class Save {
+  static async fetchSavedRecipes(user) {
+    if (!user) {
+      throw new UnauthorizedError(`No user logged in.`);
+    }
+
+    const results = await db.query(
+      `
+      SELECT * FROM saved_recipes
+      WHERE user_id = (
+        SELECT id FROM users WHERE username = $1
+      )
+    `,
+      [user.username]
+    );
+
+    return results.rows;
+  }
   static async saveRecipe(user, recipe) {
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
