@@ -16,7 +16,8 @@ router.get("/recipes", requireAuthenticatedUser, async (req, res, next) => {
 router.post("/recipe", requireAuthenticatedUser, async (req, res, next) => {
     try {
         const user = res.locals.user;
-        const recipe = req.body.recipe;
+        // const recipe = req.body.recipe;
+        const recipe = req.body;
         const saveRecipe = await Save.saveRecipe(user, recipe);
         res.status(201).json({ saveRecipe });
     } catch (err) {

@@ -1,4 +1,7 @@
 const db = require("../db");
+
+const { BadRequestError, UnauthorizedError } = require("../utils/errors");
+
 class Save {
   static async fetchSavedRecipes(user) {
     if (!user) {
@@ -17,9 +20,17 @@ class Save {
 
     return results.rows;
   }
+
+  // Recipe is an object.
   static async saveRecipe(user, recipe) {
+    console.log(recipe);
+
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
+    }
+
+    if (!recipe) {
+      throw new BadRequestError("no recipe in request.body");
     }
 
     if (!recipe.hasOwnProperty("title")) {
