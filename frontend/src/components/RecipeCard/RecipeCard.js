@@ -4,7 +4,9 @@ import './RecipeCard.css'
 export default function RecipeCard({ recipeInfo }) {
   return (
     <div className="RecipeCard">
-      <img src={recipeInfo.image_url} alt={recipeInfo.title}></img>
+      <div className="card-img">
+        <img src={recipeInfo.image_url} alt={recipeInfo.title}></img>
+      </div>
       <div>
         <div>{recipeInfo.title}</div>
         <div>Prep Time (mins): {recipeInfo.prep_time}</div>

@@ -7,22 +7,19 @@ import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
 export default function Home({ user }) {
     return (
         <div className="Home" style={{backgroundImage: `url(${home})`}}>
-            {user.email ? (
-                <>
-                    <div> username: {user.username}</div>
-                    <div> first_name: {user.first_name}</div>
-                    <div> last_name: {user.last_name}</div>
-                    <div> email: {user.email}</div>
-                </>
-            ) : (
-                <> </>
-            )}
-            {/* {recipes.length > 0 ? 
-                recipes.map(element => (
-                    <RecipeCard recipeInfo={element}/>
-                )): null
-            } */}
-
+            <div className="home-header">
+                {user.email ? (
+                    <>
+                        <div>Good morning, {user.first_name}</div>
+                        <div>Here are some categories of recipes you may like!</div>
+                    </>
+                ) : (
+                    <div>
+                        <span>Good morning!</span>
+                        <div>Login to see a list of recommendations!</div>
+                    </div>
+                )}
+            </div>
             <DisplayAllRecipes />
         </div>
     );

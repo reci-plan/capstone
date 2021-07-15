@@ -1,0 +1,11 @@
+.RecipeCard {
+  width: 200px;
+  overflow: hidden;
+}
+
+.card-img {
+  width: 100%;
+}
+.card-img img {
+  width: 100%;
+}

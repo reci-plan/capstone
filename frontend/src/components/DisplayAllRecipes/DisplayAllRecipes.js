@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import PutIntoCategories from "./PutIntoCategories/PutIntoCategories";
 
+import './DisplayAllRecipes.css'
 export default function DisplayAllRecipes() {
     const [recipes, setRecipes] = useState([]);
     const [minutes, setMinutes] = useState(45);
@@ -37,7 +38,7 @@ export default function DisplayAllRecipes() {
     };
 
     return (
-        <div>
+        <div className="DisplayAllRecipes">
             <h2> DisplayAllRecipes component </h2>
             {/*     <button onClick={() => setMinutes(10)}> 10 Minutes </button>
             <button onClick={() => setMinutes(20)}> 20 Minutes </button>
@@ -60,7 +61,7 @@ export default function DisplayAllRecipes() {
                     less than 30 minutes recipes
                 </div>
                 <PutIntoCategories recipes={recipes} rangeA={21} rangeB={30} />
-            </div>{" "}
+            </div>
             <div>
                 <div style={{ border: "1px solid black" }}>
                     less than 45 minutes recipes
