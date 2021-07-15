@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 import PutIntoCategories from "./PutIntoCategories/PutIntoCategories";
 
-export default function DisplayAllRecipes() {
+export default function DisplayAllRecipes({ user }) {
     const [recipes, setRecipes] = useState([]);
     const [minutes, setMinutes] = useState(45);
 
@@ -48,25 +48,45 @@ export default function DisplayAllRecipes() {
                 <div style={{ border: "1px solid black" }}>
                     less than 10 minutes recipes
                 </div>
-                <PutIntoCategories recipes={recipes} rangeA={0} rangeB={10} />
+                <PutIntoCategories
+                    recipes={recipes}
+                    rangeA={0}
+                    rangeB={10}
+                    user={user}
+                />
             </div>
             <div>
                 <div style={{ border: "1px solid black" }}>
                     less than 20 minutes recipes
                 </div>
-                <PutIntoCategories recipes={recipes} rangeA={11} rangeB={20} />
+                <PutIntoCategories
+                    recipes={recipes}
+                    rangeA={11}
+                    rangeB={20}
+                    user={user}
+                />
             </div>
             <div>
                 <div style={{ border: "1px solid black" }}>
                     less than 30 minutes recipes
                 </div>
-                <PutIntoCategories recipes={recipes} rangeA={21} rangeB={30} />
+                <PutIntoCategories
+                    recipes={recipes}
+                    rangeA={21}
+                    rangeB={30}
+                    user={user}
+                />
             </div>{" "}
             <div>
                 <div style={{ border: "1px solid black" }}>
                     less than 45 minutes recipes
                 </div>
-                <PutIntoCategories recipes={recipes} rangeA={31} rangeB={45} />
+                <PutIntoCategories
+                    recipes={recipes}
+                    rangeA={31}
+                    rangeB={45}
+                    user={user}
+                />
             </div>
         </div>
     );

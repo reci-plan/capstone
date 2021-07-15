@@ -46,7 +46,7 @@ export default function Login({ user, setUser }) {
     if (user?.email) {
       navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <div className="Login">

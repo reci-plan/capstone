@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function PutIntoCategories({ recipes, rangeA, rangeB }) {
+export default function PutIntoCategories({ recipes, rangeA, rangeB, user }) {
     return (
         <>
             {recipes
@@ -9,7 +9,7 @@ export default function PutIntoCategories({ recipes, rangeA, rangeB }) {
                 .slice(0, 25)
                 .map((r) => (
                     <p>
-                        {r.title}, {r.prep_time} <button> save </button>
+                        {r.title}, {r.prep_time} {user?.email && <button> save </button>}
                     </p>
                 ))}
         </>

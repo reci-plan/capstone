@@ -5,6 +5,7 @@ import Home from '../Home/Home'
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Navbar from "../Navbar/Navbar";
+import Profile from "../Profile/Profile";
 import apiClient from "../../services/apiClient";
 
 import './App.css'
@@ -47,6 +48,10 @@ function App() {
           <Route
             path="/login"
             element={<Login user={user} setUser={setUser} />}
+          />
+          <Route
+            path="/profile"
+            element={<Profile user={user}/>}
           />
         </Routes>
       </BrowserRouter>
