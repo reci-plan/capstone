@@ -13,6 +13,7 @@ export default function Register({ user, setUser }) {
     email: "",
     username: "",
     password: "",
+    passwordConfirm: "",
     first_name: "",
     last_name: "",
   });
@@ -25,6 +26,23 @@ export default function Register({ user, setUser }) {
         setErrors((e) => ({ ...e, email: "Please enter a valid email." }));
       } else {
         setErrors((e) => ({ ...e, email: null }));
+      }
+    }
+
+    // check that password confirm is equal to password
+    if (e.target.name === "password") {
+      if (form.passwordConfirm && form.passwordConfirm !== e.target.value) {
+        setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match" }))
+      } else {
+        setErrors((e) => ({ ...e, passwordConfirm: null }))
+      }
+    }
+    // check that password is equal to password confirm
+    if (e.target.name === "passwordConfirm") {
+      if (form.password && form.password !== e.target.value) {
+        setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match" }))
+      } else {
+        setErrors((e) => ({ ...e, passwordConfirm: null }))
       }
     }
 
@@ -84,8 +102,8 @@ export default function Register({ user, setUser }) {
               value={form.email}
               onChange={handleInputChange}
             />
-            {errors.email}
           </div>
+          {errors.email}
           <div>
             <input
               type="text"
@@ -104,6 +122,16 @@ export default function Register({ user, setUser }) {
               onChange={handleInputChange}
             />
           </div>
+          <div>
+            <input
+              type="password"
+              name="passwordConfirm"
+              placeholder="confirm password"
+              value={form.passwordConfirm}
+              onChange={handleInputChange}
+            />
+          </div>
+          {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
           <div>{errors.form}</div>
           <button className="btn register-btn" onClick={handleSubmit}>register</button>
         </div>

@@ -38,3 +38,8 @@
   text-transform: uppercase;
   font-family: 'Josefin Sans', sans-serif;
 }
+
+.search-input {
+  width: auto;
+  margin: 0 0;
+}

@@ -35,7 +35,7 @@ export default function Navbar({ user, setUser }) {
           <div className="search-btn">
             <img src={search} alt="Search icon"></img>
           </div>
-          <input type='text' placeholder='search recipes...'>
+          <input className="search-input" type='text' placeholder='search recipes...'>
           </input>
           <div className="search-btn" onClick={handleOnClick}>
             <img src={close} alt="Close button"></img>
