@@ -2,6 +2,10 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import apiClient from '../../services/apiClient'
+import veganIcon from '../../assets/vegan-icon.svg'
+import vegetarianIcon from '../../assets/vegetarian-icon.svg'
+import dairyfreeIcon from '../../assets/dairyfree-icon.svg'
+import glutenfreeIcon from '../../assets/glutenfree-icon.svg'
 import './IndividualRecipe.css'
 
 export default function IndividualRecipe() {
@@ -30,13 +34,22 @@ export default function IndividualRecipe() {
     fetchRecipeInfo()
   },[])
 
-  console.log(recipeIngredients)
-  console.log(recipeInstructions)
-
   return (
     <div className="IndividualRecipe">
-      <div className="recipe-title">{recipeInfo.title}</div>
+
+      <div className="recipe-top">
+        <div className="recipe-title">{recipeInfo.title}</div>
+        <div className="recipe-diet">
+          {recipeInfo.vegan ? <img src={veganIcon} alt="Vegan Icon"></img> : null}
+          {recipeInfo.vegetarian ? <img src={vegetarianIcon} alt="Vegetarian Icon"></img> : null}
+          {recipeInfo.dairyFree ? <img src={dairyfreeIcon} alt="Dairy Free Icon"></img> : null}
+          {recipeInfo.glutenFree ? <img src={glutenfreeIcon} alt="Gluten Free Icon"></img> : null}
+        </div>
+      </div>
+
       <div className="recipe-display">
+
+        {/* Left Side */}
         <div className="recipe-left">
           <div className="recipe-img">
             <img src={recipeInfo.image} alt={recipeInfo.title}></img>
@@ -50,6 +63,8 @@ export default function IndividualRecipe() {
             }
           </div>
         </div>
+
+        {/* Right Side */}
         <div className="recipe-right">
           <div className="heading">Instructions</div>
           {recipeInstructions.length > 0 ?

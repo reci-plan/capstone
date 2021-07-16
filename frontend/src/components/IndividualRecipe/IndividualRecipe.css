@@ -1,5 +1,5 @@
 .IndividualRecipe {
-  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0 75px;
@@ -8,6 +8,19 @@
 }
 .heading {
   font-size: 30px;
+}
+.recipe-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.recipe-diet {
+  display: flex;
+  flex-direction: row;
+
+}
+.recipe-diet img {
+  width: 100%;
 }
 
 .recipe-title {
