@@ -16,7 +16,13 @@ export default function IndividualRecipe() {
       if (data) {
         setRecipeInfo(data)
       }
+      if (data?.analyzedInstructions[0]?.steps) {
+        setRecipeInstructions(data.analyzedInstructions[0].steps)
+      }
 
+      if (data?.extendedIngredients) {
+        setRecipeIngredients(data.extendedIngredients)
+      }
       if (error) {
         console.log(error, 'IndividualRecipe.js')
       }
@@ -24,44 +30,18 @@ export default function IndividualRecipe() {
     fetchRecipeInfo()
   },[])
 
-  useEffect(() => {
-    const fetchRecipeInstructions = async () => {
-      const { data, error } = await apiClient.fetchIndividualRecipeInstructions(recipeId)
-      if (data?.steps) {
-        setRecipeInstructions(data.steps)
-      }
-
-      if (error) {
-        console.log(error, 'IndividualRecipe.js')
-      }
-    }
-    fetchRecipeInstructions()
-  },[])
-
-  useEffect(() => {
-    const fetchRecipeIngredients = async () => {
-      const { data, error } = await apiClient.fetchIndividualRecipeIngredients(recipeId)
-      console.log(data)
-      if (data) {
-        setRecipeIngredients(data)
-      }
-
-      if (error) {
-        console.log(error, 'IndividualRecipe.js')
-      }
-    }
-    fetchRecipeIngredients()
-  },[])
+  console.log(recipeIngredients)
+  console.log(recipeInstructions)
 
   return (
     <div className="IndividualRecipe">
       <div className="recipe-left">
         <div>{recipeInfo.title}</div>
-        <img src={recipeInfo.image_url} alt={recipeInfo.title}></img>
+        <img src={recipeInfo.image} alt={recipeInfo.title}></img>
         <div className="ingredients">
           {recipeIngredients.length > 0 ?
             recipeIngredients.map(element => (
-              <div>{element}</div>
+              <div key={element.id}>{element.original}</div>
             )) : null
           }
         </div>

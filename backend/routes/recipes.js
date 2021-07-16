@@ -62,33 +62,14 @@ router.get("/logRecipes", async (req, res, next) => {
 router.get('/:recipeId', async (req, res, next) => {
   try {
     const { recipeId } = req.params
-    const recipeInfo = await Recipe.fetchIndividualRecipe(recipeId)
-    console.log(recipeInfo)
-    res.status(200).json(recipeInfo)
+    const recipeInfo = await axios.get(`${BASE_RECIPES_URL}/${recipeId}/information?apiKey=${API_KEY}&includeNutrition=true`)
+    res.status(200).json(recipeInfo.data)
   } catch(err) {
     next(err)
   }
 })
 
-router.get('/:recipeId/instructions', async (req, res, next) => {
-  try {
-    const { recipeId } = req.params
-    const recipeInstruc = await axios.get(`${BASE_RECIPES_URL}/${recipeId}/analyzedInstructions?apiKey=${API_KEY}`)
-    res.status(200).json(recipeInstruc.data[0])
-  } catch(err) {
-    next(err)
-  }
-})
 
-router.get('/:recipeId/ingredients', async (req, res, next) => {
-  try {
-    const { recipeId } = req.params
-    const recipeIngred = await axios.get(`${BASE_RECIPES_URL}/${recipeId}/ingredientWidget.json?apiKey=${API_KEY}`)
-    res.status(200).json(recipeIngred.data[0])
-  } catch(err) {
-    next(err)
-  }
-})
 // Ignore these
 // router.get("/summarize/:id", async (req, res, next) => {
 //   try {
