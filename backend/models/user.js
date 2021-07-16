@@ -41,6 +41,13 @@ class User {
             );
         }
 
+        const existingUsername = await User.fetchUserByUsername(credentials.username);
+        if (existingUsername) {
+            throw new BadRequestError(
+                `User already exists: ${credentials.username}`
+            );
+        }
+
         const hashedPassword = await bcrypt.hash(
             credentials.password,
             BCRYPT_WORK_FACTOR
@@ -106,6 +113,7 @@ class User {
             `SELECT * FROM users WHERE username = $1`,
             [username]
         );
+    
 
         return result.rows[0];
     }

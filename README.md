@@ -16,4 +16,5 @@ Deployment Website: **Add Link to Deployed Project**
 
 ### Open-source libraries used
 
-- Add any links to open-source libraries used in your project.
+* Wheel: [https://github.com/effectussoftware/react-custom-roulette](https://github.com/effectussoftware/react-custom-roulette)
+* Carousel: [https://www.npmjs.com/package/react-multi-carousel](https://www.npmjs.com/package/react-multi-carousel)

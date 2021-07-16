@@ -1,0 +1,34 @@
+.Register {
+  font-family: 'Lato', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-position: center;
+}
+
+.Register > div {
+  display: flex;
+  justify-content: baseline;
+  flex-direction: column;
+}
+.register-btn {
+  border: 2px solid #E1B5A1;
+  background-color: #E1B5A1;
+  font-size: 15px;
+}
+.input-name {
+  display: flex;
+  width: 100%;
+}
+.input-name input {
+  width: 38%;
+}
+.form div {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}

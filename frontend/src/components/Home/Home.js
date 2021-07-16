@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
 
+
 import "./Home.css";
 export default function Home({ user }) {
     return (

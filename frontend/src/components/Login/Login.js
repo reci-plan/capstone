@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
+import './Login.css'
+import blueberry from '../../assets/blueberry.png'
+
+
 export default function Login({ user, setUser }) {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -49,37 +53,38 @@ export default function Login({ user, setUser }) {
   }, [user, navigate]);
 
   return (
-    <div className="Login">
+    <div className="Login" style={{backgroundImage: `url(${blueberry})`}}>
       <div>
-        Login page
-        <div> {errors.form} </div>
-        <div>
-          email:
-          <input
-            type="email"
-            name="email"
-            placeholder="email"
-            value={form.email}
-            onChange={handleInputChange}
-          />
-          {errors.email}
+        <span className="section-title">Login</span>
+        <div className="form">
+          <div>
+            <input
+              type="email"
+              name="email"
+              placeholder="email"
+              value={form.email}
+              onChange={handleInputChange}
+            />
+            {errors.email}
+          </div>
+          <div>
+            <input
+              type="password"
+              name="password"
+              placeholder="password"
+              value={form.password}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>{errors.form}</div>
+          <button className="btn login-btn" onClick={handleLogin}>login</button>
+
+          <div className="login-footer">
+            <p>
+              Don't have an account? Register <Link to="/register">here</Link>.
+            </p>
+          </div>
         </div>
-        <div>
-          password:
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={form.password}
-            onChange={handleInputChange}
-          />
-        </div>
-        <button onClick={handleLogin}> login </button>
-      </div>
-      <div className="login-footer">
-        <p>
-          Don't have an account? Register <Link to="/register">here</Link>.
-        </p>
       </div>
     </div>
   );
