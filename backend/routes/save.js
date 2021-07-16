@@ -30,6 +30,7 @@ router.delete("/recipe", requireAuthenticatedUser, async (req, res, next) => {
         const user = res.locals.user;
         const recipe = req.body;
         const deleteRecipe = await Save.deleteRecipe(user, recipe);
+        console.log("The deleted recipe", deleteRecipe);
         res.status(200).json({ deleteRecipe });
     } catch (err) {
         next(err);

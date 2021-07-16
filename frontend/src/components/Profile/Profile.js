@@ -24,11 +24,14 @@ export default function Profile({ user }) {
         fetchRecipes();
     }, []);
 
-    const handleDelete = async (s) => {
-        const { data, error } = await apiClient.deleteSavedRecipe(s);
+    const handleDelete = async (cur_saved_recipe) => {
+        const { data, error } = await apiClient.deleteSavedRecipe(
+            cur_saved_recipe
+        );
 
         if (data) {
-            console.log(data);
+            // Filter saved
+            setSaved(saved.filter((item) => item.id !== cur_saved_recipe.id));
         }
 
         if (error) {

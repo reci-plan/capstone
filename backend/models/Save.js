@@ -62,12 +62,11 @@ class Save {
       );
     }
 
-    // if (!recipe.hasOwnProperty("title")) {
-    //   throw new BadRequestError(`Missing title in request body.`);
-    // }
+    if (!recipe.hasOwnProperty("title")) {
+      throw new BadRequestError(`Missing title in request body.`);
+    }
 
     const isExisting = await Save.checkExistingRecipe(user, recipe);
-    console.log(isExisting);
     if (isExisting.length === 0) {
       throw new BadRequestError(
         "You cannot delete this item, it was not even saved in the first place."
@@ -82,8 +81,8 @@ class Save {
     return results.rows[0];
   }
 
+  // Returns whether or not there is an existing entry for the current recipe in the user's saved recipes
   static async checkExistingRecipe(user, recipe) {
-    console.log("recipe", recipe);
     const results = await db.query(
       `SELECT * FROM all_recipes
       JOIN saved_recipes ON all_recipes.id = saved_recipes.recipe_id
@@ -93,7 +92,6 @@ class Save {
        `,
       [recipe.title, user.username]
     );
-    console.log("Results.rows", results.rows);
     return results.rows;
   }
 }
