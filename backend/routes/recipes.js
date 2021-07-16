@@ -39,7 +39,7 @@ router.get("/getRecipes", async (req, res, next) => {
     ].join(", ");
 
     const result = await axios.get(`
-    ${BASE_RECIPES_URL}/complexSearch?apiKey=${API_KEY}&instructionsRequired=true&addRecipeInformation=true&maxReadyTime=60&sort=price&sortDirection=asc&limitLicense=true&number=100&offset=300&type=${typesToString}
+      ${BASE_RECIPES_URL}/complexSearch?apiKey=${API_KEY}&instructionsRequired=true&addRecipeInformation=true&maxReadyTime=60&sort=price&sortDirection=asc&limitLicense=true&number=100&offset=500&type=${typesToString}
     `);
     const recipes = await Recipe.extractInfo(result.data);
     // res.status(201).json({ result: recipes });

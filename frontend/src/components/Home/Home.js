@@ -6,21 +6,28 @@ import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
 
 export default function Home({ user }) {
     return (
-        <div className="Home" style={{backgroundImage: `url(${home})`}}>
+        <div className="Home">
+            Home page component
             <div className="home-header">
                 {user.email ? (
                     <div>
                         <div>Good morning, {user.first_name}</div>
-                        {/* <div>Here are some categories of recipes you may like!</div> */}
                     </div>
                 ) : (
                     <div>
                         <span>Good morning!</span>
-                        {/* <div>Login to see a list of recommendations!</div> */}
                     </div>
                 )}
             </div>
-            <DisplayAllRecipes />
+            
+            {user?.email && (
+                <div>
+                    <Link to="/profile">
+                        <h3> Go to your profile </h3>
+                    </Link>
+                </div>
+            )}
+            <DisplayAllRecipes user={user} />
         </div>
     );
 }

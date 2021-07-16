@@ -53,7 +53,7 @@ export default function Register({ user, setUser }) {
     if (user?.email) {
       navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <div className="Register" style={{backgroundImage: `url(${orange})`}}>

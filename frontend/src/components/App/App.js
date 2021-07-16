@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Home from '../Home/Home'
+import Home from "../Home/Home";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Navbar from "../Navbar/Navbar";
 import IndividualRecipe from "../IndividualRecipe/IndividualRecipe";
+import Profile from "../Profile/Profile";
 import apiClient from "../../services/apiClient";
 
-import './App.css'
+import { useDataLayerValue } from "../../context/DataLayer";
+
+import "./App.css";
 function App() {
   const [user, setUser] = useState({});
   // const [recipes, setRecipes] = useState({})
+
+  const [{ colors }, dispatch] = useDataLayerValue();
+
+  console.log("On App.js component, colors is: ", colors);
+
+
 
   // Remain logged in
   useEffect(() => {
@@ -54,6 +63,7 @@ function App() {
             path="/recipes/:recipeId"
             element={<IndividualRecipe />}
           />
+          <Route path="/profile" element={<Profile user={user} />} />
         </Routes>
       </BrowserRouter>
     </div>

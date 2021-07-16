@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import PutIntoCategories from "./PutIntoCategories/PutIntoCategories";
 
 import './DisplayAllRecipes.css'
-export default function DisplayAllRecipes() {
+export default function DisplayAllRecipes({ user }) {
     const [recipes, setRecipes] = useState([]);
     const [minutes, setMinutes] = useState(45);
 
@@ -39,25 +39,21 @@ export default function DisplayAllRecipes() {
 
     return (
         <div className="DisplayAllRecipes">
-            {/*     <button onClick={() => setMinutes(10)}> 10 Minutes </button>
-            <button onClick={() => setMinutes(20)}> 20 Minutes </button>
-            <button onClick={() => setMinutes(30)}> 30 Minutes </button>
-            <button onClick={() => setMinutes(45)}> 45 Minutes </button>*/}
             <div className="display-section">
                 <div className="display-title">Under 10 minutes</div>
-                <PutIntoCategories recipes={recipes} rangeA={0} rangeB={10} />
+                <PutIntoCategories user={user} recipes={recipes} rangeA={0} rangeB={10} />
             </div>
             <div className="display-section">
                 <div className="display-title">Under 20 minutes</div>
-                <PutIntoCategories recipes={recipes} rangeA={11} rangeB={20} />
+                <PutIntoCategories user={user} recipes={recipes} rangeA={11} rangeB={20} />
             </div>
             <div className="display-section">
                 <div className="display-title">Under 30 minutes</div>
-                <PutIntoCategories recipes={recipes} rangeA={21} rangeB={30} />
+                <PutIntoCategories user={user} recipes={recipes} rangeA={21} rangeB={30} />
             </div>
             <div className="display-section">
                 <div className="display-title">Under 45 minutes</div>
-                <PutIntoCategories recipes={recipes} rangeA={31} rangeB={45} />
+                <PutIntoCategories user={user} recipes={recipes} rangeA={31} rangeB={45} />
             </div>
         </div>
     );
