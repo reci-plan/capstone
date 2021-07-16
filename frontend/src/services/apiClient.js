@@ -65,7 +65,7 @@ class ApiCalls {
 
     async fetchAllRecipes() {
         return await this.request({
-            endpoint: `recipes/logRandom`,
+            endpoint: `recipes/logRecipes`,
             method: `GET`,
         });
     }

@@ -50,7 +50,7 @@ router.get("/getRecipes", async (req, res, next) => {
 });
 
 // select all from all_recipes and return it
-router.get("/logRandom", async (req, res, next) => {
+router.get("/logRecipes", async (req, res, next) => {
   try {
     const result = await Recipe.getAllRecipes();
     return res.status(201).json({ recipes: result });
