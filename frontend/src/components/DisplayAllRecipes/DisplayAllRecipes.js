@@ -3,9 +3,13 @@ import { useState, useEffect } from "react";
 
 import PutIntoCategories from "./PutIntoCategories/PutIntoCategories";
 
+import { useDataLayerValue } from "../../context/DataLayer";
+
 export default function DisplayAllRecipes({ user }) {
-    const [recipes, setRecipes] = useState([]);
+    // const [recipes, setRecipes] = useState([]);
     const [minutes, setMinutes] = useState(45);
+
+    const [{ recipes }, dispatch] = useDataLayerValue();
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -13,7 +17,8 @@ export default function DisplayAllRecipes({ user }) {
 
             if (data) {
                 console.log(data.recipes);
-                setRecipes(data.recipes);
+
+                dispatch({ type: "SET_GLOBAL_RECIPES", recipes: data.recipes });
             }
 
             if (error) {
@@ -22,8 +27,6 @@ export default function DisplayAllRecipes({ user }) {
         };
         fetchRecipes();
     }, []);
-
-    console.log(recipes);
 
     const fixObj = (categories_obj) => {
         const arr = [];

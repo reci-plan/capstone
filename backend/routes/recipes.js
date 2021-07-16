@@ -14,7 +14,7 @@ router.get("/search/:food", async (req, res, next) => {
   try {
     const { food } = req.params;
     const result = await axios.get(
-      `${BASE_RECIPES_URL}/complexSearch?apiKey=${API_KEY}&query=${food}?`
+      `${BASE_RECIPES_URL}/complexSearch?apiKey=${API_KEY}&query=${food}&addRecipeInformation=true`
     );
 
     res.status(201).json({ results: result.data });
