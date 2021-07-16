@@ -35,24 +35,31 @@ export default function IndividualRecipe() {
 
   return (
     <div className="IndividualRecipe">
-      <div className="recipe-left">
-        <div>{recipeInfo.title}</div>
-        <img src={recipeInfo.image} alt={recipeInfo.title}></img>
-        <div className="ingredients">
-          {recipeIngredients.length > 0 ?
-            recipeIngredients.map(element => (
-              <div key={element.id}>{element.original}</div>
+      <div className="recipe-title">{recipeInfo.title}</div>
+      <div className="recipe-display">
+        <div className="recipe-left">
+          <div className="recipe-img">
+            <img src={recipeInfo.image} alt={recipeInfo.title}></img>
+          </div>
+          <div className="recipe-ingre">
+            <div className="heading">Ingredients</div>
+            {recipeIngredients.length > 0 ?
+              recipeIngredients.map(element => (
+                <div key={element.id}>{element.original}</div>
+              )) : null
+            }
+          </div>
+        </div>
+        <div className="recipe-right">
+          <div className="heading">Instructions</div>
+          {recipeInstructions.length > 0 ?
+            recipeInstructions.map(element => (
+              <div key={element.number}>{element.number}. {element.step}</div>
             )) : null
           }
         </div>
       </div>
-      <div className="recipe-right"> 
-        {recipeInstructions.length > 0 ?
-          recipeInstructions.map(element => (
-            <div key={element.number}>{element.number}. {element.step}</div>
-          )) : null
-        }
-      </div>
+      
     </div>
   )
 }
