@@ -59,6 +59,15 @@ router.get("/logRandom", async (req, res, next) => {
   }
 });
 
+router.get('/:recipeId', async (req, res, next) => {
+  try {
+    const { recipeId } = req.params
+    const recipe = await axios.get(`${BASE_RECIPES_URL}/${recipeId}/analyzedInstructions?apiKey=${API_KEY}`)
+    res.status(200).json( recipe.data[0].steps )
+  } catch(err) {
+    next(err)
+  }
+})
 // Ignore these
 // router.get("/summarize/:id", async (req, res, next) => {
 //   try {

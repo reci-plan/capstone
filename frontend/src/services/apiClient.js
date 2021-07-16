@@ -81,6 +81,12 @@ class ApiCalls {
             data: cur_recipe,
         });
     }
+
+    async fetchIndividualRecipe(recipeId) {
+        return await this.request({
+            endpoint:`recipes/${recipeId}`
+        })
+    }
 }
 
 const API = new ApiCalls(

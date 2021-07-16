@@ -6,8 +6,7 @@ import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
 
 export default function Home({ user }) {
     return (
-        <div className="Home">
-            Home page component
+        <div className="Home" style={{backgroundImage: `url(${home})`}}>
             <div className="home-header">
                 {user.email ? (
                     <div>
