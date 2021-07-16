@@ -109,9 +109,10 @@ class User {
             throw new BadRequestError("No username provided");
         }
 
-        const result = await db.query(`SELECT * FROM users WHERE username = $1`, [
-            username
-        ]);
+        const result = await db.query(
+            `SELECT * FROM users WHERE username = $1`,
+            [username]
+        );
 
         return result.rows[0];
     }

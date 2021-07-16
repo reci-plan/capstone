@@ -62,6 +62,31 @@ class ApiCalls {
         this.setToken(null);
         localStorage.setItem(this.tokenName, "");
     }
+
+    async fetchAllRecipes() {
+        return await this.request({
+            endpoint: `recipes/logRecipes`,
+            method: `GET`,
+        });
+    }
+
+    async fetchSavedRecipes() {
+        return await this.request({ endpoint: `save/recipes`, method: `GET` });
+    }
+
+    async saveRecipe(cur_recipe) {
+        return await this.request({
+            endpoint: `save/recipe`,
+            method: `POST`,
+            data: cur_recipe,
+        });
+    }
+
+    async fetchIndividualRecipeInfo(recipeId) {
+        return await this.request({
+            endpoint:`recipes/${recipeId}`
+        })
+    }
 }
 
 const API = new ApiCalls(

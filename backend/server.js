@@ -7,8 +7,9 @@ const morgan = require("morgan");
 const { PORT, API_KEY } = require("./config");
 
 // import routes
-const recipeRoutes = require("./routes/recipes");
 const authRoutes = require("./routes/auth");
+const recipeRoutes = require("./routes/recipes");
+const saveRoutes = require("./routes/save");
 
 // import errors
 const { NotFoundError } = require("./utils/errors");
@@ -26,6 +27,7 @@ app.use(morgan("tiny"));
 app.use(security.extractUserFromJwt);
 app.use("/recipes", recipeRoutes);
 app.use("/auth", authRoutes);
+app.use("/save", saveRoutes);
 
 // Error handlers
 app.use((req, res, next) => {
