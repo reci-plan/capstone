@@ -53,7 +53,6 @@ export default function Navbar({ user, setUser }) {
               type="text"
               placeholder="search recipes..."
               onChange={handleInputChange}
-              value={searchTerm}
             ></input>
             <div className="search-btn" onClick={handleOnClick}>
               <img src={close} alt="Close button"></img>

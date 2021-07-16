@@ -7,7 +7,7 @@ import { useDataLayerValue } from "../../context/DataLayer";
 
 export default function DisplayAllRecipes({ user }) {
     // const [recipes, setRecipes] = useState([]);
-    const [minutes, setMinutes] = useState(45);
+    // const [minutes, setMinutes] = useState(45);
 
     const [{ recipes }, dispatch] = useDataLayerValue();
 
@@ -26,7 +26,7 @@ export default function DisplayAllRecipes({ user }) {
             }
         };
         fetchRecipes();
-    }, []);
+    }, [dispatch]);
 
     const fixObj = (categories_obj) => {
         const arr = [];
