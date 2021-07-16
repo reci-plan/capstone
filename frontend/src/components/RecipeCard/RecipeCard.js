@@ -7,12 +7,15 @@ import heartFill from '../../assets/heart-fill.svg'
 import budgetIcon from '../../assets/budget-icon.svg'
 import timeIcon from '../../assets/time-icon.svg'
 
-export default function RecipeCard({ recipeInfo }) {
+export default function RecipeCard({ user, recipeInfo, handleClick }) {
   const [saved, setSaved] = useState(false)
   const limit = 17
   
   const handleOnSave = () => {
-    saved ? setSaved(false) : setSaved(true)
+    if (user?.email) { 
+      saved ? setSaved(false) : setSaved(true) 
+    }
+    handleClick(recipeInfo)
   }
   return (
       <div className="RecipeCard">

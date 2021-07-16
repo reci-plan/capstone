@@ -33,7 +33,7 @@ export default function PutIntoCategories({ recipes, rangeA, rangeB, user }) {
                 .sort((a, b) => a.prep_time - b.prep_time)
                 .slice(0, 25)
                 .map((r) => (
-                    <RecipeCard recipeInfo={r} />
+                    <RecipeCard user={user} recipeInfo={r} handleClick={handleClick}/>
                     // {user?.email && (
                     //     <button onClick={() => handleClick(r)}>save</button>
                     // )}

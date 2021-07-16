@@ -6,6 +6,14 @@ class Recipe {
         return results.rows;
     }
 
+    static async fetchIndividualRecipe(recipeId) {
+        const results = await db.query(`
+            SELECT * FROM all_recipes
+            WHERE api_id = $1
+        `, [recipeId])
+        return results.rows[0]
+    }
+    
     static async extractInfo(data) {
         const arr = [];
         const category = [];

@@ -82,9 +82,21 @@ class ApiCalls {
         });
     }
 
-    async fetchIndividualRecipe(recipeId) {
+    async fetchIndividualRecipeInfo(recipeId) {
         return await this.request({
             endpoint:`recipes/${recipeId}`
+        })
+    }
+
+    async fetchIndividualRecipeInstructions(recipeId) {
+        return await this.request({
+            endpoint:`recipes/${recipeId}/instructions`
+        })
+    }
+
+    async fetchIndividualRecipeIngredients(recipeId) {
+        return await this.request({
+            endpoint:`recipes/${recipeId}/ingredients`
         })
     }
 }
