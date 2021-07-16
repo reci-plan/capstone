@@ -24,8 +24,8 @@ export default function Profile({ user }) {
         fetchRecipes();
     }, []);
 
-    const handleDelete = async () => {
-        const { data, error } = await apiClient.deleteSavedRecipe();
+    const handleDelete = async (s) => {
+        const { data, error } = await apiClient.deleteSavedRecipe(s);
 
         if (data) {
             console.log(data);
@@ -52,7 +52,7 @@ export default function Profile({ user }) {
             {saved.map((s) => (
                 <div>
                     Title: {s.title}, prep_time: {s.prep_time}, date: {s.date}
-                    <button onClick={handleDelete}> Delete </button>
+                    <button onClick={() => handleDelete(s)}> Delete </button>
                 </div>
             ))}
         </div>
