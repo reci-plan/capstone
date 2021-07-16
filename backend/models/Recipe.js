@@ -6,9 +6,16 @@ class Recipe {
         return results.rows;
     }
 
+    static async fetchIndividualRecipe(recipeId) {
+        const results = await db.query(`
+            SELECT * FROM all_recipes
+            WHERE api_id = $1
+        `, [recipeId])
+        return results.rows[0]
+    }
+    
     static async extractInfo(data) {
         const arr = [];
-
         const category = [];
 
         data.results.forEach(async (r, idx) => {
@@ -16,7 +23,7 @@ class Recipe {
                 vegetarian: r.vegetarian,
                 vegan: r.vegan,
                 glutenFree: r.glutenFree,
-                dairyFree: r.dairyFree,
+                dairyFree: r.dairyFree
             });
 
             arr.push({
@@ -29,6 +36,7 @@ class Recipe {
                 image_url: r.image ? r.image : "no_image",
                 rating: parseInt(r.spoonacularScore),
             });
+            
         });
 
         // console.log("supposed to look like this:", [category[0]]);
@@ -36,18 +44,19 @@ class Recipe {
         let result_arr = [];
         for (let i = 0; i < arr.length; i++) {
             const queryString = `
-            INSERT INTO all_recipes (title, category, image_url, prep_time, description, rating, expense)
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
-                RETURNING id, title, category, image_url, prep_time, description, rating, expense
+            INSERT INTO all_recipes (api_id, title, category, image_url, prep_time, description, rating, expense)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                RETURNING id, api_id, title, category, image_url, prep_time, description, rating, expense
             `;
             const results = await db.query(queryString, [
+                arr[i].id,
                 arr[i].title,
                 [category[i]],
                 arr[i].image_url,
                 arr[i].prep_time,
                 arr[i].description,
                 arr[i].rating,
-                arr[i].expense,
+                arr[i].expense
             ]);
             result_arr.push(results.rows);
         }

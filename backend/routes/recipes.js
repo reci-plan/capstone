@@ -50,7 +50,7 @@ router.get("/getRecipes", async (req, res, next) => {
 });
 
 // select all from all_recipes and return it
-router.get("/logRandom", async (req, res, next) => {
+router.get("/logRecipes", async (req, res, next) => {
   try {
     const result = await Recipe.getAllRecipes();
     return res.status(201).json({ recipes: result });
@@ -58,6 +58,17 @@ router.get("/logRandom", async (req, res, next) => {
     next(e);
   }
 });
+
+router.get('/:recipeId', async (req, res, next) => {
+  try {
+    const { recipeId } = req.params
+    const recipeInfo = await axios.get(`${BASE_RECIPES_URL}/${recipeId}/information?apiKey=${API_KEY}&includeNutrition=true`)
+    res.status(200).json(recipeInfo.data)
+  } catch(err) {
+    next(err)
+  }
+})
+
 
 // Ignore these
 // router.get("/summarize/:id", async (req, res, next) => {

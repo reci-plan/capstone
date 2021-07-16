@@ -5,6 +5,8 @@ import PutIntoCategories from "./PutIntoCategories/PutIntoCategories";
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
+import './DisplayAllRecipes.css'
+
 export default function DisplayAllRecipes({ user }) {
     // const [recipes, setRecipes] = useState([]);
     // const [minutes, setMinutes] = useState(45);
@@ -26,7 +28,7 @@ export default function DisplayAllRecipes({ user }) {
             }
         };
         fetchRecipes();
-    }, [dispatch]);
+    }, []);
 
     const fixObj = (categories_obj) => {
         const arr = [];
@@ -41,55 +43,22 @@ export default function DisplayAllRecipes({ user }) {
     };
 
     return (
-        <div>
-            <h2> DisplayAllRecipes component </h2>
-            {/*     <button onClick={() => setMinutes(10)}> 10 Minutes </button>
-            <button onClick={() => setMinutes(20)}> 20 Minutes </button>
-            <button onClick={() => setMinutes(30)}> 30 Minutes </button>
-            <button onClick={() => setMinutes(45)}> 45 Minutes </button>*/}
-            <div>
-                <div style={{ border: "1px solid black" }}>
-                    less than 10 minutes recipes
-                </div>
-                <PutIntoCategories
-                    recipes={recipes}
-                    rangeA={0}
-                    rangeB={10}
-                    user={user}
-                />
+        <div className="DisplayAllRecipes">
+            <div className="display-section">
+                <div className="display-title">Under 10 minutes</div>
+                <PutIntoCategories user={user} recipes={recipes} rangeA={0} rangeB={10} />
             </div>
-            <div>
-                <div style={{ border: "1px solid black" }}>
-                    less than 20 minutes recipes
-                </div>
-                <PutIntoCategories
-                    recipes={recipes}
-                    rangeA={11}
-                    rangeB={20}
-                    user={user}
-                />
+            <div className="display-section">
+                <div className="display-title">Under 20 minutes</div>
+                <PutIntoCategories user={user} recipes={recipes} rangeA={11} rangeB={20} />
             </div>
-            <div>
-                <div style={{ border: "1px solid black" }}>
-                    less than 30 minutes recipes
-                </div>
-                <PutIntoCategories
-                    recipes={recipes}
-                    rangeA={21}
-                    rangeB={30}
-                    user={user}
-                />
-            </div>{" "}
-            <div>
-                <div style={{ border: "1px solid black" }}>
-                    less than 45 minutes recipes
-                </div>
-                <PutIntoCategories
-                    recipes={recipes}
-                    rangeA={31}
-                    rangeB={45}
-                    user={user}
-                />
+            <div className="display-section">
+                <div className="display-title">Under 30 minutes</div>
+                <PutIntoCategories user={user} recipes={recipes} rangeA={21} rangeB={30} />
+            </div>
+            <div className="display-section">
+                <div className="display-title">Under 45 minutes</div>
+                <PutIntoCategories user={user} recipes={recipes} rangeA={31} rangeB={45} />
             </div>
         </div>
     );

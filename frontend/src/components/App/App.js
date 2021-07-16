@@ -5,6 +5,7 @@ import Home from "../Home/Home";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Navbar from "../Navbar/Navbar";
+import IndividualRecipe from "../IndividualRecipe/IndividualRecipe";
 import Profile from "../Profile/Profile";
 import apiClient from "../../services/apiClient";
 
@@ -13,6 +14,7 @@ import { useDataLayerValue } from "../../context/DataLayer";
 import "./App.css";
 function App() {
   const [user, setUser] = useState({});
+  // const [recipes, setRecipes] = useState({})
 
   const [{ colors }, dispatch] = useDataLayerValue();
 
@@ -42,7 +44,7 @@ function App() {
     };
     tokenValid();
   }, []);
-
+  
   return (
     <div className="App">
       <BrowserRouter>
@@ -56,6 +58,10 @@ function App() {
           <Route
             path="/login"
             element={<Login user={user} setUser={setUser} />}
+          />
+           <Route
+            path="/recipes/:recipeId"
+            element={<IndividualRecipe />}
           />
           <Route path="/profile" element={<Profile user={user} />} />
         </Routes>

@@ -1,12 +1,25 @@
 import { Link } from "react-router-dom";
+
+import './Home.css'
+import home from '../../assets/home.png'
 import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
 
 
-import "./Home.css";
 export default function Home({ user }) {
     return (
-        <div className="Home">
-            Home page component
+        <div className="Home" style={{backgroundImage: `url(${home})`}}>
+            <div className="home-header">
+                {user.email ? (
+                    <div>
+                        <div>Good morning, {user.first_name}</div>
+                    </div>
+                ) : (
+                    <div>
+                        <span>Good morning!</span>
+                    </div>
+                )}
+            </div>
+            
             {user?.email && (
                 <div>
                     <Link to="/profile">

@@ -1,0 +1,51 @@
+.IndividualRecipe {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 75px;
+  margin-top: 100px;
+  font-family: 'Lato', sans-serif;
+}
+.heading {
+  font-size: 30px;
+}
+.recipe-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.recipe-diet {
+  display: flex;
+  flex-direction: row;
+
+}
+.recipe-diet img {
+  width: 100%;
+}
+
+.recipe-title {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 40px;
+}
+.recipe-display {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.recipe-img {
+  overflow: hidden;
+}
+.recipe-img img {
+  width: 100%;
+}
+.recipe-left {
+  width: 35%;
+}
+.recipe-right {
+  margin-left: 20px;
+  font-size: 25px;
+  width: 35%;
+}
+.recipe-ingre {
+  font-size: 20px;
+}

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import apiClient from "../../../services/apiClient";
-
+import RecipeCard from "../../RecipeCard/RecipeCard";
 import { useDataLayerValue } from "../../../context/DataLayer";
+import apiClient from '../../../services/apiClient'
 
+import './PutIntoCategories.css'
 export default function PutIntoCategories({ recipes, rangeA, rangeB, user }) {
     const [{ colors, test }, dispatch] = useDataLayerValue();
 
@@ -26,19 +27,17 @@ export default function PutIntoCategories({ recipes, rangeA, rangeB, user }) {
     };
 
     return (
-        <>
+        <div className="PutIntoCategories">
             {recipes
                 .filter((r) => r.prep_time >= rangeA && r.prep_time <= rangeB)
                 .sort((a, b) => a.prep_time - b.prep_time)
                 .slice(0, 25)
                 .map((r) => (
-                    <p>
-                        {r.title}, {r.prep_time}
-                        {user?.email && (
-                            <button onClick={() => handleClick(r)}>save</button>
-                        )}
-                    </p>
+                    <RecipeCard user={user} recipeInfo={r} handleClick={handleClick}/>
+                    // {user?.email && (
+                    //     <button onClick={() => handleClick(r)}>save</button>
+                    // )}
                 ))}
-        </>
+        </div>
     );
 }

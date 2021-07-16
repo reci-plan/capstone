@@ -1,0 +1,10 @@
+.Home {
+  padding: 0 75px;
+  background-repeat: no-repeat;
+}
+.home-header {
+  padding-top: 150px;
+  display: flex;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 50px;
+}

@@ -65,7 +65,7 @@ class ApiCalls {
 
     async fetchAllRecipes() {
         return await this.request({
-            endpoint: `recipes/logRandom`,
+            endpoint: `recipes/logRecipes`,
             method: `GET`,
         });
     }
@@ -87,6 +87,12 @@ class ApiCalls {
             endpoint: `save/recipe`,
             method: `DELETE`,
             data: cur_saved_recipe,
+        });
+    }
+
+    async fetchIndividualRecipeInfo(recipeId) {
+        return await this.request({
+            endpoint: `recipes/${recipeId}`
         });
     }
 }
