@@ -25,4 +25,15 @@ router.post("/recipe", requireAuthenticatedUser, async (req, res, next) => {
     }
 });
 
+router.delete("/recipe", requireAuthenticatedUser, async (req, res, next) => {
+    try {
+        const user = res.locals.user;
+        const recipe = req.body;
+        const deleteRecipe = await Save.deleteRecipe(user, recipe);
+        res.status(200).json({ deleteRecipe });
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = router;

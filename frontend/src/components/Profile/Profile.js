@@ -23,6 +23,19 @@ export default function Profile({ user }) {
         };
         fetchRecipes();
     }, []);
+
+    const handleDelete = async () => {
+        const { data, error } = await apiClient.deleteSavedRecipe();
+
+        if (data) {
+            console.log(data);
+        }
+
+        if (error) {
+            console.log(error);
+        }
+    };
+
     console.log(saved);
     return (
         <div>
@@ -35,14 +48,13 @@ export default function Profile({ user }) {
             <div> email: {user.email}</div>
 
             <h3> Your saved recipes </h3>
-                {/*.sort((a, b) => a.date - b.date)*/}
-            {saved
-                .map((s) => (
-                    <div>
-                        Title: {s.title}, prep_time: {s.prep_time}, date:{" "}
-                        {s.date}
-                    </div>
-                ))}
+            {/*.sort((a, b) => a.date - b.date)*/}
+            {saved.map((s) => (
+                <div>
+                    Title: {s.title}, prep_time: {s.prep_time}, date: {s.date}
+                    <button onClick={handleDelete}> Delete </button>
+                </div>
+            ))}
         </div>
     );
 }

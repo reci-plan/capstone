@@ -81,6 +81,14 @@ class ApiCalls {
             data: cur_recipe,
         });
     }
+
+    async deleteSavedRecipe(cur_saved_recipe) {
+        return await this.request({
+            endpoint: `save/recipe`,
+            method: `DELETE`,
+            data: cur_saved_recipe,
+        });
+    }
 }
 
 const API = new ApiCalls(
