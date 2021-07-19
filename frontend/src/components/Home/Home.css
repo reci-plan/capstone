@@ -3,6 +3,7 @@
   background-repeat: no-repeat;
   max-width: 100vw;
   overflow: hidden;
+  background-size: 100%;
 }
 .home-header {
   padding-top: 170px;
