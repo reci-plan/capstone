@@ -17,15 +17,7 @@ export default function RecipeCard({ user, recipeInfo, handleClick }) {
     // if (user?.email) {
     //   saved ? setSaved(false) : setSaved(true)
     // }
-    const { data, error } = await apiClient.checkIfRecipeExists(recipeInfo);
-
-    if (data.is_existing.length === 0) {
-      setSaved(false);
-    } else {
-      setSaved(true);
-    }
-
-    handleClick(recipeInfo);
+    handleClick(recipeInfo, saved, setSaved);
   };
 
   useEffect(() => {

@@ -64,31 +64,11 @@ function App() {
   }, []);
 
   // when user clicks on save button
-  const handleClickOnSave = async (r) => {
-    // const { data, error } = await apiClient.checkIfRecipeExists(r);
-
-    // // if cur recipe not in user's saved recipes
-    // if (data.is_existing.length === 0) {
-    //   const result = await apiClient.saveRecipe(r);
-    //   console.log(result);
-    //   if (result.data) {
-    //     console.log("hi", result.data);
-    //   }
-
-    //   if (result.error) {
-    //     alert(error);
-    //   }
-    // } else {
-    //   setAlreadyExist(true);
-    //   alert(
-    //     `${JSON.stringify(
-    //       data.is_existing[0].title
-    //     )} already in user saved recipes`
-    //   );
-    // }
+  const handleClickOnSave = async (r, saved, setSaved) => {
     const { data, error } = await apiClient.saveRecipe(r);
     if (data) {
       console.log("hi", data);
+      setSaved(!saved);
       // dispatch({type: "SET_SAVED", saved: })
     }
 
