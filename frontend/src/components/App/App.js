@@ -71,12 +71,9 @@ function App() {
       setSaved(!saved);
     }
 
-    /*  if (error) {
-      alert(error);
-    }*/
     if (error) {
       const result = await apiClient.deleteSavedRecipe(r);
-      setSaved(!saved);
+      setSaved(false);
     }
   };
 
@@ -116,7 +113,12 @@ function App() {
             element={<IndividualRecipe />}
           />
 
-          <Route path="/profile" element={<Profile user={user} />} />
+          <Route
+            path="/profile"
+            element={
+              <Profile user={user} handleClickOnSave={handleClickOnSave} />
+            }
+          />
           <Route
             path="/search"
             element={
