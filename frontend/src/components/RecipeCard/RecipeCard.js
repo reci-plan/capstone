@@ -22,11 +22,13 @@ export default function RecipeCard({ user, recipeInfo, handleClick }) {
 
   useEffect(() => {
     async function fetchApi() {
-      const { data, error } = await apiClient.checkIfRecipeExists(recipeInfo);
-      if (data.is_existing.length === 0) {
-        setSaved(false);
-      } else {
-        setSaved(true);
+      if (user?.email) {
+        const { data, error } = await apiClient.checkIfRecipeExists(recipeInfo);
+        if (data.is_existing.length === 0) {
+          setSaved(false);
+        } else {
+          setSaved(true);
+        }
       }
     }
     fetchApi();
