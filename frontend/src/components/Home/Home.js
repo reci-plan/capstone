@@ -10,14 +10,16 @@ export default function Home({ user, recipes, handleClickOnSave }) {
 
     const greetingMessage = () => {
         let greeting;
+
+        if (cur_hour < 12) {
+            greeting = "Morning";
+        } else if (cur_hour >= 12 && cur_hour <= 17) {
+            greeting = "Afternoon";
+        } else {
+            greeting = "Evening";
+        }
+
         if (user.email) {
-            if (cur_hour < 12) {
-                greeting = "Morning";
-            } else if (cur_hour >= 12 && cur_hour <= 17) {
-                greeting = "Afternoon";
-            } else {
-                greeting = "Evening";
-            }
             return (
                 <div>
                     <div>
