@@ -69,11 +69,14 @@ function App() {
     if (data) {
       console.log("hi", data);
       setSaved(!saved);
-      // dispatch({type: "SET_SAVED", saved: })
     }
 
-    if (error) {
+    /*  if (error) {
       alert(error);
+    }*/
+    if (error) {
+      const result = await apiClient.deleteSavedRecipe(r);
+      setSaved(!saved);
     }
   };
 
