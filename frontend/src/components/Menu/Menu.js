@@ -88,7 +88,7 @@ export default function Menu() {
             
             {submitIsVisible ?
                 <>
-                <div className="submit-but"><button onClick={(returnValues)}>Close</button></div>
+                <div className="submit-but"><button onClick={(returnValues)}>Submit</button></div>
                 </> : 
                 ""
             }

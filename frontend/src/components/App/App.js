@@ -8,6 +8,7 @@ import Navbar from "../Navbar/Navbar";
 import IndividualRecipe from "../IndividualRecipe/IndividualRecipe";
 import Profile from "../Profile/Profile";
 import apiClient from "../../services/apiClient";
+import Wheel from "../Wheel/Wheel"
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
@@ -62,6 +63,10 @@ function App() {
            <Route
             path="/recipes/:recipeId"
             element={<IndividualRecipe />}
+          />
+          <Route
+            path="/wheel"
+            element={<Wheel />}
           />
           <Route path="/profile" element={<Profile user={user} />} />
         </Routes>
