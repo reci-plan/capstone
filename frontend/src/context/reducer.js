@@ -20,9 +20,7 @@ const reducer = (state, action) => {
 
       return {
         ...state,
-        recipes: [
-          ...state.recipes.filter((r) => r.title.includes(action.searchTerm)),
-        ],
+        recipes: action.recipes,
       };
 
     default:

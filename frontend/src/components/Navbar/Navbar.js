@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import logo from "../../assets/logo.svg";
 import search from "../../assets/search-icon.svg";
@@ -11,9 +11,11 @@ import "./Navbar.css";
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
-export default function Navbar({ user, setUser }) {
+export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
+  const navigate = useNavigate();
+
   const [isSearch, setIsSearch] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+
   const [{ recipes }, dispatch] = useDataLayerValue();
 
   const handleOnClick = () => {
@@ -27,11 +29,17 @@ export default function Navbar({ user, setUser }) {
 
   const handleInputChange = (e) => {
     console.log(e.target.value);
-    dispatch({
-      type: "FILTER_RECIPE_BY_SEARCH",
-      recipes: recipes,
-      searchTerm: e.target.value,
-    });
+    setSearchTerm(e.target.value);
+    // dispatch({
+    //   type: "FILTER_RECIPE_BY_SEARCH",
+    //   recipes: recipes,
+    //   searchTerm: e.target.value,
+    // });
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    navigate("/search");
   };
 
   return (
@@ -49,11 +57,13 @@ export default function Navbar({ user, setUser }) {
             <div className="search-btn">
               <img src={search} alt="Search icon"></img>
             </div>
-            <input
-              type="text"
-              placeholder="search recipes..."
-              onChange={handleInputChange}
-            ></input>
+            <form onSubmit={handleOnSubmit}>
+              <input
+                type="text"
+                placeholder="search recipes..."
+                onChange={handleInputChange}
+              ></input>
+            </form>
             <div className="search-btn" onClick={handleOnClick}>
               <img src={close} alt="Close button"></img>
             </div>

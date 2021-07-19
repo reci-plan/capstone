@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 
-import './Home.css'
-import home from '../../assets/home.png'
+import "./Home.css";
+import home from "../../assets/home.png";
 import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
 
-
-export default function Home({ user }) {
+export default function Home({ user, recipes }) {
     return (
-        <div className="Home" style={{backgroundImage: `url(${home})`}}>
+        <div className="Home" style={{ backgroundImage: `url(${home})` }}>
             <div className="home-header">
                 {user.email ? (
                     <div>
@@ -19,7 +18,7 @@ export default function Home({ user }) {
                     </div>
                 )}
             </div>
-            
+
             {user?.email && (
                 <div>
                     <Link to="/profile">
@@ -27,7 +26,7 @@ export default function Home({ user }) {
                     </Link>
                 </div>
             )}
-            <DisplayAllRecipes user={user} />
+            <DisplayAllRecipes user={user} recipes={recipes} />
         </div>
     );
 }
