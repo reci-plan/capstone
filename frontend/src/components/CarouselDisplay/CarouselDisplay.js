@@ -15,11 +15,15 @@ export default function CarouselDisplay({ recipes, type, rangeA, rangeB}) {
       items: 4
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 1024, min: 800 },
       items: 3
     },
+    miniTablet: {
+      breakpoint: { max: 800, min: 464 },
+      items: 2
+    },
     mobile: {
-      breakpoint: { max: 300, min: 0 },
+      breakpoint: { max: 464, min: 0 },
       items: 1
     }
   };
