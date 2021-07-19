@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;300;400;500&display=swap');
+
+.Generator {
+    max-height:100px;
+    margin:80px;
+}
+.Navbar {
+    background-color: orange;
+}
+.header {
+    font-size: 40px;
+    font-family: 'Josefin Sans', sans-serif;
+    padding: 25px 0px 20px 0px;
+}
+
+
+.subHeader {
+    font-size: 30px;
+    font-family: 'Josefin Sans', sans-serif;
+    padding: 10px 0px 10px 0px;
+}
+
+.fullPage {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.menuView {
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction:column;
+    background-color: white;
+    width: 380px;
+}
+.wheelView {
+    background-color: blue;
+    max-height: 100vh;
+    z-index: 1;
+}
+
+.box, .fake-input, input {
+    background-color: #CECECE;
+    height:70px;
+    display:flex;
+    align-items: center;
+    
+  font-size: 26px;
+}
+  
+.penIc, .fake-input img {
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+.fake-input input { outline: none; background-color:#CECECE; display:block; width: 100%; box-sizing: border-box; border-style: none; margin-left:20px;}
+
+.menuParent {
+    width: 676px;
+}
+.menuHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #A6A6A6;
+    font-size: 40px;
+    padding-inline: 10px;
+}
+
+.close {
+    display: flex;
+    margin-left: auto;
+}
