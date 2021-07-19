@@ -10,6 +10,34 @@
   right: 0;
   margin: 0 75px;
 }
+.user-btn {
+  position: absolute;
+  top: 15px;
+  right: 0;
+  width: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.user-drop {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  width: 80px;
+  border-radius: 10px;
+}
+.user-drop a {
+  margin: 0;
+  padding: 0;
+}
+.wheel-link.margin-right {
+  margin-right: 40px;
+}
 
 .navbar-right {
   display: flex;
@@ -26,8 +54,11 @@
 .search-btn, .user-btn {
   cursor: pointer;
 }
-.search-btn, .wheel-link, .user-btn {
+.search-btn, .wheel-link {
   width: 30px;
+}
+.user-btn {
+  width: 35px;
 }
 .logo-link img, .search-btn img, .wheel-link img, .user-btn img {
   width: 100%;

@@ -8,21 +8,21 @@ export default function DisplayAllRecipes({ user }) {
     const [recipes, setRecipes] = useState([]);
     const [minutes, setMinutes] = useState(45);
 
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            const { data, error } = await apiClient.fetchAllRecipes();
+    // useEffect(() => {
+    //     const fetchRecipes = async () => {
+    //         const { data, error } = await apiClient.fetchAllRecipes();
 
-            if (data) {
-                console.log(data.recipes);
-                setRecipes(data.recipes);
-            }
+    //         if (data) {
+    //             console.log(data.recipes);
+    //             setRecipes(data.recipes);
+    //         }
 
-            if (error) {
-                alert(error.message);
-            }
-        };
-        fetchRecipes();
-    }, []);
+    //         if (error) {
+    //             alert(error.message);
+    //         }
+    //     };
+    //     fetchRecipes();
+    // }, []);
 
 
     const fixObj = (categories_obj) => {
