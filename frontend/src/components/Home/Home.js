@@ -38,7 +38,7 @@ export default function Home({ user }) {
             <div className="home-header">
                 {user.email ? (
                     <div>
-                        <div>Good morning, {user.first_name}</div>
+                        <div>Good morning, {user.first_name} {user.last_name}</div>
                     </div>
                 ) : (
                     <div>
@@ -47,7 +47,7 @@ export default function Home({ user }) {
                 )}
             </div>
 
-            <button className="sortby-btn" onClick={toggleSortbyBtn}>Sort by:</button>
+            <button className="sortby-btn" onClick={toggleSortbyBtn}>Sort by {dropdownIsOpen ? <>&#9652;</> : <>&#9662;</>}</button>
             {dropdownIsOpen ?
                 <div className='sortby-dropdown'>
                     <button onClick={() => handleSortbyChange("price")}>Price</button>
@@ -58,45 +58,42 @@ export default function Home({ user }) {
             
             {sortby === "price" ?
             <>
-                <div>Under $30</div>
+                <div className="category-header">Under $30</div>
                 <CarouselDisplay recipes={recipes} type={"expense"} rangeA={0} rangeB={30}/>
 
-                <div>Under $40</div>
+                <div className="category-header">Under $40</div>
                 <CarouselDisplay recipes={recipes} type={"expense"} rangeA={30} rangeB={40}/>
             </> : null
             }
             
             {sortby === "time" ?
             <>
-                <div>Under 10 min</div>
+                <div className="category-header">Under 10 min</div>
                 <CarouselDisplay recipes={recipes} type={"prep_time"} rangeA={0} rangeB={10}/>
 
-                <div>Under 20 min</div>
+                <div className="category-header">Under 20 min</div>
                 <CarouselDisplay recipes={recipes} type={"prep_time"} rangeA={10} rangeB={20}/>
 
-                <div>Under 30 min</div>
+                <div className="category-header">Under 30 min</div>
                 <CarouselDisplay recipes={recipes} type={"prep_time"} rangeA={20} rangeB={30}/>
 
-                <div>Under 40 min</div>
+                <div className="category-header">Under 40 min</div>
                 <CarouselDisplay recipes={recipes} type={"prep_time"} rangeA={30} rangeB={40}/>
             </> : null
             }
 
             {sortby === "rating" ?
             <>
-                <div>Over 80 points</div>
+                <div className="category-header">Over 80 points</div>
                 <CarouselDisplay recipes={recipes} type={"rating"} rangeA={80} rangeB={101}/>
 
-                <div>Over 60 points</div>
+                <div className="category-header">Over 60 points</div>
                 <CarouselDisplay recipes={recipes} type={"rating"} rangeA={60} rangeB={80}/>
 
-                <div>Over 40 points</div>
+                <div className="category-header">Over 40 points</div>
                 <CarouselDisplay recipes={recipes} type={"rating"} rangeA={40} rangeB={60}/>
             </> : null
             }
-
-            
-
             {/* <DisplayAllRecipes user={user} /> */}
         
         </div>

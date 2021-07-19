@@ -1,10 +1,47 @@
 .Home {
   padding: 0 75px;
   background-repeat: no-repeat;
+  max-width: 100vw;
+  overflow: hidden;
 }
 .home-header {
-  padding-top: 150px;
+  padding-top: 170px;
   display: flex;
-  font-family: 'Baloo 2', sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-size: 50px;
+  font-weight: 300;
+}
+
+.sortby-btn {
+  margin-top: 40px;
+  border: none;
+  cursor: pointer;
+  background-color: #B39F90;
+  font-size: 20px;
+  padding: 10px;
+  width: 110px;
+  border-radius: 0 10px;
+  font-family: 'Lato', sans-serif;
+}
+.sortby-dropdown {
+  background-color: #cfbcac;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  width: 110px;
+  border-radius: 10px 0;
+}
+.sortby-dropdown button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  margin: 5px;
+  font-family: 'Lato', sans-serif;
+}
+
+.category-header {
+  font-size: 25px;
+  font-family: 'Baloo 2', sans-serif;
 }
