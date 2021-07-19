@@ -30,15 +30,15 @@ export default function RecipeCard({ user, recipeInfo, handleClick }) {
           </div>
           <div className="card-tips">
             <img src={budgetIcon} alt="Money sign"></img>
-            <span>  Budget ($) : {recipeInfo.expense}</span>
+            <span>Budget ($) : {recipeInfo.expense}</span>
           </div>
           <div className="card-tips">
             <img src={timeIcon} alt="Time sign"></img>
-            <span>  Time (min) : {recipeInfo.prep_time}</span>
+            <span>Time (min) : {recipeInfo.prep_time}</span>
           </div>
         </div>
         <div className="card-links">
-          <Link to={`recipes/${recipeInfo.api_id}`}>View more &#187;</Link>
+          <Link to={`recipes/${recipeInfo.api_id}`}>View More &#8594;</Link>
           <button className="save-btn" onClick={handleOnSave}>
             {saved ?
               <img src={heartFill} alt="Solid Heart to unsave recipe"></img> :

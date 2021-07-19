@@ -38,11 +38,11 @@ export default function Home({ user }) {
             <div className="home-header">
                 {user.email ? (
                     <div>
-                        <div>Good morning, {user.first_name} {user.last_name}</div>
+                        <div>Welcome to Reciplan, {user.first_name} {user.last_name}</div>
                     </div>
                 ) : (
                     <div>
-                        <span>Good morning!</span>
+                        <span>Welcome to Reciplan!</span>
                     </div>
                 )}
             </div>
