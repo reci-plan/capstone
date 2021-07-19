@@ -7,7 +7,11 @@ import { useDataLayerValue } from "../../context/DataLayer";
 
 import "./DisplayAllRecipes.css";
 
-export default function DisplayAllRecipes({ user, recipes }) {
+export default function DisplayAllRecipes({
+    user,
+    recipes,
+    handleClickOnSave,
+}) {
     // const [recipes, setRecipes] = useState([]);
     // const [minutes, setMinutes] = useState(45);
 
@@ -32,6 +36,7 @@ export default function DisplayAllRecipes({ user, recipes }) {
                     recipes={recipes}
                     rangeA={0}
                     rangeB={10}
+                    handleClickOnSave={handleClickOnSave}
                 />
             </div>
             <div className="display-section">
@@ -41,6 +46,7 @@ export default function DisplayAllRecipes({ user, recipes }) {
                     recipes={recipes}
                     rangeA={11}
                     rangeB={20}
+                    handleClickOnSave={handleClickOnSave}
                 />
             </div>
             <div className="display-section">
@@ -50,6 +56,7 @@ export default function DisplayAllRecipes({ user, recipes }) {
                     recipes={recipes}
                     rangeA={21}
                     rangeB={30}
+                    handleClickOnSave={handleClickOnSave}
                 />
             </div>
             <div className="display-section">
@@ -59,6 +66,7 @@ export default function DisplayAllRecipes({ user, recipes }) {
                     recipes={recipes}
                     rangeA={31}
                     rangeB={45}
+                    handleClickOnSave={handleClickOnSave}
                 />
             </div>
         </div>

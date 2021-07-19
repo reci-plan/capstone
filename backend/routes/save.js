@@ -37,4 +37,19 @@ router.delete("/recipe", requireAuthenticatedUser, async (req, res, next) => {
     }
 });
 
+router.post(
+    "/isRecipeSaved",
+    requireAuthenticatedUser,
+    async (req, res, next) => {
+        try {
+            const user = res.locals.user;
+            const recipe = req.body;
+            const is_existing = await Save.checkExistingRecipe(user, recipe);
+            res.status(201).json({ is_existing });
+        } catch (err) {
+            next(err);
+        }
+    }
+);
+
 module.exports = router;

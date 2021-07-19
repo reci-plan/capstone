@@ -17,6 +17,7 @@ function App() {
   const [user, setUser] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
+  const [alreadyExist, setAlreadyExist] = useState(false);
   // const [recipes, setRecipes] = useState({})
 
   const [{ colors }, dispatch] = useDataLayerValue();
@@ -62,6 +63,40 @@ function App() {
     fetchRecipes();
   }, []);
 
+  // when user clicks on save button
+  const handleClickOnSave = async (r) => {
+    // const { data, error } = await apiClient.checkIfRecipeExists(r);
+
+    // // if cur recipe not in user's saved recipes
+    // if (data.is_existing.length === 0) {
+    //   const result = await apiClient.saveRecipe(r);
+    //   console.log(result);
+    //   if (result.data) {
+    //     console.log("hi", result.data);
+    //   }
+
+    //   if (result.error) {
+    //     alert(error);
+    //   }
+    // } else {
+    //   setAlreadyExist(true);
+    //   alert(
+    //     `${JSON.stringify(
+    //       data.is_existing[0].title
+    //     )} already in user saved recipes`
+    //   );
+    // }
+    const { data, error } = await apiClient.saveRecipe(r);
+    if (data) {
+      console.log("hi", data);
+      // dispatch({type: "SET_SAVED", saved: })
+    }
+
+    if (error) {
+      alert(error);
+    }
+  };
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -72,7 +107,16 @@ function App() {
           setSearchTerm={setSearchTerm}
         />
         <Routes>
-          <Route path="/" element={<Home user={user} recipes={recipes} />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                user={user}
+                recipes={recipes}
+                handleClickOnSave={handleClickOnSave}
+              />
+            }
+          />
           <Route
             path="/register"
             element={<Register user={user} setUser={setUser} />}
@@ -97,6 +141,7 @@ function App() {
                 searchTerm={searchTerm}
                 recipes={recipes}
                 user={user}
+                handleClickOnSave={handleClickOnSave}
               />
             }
           />

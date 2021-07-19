@@ -4,7 +4,7 @@ import "./Home.css";
 import home from "../../assets/home.png";
 import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
 
-export default function Home({ user, recipes }) {
+export default function Home({ user, recipes, handleClickOnSave }) {
     return (
         <div className="Home" style={{ backgroundImage: `url(${home})` }}>
             <div className="home-header">
@@ -26,7 +26,11 @@ export default function Home({ user, recipes }) {
                     </Link>
                 </div>
             )}
-            <DisplayAllRecipes user={user} recipes={recipes} />
+            <DisplayAllRecipes
+                user={user}
+                recipes={recipes}
+                handleClickOnSave={handleClickOnSave}
+            />
         </div>
     );
 }

@@ -2,21 +2,13 @@ import "./SearchPage.css";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import apiClient from "../../services/apiClient";
 
-export default function SearchPage({ searchTerm, recipes, user }) {
-    // console.log("searchpage.js", recipes);
+export default function SearchPage({
+    searchTerm,
+    recipes,
+    user,
+    handleClickOnSave,
+}) {
 
-    const handleClick = async (r) => {
-        const { data, error } = await apiClient.saveRecipe(r);
-
-        if (data) {
-            console.log("hi", data);
-            // dispatch({type: "SET_SAVED", saved: })
-        }
-
-        if (error) {
-            alert(error);
-        }
-    };
     return (
         <div className="SearchPage">
             Search Page Component (This currently has margin-top: 150px)
@@ -35,7 +27,7 @@ export default function SearchPage({ searchTerm, recipes, user }) {
                         <RecipeCard
                             user={user}
                             recipeInfo={filteredRecipes}
-                            handleClick={handleClick}
+                            handleClick={handleClickOnSave}
                         />
                     ))}
             </div>
