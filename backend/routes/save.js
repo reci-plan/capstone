@@ -25,6 +25,17 @@ router.post("/recipe", requireAuthenticatedUser, async (req, res, next) => {
     }
 });
 
+router.delete("/recipe", requireAuthenticatedUser, async (req, res, next) => {
+    try {
+        const user = res.locals.user;
+        const recipe = req.body;
+        const unsaveRecipe = await Save.unsaveRecipe(user, recipe);
+        res.status(200).json({ unsaveRecipe });
+    } catch (err) {
+        next(err);
+    }
+});
+
 router.get('/check/:recipeId', requireAuthenticatedUser, async (req, res, next) => {
     try {
         const user = res.locals.user

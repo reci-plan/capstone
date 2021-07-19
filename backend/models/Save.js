@@ -58,6 +58,29 @@ class Save {
     return results.rows[0];
   }
 
+  static async unsaveRecipe(user, recipe) {
+    if (!user) {
+      throw new UnauthorizedError(`No user logged in.`);
+    }
+
+    if (!recipe) {
+      throw new BadRequestError("no recipe in request.body");
+    }
+
+    if (!recipe.hasOwnProperty("title")) {
+      throw new BadRequestError(`Missing title in request body.`);
+    }
+
+    const results = await db.query(
+      `
+        DELETE FROM saved_recipes 
+        WHERE recipe_id = $1 AND user_id = (SELECT id FROM users WHERE username = $2)
+      `, [recipe.id, user.username]
+    )
+
+    return results.rows[0]
+  }
+
   static async checkRecipe(user, recipeId) {
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
@@ -74,12 +97,9 @@ class Save {
       `, [recipeId, user.username]
     )
 
-    console.log(results.rows[0])
     if (results.rows[0]) {
-      console.log(recipeId.title, true)
       return true
     }
-    console.log(recipeId.title, false)
     return false
   }
 }

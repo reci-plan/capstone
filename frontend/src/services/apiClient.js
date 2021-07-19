@@ -82,6 +82,14 @@ class ApiCalls {
         });
     }
 
+    async unsaveRecipe(cur_recipe) {
+        return await this.request({
+            endpoint: `save/recipe`,
+            method: `DELETE`,
+            data: cur_recipe,
+        });
+    }
+
     async fetchIndividualRecipeInfo(recipeId) {
         return await this.request({
             endpoint:`recipes/${recipeId}`
