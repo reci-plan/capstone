@@ -32,7 +32,7 @@ export default function Home({ user }) {
         setSortby(v)
         toggleSortbyBtn()
     }
-    
+
     return (
         <div className="Home" style={{backgroundImage: `url(${home})`}}>
             <div className="home-header">
@@ -79,6 +79,19 @@ export default function Home({ user }) {
 
                 <div>Under 40 min</div>
                 <CarouselDisplay recipes={recipes} type={"prep_time"} rangeA={30} rangeB={40}/>
+            </> : null
+            }
+
+            {sortby === "rating" ?
+            <>
+                <div>Over 80 points</div>
+                <CarouselDisplay recipes={recipes} type={"rating"} rangeA={80} rangeB={101}/>
+
+                <div>Over 60 points</div>
+                <CarouselDisplay recipes={recipes} type={"rating"} rangeA={60} rangeB={80}/>
+
+                <div>Over 40 points</div>
+                <CarouselDisplay recipes={recipes} type={"rating"} rangeA={40} rangeB={60}/>
             </> : null
             }
 

@@ -49,6 +49,18 @@ export default function CarouselDisplay({ recipes, type, rangeA, rangeB}) {
           }
         </Carousel> : null
       }
+
+      {type === "rating" ?
+        <Carousel responsive={responsive}>
+          {recipes
+            .filter((r) => r.rating >= rangeA && r.rating < rangeB)
+            .slice(0, 10)
+            .map((r) => (
+                <RecipeCard key={r.id} recipeInfo={r}/>
+            ))
+          }
+        </Carousel> : null
+      }
      
 
     </div>
