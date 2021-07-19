@@ -30,7 +30,6 @@ export default function CarouselDisplay({ recipes, type, rangeA, rangeB}) {
         <Carousel responsive={responsive}>
           {recipes
             .filter((r) => r.expense >= rangeA && r.expense < rangeB)
-            // .sort((a, b) => a.expense - b.expense)
             .slice(0, 10)
             .map((r) => (
                 <RecipeCard key={r.id} recipeInfo={r}/>
@@ -43,7 +42,6 @@ export default function CarouselDisplay({ recipes, type, rangeA, rangeB}) {
         <Carousel responsive={responsive}>
           {recipes
             .filter((r) => r.prep_time >= rangeA && r.prep_time < rangeB)
-            // .sort((a, b) => a.prep_time - b.prep_time)
             .slice(0, 10)
             .map((r) => (
                 <RecipeCard key={r.id} recipeInfo={r}/>
