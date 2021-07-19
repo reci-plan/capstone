@@ -87,6 +87,12 @@ class ApiCalls {
             endpoint:`recipes/${recipeId}`
         })
     }
+
+    async checkSavedRecipe(recipeId) {
+        return await this.request({
+            endpoint: `save/check/${recipeId}`,
+        })
+    }
 }
 
 const API = new ApiCalls(

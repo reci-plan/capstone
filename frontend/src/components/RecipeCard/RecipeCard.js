@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './RecipeCard.css'
 
@@ -7,8 +7,28 @@ import heartFill from '../../assets/heart-fill.svg'
 import budgetIcon from '../../assets/budget-icon.svg'
 import timeIcon from '../../assets/time-icon.svg'
 
+import apiClient from '../../services/apiClient'
+
 export default function RecipeCard({ user, recipeInfo, handleClick }) {
   const [saved, setSaved] = useState(false)
+
+  useEffect(() => {
+    const checkRecipe = async () => {
+      const { data, error } = await apiClient.checkSavedRecipe(recipeInfo.id)
+      console.log(recipeInfo.title, data)
+      if (data) {
+        setSaved(data)
+      }
+
+      if (error) {
+        console.log("Check saved recipe error.......RecipeCard.js")
+      }
+    }
+
+    checkRecipe()
+
+  },[recipeInfo])
+  
   const limit = 17
   
   const handleOnSave = () => {
@@ -41,8 +61,8 @@ export default function RecipeCard({ user, recipeInfo, handleClick }) {
           <Link to={`recipes/${recipeInfo.api_id}`}>View more &#187;</Link>
           <button className="save-btn" onClick={handleOnSave}>
             {saved ?
-              <img src={heartFill} alt="Solid Heart to unsave recipe"></img> :
-              <img src={heart} alt="Heart to save recipe"></img>
+              <img src={heartFill} alt="Solid Heart"></img> :
+              <img src={heart} alt="Heart"></img>
             }
           </button>
         </div>

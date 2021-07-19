@@ -25,4 +25,15 @@ router.post("/recipe", requireAuthenticatedUser, async (req, res, next) => {
     }
 });
 
+router.get('/check/:recipeId', requireAuthenticatedUser, async (req, res, next) => {
+    try {
+        const user = res.locals.user
+        const recipeId = req.params.recipeId
+        const checkRecipe = await Save.checkRecipe(user, recipeId)
+        res.status(200).json(checkRecipe)
+    } catch(err) {
+        next(err)
+    }
+  })
+
 module.exports = router;

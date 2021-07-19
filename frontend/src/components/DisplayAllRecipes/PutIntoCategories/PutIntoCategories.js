@@ -34,9 +34,6 @@ export default function PutIntoCategories({ recipes, rangeA, rangeB, user }) {
                 .slice(0, 25)
                 .map((r) => (
                     <RecipeCard user={user} recipeInfo={r} handleClick={handleClick}/>
-                    // {user?.email && (
-                    //     <button onClick={() => handleClick(r)}>save</button>
-                    // )}
                 ))}
         </div>
     );
