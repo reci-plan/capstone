@@ -82,10 +82,23 @@ function App() {
             element={<Login user={user} setUser={setUser} />}
           />
           <Route path="/recipes/:recipeId" element={<IndividualRecipe />} />
+
+          {/*Fix this route later*/}
+          <Route
+            path="/search/recipes/:recipeId"
+            element={<IndividualRecipe />}
+          />
+
           <Route path="/profile" element={<Profile user={user} />} />
           <Route
             path="/search"
-            element={<SearchPage searchTerm={searchTerm} recipes={recipes} />}
+            element={
+              <SearchPage
+                searchTerm={searchTerm}
+                recipes={recipes}
+                user={user}
+              />
+            }
           />
         </Routes>
       </BrowserRouter>

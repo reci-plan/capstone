@@ -1,22 +1,44 @@
 import "./SearchPage.css";
+import RecipeCard from "../RecipeCard/RecipeCard";
+import apiClient from "../../services/apiClient";
 
-export default function SearchPage({ searchTerm, recipes }) {
+export default function SearchPage({ searchTerm, recipes, user }) {
     // console.log("searchpage.js", recipes);
-    console.log(recipes.filter((r) => r.title.includes(searchTerm)));
+
+    const handleClick = async (r) => {
+        const { data, error } = await apiClient.saveRecipe(r);
+
+        if (data) {
+            console.log("hi", data);
+            // dispatch({type: "SET_SAVED", saved: })
+        }
+
+        if (error) {
+            alert(error);
+        }
+    };
     return (
         <div className="SearchPage">
             Search Page Component (This currently has margin-top: 150px)
-            <h2> Search Results </h2>
-            <p>
-                The word you searched for was: <b> {searchTerm} </b>
-            </p>
-            {recipes
-                .filter((r) =>
-                    r.title.toLowerCase().includes(searchTerm.toLowerCase())
-                )
-                .map((filteredRecipes) => (
-                    <div> {filteredRecipes.title} </div>
-                ))}
+            <div className="placeholder">
+                <h2> Search Results </h2>
+                <p>
+                    The word you searched for was: <b> {searchTerm} </b>
+                </p>
+            </div>
+            <div className="filtered-recipes">
+                {recipes
+                    .filter((r) =>
+                        r.title.toLowerCase().includes(searchTerm.toLowerCase())
+                    )
+                    .map((filteredRecipes) => (
+                        <RecipeCard
+                            user={user}
+                            recipeInfo={filteredRecipes}
+                            handleClick={handleClick}
+                        />
+                    ))}
+            </div>
         </div>
     );
 }
