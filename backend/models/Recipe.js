@@ -63,6 +63,13 @@ class Recipe {
         // console.log(result_arr[0][0].category);
         return result_arr;
     }
+
+    //Pass in a shifted bit number to get categories
+    static async getRecipeIdsByCategory () {
+        //const results = await db.query(`SELECT id FROM all_recipes WHERE category = `);
+        //return results.rows;
+        return 0;
+    }
 }
 
 module.exports = Recipe;
