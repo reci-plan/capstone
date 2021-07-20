@@ -1,6 +1,5 @@
 .RecipeCard {
   margin: 10px;
-  width: 230px;
   overflow: hidden;
   border: 2px solid #CCCBCB;
 }
@@ -13,6 +12,7 @@
 }
 .card-img img {
   width: 100%;
+  min-height: 200px;
 }
 .card-info {
   font-family: 'Lato', sans-serif;
@@ -23,13 +23,16 @@
 .card-tips {
   display: flex;
   align-items: center;
+  margin: 5px 5px 0 5px;
 }
 .card-tips img {
+  font-weight: 400;
   margin-right: 2px;
 }
 .card-title {
   font-size: 20px;
   font-family: 'Josefin Sans', sans-serif;
+  margin-bottom: 10px;
 }
 .card-links {
   margin: 0 10px;
@@ -45,5 +48,13 @@
 .card-links a {
   margin: 0;
   font-family: 'Lato', sans-serif;
+  font-weight: 300;
   text-decoration: none;
+}
+
+@media only screen and (max-width: 700px) {
+  .card-img img {
+    width: 100%;
+    min-height: 100px;
+  }
 }

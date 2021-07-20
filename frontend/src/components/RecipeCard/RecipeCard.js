@@ -15,7 +15,6 @@ export default function RecipeCard({ user, recipeInfo, handleSave, handleUnsave 
   useEffect(() => {
     const checkRecipe = async () => {
       const { data, error } = await apiClient.checkSavedRecipe(recipeInfo.id)
-      console.log(recipeInfo.title, data)
       if (data) {
         setSaved(data)
       }
@@ -32,6 +31,8 @@ export default function RecipeCard({ user, recipeInfo, handleSave, handleUnsave 
   const limit = 17
   
   const handleOnClick = () => {
+    console.log("click")
+    console.log(user)
     if (user?.email) { 
       if (saved) {
         handleUnsave(recipeInfo)
@@ -41,9 +42,7 @@ export default function RecipeCard({ user, recipeInfo, handleSave, handleUnsave 
         handleSave(recipeInfo)
         setSaved(true) 
       }
-      
     }
-    
   }
   return (
       <div className="RecipeCard">
@@ -58,15 +57,15 @@ export default function RecipeCard({ user, recipeInfo, handleSave, handleUnsave 
           </div>
           <div className="card-tips">
             <img src={budgetIcon} alt="Money sign"></img>
-            <span>  Budget ($) : {recipeInfo.expense}</span>
+            <span>Budget ($) : {recipeInfo.expense}</span>
           </div>
           <div className="card-tips">
             <img src={timeIcon} alt="Time sign"></img>
-            <span>  Time (min) : {recipeInfo.prep_time}</span>
+            <span>Time (min) : {recipeInfo.prep_time}</span>
           </div>
         </div>
         <div className="card-links">
-          <Link to={`recipes/${recipeInfo.api_id}`}>View more &#187;</Link>
+          <Link to={`recipes/${recipeInfo.api_id}`}>View More &#8594;</Link>
           <button className="save-btn" onClick={handleOnClick}>
             {saved ?
               <img src={heartFill} alt="Solid Heart"></img> :
@@ -74,8 +73,6 @@ export default function RecipeCard({ user, recipeInfo, handleSave, handleUnsave 
             }
           </button>
         </div>
-       
       </div>
-      
   )
 }
