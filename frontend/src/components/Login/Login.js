@@ -65,8 +65,8 @@ export default function Login({ user, setUser }) {
               value={form.email}
               onChange={handleInputChange}
             />
-            {errors.email}
           </div>
+          {errors.email}
           <div>
             <input
               type="password"
