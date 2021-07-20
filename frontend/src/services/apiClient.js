@@ -92,8 +92,16 @@ class ApiCalls {
 
     async fetchIndividualRecipeInfo(recipeId) {
         return await this.request({
-            endpoint:`recipes/${recipeId}`
-        })
+            endpoint: `recipes/${recipeId}`,
+        });
+    }
+
+    async checkIfRecipeExists(cur_recipe) {
+        return await this.request({
+            endpoint: `save/isRecipeSaved`,
+            method: `POST`,
+            data: cur_recipe,
+        });
     }
 
     async checkSavedRecipe(recipeId) {

@@ -113,6 +113,7 @@ class User {
             `SELECT * FROM users WHERE username = $1`,
             [username]
         );
+    
 
         return result.rows[0];
     }

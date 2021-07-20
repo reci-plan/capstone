@@ -90,4 +90,7 @@
   .navbar-right {
     height: 80px;
   }
+  .user-btn {
+    top: 20px;
+  }
 }
