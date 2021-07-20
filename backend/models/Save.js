@@ -34,7 +34,7 @@ class Save {
       throw new BadRequestError(`Missing title in request body.`);
     }
 
-    const isExisting = await Save.checkExistingRecipe(user, recipe);
+    const isExisting = await Save.checkRecipe(user, recipe);
     if (isExisting.length > 0) {
       throw new BadRequestError("Cannot insert duplicate.");
     }
@@ -66,12 +66,13 @@ class Save {
 
     const results = await db.query(
       `
-        DELETE FROM saved_recipes 
+        DELETE FROM saved_recipes
         WHERE recipe_id = $1 AND user_id = (SELECT id FROM users WHERE username = $2)
-      `, [recipe.id, user.username]
-    )
+      `,
+      [recipe.id, user.username]
+    );
 
-    return results.rows[0]
+    return results.rows[0];
   }
 
   static async checkRecipe(user, recipeId) {
@@ -87,13 +88,14 @@ class Save {
       `
         SELECT * FROM saved_recipes
         WHERE recipe_id = $1 AND user_id = (SELECT id FROM users WHERE username = $2)
-      `, [recipeId, user.username]
-    )
+      `,
+      [recipeId, user.username]
+    );
 
     if (results.rows[0]) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 }
 
