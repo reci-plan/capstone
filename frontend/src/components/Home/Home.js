@@ -59,26 +59,26 @@ export default function Home({ user }) {
             {sortby === "price" ?
             <>
                 <div className="category-header">Under $30</div>
-                <CarouselDisplay recipes={recipes} type={"expense"} rangeA={0} rangeB={30}/>
+                <CarouselDisplay user={user} recipes={recipes} type={"expense"} rangeA={0} rangeB={30}/>
 
                 <div className="category-header">Under $40</div>
-                <CarouselDisplay recipes={recipes} type={"expense"} rangeA={30} rangeB={40}/>
+                <CarouselDisplay user={user} recipes={recipes} type={"expense"} rangeA={30} rangeB={40}/>
             </> : null
             }
             
             {sortby === "time" ?
             <>
                 <div className="category-header">Under 10 min</div>
-                <CarouselDisplay recipes={recipes} type={"prep_time"} rangeA={0} rangeB={10}/>
+                <CarouselDisplay user={user} recipes={recipes} type={"prep_time"} rangeA={0} rangeB={10}/>
 
                 <div className="category-header">Under 20 min</div>
-                <CarouselDisplay recipes={recipes} type={"prep_time"} rangeA={10} rangeB={20}/>
+                <CarouselDisplay user={user} recipes={recipes} type={"prep_time"} rangeA={10} rangeB={20}/>
 
                 <div className="category-header">Under 30 min</div>
-                <CarouselDisplay recipes={recipes} type={"prep_time"} rangeA={20} rangeB={30}/>
+                <CarouselDisplay user={user} recipes={recipes} type={"prep_time"} rangeA={20} rangeB={30}/>
 
                 <div className="category-header">Under 40 min</div>
-                <CarouselDisplay recipes={recipes} type={"prep_time"} rangeA={30} rangeB={40}/>
+                <CarouselDisplay user={user} recipes={recipes} type={"prep_time"} rangeA={30} rangeB={40}/>
             </> : null
             }
 

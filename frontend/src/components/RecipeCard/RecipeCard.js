@@ -31,6 +31,8 @@ export default function RecipeCard({ user, recipeInfo, handleSave, handleUnsave 
   const limit = 17
   
   const handleOnClick = () => {
+    console.log("click")
+    console.log(user)
     if (user?.email) { 
       if (saved) {
         handleUnsave(recipeInfo)
