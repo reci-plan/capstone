@@ -3,8 +3,32 @@ import './CarouselDisplay.css'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import RecipeCard from '../RecipeCard/RecipeCard';
+import apiClient from '../../services/apiClient';
 
-export default function CarouselDisplay({ recipes, type, rangeA, rangeB}) {
+export default function CarouselDisplay({ user, recipes, type, rangeA, rangeB}) {
+  const handleSave = async (r) => {
+    const { data, error } = await apiClient.saveRecipe(r);
+
+    if (data) {
+        console.log("Save: ", data);
+    }
+
+    if (error) {
+        alert(error);
+    }
+};
+
+const handleUnsave = async (r) => {
+    const { data, error } = await apiClient.unsaveRecipe(r);
+
+    if (data) {
+        console.log("Unsave: ", data);
+    }
+
+    if (error) {
+        alert(error);
+    }
+};
   const responsive = {
     largeDesktop: {
       breakpoint: { max: 4000, min: 2000 },
@@ -35,7 +59,7 @@ export default function CarouselDisplay({ recipes, type, rangeA, rangeB}) {
             .filter((r) => r.expense >= rangeA && r.expense < rangeB)
             .slice(0, 10)
             .map((r) => (
-                <RecipeCard key={r.id} recipeInfo={r}/>
+              <RecipeCard key={r.id} user={user} recipeInfo={r}  handleSave={handleSave} handleUnsave={handleUnsave}/>
             ))
           }
         </Carousel> : null
@@ -47,7 +71,7 @@ export default function CarouselDisplay({ recipes, type, rangeA, rangeB}) {
             .filter((r) => r.prep_time >= rangeA && r.prep_time < rangeB)
             .slice(0, 10)
             .map((r) => (
-                <RecipeCard key={r.id} recipeInfo={r}/>
+                <RecipeCard key={r.id} user={user} recipeInfo={r}  handleSave={handleSave} handleUnsave={handleUnsave}/>
             ))
           }
         </Carousel> : null
@@ -59,7 +83,7 @@ export default function CarouselDisplay({ recipes, type, rangeA, rangeB}) {
             .filter((r) => r.rating >= rangeA && r.rating < rangeB)
             .slice(0, 10)
             .map((r) => (
-                <RecipeCard key={r.id} recipeInfo={r}/>
+              <RecipeCard key={r.id} user={user} recipeInfo={r}  handleSave={handleSave} handleUnsave={handleUnsave}/>
             ))
           }
         </Carousel> : null

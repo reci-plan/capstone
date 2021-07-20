@@ -11,15 +11,21 @@ import './Navbar.css'
 
 export default function Navbar({ user, setUser }) {
   const [isSearch, setIsSearch] = useState(false)
+  const [userIsClicked, setUserIsClicked] = useState(false)
 
-  const handleOnClick = () => {
+  const handleOnSearchClick = () => {
     isSearch ? setIsSearch(false) : setIsSearch(true)
+  }
+
+  const handleOnUserClick = () => {
+    userIsClicked ? setUserIsClicked(false) : setUserIsClicked(true)
   }
 
   const handleLogout = async () => {
     await apiClient.logout();
     setUser({});
   };  
+
   return (
     <div className="Navbar">
       <Link to='/' className="logo-link">
@@ -27,7 +33,7 @@ export default function Navbar({ user, setUser }) {
       </Link>
       <div className="navbar-right">
         {!isSearch ? 
-          <div className="search-btn" onClick={handleOnClick}>
+          <div className="search-btn" onClick={handleOnSearchClick}>
             <img src={search} alt="Search icon"></img>
           </div>
           : 
@@ -35,22 +41,28 @@ export default function Navbar({ user, setUser }) {
           <div className="search-btn">
             <img src={search} alt="Search icon"></img>
           </div>
-          <input type='text' placeholder='search recipes...'>
+          <input className="search-input" type='text' placeholder='search recipes...'>
           </input>
-          <div className="search-btn" onClick={handleOnClick}>
+          <div className="search-btn" onClick={handleOnSearchClick}>
             <img src={close} alt="Close button"></img>
           </div>
           </>
         }
-        <Link to='/wheel' className="wheel-link">
+        <Link to='/wheel' className={`wheel-link ${user?.email ? 'margin-right' : ''}`}>
           <img src={wheel} alt="Wheel icon"></img>
         </Link>
 
         {user?.email ?
-          <div onClick={handleLogout} className="user-btn">
-            <img src={userlogo} alt='User button'></img>
+          <div className="user-btn">
+            <img onClick={handleOnUserClick} src={userlogo} alt='User button'></img>
+            {userIsClicked ?
+            <div className="user-drop">
+              <Link onClick={handleOnUserClick} to='/profile'>profile</Link>
+              <Link onClick={handleOnUserClick} to='/saved'>saved</Link>
+              <Link onClick={handleLogout} to='/'>logout</Link>
+            </div> : null
+            }
           </div>
-          
           : 
           <Link to='/login' className="login-link">Login</Link>
         }
