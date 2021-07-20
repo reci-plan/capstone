@@ -43,3 +43,10 @@ input {
   background-color: #B3C1D5;
   font-size: 15px;
 }
+
+@media only screen and (max-width: 700px) {
+  .Login {
+    background-position-x: 60%;
+    background-size: 250%;
+  }
+}
