@@ -57,3 +57,11 @@ CREATE TABLE categories (
     dish_type      TEXT NOT NULL,
     FOREIGN KEY (recipe_id) REFERENCES all_recipes(id) ON DELETE CASCADE
 );
+
+CREATE TABLE comments (
+    id              SERIAL PRIMARY KEY,
+    comment         TEXT NOT NULL,
+    user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    recipe_id       INTEGER NOT NULL REFERENCES all_recipes(id) ON DELETE CASCADE,
+    date            TIMESTAMP NOT NULL DEFAULT NOW()
+)

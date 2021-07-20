@@ -14,6 +14,8 @@ export default function IndividualRecipe() {
   const [recipeInstructions, setRecipeInstructions] = useState([]);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeInfo, setRecipeInfo] = useState([]);
+  const [comment, setComment] = useState("");
+
   useEffect(() => {
     const fetchRecipeInfo = async () => {
       const { data, error } = await apiClient.fetchIndividualRecipeInfo(
@@ -36,6 +38,12 @@ export default function IndividualRecipe() {
     };
     fetchRecipeInfo();
   }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setComment(e.target.textarea.value);
+    console.log(comment);
+  };
 
   return (
     <div className="IndividualRecipe">
@@ -84,6 +92,15 @@ export default function IndividualRecipe() {
               ))
             : null}
         </div>
+      </div>
+
+      {/*comments*/}
+      <div style={{margin: "50px"}}>
+        <div>comments</div>
+        <form onSubmit={handleSubmit}>
+          <textarea name="textarea">hi</textarea>
+          <button> comment </button>
+        </form>
       </div>
     </div>
   );

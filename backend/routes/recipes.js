@@ -59,16 +59,17 @@ router.get("/logRecipes", async (req, res, next) => {
   }
 });
 
-router.get('/:recipeId', async (req, res, next) => {
+router.get("/:recipeId", async (req, res, next) => {
   try {
-    const { recipeId } = req.params
-    const recipeInfo = await axios.get(`${BASE_RECIPES_URL}/${recipeId}/information?apiKey=${API_KEY}&includeNutrition=true`)
-    res.status(200).json(recipeInfo.data)
-  } catch(err) {
-    next(err)
+    const { recipeId } = req.params;
+    const recipeInfo = await axios.get(
+      `${BASE_RECIPES_URL}/${recipeId}/information?apiKey=${API_KEY}&includeNutrition=true`
+    );
+    res.status(200).json(recipeInfo.data);
+  } catch (err) {
+    next(err);
   }
-})
-
+});
 
 // Ignore these
 // router.get("/summarize/:id", async (req, res, next) => {
