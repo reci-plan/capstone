@@ -29,27 +29,22 @@ router.delete("/recipe", requireAuthenticatedUser, async (req, res, next) => {
     try {
         const user = res.locals.user;
         const recipe = req.body;
-        const deleteRecipe = await Save.deleteRecipe(user, recipe);
-        console.log("The deleted recipe", deleteRecipe);
-        res.status(200).json({ deleteRecipe });
+        const unsaveRecipe = await Save.unsaveRecipe(user, recipe);
+        res.status(200).json({ unsaveRecipe });
     } catch (err) {
         next(err);
     }
 });
 
-router.post(
-    "/isRecipeSaved",
-    requireAuthenticatedUser,
-    async (req, res, next) => {
-        try {
-            const user = res.locals.user;
-            const recipe = req.body;
-            const is_existing = await Save.checkExistingRecipe(user, recipe);
-            res.status(201).json({ is_existing });
-        } catch (err) {
-            next(err);
-        }
+router.get('/check/:recipeId', requireAuthenticatedUser, async (req, res, next) => {
+    try {
+        const user = res.locals.user
+        const recipeId = req.params.recipeId
+        const checkRecipe = await Save.checkRecipe(user, recipeId)
+        res.status(200).json(checkRecipe)
+    } catch(err) {
+        next(err)
     }
-);
+  })
 
 module.exports = router;

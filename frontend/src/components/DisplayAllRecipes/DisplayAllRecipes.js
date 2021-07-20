@@ -5,7 +5,21 @@ import PutIntoCategories from "./PutIntoCategories/PutIntoCategories";
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
-import "./DisplayAllRecipes.css";
+    // useEffect(() => {
+    //     const fetchRecipes = async () => {
+    //         const { data, error } = await apiClient.fetchAllRecipes();
+
+    //         if (data) {
+    //             console.log(data.recipes);
+    //             setRecipes(data.recipes);
+    //         }
+
+    //         if (error) {
+    //             alert(error.message);
+    //         }
+    //     };
+    //     fetchRecipes();
+    // }, []);
 
 export default function DisplayAllRecipes({
     user,
@@ -14,7 +28,7 @@ export default function DisplayAllRecipes({
 }) {
     // const [recipes, setRecipes] = useState([]);
     // const [minutes, setMinutes] = useState(45);
-
+    console.log(recipes);
     const fixObj = (categories_obj) => {
         const arr = [];
         categories_obj = JSON.parse(categories_obj);

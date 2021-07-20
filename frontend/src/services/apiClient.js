@@ -82,11 +82,11 @@ class ApiCalls {
         });
     }
 
-    async deleteSavedRecipe(cur_saved_recipe) {
+    async unsaveRecipe(cur_recipe) {
         return await this.request({
             endpoint: `save/recipe`,
             method: `DELETE`,
-            data: cur_saved_recipe,
+            data: cur_recipe,
         });
     }
 
@@ -102,6 +102,12 @@ class ApiCalls {
             method: `POST`,
             data: cur_recipe,
         });
+    }
+
+    async checkSavedRecipe(recipeId) {
+        return await this.request({
+            endpoint: `save/check/${recipeId}`,
+        })
     }
 }
 

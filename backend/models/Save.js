@@ -51,48 +51,49 @@ class Save {
     return results.rows[0];
   }
 
-  static async deleteRecipe(user, recipe) {
+  static async unsaveRecipe(user, recipe) {
     if (!user) {
-      throw new UnauthorizedError("No user logged in");
+      throw new UnauthorizedError(`No user logged in.`);
     }
 
     if (!recipe) {
-      throw new BadRequestError(
-        "No recipe given under deleteRecipe function in models."
-      );
+      throw new BadRequestError("no recipe in request.body");
     }
 
     if (!recipe.hasOwnProperty("title")) {
       throw new BadRequestError(`Missing title in request body.`);
     }
 
-    const isExisting = await Save.checkExistingRecipe(user, recipe);
-    if (isExisting.length === 0) {
-      throw new BadRequestError(
-        "You cannot delete this item, it was not even saved in the first place."
-      );
-    }
+    const results = await db.query(
+      `
+        DELETE FROM saved_recipes 
+        WHERE recipe_id = $1 AND user_id = (SELECT id FROM users WHERE username = $2)
+      `, [recipe.id, user.username]
+    )
 
-    const query = `DELETE FROM saved_recipes
-    WHERE recipe_id = (SELECT id FROM all_recipes WHERE title = $1)`;
-
-    const results = await db.query(query, [recipe.title]);
-
-    return results.rows[0];
+    return results.rows[0]
   }
 
-  // Returns whether or not there is an existing entry for the current recipe in the user's saved recipes
-  static async checkExistingRecipe(user, recipe) {
+  static async checkRecipe(user, recipeId) {
+    if (!user) {
+      throw new UnauthorizedError(`No user logged in.`);
+    }
+
+    if (!recipeId) {
+      throw new BadRequestError("No recipeId in req.params");
+    }
+
     const results = await db.query(
-      `SELECT * FROM all_recipes
-      JOIN saved_recipes ON all_recipes.id = saved_recipes.recipe_id
-      JOIN users ON users.id = saved_recipes.user_id
-      WHERE recipe_id = (SELECT id FROM all_recipes WHERE title = $1) AND
-      user_id = (SELECT id FROM users WHERE username = $2)
-       `,
-      [recipe.title, user.username]
-    );
-    return results.rows;
+      `
+        SELECT * FROM saved_recipes
+        WHERE recipe_id = $1 AND user_id = (SELECT id FROM users WHERE username = $2)
+      `, [recipeId, user.username]
+    )
+
+    if (results.rows[0]) {
+      return true
+    }
+    return false
   }
 }
 

@@ -1,40 +1,52 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import "./RecipeCard.css";
-
-import heart from "../../assets/heart.svg";
-import heartFill from "../../assets/heart-fill.svg";
-import budgetIcon from "../../assets/budget-icon.svg";
-import timeIcon from "../../assets/time-icon.svg";
-
-import apiClient from "../../services/apiClient";
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import './RecipeCard.css'
 
 
-export default function RecipeCard({ user, recipeInfo, handleClick }) {
-  const [saved, setSaved] = useState(false);
-  const limit = 17;
 
-  const handleOnSave = async () => {
-    // if (user?.email) {
-    //   saved ? setSaved(false) : setSaved(true)
-    // }
-    handleClick(recipeInfo, saved, setSaved);
-  };
+import heart from '../../assets/heart.svg'
+import heartFill from '../../assets/heart-fill.svg'
+import budgetIcon from '../../assets/budget-icon.svg'
+import timeIcon from '../../assets/time-icon.svg'
+
+import apiClient from '../../services/apiClient'
+
+export default function RecipeCard({ user, recipeInfo, handleSave, handleUnsave }) {
+  const [saved, setSaved] = useState(false)
 
   useEffect(() => {
-    async function fetchApi() {
-      if (user?.email) {
-        const { data, error } = await apiClient.checkIfRecipeExists(recipeInfo);
-        if (data.is_existing.length === 0) {
-          setSaved(false);
-        } else {
-          setSaved(true);
-        }
+    const checkRecipe = async () => {
+      const { data, error } = await apiClient.checkSavedRecipe(recipeInfo.id)
+      console.log(recipeInfo.title, data)
+      if (data) {
+        setSaved(data)
+      }
+
+      if (error) {
+        console.log("Check saved recipe error.......RecipeCard.js")
       }
     }
-    fetchApi();
-  }, []);
 
+    checkRecipe()
+
+  },[recipeInfo])
+  
+  const limit = 17
+  
+  const handleOnClick = () => {
+    if (user?.email) { 
+      if (saved) {
+        handleUnsave(recipeInfo)
+        setSaved(false)
+      }
+      else {
+        handleSave(recipeInfo)
+        setSaved(true) 
+      }
+      
+    }
+    
+  }
   return (
     <div className="RecipeCard">
       <div className="card-img">
@@ -50,14 +62,19 @@ export default function RecipeCard({ user, recipeInfo, handleClick }) {
           <img src={budgetIcon} alt="Money sign"></img>
           <span> Budget ($) : {recipeInfo.expense}</span>
         </div>
-        <div className="card-tips">
-          <img src={timeIcon} alt="Time sign"></img>
-          <span> Time (min) : {recipeInfo.prep_time}</span>
+        <div className="card-links">
+          <Link to={`recipes/${recipeInfo.api_id}`}>View more &#187;</Link>
+          <button className="save-btn" onClick={handleOnClick}>
+            {saved ?
+              <img src={heartFill} alt="Solid Heart"></img> :
+              <img src={heart} alt="Heart"></img>
+            }
+          </button>
         </div>
       </div>
       <div className="card-links">
         <Link to={`recipes/${recipeInfo.api_id}`}>View more &#187;</Link>
-        <button className="save-btn" onClick={handleOnSave}>
+        <button className="save-btn" onClick={handleOnClick}>
           {saved ? (
             <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
           ) : (
