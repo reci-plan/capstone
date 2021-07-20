@@ -28,10 +28,10 @@ export default function Navbar({ user, setUser }) {
 
   return (
     <div className="Navbar">
-      <Link to='/' className="logo-link">
+      <Link to='/' className={`logo-link ${isSearch ? 'phone-view': ''}`}>
         <img src={logo} alt="Reciplan app logo"></img>
       </Link>
-      <div className="navbar-right">
+      <div className={`navbar-right ${isSearch ? 'phone-view-search': ''}`}>
         {!isSearch ? 
           <div className="search-btn" onClick={handleOnSearchClick}>
             <img src={search} alt="Search icon"></img>
@@ -48,12 +48,12 @@ export default function Navbar({ user, setUser }) {
           </div>
           </>
         }
-        <Link to='/wheel' className={`wheel-link ${user?.email ? 'margin-right' : ''}`}>
+        <Link to='/wheel' className={`wheel-link ${user?.email ? 'margin-right' : ''} ${isSearch ? 'phone-view': ''}`}>
           <img src={wheel} alt="Wheel icon"></img>
         </Link>
 
         {user?.email ?
-          <div className="user-btn">
+          <div className={`user-btn ${isSearch ? 'phone-view': ''}`}>
             <img onClick={handleOnUserClick} src={userlogo} alt='User button'></img>
             {userIsClicked ?
             <div className="user-drop">
@@ -64,7 +64,7 @@ export default function Navbar({ user, setUser }) {
             }
           </div>
           : 
-          <Link to='/login' className="login-link">Login</Link>
+          <Link to='/login' className={`login-link ${isSearch ? 'phone-view': ''}`}>Login</Link>
         }
       </div>
       

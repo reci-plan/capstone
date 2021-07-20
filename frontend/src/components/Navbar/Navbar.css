@@ -71,6 +71,23 @@
 }
 
 .search-input {
-  width: auto;
+  width: 200px;
   margin: 0 0;
+  padding: 8px;
+  border-radius: 15px;
+}
+
+@media only screen and (max-width: 700px) {
+  .Navbar {
+    margin: 0 40px;
+  }
+  .phone-view {
+    display: none;
+  }
+  .phone-view-search {
+    width: 100%;
+  }
+  .navbar-right {
+    height: 80px;
+  }
 }
