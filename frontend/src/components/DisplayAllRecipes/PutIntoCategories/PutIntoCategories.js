@@ -3,8 +3,14 @@ import RecipeCard from "../../RecipeCard/RecipeCard";
 import { useDataLayerValue } from "../../../context/DataLayer";
 import apiClient from '../../../services/apiClient'
 
-import './PutIntoCategories.css'
-export default function PutIntoCategories({ recipes, rangeA, rangeB, user }) {
+
+import "./PutIntoCategories.css";
+export default function PutIntoCategories({
+    recipes,
+    rangeA,
+    rangeB,
+    user
+}) {
     const [{ colors, test }, dispatch] = useDataLayerValue();
 
     useEffect(() => {
