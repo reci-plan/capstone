@@ -9,8 +9,7 @@ export default function PutIntoCategories({
     recipes,
     rangeA,
     rangeB,
-    user,
-    handleClickOnSave,
+    user
 }) {
     const [{ colors, test }, dispatch] = useDataLayerValue();
 

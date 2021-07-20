@@ -34,7 +34,10 @@ export default function RecipeCard({
   }, [recipeInfo]);
 
   const limit = 17;
-  
+
+  console.log("handleUnsave", handleUnsave);
+  console.log("handleSave", handleSave);
+
   const handleOnClick = () => {
     if (user?.email) {
       if (saved) {
@@ -46,6 +49,7 @@ export default function RecipeCard({
       }
     }
   };
+
   return (
     <div className="RecipeCard">
       <div className="card-img">
