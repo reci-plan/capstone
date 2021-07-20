@@ -66,7 +66,7 @@ export default function RecipeCard({
           <span> Budget ($) : {recipeInfo.expense}</span>
         </div>
         <div className="card-links">
-          <Link to={`recipes/${recipeInfo.api_id}`}>View more &#187;</Link>
+          <Link to={`recipes/${recipeInfo.api_id}`}>View More &#8594;</Link>
           <button className="save-btn" onClick={handleOnClick}>
             {saved ? (
               <img src={heartFill} alt="Solid Heart"></img>
