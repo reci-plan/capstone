@@ -35,9 +35,6 @@ export default function RecipeCard({
 
   const limit = 17;
 
-  console.log("handleUnsave", handleUnsave);
-  console.log("handleSave", handleSave);
-
   const handleOnClick = () => {
     if (user?.email) {
       if (saved) {
@@ -65,15 +62,9 @@ export default function RecipeCard({
           <img src={budgetIcon} alt="Money sign"></img>
           <span> Budget ($) : {recipeInfo.expense}</span>
         </div>
-        <div className="card-links">
-          <Link to={`recipes/${recipeInfo.api_id}`}>View More &#8594;</Link>
-          <button className="save-btn" onClick={handleOnClick}>
-            {saved ? (
-              <img src={heartFill} alt="Solid Heart"></img>
-            ) : (
-              <img src={heart} alt="Heart"></img>
-            )}
-          </button>
+        <div className="card-tips">
+          <img src={timeIcon} alt="Time sign"></img>
+          <span>Time (min) : {recipeInfo.prep_time}</span>
         </div>
       </div>
       <div className="card-links">
