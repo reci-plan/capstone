@@ -144,7 +144,8 @@ export default function IndividualRecipe() {
         </div>
         {curComments.map((comment) => (
           <div>
-            {comment?.comment} - {comment?.date} - user id: {comment?.user_id}
+            comment: {comment?.comment}, date: {comment?.date}, user id:{" "}
+            {comment?.user_id}, ID (primary key): {comment?.id}
           </div>
         ))}
       </div>

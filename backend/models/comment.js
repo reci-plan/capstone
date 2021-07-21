@@ -27,7 +27,7 @@ class Comment {
         console.log(user, comment, recipeId);
         const query = `INSERT INTO comments (user_id, recipe_id, comment)
             VALUES ((SELECT id FROM users WHERE username = $1), (SELECT id FROM all_recipes WHERE api_id = $2), $3)
-            RETURNING comment, user_id, recipe_id
+            RETURNING comment, user_id, recipe_id, date, id
         `;
 
         const results = await db.query(query, [
@@ -42,6 +42,17 @@ class Comment {
 
         return results.rows[0];
     }
+
+    // static async deleteComment(user, comment, recipeId) {
+    //     if (!user) {
+    //         throw new UnauthorizedError(`No user logged in`);
+    //     }
+
+    //     const results = await db.query(`
+    //         DELETE FROM comments WHERE`
+
+    //     )
+    // }
 }
 
 module.exports = Comment;
