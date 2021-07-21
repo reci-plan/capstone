@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Comment = require("../models/Comment");
 
-router.get("/:recipeId", async (req, res, next) => {
+router.get("/getComment/:recipeId", async (req, res, next) => {
   try {
     const user = res.locals.user;
     const { recipeId } = req.params;
@@ -14,13 +14,24 @@ router.get("/:recipeId", async (req, res, next) => {
   }
 });
 
-router.post("/:recipeId", async (req, res, next) => {
+router.post("/postComment/:recipeId", async (req, res, next) => {
   try {
     const user = res.locals.user;
     const { recipeId } = req.params;
     const { comment } = req.body;
     const publishComment = await Comment.postComment(user, comment, recipeId);
     res.status(201).json({ publishComment });
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.delete("/deleteComment", async (req, res, next) => {
+  try {
+    const user = res.locals.user;
+    const { id } = req.body;
+    const idToDelete = await Comment.deleteComment(user, id);
+    res.status(201).json({ idToDelete });
   } catch (e) {
     next(e);
   }

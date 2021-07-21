@@ -81,6 +81,18 @@ export default function IndividualRecipe() {
     setComment(e.target.value);
   };
 
+  const handleDelete = async (e, comment) => {
+    console.log("Before api call", comment);
+    const { data, error } = await apiClient.deleteComment(comment);
+    if (data) {
+      setCurComments(curComments.filter((c) => c.id != comment.id));
+    }
+
+    if (error) {
+      alert(error);
+    }
+  };
+
   console.log("curComments: >>>>>>>> ", curComments);
   return (
     <div className="IndividualRecipe">
@@ -145,7 +157,8 @@ export default function IndividualRecipe() {
         {curComments.map((comment) => (
           <div>
             comment: {comment?.comment}, date: {comment?.date}, user id:{" "}
-            {comment?.user_id}, ID (primary key): {comment?.id}
+            {comment?.user_id}, ID (primary key): {comment?.id}{" "}
+            <button onClick={(e) => handleDelete(e, comment)}> Delete </button>
           </div>
         ))}
       </div>

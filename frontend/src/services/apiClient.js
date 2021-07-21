@@ -112,16 +112,24 @@ class ApiCalls {
 
     async getCurrentComments(api_id) {
         return await this.request({
-            endpoint: `comment/${api_id}`,
+            endpoint: `comment/getComment/${api_id}`,
             method: `GET`,
         });
     }
 
     async postComment(comment, api_id) {
         return await this.request({
-            endpoint: `comment/${api_id}`,
+            endpoint: `comment/postComment/${api_id}`,
             method: `POST`,
             data: comment,
+        });
+    }
+
+    async deleteComment(comment_primary_id) {
+        return await this.request({
+            endpoint: `comment/deleteComment`,
+            method: `DELETE`,
+            data: comment_primary_id,
         });
     }
 }
