@@ -41,15 +41,24 @@ class Comment {
             throw new UnauthorizedError(`No user logged in`);
         }
 
-        console.log(user, comment_id);
+        console.log(
+            "user.username: ",
+            user.username,
+            " comment_id: ",
+            comment_id
+        );
 
         const results = await db.query(
             `DELETE FROM comments
-            WHERE id = $1
-            AND user_id = (SELECT id FROM users WHERE username = $2)`,
-            [comment_id, user.username]
+            WHERE user_id = (SELECT id FROM users WHERE username = $1)
+            AND id = $2
+            `,
+            [user.username, comment_id]
         );
-
+        console.log(results.rows[0]);
+        if (results.rows[0] === undefined) {
+            throw new BadRequestError("Not your comment");
+        }
         return results.rows[0];
     }
 }
