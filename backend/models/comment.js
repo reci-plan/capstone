@@ -11,10 +11,10 @@ class Comment {
         const results = await db.query(
             `SELECT * FROM comments
             JOIN all_recipes ON comments.recipe_id = all_recipes.id
-            WHERE user_id = (SELECT id FROM users WHERE username = $1)
-            AND all_recipes.api_id = $2
+            AND all_recipes.api_id = $1
+            ORDER BY date DESC
             `,
-            [user.username, recipeId]
+            [recipeId]
         );
 
         return results.rows;

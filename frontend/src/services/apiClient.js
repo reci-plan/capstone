@@ -107,7 +107,22 @@ class ApiCalls {
     async checkSavedRecipe(recipeId) {
         return await this.request({
             endpoint: `save/check/${recipeId}`,
-        })
+        });
+    }
+
+    async getCurrentComments(api_id) {
+        return await this.request({
+            endpoint: `comment/${api_id}`,
+            method: `GET`,
+        });
+    }
+
+    async postComment(comment, api_id) {
+        return await this.request({
+            endpoint: `comment/${api_id}`,
+            method: `POST`,
+            data: comment,
+        });
     }
 }
 

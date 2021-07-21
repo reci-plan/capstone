@@ -10,10 +10,13 @@ import "./IndividualRecipe.css";
 
 export default function IndividualRecipe() {
   const { recipeId } = useParams();
-  console.log("recipeId", recipeId);
+  // console.log("recipeId", recipeId);
   const [recipeInstructions, setRecipeInstructions] = useState([]);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeInfo, setRecipeInfo] = useState([]);
+  const [comment, setComment] = useState("");
+  const [curComments, setCurComments] = useState([]);
+
   useEffect(() => {
     const fetchRecipeInfo = async () => {
       const { data, error } = await apiClient.fetchIndividualRecipeInfo(
@@ -35,8 +38,50 @@ export default function IndividualRecipe() {
       }
     };
     fetchRecipeInfo();
-  }, []);
+  }, [recipeId]);
 
+  // get comments for cur recipe.
+  useEffect(() => {
+    const fetchCurrentComments = async () => {
+      const { data, error } = await apiClient.getCurrentComments(recipeId);
+      if (data) {
+        console.log(
+          "data.getAllComments: >>>>>>>>>>>>>>> ",
+          data.getAllComments
+        );
+        // console.log(
+        //   "data.getAllComments[data.getAllComments.length-1]",
+        //   data.getAllComments[data.getAllComments.length - 1]
+        // );
+
+        setCurComments(data.getAllComments);
+      }
+      if (error) {
+        alert(error);
+      }
+    };
+    fetchCurrentComments();
+  }, [recipeId]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(comment);
+    const { data, error } = await apiClient.postComment({ comment }, recipeId);
+    if (data) {
+      console.log("data.publishComment: >>>>>>>>> ", data.publishComment);
+      setCurComments((prevState) => [...prevState, data.publishComment]);
+    }
+    if (error) {
+      alert(error);
+    }
+    setComment("");
+  };
+
+  const handleTextAreaChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  console.log("curComments: >>>>>>>> ", curComments);
   return (
     <div className="IndividualRecipe">
       <div className="recipe-top">
@@ -84,6 +129,24 @@ export default function IndividualRecipe() {
               ))
             : null}
         </div>
+      </div>
+      <div>
+        comments
+        <div>
+          <form onSubmit={handleSubmit}>
+            <textarea
+              name="textarea"
+              value={comment}
+              onChange={handleTextAreaChange}
+            ></textarea>
+            <button> comment </button>
+          </form>
+        </div>
+        {curComments.map((comment) => (
+          <div>
+            {comment?.comment} - {comment?.date} - user id: {comment?.user_id}
+          </div>
+        ))}
       </div>
     </div>
   );
