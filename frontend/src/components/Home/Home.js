@@ -38,14 +38,11 @@ export default function Home({ user }) {
             <div className="home-header">
                 {user.email ? (
                     <div>
-                        <div>
-                            Welcome to Reciplan, {user.first_name}{" "}
-                            {user.last_name}
-                        </div>
+                        Welcome to Reciplan, {user.first_name} {user.last_name}
                     </div>
                 ) : (
                     <div>
-                        <span>Welcome to Reciplan!</span>
+                        Welcome to Reciplan!
                     </div>
                 )}
             </div>
