@@ -93,4 +93,7 @@
   .user-btn {
     top: 20px;
   }
+  .search-input {
+    width: 150px;
+  }
 }

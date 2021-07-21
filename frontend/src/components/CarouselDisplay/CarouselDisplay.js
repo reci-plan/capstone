@@ -59,7 +59,7 @@ const handleUnsave = async (r) => {
             .filter((r) => r.expense >= rangeA && r.expense < rangeB)
             .slice(0, 10)
             .map((r) => (
-              <RecipeCard key={r.id} user={user} recipeInfo={r}  handleSave={handleSave} handleUnsave={handleUnsave}/>
+              <RecipeCard key={r.id} user={user} recipeInfo={r} handleSave={handleSave} handleUnsave={handleUnsave}/>
             ))
           }
         </Carousel> : null
@@ -71,7 +71,7 @@ const handleUnsave = async (r) => {
             .filter((r) => r.prep_time >= rangeA && r.prep_time < rangeB)
             .slice(0, 10)
             .map((r) => (
-                <RecipeCard key={r.id} user={user} recipeInfo={r}  handleSave={handleSave} handleUnsave={handleUnsave}/>
+                <RecipeCard key={r.id} user={user} recipeInfo={r} handleSave={handleSave} handleUnsave={handleUnsave}/>
             ))
           }
         </Carousel> : null
@@ -83,7 +83,7 @@ const handleUnsave = async (r) => {
             .filter((r) => r.rating >= rangeA && r.rating < rangeB)
             .slice(0, 10)
             .map((r) => (
-              <RecipeCard key={r.id} user={user} recipeInfo={r}  handleSave={handleSave} handleUnsave={handleUnsave}/>
+              <RecipeCard key={r.id} user={user} recipeInfo={r} handleSave={handleSave} handleUnsave={handleUnsave}/>
             ))
           }
         </Carousel> : null

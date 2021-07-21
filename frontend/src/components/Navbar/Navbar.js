@@ -73,7 +73,7 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
         </Link>
 
         {user?.email ? (
-          <div className="user-btn">
+          <div className={`user-btn ${isSearch ? 'phone-view': ''}`}>
             <img
               onClick={handleOnUserClick}
               src={userlogo}
