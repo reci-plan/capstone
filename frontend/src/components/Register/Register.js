@@ -64,7 +64,21 @@ export default function Register({ user, setUser }) {
     if (error) {
       setErrors((prevState) => ({ ...prevState, form: error }));
     }
+
+    createProfile()
   };
+
+  const createProfile = async () => {
+    const { data, error } = await apiClient.createProfile();
+
+    if (data) {
+      console.log("success.........Profile.js")
+    }
+
+    if (error) {
+      console.log(error, "error........Profile.js")
+    }
+  }
 
   // redirect, when user registers
   useEffect(() => {

@@ -8,6 +8,7 @@ import Navbar from "../Navbar/Navbar";
 import IndividualRecipe from "../IndividualRecipe/IndividualRecipe";
 import Profile from "../Profile/Profile";
 import SearchPage from "../SearchPage/SearchPage";
+import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
 
 import { useDataLayerValue } from "../../context/DataLayer";
@@ -116,9 +117,17 @@ function App() {
           <Route
             path="/profile"
             element={
-              <Profile user={user} handleClickOnSave={handleClickOnSave} />
+              <Profile user={user} />
             }
           />
+
+          <Route
+            path="/saved"
+            element={
+              <SavedGallery user={user} handleClickOnSave={handleClickOnSave} />
+            }
+          />
+
           <Route
             path="/search"
             element={

@@ -20,7 +20,6 @@ export default function RecipeCard({
   useEffect(() => {
     const checkRecipe = async () => {
       const { data, error } = await apiClient.checkSavedRecipe(recipeInfo.id);
-      console.log(recipeInfo.title, data);
       if (data) {
         setSaved(data);
       }
@@ -68,7 +67,7 @@ export default function RecipeCard({
         </div>
       </div>
       <div className="card-links">
-        <Link to={`recipes/${recipeInfo.api_id}`}>View more &#187;</Link>
+        <Link to={`recipes/${recipeInfo.api_id}`}>View More &#8594;</Link>
         <button className="save-btn" onClick={handleOnClick}>
           {saved ? (
             <img src={heartFill} alt="Solid Heart to unsave recipe"></img>

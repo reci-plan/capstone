@@ -109,6 +109,13 @@ class ApiCalls {
             endpoint: `save/check/${recipeId}`,
         })
     }
+
+    async createProfile() {
+        return await this.request({
+            endpoint: `profile/create`,
+            method: `POST`
+        })
+    }
 }
 
 const API = new ApiCalls(

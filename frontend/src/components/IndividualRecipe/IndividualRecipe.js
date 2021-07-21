@@ -10,16 +10,15 @@ import "./IndividualRecipe.css";
 
 export default function IndividualRecipe() {
   const { recipeId } = useParams();
-  console.log("recipeId", recipeId);
   const [recipeInstructions, setRecipeInstructions] = useState([]);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeInfo, setRecipeInfo] = useState([]);
+
   useEffect(() => {
     const fetchRecipeInfo = async () => {
       const { data, error } = await apiClient.fetchIndividualRecipeInfo(
         recipeId
       );
-      console.log(data);
       if (data) {
         setRecipeInfo(data);
       }
@@ -75,6 +74,14 @@ export default function IndividualRecipe() {
 
         {/* Right Side */}
         <div className="recipe-right">
+          <div className="jumpto">
+            {recipeInstructions.length > 0 ?
+              Array.from(recipeInstructions.length, (i) => {
+                console.log("here",i)
+                return <div>i</div>
+              }) : null
+            }
+          </div>
           <div className="heading">Instructions</div>
           {recipeInstructions.length > 0
             ? recipeInstructions.map((element) => (

@@ -24,9 +24,9 @@ CREATE TABLE all_recipes (
 CREATE TABLE profile (
     id              SERIAL PRIMARY KEY,
     user_id         INTEGER NOT NULL,
-    region          TEXT NOT NULL,
-    short_bio       TEXT NOT NULL,
-    fav_flavors     TEXT NOT NULL,
+    region          TEXT,
+    short_bio       TEXT,
+    fav_flavors     TEXT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 

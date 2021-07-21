@@ -86,6 +86,15 @@ export default function Home({ user }) {
                         rangeA={30}
                         rangeB={40}
                     />
+
+                    <div className="category-header">Under $50</div>
+                    <CarouselDisplay
+                        user={user}
+                        recipes={recipes}
+                        type={"expense"}
+                        rangeA={40}
+                        rangeB={50}
+                    />                      
                 </>
             ) : null}
 
@@ -133,6 +142,7 @@ export default function Home({ user }) {
                 <>
                     <div className="category-header">Over 80 points</div>
                     <CarouselDisplay
+                        user={user}
                         recipes={recipes}
                         type={"rating"}
                         rangeA={80}
@@ -141,6 +151,7 @@ export default function Home({ user }) {
 
                     <div className="category-header">Over 60 points</div>
                     <CarouselDisplay
+                        user={user}
                         recipes={recipes}
                         type={"rating"}
                         rangeA={60}
@@ -149,6 +160,7 @@ export default function Home({ user }) {
 
                     <div className="category-header">Over 40 points</div>
                     <CarouselDisplay
+                        user={user}
                         recipes={recipes}
                         type={"rating"}
                         rangeA={40}
