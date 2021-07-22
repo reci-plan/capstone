@@ -132,6 +132,14 @@ class ApiCalls {
             data: comment_primary_id,
         });
     }
+
+    async editComment(comment) {
+        return await this.request({
+            endpoint: `comment/editComment`,
+            method: `PATCH`,
+            data: comment,
+        });
+    }
 }
 
 const API = new ApiCalls(

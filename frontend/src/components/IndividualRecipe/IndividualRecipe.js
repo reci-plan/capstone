@@ -82,12 +82,28 @@ export default function IndividualRecipe() {
   };
 
   const handleDelete = async (e, comment) => {
-    console.log("Before api call", comment);
+    // console.log("Before api call", comment);
     const { data, error } = await apiClient.deleteComment(comment);
     if (data) {
+      console.log(data);
       setCurComments(curComments.filter((c) => c.id != comment.id));
     }
 
+    if (error) {
+      alert(error);
+    }
+  };
+
+  const handleEdit = async (e, comment) => {
+    const newComment = { ...comment, comment: comment.comment + "a" };
+    const { data, error } = await apiClient.editComment(newComment);
+    if (data) {
+      setCurComments(
+        curComments.map((c) =>
+          c.id === newComment.id ? { ...c, comment: newComment.comment } : c
+        )
+      );
+    }
     if (error) {
       alert(error);
     }
@@ -159,6 +175,7 @@ export default function IndividualRecipe() {
             comment: {comment?.comment}, date: {comment?.date}, user id:{" "}
             {comment?.user_id}, ID (primary key): {comment?.id}{" "}
             <button onClick={(e) => handleDelete(e, comment)}> Delete </button>
+            <button onClick={(e) => handleEdit(e, comment)}> Edit </button>
           </div>
         ))}
       </div>

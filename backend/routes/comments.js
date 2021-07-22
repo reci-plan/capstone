@@ -37,4 +37,15 @@ router.delete("/deleteComment", async (req, res, next) => {
   }
 });
 
+router.patch("/editComment", async (req, res, next) => {
+  try {
+    const user = res.locals.user;
+    const comment = req.body;
+    const idToModify = await Comment.editComment(user, comment);
+    res.status(200).json({ idToModify });
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;
