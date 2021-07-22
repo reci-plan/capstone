@@ -16,6 +16,9 @@ export default function IndividualRecipe() {
   const [recipeInfo, setRecipeInfo] = useState([]);
   const [comment, setComment] = useState("");
   const [curComments, setCurComments] = useState([]);
+  const [showEdit, setShowEdit] = useState(false);
+
+  const [editCommentMsg, setEditCommentMsg] = useState("");
 
   useEffect(() => {
     const fetchRecipeInfo = async () => {
@@ -94,8 +97,20 @@ export default function IndividualRecipe() {
     }
   };
 
-  const handleEdit = async (e, comment) => {
-    const newComment = { ...comment, comment: comment.comment + "a" };
+  const toggleEditArea = async (e, comment) => {
+    setShowEdit(true);
+  };
+
+  const handleEditChange = (e) => {
+    setEditCommentMsg(e.target.value);
+  };
+
+  const handleEditSubmit = async (e, comment) => {
+    e.preventDefault();
+    console.log("INSIDE HANDLEeditsubmit", comment);
+    const newComment = { ...comment, comment: editCommentMsg };
+    console.log(comment, newComment);
+    console.log(newComment.id, comment.id);
     const { data, error } = await apiClient.editComment(newComment);
     if (data) {
       setCurComments(
@@ -109,6 +124,7 @@ export default function IndividualRecipe() {
     }
   };
 
+  console.log(editCommentMsg, showEdit);
   console.log("curComments: >>>>>>>> ", curComments);
   return (
     <div className="IndividualRecipe">
@@ -175,7 +191,19 @@ export default function IndividualRecipe() {
             comment: {comment?.comment}, date: {comment?.date}, user id:{" "}
             {comment?.user_id}, ID (primary key): {comment?.id}{" "}
             <button onClick={(e) => handleDelete(e, comment)}> Delete </button>
-            <button onClick={(e) => handleEdit(e, comment)}> Edit </button>
+            <button onClick={(e) => toggleEditArea(e, comment)}> Edit </button>
+            {showEdit ? (
+              <form onSubmit={(e, _comment) => handleEditSubmit(e, comment)}>
+                <textarea
+                  name="textareaEdit"
+                  value={editCommentMsg}
+                  onChange={handleEditChange}
+                ></textarea>
+                <button> submit edit </button>
+              </form>
+            ) : (
+              <> </>
+            )}
           </div>
         ))}
       </div>
