@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import apiClient from "../../services/apiClient";
 
-import location from "../../assets/location.svg"
+import tempImg from "../../assets/tempProfileImg.png";
+import location from "../../assets/location.svg";
 import './Profile.css'
 export default function Profile({ user }) {
     const [profile, setProfile] = useState({})
@@ -25,35 +26,41 @@ export default function Profile({ user }) {
 
     return (
         <div className="Profile">
-            <div className="section-title">Profile</div>
-            <div>
-                <img src="" alt="User profile img"></img>
-                <div className="fav-flavors">
-                {/* Categories to input flavors */}
-                {profile.fav_flavors ? 
-                    <div>fav flavors: {profile.fav_flavors}</div> : null
-                }
-                </div>
-            </div>
-            <div>
-                <div>
-                    <div className="profile-name">{user.first_name} {user.last_name}</div>
+            <div className="profile-display">
+                <div className="profile-left">
                     <div className="profile-img">
-                        {profile.region ? 
-                        <>
-                            <img src={location} alt="Location Icon"></img>
-                            <div>{profile.region}</div> 
-                        </> : null
+                        {profile.image_url ?
+                            <img src={profile.image_url} alt="User profile img"></img> : 
+                            <img src={tempImg} alt="Placeholder img"></img>
                         }
                     </div>
+                    <div className="fav-flavors">
+                    {/* Categories to input flavors */}
+                    {profile.fav_flavors ? 
+                        <div>fav flavors: {profile.fav_flavors}</div> : null
+                    }
+                    </div>
                 </div>
-                <div> username: {user.username}</div>
-                <div> email: {user.email}</div>
-                {profile.short_bio ? 
-                    <div>short bio: {profile.short_bio}</div> : null
-                }
+                <div className="profile-right">
+                    <div className="profile-basic">
+                        <div className="profile-name">{user.first_name} {user.last_name}</div>
+                        <div className="location">
+                            {profile.region ? 
+                            <>
+                                <img src={location} alt="Location Icon"></img>
+                                <span>{profile.region}</span> 
+                            </> : null
+                            }
+                        </div>
+                    </div>
+                    <div> username: {user.username}</div>
+                    <div> email: {user.email}</div>
+                    {profile.short_bio ? 
+                        <div>short bio: {profile.short_bio}</div> : null
+                    }
+                </div>
+                <Link to='/profile/edit' className="edit-btn">...</Link>
             </div>
-            <Link to='/profile/edit'>...</Link>
         </div>
     );
 }
