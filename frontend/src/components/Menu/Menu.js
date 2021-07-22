@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Menu.css'
 import { TextField } from '@material-ui/core';
 import Multiselect from 'multiselect-react-dropdown';
+import apiClient from "../../services/apiClient";
 
 import pencil from '../../assets/pencil.svg'
 
@@ -13,20 +14,20 @@ var userMeal = "";
 var userCategories = [];
 
 //Pass elements into popup with props.children
-export default function Menu() {
+export default function Menu(props) {
     const data = [
-        {Category: 'Vegetarian', id:1},
-        {Category: 'Vegan', id:2},
-        {Category: 'Gluten Free', id:3},
-        {Category: 'Dairy Free', id:4},
-        {Category: 'Breakfast', id:5},
-        {Category: 'Main Course', id:6},
-        {Category: 'Side Dish', id:7},
-        {Category: 'Salad', id:8},
-        {Category: 'Appetizer', id:9},
-        {Category: 'Soup', id:10},
-        {Category: 'Finger Food', id:11},
-        {Category: 'Drink', id:12}
+        {Category: 'Vegetarian', id:0},
+        {Category: 'Vegan', id:1},
+        {Category: 'Gluten Free', id:2},
+        {Category: 'Dairy Free', id:3},
+        {Category: 'Breakfast', id:4},
+        {Category: 'Main Course', id:5},
+        {Category: 'Side Dish', id:6},
+        {Category: 'Salad', id:7},
+        {Category: 'Appetizer', id:8},
+        {Category: 'Soup', id:9},
+        {Category: 'Finger Food', id:10},
+        {Category: 'Drink', id:11}
     ]
 
     const [options] = useState(data)
@@ -58,13 +59,34 @@ export default function Menu() {
         console.log(selectedCategories)
     }
 
-    const returnValues = () => {
+    const returnValues = async () => {
+        var categoryCode = 0;
         userTime = document.getElementById('time').value;
         userMeal =document.getElementById('meal-name').value;
         userCategories = selectedCategories;
-        userValues = [userTime, userMeal, userCategories]
-        console.log("HERE ARE THE VALUES", userValues)
+        userCategories.forEach(element => {
+            console.log(element.option)
+        })
+
+        userCategories.forEach(element => {
+            categoryCode |= 1<<(element.option);
+        })
+        
+        console.log("Cat", categoryCode)
+
+        const { data, err } = await apiClient.fetchRecipesByCategory(categoryCode);
+
+        if (data) {
+            console.log(data)
+        }
         //return userValues;
+        
+        userValues = [userTime, userMeal, data.recipes]
+        console.log("HERE ARE THE VALUES", userValues)
+
+        //load wheel with options
+        console.log(userValues[2])
+        return userValues[2];
     }
 
     return (
@@ -88,7 +110,7 @@ export default function Menu() {
             
             {submitIsVisible ?
                 <>
-                <div className="submit-but"><button onClick={(returnValues)}>Submit</button></div>
+                <div className="submit-but" onClick={props.data}><div onClick={props.passToParent(returnValues)}><button onClick={props.onClick2}>Submit</button></div></div>
                 </> : 
                 ""
             }

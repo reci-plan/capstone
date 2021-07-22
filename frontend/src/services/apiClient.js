@@ -87,6 +87,12 @@ class ApiCalls {
             endpoint:`recipes/${recipeId}`
         })
     }
+
+    async fetchRecipesByCategory(category) {
+        return await this.request({
+            endpoint:`search/${category}`
+        })
+    }
 }
 
 const API = new ApiCalls(

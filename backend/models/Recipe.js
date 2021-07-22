@@ -22,9 +22,7 @@ class Recipe {
         var catCode = 0;
 
         data.results.forEach(async (r, idx) => {
-            
-            catCode = (2*(2*(2*(r.vegetarian ? 1 : 0) + (r.vegan ? 1 : 0)) + (r.glutenFree ? 1 : 0)) + (r.dairyFree ? 1 : 0))
-
+            catCode = ((((r.vegetarian ? 1 : 0) + (r.vegan ? 1 : 0)) + (r.glutenFree ? 1 : 0)) + (r.dairyFree ? 1 : 0))
             r.dishTypes.forEach(element => {
                 if (dishTypes.includes(element)) {
                     catCode |= 1<<dishTypes.indexOf(element);
