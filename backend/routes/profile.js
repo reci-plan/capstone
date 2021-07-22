@@ -14,7 +14,25 @@ router.post('/create', requireAuthenticatedUser, async(req, res, next) => {
   }
 })
 
+router.get('/', requireAuthenticatedUser, async(req, res, next) => {
+  try {
+    const user = res.locals.user;
+    const profile = await Profile.fetchProfile(user);
+    res.status(200).json(profile)
+  } catch(err) {
+    next(err)
+  }
+})
 
-
+router.put('/', requireAuthenticatedUser, async(req, res, next) => {
+  try {
+    const user = res.locals.user;
+    const profile = req.body.info
+    const updateProfile = await Profile.updateProfile(user, profile);
+    res.status(201).json(updateProfile)
+  } catch(err) {
+    next(err)
+  }
+})
 
 module.exports = router

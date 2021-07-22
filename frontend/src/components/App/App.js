@@ -7,6 +7,7 @@ import Login from "../Login/Login";
 import Navbar from "../Navbar/Navbar";
 import IndividualRecipe from "../IndividualRecipe/IndividualRecipe";
 import Profile from "../Profile/Profile";
+import EditProfile from "../EditProfile/EditProfile";
 import SearchPage from "../SearchPage/SearchPage";
 import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
@@ -118,6 +119,13 @@ function App() {
             path="/profile"
             element={
               <Profile user={user} />
+            }
+          />
+
+          <Route
+            path="/profile/edit"
+            element={
+              <EditProfile user={user} />
             }
           />
 

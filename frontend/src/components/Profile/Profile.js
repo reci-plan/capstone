@@ -1,15 +1,33 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
+import apiClient from "../../services/apiClient";
 
-
+import './Profile.css'
 export default function Profile({ user }) {
-    const [errors, setErrors] = useState("");
+    const [profile, setProfile] = useState({})
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            const { data, error } = await apiClient.fetchProfile()
+            if (data) {
+                setProfile(data)
+            }
+            if (error) {
+                console.log(error, "Profile.js")
+            }
+        }
+
+        fetchProfile()
+    }, [])
+
+    console.log(profile)
 
     return (
         <div className="Profile">
             <div className="section-title">Profile</div>
             <div>
                 <img src="" alt="User profile img"></img>
-                <div>
+                <div className="fav-flavors">
 
                 </div>
             </div>
@@ -18,6 +36,7 @@ export default function Profile({ user }) {
                 <div> username: {user.username}</div>
                 <div> email: {user.email}</div>
             </div>
+            <Link to='/profile/edit'>...</Link>
         </div>
     );
 }

@@ -116,6 +116,20 @@ class ApiCalls {
             method: `POST`
         })
     }
+
+    async fetchProfile() {
+        return await this.request({
+            endpoint: `profile/`
+        })
+    }
+
+    async updateProfile(info) {
+        return await this.request({
+            endpoint: `profile/`,
+            method: `PUT`,
+            data: info
+        })
+    }
 }
 
 const API = new ApiCalls(

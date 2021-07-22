@@ -18,8 +18,43 @@ class Profile {
     `, [user.username]
     )
 
-    console.log(results.rows)
     return results.rows[0]
+  }
+
+  /** Fetch user profile */
+  static async fetchProfile(user) {
+    if (!user) {
+      throw new UnauthorizedError(`No user logged in.`);
+    }
+
+    const results = await db.query(`
+      SELECT * FROM profile
+      WHERE user_id = (SELECT id FROM users WHERE username = $1)
+    `, [user.username]
+    )
+
+    return results.rows[0];
+  }
+
+  /** Update user profile */
+  static async updateProfile(user, profile) {
+    console.log("update")
+    if (!user) {
+      throw new UnauthorizedError(`No user logged in.`);
+    }
+
+    const userResults = await db.query(`
+      UPDATE users
+      SET first_name = ISNULL
+    `)
+
+    const profileResults = await db.query(`
+      UPDATE profile
+      SET 
+    `)
+    
+
+    return results.rows[0];
   }
 }
 
