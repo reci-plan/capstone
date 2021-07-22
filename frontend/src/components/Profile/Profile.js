@@ -10,6 +10,7 @@ export default function Profile({ user }) {
         const fetchProfile = async () => {
             const { data, error } = await apiClient.fetchProfile()
             if (data) {
+                console.log(data)
                 setProfile(data)
             }
             if (error) {

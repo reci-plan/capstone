@@ -10,7 +10,9 @@ export default function EditProfile() {
     email: "",
     password: "",
     passwordConfirm: "",
-    short_bio: ""
+    short_bio: "",
+    region: "",
+    fav_flavors: ""
   })
   const [errors, setErrors] = useState([])
 
@@ -25,7 +27,9 @@ export default function EditProfile() {
       username: form.username,
       email: form.email,
       password: form.password,
-      short_bio: form.short_bio
+      short_bio: form.short_bio,
+      region: form.region,
+      fav_flavors: form.fav_flavors
     })
 
     if (data) {
@@ -94,6 +98,15 @@ export default function EditProfile() {
             />
           </div>
           {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
+          <div>
+            <input
+              type="text"
+              name="region"
+              placeholder="region"
+              value={form.region}
+              onChange={handleInputChange}
+            />
+          </div>
           <div>
             <input
               type="text"
