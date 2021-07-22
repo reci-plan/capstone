@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import apiClient from '../../services/apiClient'
 import './EditProfile.css';
 
-export default function EditProfile() {
+export default function EditProfile({ user }) {
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -12,7 +14,8 @@ export default function EditProfile() {
     passwordConfirm: "",
     short_bio: "",
     region: "",
-    fav_flavors: ""
+    fav_flavors: "",
+    image_url: ""
   })
   const [errors, setErrors] = useState([])
 
@@ -56,10 +59,12 @@ export default function EditProfile() {
       password: form.password,
       short_bio: form.short_bio,
       region: form.region,
-      fav_flavors: form.fav_flavors
+      fav_flavors: form.fav_flavors,
+      image_url: form.image_url
     })
     if (data) {
       console.log(data, "success EditProfile.js")
+      navigate('/profile')
     }
     if (error) {
       console.log(error, "error EditProfile.js")

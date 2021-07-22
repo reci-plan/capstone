@@ -16,6 +16,7 @@ router.post('/create', requireAuthenticatedUser, async(req, res, next) => {
 
 router.get('/', requireAuthenticatedUser, async(req, res, next) => {
   try {
+    console.log("fetch")
     const user = res.locals.user;
     const profile = await Profile.fetchProfile(user);
     res.status(200).json(profile)

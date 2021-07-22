@@ -47,7 +47,6 @@ class Profile {
       throw new UnauthorizedError(`No user logged in.`);
     }
 
-    
     if (profile.email) {
       if (profile.email.indexOf("@") <= 0) {
         throw new BadRequestError("Invalid email.");
@@ -76,12 +75,13 @@ class Profile {
 
     const profileResults = await db.query(`
       UPDATE profile
-      SET region = CASE WHEN COALESCE($1, '') = '' THEN region ELSE $1 END,
-          short_bio = CASE WHEN COALESCE($2, '') = '' THEN short_bio ELSE $2 END,
-          fav_flavors = CASE WHEN COALESCE($3, '') = '' THEN fav_flavors ELSE $3 END
-      WHERE user_id = (SELECT id from users WHERE username = $4)
-      RETURNING id, user_id, region, short_bio, fav_flavors;
-    `, [profile.region, profile.short_bio, profile.fav_flavors, user.username]
+      SET image_url = CASE WHEN COALESCE($1, '') = '' THEN image_url ELSE $1 END,
+          region = CASE WHEN COALESCE($2, '') = '' THEN region ELSE $2 END,
+          short_bio = CASE WHEN COALESCE($3, '') = '' THEN short_bio ELSE $3 END,
+          fav_flavors = CASE WHEN COALESCE($4, '') = '' THEN fav_flavors ELSE $4 END
+      WHERE user_id = (SELECT id from users WHERE username = $5)
+      RETURNING id, user_id, image_url, region, short_bio, fav_flavors;
+    `, [profile.image_url, profile.region, profile.short_bio, profile.fav_flavors, user.username]
     )
     
     return [userResults.rows[0], profileResults.rows[0]];
