@@ -93,6 +93,12 @@ class ApiCalls {
             endpoint:`search/${category}`
         })
     }
+
+    async fetchLocalDbRecipe(recipeId) {
+        return await this.request({
+            endpoint:`search/id/${recipeId}`
+        })
+    }
 }
 
 const API = new ApiCalls(

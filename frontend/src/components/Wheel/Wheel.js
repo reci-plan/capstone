@@ -7,6 +7,7 @@ import apiClient from "../../services/apiClient";
 
 import pencil from '../../assets/pencil.svg'
 
+var titleHere = "";
 export default function Generator() {
   const [wheelIsVisible, setWheelIsVisible] = useState(true)
   const [mustSpin, setMustSpin] = useState(false);
@@ -61,14 +62,30 @@ export default function Generator() {
     }
   }
 
-  // const displayRecipePopup = async (recipeId) => {
-  //   const { data, err } = await apiClient.fetchIndividualRecipeInfo(recipeId);
-  //   console.log(data)
-  // }
+  const displayRecipePopup = async (recipeId) => {
+    console.log("------------------------->", Promise.resolve(recipeId))
+    var promise = Promise.resolve(recipeId);
+    promise.then(function(val) {
+      console.log("TRY PROMISE ----------->")
+      console.log(val)
+      console.log("Recipe Id", val)
+      recipeId = val;
+    });
+    const { data, err } = await apiClient.fetchLocalDbRecipe(recipeId);
+    console.log("MY PROM DATA", data)
+    console.log("WANT TO RETURN", data.recipe.title)
+    console.log("RESULT PROM", recipeId)
+    titleHere = data.recipe.title;
+    return data.recipe.title;
+  }
 
+  const promise1 = new Promise((resolve, reject) => {
+    resolve('Success');
+  });
   // const childCallBack = (passToParent) => {
   //   console.log("This is the wheel", passToParent);
   // }
+  
 
   return (
     <div className="Generator">
@@ -120,7 +137,9 @@ export default function Generator() {
           <h3>My popup</h3>
           
           <p>This is my button triggered popup</p>
-
+          {console.log(data[prizeNumber].option)}
+          {console.log("aaaaaAAAAAAAAAAAA", (displayRecipePopup((data[prizeNumber].option)).then(data=>console.log("AAAAAA",data))))}
+          {titleHere}
           {(data[prizeNumber].option)}
           {(data[prizeNumber].category)}
 

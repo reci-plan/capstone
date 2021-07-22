@@ -22,4 +22,14 @@ router.get('/:category', async(req, res, next) => {
   }
 })
 
+router.get('/id/:id', async(req, res, next) => {
+    try {
+      const query = req.params.id
+      const recipe = await Search.fetchRecipe(query)
+      res.status(200).json({ recipe })
+    } catch(err) {
+      next(err)
+    }
+  })
+
 module.exports = router

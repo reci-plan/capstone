@@ -25,6 +25,14 @@ class Search {
 
     return results;
   }
+
+  static async fetchRecipe(recipeId) {
+    const results = await db.query(`
+        SELECT * FROM all_recipes
+        WHERE id = $1
+    `, [recipeId])
+    return results.rows[0]
+}
 }
 
 module.exports = Search
