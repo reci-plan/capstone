@@ -92,6 +92,26 @@ class Comment {
 
         // return results.rows[0];
     }
+
+    static async belongsToUser(user, cur_api_id) {
+        if (!user) {
+            throw new UnauthorizedError(`No user logged in`);
+        }
+        console.log(user, cur_api_id);
+        const results = await db.query(
+            `SELECT * FROM comments
+            WHERE user_id = (SELECT id FROM users WHERE username = $1)
+            AND recipe_id = (SELECT id FROM all_recipes WHERE api_id = $2)
+            `,
+            [user.username, cur_api_id]
+        );
+        console.log(results.rows[0]);
+        // if (results.length === 0) {
+        //     throw new BadRequestError("does not belong to you");
+        // }
+
+        return results.rows[0];
+    }
 }
 
 module.exports = Comment;

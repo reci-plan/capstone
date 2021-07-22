@@ -52,11 +52,6 @@ export default function IndividualRecipe() {
           "data.getAllComments: >>>>>>>>>>>>>>> ",
           data.getAllComments
         );
-        // console.log(
-        //   "data.getAllComments[data.getAllComments.length-1]",
-        //   data.getAllComments[data.getAllComments.length - 1]
-        // );
-
         setCurComments(data.getAllComments);
       }
       if (error) {
@@ -97,20 +92,9 @@ export default function IndividualRecipe() {
     }
   };
 
-  const toggleEditArea = async (e, comment) => {
-    setShowEdit(true);
-  };
-
-  const handleEditChange = (e) => {
-    setEditCommentMsg(e.target.value);
-  };
-
   const handleEditSubmit = async (e, comment) => {
     e.preventDefault();
-    console.log("INSIDE HANDLEeditsubmit", comment);
     const newComment = { ...comment, comment: editCommentMsg };
-    console.log(comment, newComment);
-    console.log(newComment.id, comment.id);
     const { data, error } = await apiClient.editComment(newComment);
     if (data) {
       setCurComments(
@@ -126,6 +110,7 @@ export default function IndividualRecipe() {
 
   console.log(editCommentMsg, showEdit);
   console.log("curComments: >>>>>>>> ", curComments);
+
   return (
     <div className="IndividualRecipe">
       <div className="recipe-top">
@@ -190,16 +175,18 @@ export default function IndividualRecipe() {
           <div>
             comment: {comment?.comment}, date: {comment?.date}, user id:{" "}
             {comment?.user_id}, ID (primary key): {comment?.id}{" "}
-            <button onClick={(e) => handleDelete(e, comment)}> Delete </button>
-            <button onClick={(e) => toggleEditArea(e, comment)}> Edit </button>
+            <button onClick={(e) => handleDelete(e, comment)}>Delete</button>
+            <button onClick={(e) => setShowEdit(!showEdit)}>
+              {showEdit ? "Unedit" : "Edit"}
+            </button>
             {showEdit ? (
               <form onSubmit={(e, _comment) => handleEditSubmit(e, comment)}>
                 <textarea
                   name="textareaEdit"
                   value={editCommentMsg}
-                  onChange={handleEditChange}
+                  onChange={(e) => setEditCommentMsg(e.target.value)}
                 ></textarea>
-                <button> submit edit </button>
+                <button>submit edit </button>
               </form>
             ) : (
               <> </>

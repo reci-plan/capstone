@@ -37,12 +37,23 @@ router.delete("/deleteComment", async (req, res, next) => {
   }
 });
 
-router.patch("/editComment", async (req, res, next) => {
+router.put("/editComment", async (req, res, next) => {
   try {
     const user = res.locals.user;
     const comment = req.body;
     const idToModify = await Comment.editComment(user, comment);
     res.status(200).json({ idToModify });
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get("/doesItBelongToUser/:recipeId", async (req, res, next) => {
+  try {
+    const user = res.locals.user;
+    const { recipeId } = req.params;
+    const theComment = await Comment.belongsToUser(user, recipeId);
+    res.status(200).json({ theComment });
   } catch (e) {
     next(e);
   }

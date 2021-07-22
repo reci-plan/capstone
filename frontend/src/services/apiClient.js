@@ -136,8 +136,15 @@ class ApiCalls {
     async editComment(comment) {
         return await this.request({
             endpoint: `comment/editComment`,
-            method: `PATCH`,
+            method: `PUT`,
             data: comment,
+        });
+    }
+
+    async checkIfCommentBelongsToUser(api_id) {
+        return await this.request({
+            endpoint: `comment/doesItBelongToUser/${api_id}`,
+            method: `GET`,
         });
     }
 }
