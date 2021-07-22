@@ -27,7 +27,7 @@ router.get('/', requireAuthenticatedUser, async(req, res, next) => {
 router.put('/', requireAuthenticatedUser, async(req, res, next) => {
   try {
     const user = res.locals.user;
-    const profile = req.body.info
+    const profile = req.body
     const updateProfile = await Profile.updateProfile(user, profile);
     res.status(201).json(updateProfile)
   } catch(err) {

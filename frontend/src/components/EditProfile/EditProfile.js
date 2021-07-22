@@ -104,7 +104,7 @@ export default function EditProfile() {
             />
           </div>
           <div>{errors.form}</div>
-          <button className="btn" onClick={handleSubmit}>register</button>
+          <button className="btn" onClick={handleSubmit}>update</button>
         </div>
     </div>
   )

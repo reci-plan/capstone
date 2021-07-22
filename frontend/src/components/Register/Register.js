@@ -60,12 +60,11 @@ export default function Register({ user, setUser }) {
     if (data) {
       setUser(data.user);
       apiClient.setToken(data.token);
+      createProfile()
     }
     if (error) {
       setErrors((prevState) => ({ ...prevState, form: error }));
     }
-
-    createProfile()
   };
 
   const createProfile = async () => {

@@ -43,18 +43,48 @@ class Profile {
       throw new UnauthorizedError(`No user logged in.`);
     }
 
-    const userResults = await db.query(`
-      UPDATE users
-      SET first_name = ISNULL
-    `)
+    console.log(profile)
 
-    const profileResults = await db.query(`
-      UPDATE profile
-      SET 
-    `)
+    var hashedPassword = "";
+    if (profile.password) {
+      hashedPassword = await bcrypt.hash(
+        profile.password,
+        BCRYPT_WORK_FACTOR
+      );
+    }
     
 
-    return results.rows[0];
+    console.log(hashedPassword)
+    
+    const userResults = await db.query(`
+      UPDATE users
+      SET first_name = CASE WHEN COALESCE($1, '') = '' THEN first_name ELSE $1 END,
+          last_name = CASE WHEN COALESCE($2, '') = '' THEN last_name ELSE $2 END,
+          username = CASE WHEN COALESCE($3, '') = '' THEN username ELSE $3 END,
+          email = CASE WHEN COALESCE($4, '') = '' THEN email ELSE $4 END,
+          password = CASE WHEN COALESCE($5, '') = '' THEN password ELSE $5 END
+      WHERE id = (SELECT id from users WHERE username = $6);
+    `, [profile.first_name, profile.last_name, profile.username, profile.email, hashedPassword, user.username]
+    )
+
+    // const userResults = await db.query(`
+    //   UPDATE users
+    //   SET first_name = CASE WHEN COALESCE($1, '') = '' THEN first_name ELSE $1 END,
+    //       last_name = CASE WHEN COALESCE($2, '') = '' THEN last_name ELSE $2 END,
+    //       username = CASE WHEN COALESCE($3, '') = '' THEN username ELSE $3 END,
+    //       password = CASE WHEN COALESCE($4, '') = '' THEN password ELSE $4 END
+    //   WHERE id = (SELECT id from users WHERE username = $5);
+    // `, [profile.first_name, profile.last_name, profile.username, hashedPassword, user.username]
+    // )
+
+    // const profileResults = await db.query(`
+    //   UPDATE profile
+    //   SET 
+    // `)
+    
+    return userResults.rows[0];
+
+    // return [userResults.rows[0], profileResults.rows[0]];
   }
 }
 
