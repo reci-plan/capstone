@@ -173,14 +173,16 @@ export default function IndividualRecipe() {
         </div>
         {curComments.map((comment) => (
           <div>
-            comment: {comment?.comment}, date: {comment?.date}, user id:{" "}
-            {comment?.user_id}, ID (primary key): {comment?.id}{" "}
+            comment: {comment?.comment}, date: {comment?.date}, user id:
+            {comment?.user_id}, ID (primary key): {comment?.id}
             <button onClick={(e) => handleDelete(e, comment)}>Delete</button>
             <button onClick={(e) => setShowEdit(!showEdit)}>
               {showEdit ? "Unedit" : "Edit"}
             </button>
             {showEdit ? (
-              <form onSubmit={(e, _comment) => handleEditSubmit(e, comment)}>
+              <form
+                onSubmit={(e, commentParameter) => handleEditSubmit(e, comment)}
+              >
                 <textarea
                   name="textareaEdit"
                   value={editCommentMsg}

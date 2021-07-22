@@ -56,7 +56,7 @@ class Comment {
         );
 
         if (checkIfExisting.rows.length !== 1) {
-            throw new BadRequestError("You don't have this comment");
+            throw new BadRequestError("You don't own this comment");
         }
 
         const results = await db.query(
@@ -77,6 +77,17 @@ class Comment {
         }
 
         console.log(comment.comment, comment.id);
+
+        const checkIfExisting = await db.query(
+            `SELECT * FROM comments
+            WHERE user_id = (SELECT id FROM users WHERE username = $1)
+            AND id = $2`,
+            [user.username, comment.id]
+        );
+
+        if (checkIfExisting.rows.length !== 1) {
+            throw new BadRequestError("You don't own this comment");
+        }
 
         const results = await db.query(
             `UPDATE comments
