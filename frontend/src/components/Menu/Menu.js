@@ -64,12 +64,13 @@ export default function Menu(props) {
         userTime = document.getElementById('time').value;
         userMeal =document.getElementById('meal-name').value;
         userCategories = selectedCategories;
+        console.log("USER CAT", selectedCategories)
         userCategories.forEach(element => {
-            console.log(element.option)
+            console.log("MY CAT", element, element.id)
         })
 
         userCategories.forEach(element => {
-            categoryCode |= 1<<(element.option);
+            categoryCode |= 1<<(element.id);
         })
         
         console.log("Cat", categoryCode)

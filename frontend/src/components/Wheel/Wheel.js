@@ -3,6 +3,7 @@ import './Wheel.css'
 import { Wheel } from 'react-custom-roulette'
 import Popup from '../Popup/Popup'
 import Menu from '../Menu/Menu'
+import apiClient from "../../services/apiClient";
 
 import pencil from '../../assets/pencil.svg'
 
@@ -18,6 +19,7 @@ export default function Generator() {
     { option: 2},
     { option: 3},
   ])
+  //const [recipePopup, setRecipePopup] = useState(false)
   const data = loadWheel;
   
   console.log("HERE'S THE DATA: ", data)
@@ -53,8 +55,16 @@ export default function Generator() {
   const dummyLoadWheel = (passToParent) => {
     console.log("SELECTED CATEGORIES TO LOAD", Promise.resolve(passToParent))
     console.log("---------- TESTING ----------")
-    passToParent.then(result => setLoadWheel(result.rows)).catch( err => console.log(err))
+    if (passToParent) {
+
+      passToParent.then(result => setLoadWheel(result.rows)).catch( err => console.log(err))
+    }
   }
+
+  // const displayRecipePopup = async (recipeId) => {
+  //   const { data, err } = await apiClient.fetchIndividualRecipeInfo(recipeId);
+  //   console.log(data)
+  // }
 
   // const childCallBack = (passToParent) => {
   //   console.log("This is the wheel", passToParent);
@@ -62,7 +72,6 @@ export default function Generator() {
 
   return (
     <div className="Generator">
-      <button onClick={dummyLoadWheel}></button>
       <div className="header">Spin the wheel to plan your meal</div>
       <div className="fullPage">
         <div className="menuView">
