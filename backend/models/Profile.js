@@ -1,12 +1,13 @@
 const bcrypt = require("bcrypt");
 const db = require("../db");
 const { BCRYPT_WORK_FACTOR } = require("../config");
+const { UnauthorizedError, BadRequestError } = require("../utils/errors")
 
 class Profile {
 
   /** Create user profile after register */
   static async createProfile(user) {
-    /* restart table schema since some info are not required */
+    /* restart table schema since some info are no longer required */
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
     }
@@ -36,14 +37,22 @@ class Profile {
     return results.rows[0];
   }
 
-  /** Update user profile */
+  /** Update user profile
+   * If the column value is null or empty, then keep original information
+   * If the column value is valid, then change it 
+   * Changed the users table email constraint to allow user to change email
+   */
   static async updateProfile(user, profile) {
-    console.log("update")
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
     }
 
-    console.log(profile)
+    
+    if (profile.email) {
+      if (profile.email.indexOf("@") <= 0) {
+        throw new BadRequestError("Invalid email.");
+      }
+    }
 
     var hashedPassword = "";
     if (profile.password) {
@@ -75,8 +84,6 @@ class Profile {
     `, [profile.region, profile.short_bio, profile.fav_flavors, user.username]
     )
     
-    console.log("user", userResults.rows[0])
-    console.log("profile", profileResults.rows[0])
     return [userResults.rows[0], profileResults.rows[0]];
   }
 }

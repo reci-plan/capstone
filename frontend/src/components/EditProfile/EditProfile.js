@@ -17,7 +17,34 @@ export default function EditProfile() {
   const [errors, setErrors] = useState([])
 
   const handleInputChange = (e) => {
-    setForm((prev) => ({...prev, [e.target.name]: e.target.value}))
+    if (e.target.name === "email") {
+      if (e.target.value.indexOf("@") === -1) {
+        setErrors((e) => ({ ...e, email: "Please enter a valid email." }));
+      } else {
+        setErrors((e) => ({ ...e, email: null }));
+      }
+      if (e.target.value === "") {
+        setErrors((e) => ({ ...e, email: null }));
+      }
+    }
+
+     if (e.target.name === "password") {
+      if (form.passwordConfirm && form.passwordConfirm !== e.target.value) {
+        setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match" }))
+      } else {
+        setErrors((e) => ({ ...e, passwordConfirm: null }))
+      }
+    }
+    
+    if (e.target.name === "passwordConfirm") {
+      if (form.password && form.password !== e.target.value) {
+        setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match" }))
+      } else {
+        setErrors((e) => ({ ...e, passwordConfirm: null }))
+      }
+    }
+
+    setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
   }
 
   const handleSubmit = async () => {
@@ -31,11 +58,9 @@ export default function EditProfile() {
       region: form.region,
       fav_flavors: form.fav_flavors
     })
-
     if (data) {
       console.log(data, "success EditProfile.js")
     }
-
     if (error) {
       console.log(error, "error EditProfile.js")
     }
