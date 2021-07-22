@@ -110,7 +110,7 @@ export default function Menu(props) {
             
             {submitIsVisible ?
                 <>
-                <div className="submit-but" onClick={props.data}><div onClick={props.passToParent(returnValues)}><button onClick={props.onClick2}>Submit</button></div></div>
+                <div className="submit-but" onClick={props.data}><div onClick={props.passToParent(returnValues())}><button onClick={props.onClick2}>Submit</button></div></div>
                 </> : 
                 ""
             }

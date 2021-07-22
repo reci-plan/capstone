@@ -12,19 +12,24 @@ export default function Generator() {
   const [prizeNumber, setPrizeNumber] = useState(0);
   //for recipe popup
   const [buttonPopup, setButtonPopup] = useState(false);
-
-  const data = [
-    { option: 'a', style: { backgroundColor: 'green', textColor: 'black' }, category: 1},
-    { option: 'b', category: 0},
-    { option: 'c', category: 1},
-  ]
-
+  const [spinIsVisible, setSpinIsVisible] = useState(false)
+  const [loadWheel, setLoadWheel] = useState([
+    { option: 1},
+    { option: 2},
+    { option: 3},
+  ])
+  const data = loadWheel;
+  
+  console.log("HERE'S THE DATA: ", data)
+  
   //Use a query to get all the recipes that fit the category selected.
   //SELECT id or name FROM all_recipes WHERE category = [SELECTED CATEGORY FROM WHEEL]
   //load options into an array like so: 
-  for (let i = 0; i < 30; i++) {
-    data.push({ option: 'a', category: 0})
-  }
+  /*var ar =[];
+  for (let i = 0; i < 4; i++) {
+    ar.push({ "option": i});
+    console.log(ar[i])
+  }*/
 
   console.log(data)
 
@@ -45,8 +50,19 @@ export default function Generator() {
     setWheelIsVisible(true)
   }
 
+  const dummyLoadWheel = (passToParent) => {
+    console.log("SELECTED CATEGORIES TO LOAD", Promise.resolve(passToParent))
+    console.log("---------- TESTING ----------")
+    passToParent.then(result => setLoadWheel(result.rows)).catch( err => console.log(err))
+  }
+
+  // const childCallBack = (passToParent) => {
+  //   console.log("This is the wheel", passToParent);
+  // }
+
   return (
     <div className="Generator">
+      <button onClick={dummyLoadWheel}></button>
       <div className="header">Spin the wheel to plan your meal</div>
       <div className="fullPage">
         <div className="menuView">
@@ -64,21 +80,26 @@ export default function Generator() {
           <Wheel
             mustStartSpinning={mustSpin}
             prizeNumber={prizeNumber}
-            data={data}
+            data={loadWheel}
 
             onStopSpinning={() => {
               setMustSpin(false)
               setButtonPopup(true)
             }}
           />
-          <button onClick={handleSpinClick}>SPIN</button>
+          {spinIsVisible ?
+                <>
+                <button onClick={handleSpinClick}>SPIN</button>
+                </> : 
+                ""
+          }
         </> : 
         <div className="menuParent">
           <div className="menuHeader">
           <div className="close"><div onClick={(handleCloseForm)}><img src="https://svgshare.com/i/ZL_.svg"></img></div></div>
             <div className="menuItem">Edit a meal</div>
           </div>
-          <Menu></Menu>
+          <Menu data={handleCloseForm} onClick2={setSpinIsVisible} passToParent={dummyLoadWheel}></Menu>
         </div>
         }
       </div>
