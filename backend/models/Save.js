@@ -9,6 +9,7 @@ class Save {
       throw new UnauthorizedError(`No user logged in.`);
     }
 
+    // correct id is saved_recipes.recipe_id
     const query = `
       SELECT * FROM all_recipes
       JOIN saved_recipes ON all_recipes.id = saved_recipes.recipe_id
@@ -23,7 +24,6 @@ class Save {
 
   // Recipe is an object.
   static async saveRecipe(user, recipe) {
-    console.log(recipe)
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
     }
@@ -36,10 +36,10 @@ class Save {
       throw new BadRequestError(`Missing title in request body.`);
     }
 
-    // const isExisting = await Save.checkRecipe(user, recipe.id);
-    // if (isExisting) {
-    //   throw new BadRequestError("Cannot insert duplicate.");
-    // }
+    const isExisting = await Save.checkRecipe(user, recipe.id);
+    if (isExisting) {
+      throw new BadRequestError("Cannot insert duplicate.");
+    }
 
     const results = await db.query(
       `
@@ -70,10 +70,11 @@ class Save {
       `
         DELETE FROM saved_recipes
         WHERE recipe_id = $1 AND user_id = (SELECT id FROM users WHERE username = $2)
+        RETURNING recipe_id, user_id
       `,
       [recipe.id, user.username]
     );
-
+    // When deleting, it is passing in the wrong ID. In the profile page, the correct id is supposed to be recipe.recipe_id
     return results.rows[0];
   }
 
@@ -94,8 +95,6 @@ class Save {
       [recipeId, user.username]
     );
 
-    console.log(recipeId)
-    console.log(results.rows[0])
     if (results.rows[0]) {
       return true;
     }

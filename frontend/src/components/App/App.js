@@ -11,6 +11,7 @@ import EditProfile from "../EditProfile/EditProfile";
 import SearchPage from "../SearchPage/SearchPage";
 import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
+import Wheel from "../Wheel/Wheel"
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
@@ -139,13 +140,21 @@ function App() {
             path="/login"
             element={<Login user={user} setUser={setUser} />}
           />
-          <Route path="/recipes/:recipeId" element={<IndividualRecipe />} />
+          <Route
+            path="/recipes/:recipeId"
+            element={<IndividualRecipe user={user} />}
+          />
 
           {/*Fix this route later*/}
           <Route
             path="/search/recipes/:recipeId"
-            element={<IndividualRecipe />}
+            element={<IndividualRecipe user={user} />}
           />
+          <Route
+            path="/wheel"
+            element={<Wheel />}
+          />
+          <Route path="/profile" element={<Profile user={user} />} />
 
           <Route
             path="/profile"

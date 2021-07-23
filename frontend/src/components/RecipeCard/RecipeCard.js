@@ -68,8 +68,11 @@ export default function RecipeCard({
         </div>
       </div>
       <div className="card-links">
-        <Link to={`recipes/${recipeInfo.api_id}`}>View more &#187;</Link>
-        <button className="save-btn" onClick={handleOnClick}>
+        <Link to={`recipes/${recipeInfo.api_id}`}>View more &#8594;</Link>
+        <button
+          className="save-btn"
+          onClick={handleOnClick}
+        >
           {saved ? (
             <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
           ) : (
