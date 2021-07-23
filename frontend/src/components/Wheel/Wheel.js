@@ -8,6 +8,9 @@ import apiClient from "../../services/apiClient";
 import pencil from '../../assets/pencil.svg'
 
 var titleHere = "";
+var imageHere = "";
+var prepHere = "";
+var ratingHere = "";
 export default function Generator() {
   const [wheelIsVisible, setWheelIsVisible] = useState(true)
   const [mustSpin, setMustSpin] = useState(false);
@@ -76,6 +79,11 @@ export default function Generator() {
     console.log("WANT TO RETURN", data.recipe.title)
     console.log("RESULT PROM", recipeId)
     titleHere = data.recipe.title;
+    
+    imageHere = data.recipe.image_url;
+    prepHere = data.recipe.prep_time;
+    ratingHere = data.recipe.rating;
+
     return data.recipe.title;
   }
 
@@ -134,14 +142,17 @@ export default function Generator() {
       {/* https://www.npmjs.com/package/react-wheel-of-prizes?activeTab=readme */}
 
       <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-          <h3>My popup</h3>
-          
-          <p>This is my button triggered popup</p>
           {console.log(data[prizeNumber].option)}
           {console.log("aaaaaAAAAAAAAAAAA", (displayRecipePopup((data[prizeNumber].option)).then(data=>console.log("AAAAAA",data))))}
-          {titleHere}
-          {(data[prizeNumber].option)}
-          {(data[prizeNumber].category)}
+          <h3>{titleHere}</h3>
+          <br></br>
+          <img src={imageHere}></img>
+          <br></br>
+          <p>Prep Time: {prepHere} minutes</p>
+          <br></br>
+          <p>Rating: {ratingHere} stars</p>
+          {/* {(data[prizeNumber].option)}
+          {(data[prizeNumber].category)} */}
 
       </Popup>
     </div>
