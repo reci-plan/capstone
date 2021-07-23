@@ -5,7 +5,7 @@ const Search = require('../models/search')
 router.get('/', async(req, res, next) => {
   try {
     const query = req.body.query
-    const recipes = await Search.fetchRecipeByQuery(query)
+    const recipes = await Search.Query(query)
     res.status(200).json({ recipes })
   } catch(err) {
     next(err)

@@ -17,11 +17,11 @@ export default function Generator() {
   const [prizeNumber, setPrizeNumber] = useState(0);
   //for recipe popup
   const [buttonPopup, setButtonPopup] = useState(false);
-  const [spinIsVisible, setSpinIsVisible] = useState(false)
+  const [spinIsVisible, setSpinIsVisible] = useState(false);
   const [loadWheel, setLoadWheel] = useState([
-    { option: 1},
-    { option: 2},
-    { option: 3},
+    { option: "meal to"},
+    { option: "begin"},
+    { option: "Add a new"},
   ])
   //const [recipePopup, setRecipePopup] = useState(false)
   const data = loadWheel;
@@ -86,7 +86,9 @@ export default function Generator() {
       prepHere = data.recipe.prep_time;
       ratingHere = data.recipe.rating;
 
-      return data.recipe.title;
+      var tempAr = [titleHere, imageHere, prepHere, ratingHere]
+
+      return tempAr;
     }
   }
 
@@ -145,27 +147,33 @@ export default function Generator() {
       {/* https://www.npmjs.com/package/react-wheel-of-prizes?activeTab=readme */}
 
       <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-          {/* {console.log(data[prizeNumber].option)} */}
-          {data.length !== 0 ?
-                <>
-                {console.log("FINAL DATA", data)}
-                {console.log("aaaaaAAAAAAAAAAAA", (displayRecipePopup((data[prizeNumber].option)).then(data=>console.log("AAAAAA",data))))}
-                </> : 
-                ""
-          }
-          {}
-          <h3>{titleHere}</h3>
-          <br></br>
-          <img src={imageHere} alt={titleHere}></img>
-          <br></br>
-          <p>Prep Time: {prepHere} minutes</p>
-          <br></br>
-          <p>Rating: {ratingHere} stars</p>
-          {/* {(data[prizeNumber].option)}
-          {(data[prizeNumber].category)} */}
-          <button className="keepBut">Keep (Coming soon!)</button>
-
+        {spinIsVisible ?
+                  <>
+                    {/* {console.log(data[prizeNumber].option)} */}
+                    {data.length !== 0 ?
+                          <>
+                          {console.log("FINAL DATA", data)}
+                          {console.log("aaaaaAAAAAAAAAAAA", (displayRecipePopup((data[prizeNumber].option)).then(data=>console.log("AAAAAA",data))))}
+                          {console.log("DATA TTLE",data.title)}
+                          </> : 
+                          ""
+                    }
+                    {}
+                    <h3>{titleHere}</h3>
+                    <br></br>
+                    <img src={imageHere} alt={titleHere}></img>
+                    <br></br>
+                    <p>Prep Time: {prepHere} minutes</p>
+                    <br></br>
+                    <p>Rating: {ratingHere} stars</p>
+                    {/* {(data[prizeNumber].option)}
+                    {(data[prizeNumber].category)} */}
+                    <button className="keepBut">Keep (Coming soon!)</button>
+                  </> : 
+                  ""
+        }
       </Popup>
+
     </div>
   )
 }

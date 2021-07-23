@@ -16,13 +16,10 @@ class Search {
 
   // search recipe by category [RECEIVED AS A CATCODE]
   static async fetchRecipesByCategory(category) {
-    console.log(category)
     const results = await db.query(`
       SELECT id AS option FROM all_recipes 
       WHERE (category & $1 = $1) 
     `, [category])
-    console.log("hi", results.rows)
-
     return results;
   }
 
