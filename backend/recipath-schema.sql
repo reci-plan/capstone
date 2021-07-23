@@ -4,7 +4,7 @@ CREATE TABLE users (
     first_name      TEXT NOT NULL,
     last_name       TEXT NOT NULL,
     password        TEXT NOT NULL,
-    email           TEXT NOT NULL UNIQUE CHECK (POSITION('@' IN email) > 1),
+    email           TEXT NOT NULL UNIQUE,
     is_admin        BOOLEAN NOT NULL DEFAULT FALSE,
     created_at      TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -24,9 +24,10 @@ CREATE TABLE all_recipes (
 CREATE TABLE profile (
     id              SERIAL PRIMARY KEY,
     user_id         INTEGER NOT NULL,
-    region          TEXT NOT NULL,
-    short_bio       TEXT NOT NULL,
-    fav_flavors     TEXT NOT NULL,
+    image_url       TEXT,
+    region          TEXT,
+    short_bio       TEXT,
+    fav_flavors     TEXT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
@@ -75,5 +76,4 @@ CREATE TABLE likes (
     id                 SERIAL PRIMARY KEY,
     amount             INTEGER NOT NULL DEFAULT 0,
     user_id            INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
-);
 );

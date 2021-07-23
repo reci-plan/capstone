@@ -12,7 +12,6 @@
     padding: 25px 0px 20px 0px;
 }
 
-
 .subHeader {
     font-size: 30px;
     font-family: 'Josefin Sans', sans-serif;
@@ -38,13 +37,12 @@
     z-index: 1;
 }
 
-.box, .fake-input, input {
+.box, .fake-input {
     background-color: #CECECE;
     height:70px;
     display:flex;
     align-items: center;
-    
-  font-size: 26px;
+    font-size: 26px;
 }
   
 .penIc, .fake-input img {
@@ -52,7 +50,14 @@
     margin-right: 30px;
 }
 
-.fake-input input { outline: none; background-color:#CECECE; display:block; width: 100%; box-sizing: border-box; border-style: none; margin-left:20px;}
+.fake-input input { 
+    outline: none; 
+    background-color:#CECECE; 
+    display:block; width: 100%; 
+    box-sizing: border-box; 
+    border-style: none; 
+    margin-left:20px;
+}
 
 .menuParent {
     width: 676px;

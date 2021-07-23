@@ -7,7 +7,7 @@ import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
 import CarouselDisplay from "../CarouselDisplay/CarouselDisplay";
 import apiClient from "../../services/apiClient";
 
-export default function Home({ user }) {
+export default function Home({ user, handleSave, handleUnsave }) {
     const [recipes, setRecipes] = useState([]);
     const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
     const [sortby, setSortby] = useState("price");
@@ -76,6 +76,8 @@ export default function Home({ user }) {
                         type={"expense"}
                         rangeA={0}
                         rangeB={30}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsave}
                     />
 
                     <div className="category-header">Under $40</div>
@@ -85,7 +87,20 @@ export default function Home({ user }) {
                         type={"expense"}
                         rangeA={30}
                         rangeB={40}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsave}
                     />
+
+                    <div className="category-header">Under $50</div>
+                    <CarouselDisplay
+                        user={user}
+                        recipes={recipes}
+                        type={"expense"}
+                        rangeA={40}
+                        rangeB={50}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsave}
+                    />                      
                 </>
             ) : null}
 
@@ -98,6 +113,8 @@ export default function Home({ user }) {
                         type={"prep_time"}
                         rangeA={0}
                         rangeB={10}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsave}
                     />
 
                     <div className="category-header">Under 20 min</div>
@@ -107,6 +124,8 @@ export default function Home({ user }) {
                         type={"prep_time"}
                         rangeA={10}
                         rangeB={20}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsave}
                     />
 
                     <div className="category-header">Under 30 min</div>
@@ -116,6 +135,8 @@ export default function Home({ user }) {
                         type={"prep_time"}
                         rangeA={20}
                         rangeB={30}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsave}
                     />
 
                     <div className="category-header">Under 40 min</div>
@@ -125,6 +146,8 @@ export default function Home({ user }) {
                         type={"prep_time"}
                         rangeA={30}
                         rangeB={40}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsave}
                     />
                 </>
             ) : null}
@@ -138,6 +161,8 @@ export default function Home({ user }) {
                         type={"rating"}
                         rangeA={80}
                         rangeB={101}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsave}
                     />
 
                     <div className="category-header">Over 60 points</div>
@@ -147,6 +172,8 @@ export default function Home({ user }) {
                         type={"rating"}
                         rangeA={60}
                         rangeB={80}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsave}
                     />
 
                     <div className="category-header">Over 40 points</div>
@@ -156,10 +183,11 @@ export default function Home({ user }) {
                         type={"rating"}
                         rangeA={40}
                         rangeB={60}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsave}
                     />
                 </>
             ) : null}
-            {/* <DisplayAllRecipes user={user} /> */}
         </div>
     );
 }

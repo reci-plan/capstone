@@ -4,6 +4,7 @@ const { BadRequestError, UnauthorizedError } = require("../utils/errors");
 
 class Save {
   static async fetchSavedRecipes(user) {
+    //TODO::fix returning value for saved recipe
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
     }
@@ -23,7 +24,6 @@ class Save {
 
   // Recipe is an object.
   static async saveRecipe(user, recipe) {
-    console.log(recipe);
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
     }
@@ -36,10 +36,10 @@ class Save {
       throw new BadRequestError(`Missing title in request body.`);
     }
 
-    // const isExisting = await Save.checkRecipe(user, recipe.id);
-    // if (isExisting) {
-    //   throw new BadRequestError("Cannot insert duplicate.");
-    // }
+    const isExisting = await Save.checkRecipe(user, recipe.id);
+    if (isExisting) {
+      throw new BadRequestError("Cannot insert duplicate.");
+    }
 
     const results = await db.query(
       `
@@ -66,7 +66,6 @@ class Save {
       throw new BadRequestError(`Missing title in request body.`);
     }
 
-    console.log(recipe);
     const results = await db.query(
       `
         DELETE FROM saved_recipes

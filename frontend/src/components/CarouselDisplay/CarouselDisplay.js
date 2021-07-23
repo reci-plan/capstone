@@ -10,32 +10,9 @@ export default function CarouselDisplay({
   type,
   rangeA,
   rangeB,
+  handleSave,
+  handleUnsave
 }) {
-  const handleSave = async (r) => {
-    console.log(r);
-    const { data, error } = await apiClient.saveRecipe(r);
-
-    if (data) {
-      console.log("Save: ", data);
-    }
-
-    if (error) {
-      alert(error);
-    }
-  };
-
-  const handleUnsave = async (r) => {
-    console.log(r);
-    const { data, error } = await apiClient.unsaveRecipe(r);
-
-    if (data) {
-      console.log("Unsave: ", data);
-    }
-
-    if (error) {
-      alert(error);
-    }
-  };
   const responsive = {
     largeDesktop: {
       breakpoint: { max: 4000, min: 2000 },

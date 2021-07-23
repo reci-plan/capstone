@@ -1,69 +1,90 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 import apiClient from "../../services/apiClient";
-import { useDataLayerValue } from "../../context/DataLayer";
-import RecipeCard from "../RecipeCard/RecipeCard";
 
-export default function Profile({ user, handleClickOnSave }) {
-    const [saved, setSaved] = useState([]);
-    const [errors, setErrors] = useState("");
-    // Fetch  all of the user's saved recipes
+import tempImg from "../../assets/tempProfileImg.png";
+import location from "../../assets/location.svg";
+import './Profile.css'
+export default function Profile({ user }) {
+    const [profile, setProfile] = useState({})
+    const [flavors, setFlavors] = useState([])
 
-    // const [{ saved }, dispatch] = useDataLayerValue();
+    const allFlavors = [
+        'spicy', 
+        'salty',
+        'sweet',
+        'sour',
+        'bitter',
+        'savory',
+        'fatty'
+    ];
 
     useEffect(() => {
-        const fetchRecipes = async () => {
-            const { data, error } = await apiClient.fetchSavedRecipes();
+        const fetchProfile = async () => {
+            const { data, error } = await apiClient.fetchProfile()
             if (data) {
-                setSaved(data.savedRecipes);
-                // dispatch({ type: "SET_SAVED", saved: data.savedRecipes });
+                setProfile(data)
+                console.log(profile)
+                if (data.fav_flavors) {
+                    var flavors = []
+                    data.fav_flavors.split("").forEach(c => {
+                        let num = Number(c)
+                        flavors.push(allFlavors[num])
+                    })
+                    setFlavors(flavors)
+                }
+                
             }
-
             if (error) {
-                setErrors(error);
+                console.log(error, "Profile.js")
             }
-        };
-        fetchRecipes();
-    }, []);
-
-    const handleDelete = async (cur_saved_recipe) => {
-        console.log(cur_saved_recipe);
-        const { data, error } = await apiClient.unsaveRecipe(cur_saved_recipe);
-
-        if (data) {
-            // console.log("It deleted", data);
-            // Filter saved
-            setSaved(saved.filter((item) => item.id !== cur_saved_recipe.id));
         }
 
-        if (error) {
-            console.log(error);
-        }
-    };
+        fetchProfile()
+    }, [user])
 
-    // console.log(saved);
-    // console.log(handleClickOnSave);
+    console.log(flavors)
+
     return (
-        <div>
-            {errors}
-            <h2> Profile page </h2>
-            <h3> Your stats </h3>
-            <div> username: {user.username}</div>
-            <div> first_name: {user.first_name}</div>
-            <div> last_name: {user.last_name}</div>
-            <div> email: {user.email}</div>
-
-            <h3> Your saved recipes </h3>
-            {/*.sort((a, b) => a.date - b.date)*/}
-            {saved.map((s) => (
-                <>
-                    <RecipeCard
-                        user={user}
-                        recipeInfo={s}
-                        handleClick={handleClickOnSave}
-                    />
-                    <button onClick={() => handleDelete(s)}> delete </button>
-                </>
-            ))}
+        
+        <div className="Profile">
+            <div className="profile-display">
+                <div className="profile-left">
+                    <div className="profile-img">
+                        {profile.image_url ?
+                            <img src={profile.image_url} alt="User profile img"></img> : 
+                            <img src={tempImg} alt="Placeholder img"></img>
+                        }
+                    </div>
+                    <div className="fav-flavors">
+                    {/* Categories to input flavors */}
+                    {flavors.length > 0 ?
+                        flavors.map(element => (
+                            <div>{element}</div>
+                        )) : null 
+                    }
+                    </div>
+                </div>
+                <div className="profile-right">
+                    <div className="profile-basic">
+                        <div className="profile-name">{user.first_name} {user.last_name}</div>
+                        <div className="location">
+                            {profile.region ? 
+                            <>
+                                <img src={location} alt="Location Icon"></img>
+                                <span>{profile.region}</span> 
+                            </> : null
+                            }
+                        </div>
+                    </div>
+                    <div> username: {user.username}</div>
+                    <div> email: {user.email}</div>
+                    {profile.short_bio ? 
+                        <div>short bio: {profile.short_bio}</div> : null
+                    }
+                </div>
+                <Link to='/profile/edit' className="edit-btn">...</Link>
+            </div>
         </div>
     );
 }

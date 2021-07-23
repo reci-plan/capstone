@@ -27,7 +27,6 @@ export default function IndividualRecipe({ user }) {
       const { data, error } = await apiClient.fetchIndividualRecipeInfo(
         recipeId
       );
-      console.log(data);
       if (data) {
         setRecipeInfo(data);
       }
@@ -185,6 +184,14 @@ export default function IndividualRecipe({ user }) {
 
         {/* Right Side */}
         <div className="recipe-right">
+          <div className="jumpto">
+            {recipeInstructions.length > 0 ?
+              Array.from(recipeInstructions.length, (i) => {
+                console.log("here",i)
+                return <div>i</div>
+              }) : null
+            }
+          </div>
           <div className="heading">Instructions</div>
           {recipeInstructions.length > 0
             ? recipeInstructions.map((element) => (

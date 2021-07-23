@@ -7,7 +7,9 @@ import Login from "../Login/Login";
 import Navbar from "../Navbar/Navbar";
 import IndividualRecipe from "../IndividualRecipe/IndividualRecipe";
 import Profile from "../Profile/Profile";
+import EditProfile from "../EditProfile/EditProfile";
 import SearchPage from "../SearchPage/SearchPage";
+import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
 import Wheel from "../Wheel/Wheel"
 
@@ -64,19 +66,50 @@ function App() {
     fetchRecipes();
   }, []);
 
-  // when user clicks on save button
-  const handleClickOnSave = async (r, saved, setSaved) => {
+  // Fetch saved recipes
+  // useEffect(() => {
+  //   const fetchRecipes = async () => {
+  //       const { data, error } = await apiClient.fetchSavedRecipes();
+  //       if (data) {
+  //           setSaved(data.savedRecipes);
+  //       }
+
+  //       if (error) {
+  //           console.log(error, "fetch saved recipes")
+  //       }
+  //   };
+  //   fetchRecipes();
+  // }, []);
+
+  // Handle save recipe
+  const handleSave = async (r) => {
     const { data, error } = await apiClient.saveRecipe(r);
+
     if (data) {
-      console.log("hi", data);
-      setSaved(!saved);
+        console.log("Save: ", data);
     }
 
     if (error) {
-      const result = await apiClient.deleteSavedRecipe(r);
-      setSaved(false);
+        alert(error);
     }
   };
+
+  // Handle unsave recipe
+  const handleUnsave = async (r) => {
+    const { data, error } = await apiClient.unsaveRecipe(r);
+
+    if (data) {
+        console.log("Unsave: ", data);
+    }
+
+    if (error) {
+        alert(error);
+    }
+  };
+
+  const handleUpdateUser = async (user) => {
+    setUser(user)
+  }
 
   return (
     <div className="App">
@@ -94,7 +127,8 @@ function App() {
               <Home
                 user={user}
                 recipes={recipes}
-                handleClickOnSave={handleClickOnSave}
+                handleSave={handleSave}
+                handleUnsave={handleUnsave}
               />
             }
           />
@@ -125,9 +159,28 @@ function App() {
           <Route
             path="/profile"
             element={
-              <Profile user={user} handleClickOnSave={handleClickOnSave} />
+              <Profile user={user} />
             }
           />
+
+          <Route
+            path="/profile/edit"
+            element={
+              <EditProfile user={user} handleUpdateUser={handleUpdateUser}/>
+            }
+          />
+
+          <Route
+            path="/saved"
+            element={
+              <SavedGallery 
+                user={user} 
+                handleSave={handleSave} 
+                handleUnsave={handleUnsave}
+              />
+            }
+          />
+          
           <Route
             path="/search"
             element={
@@ -135,7 +188,8 @@ function App() {
                 searchTerm={searchTerm}
                 recipes={recipes}
                 user={user}
-                handleClickOnSave={handleClickOnSave}
+                handleSave={handleSave} 
+                handleUnsave={handleUnsave}
               />
             }
           />
