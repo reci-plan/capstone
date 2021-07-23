@@ -5,6 +5,9 @@ const { UnauthorizedError, BadRequestError } = require("../utils/errors")
 const User = require("./user")
 
 class Profile {
+  static flavors = {
+    
+  }
 
   /** Create user profile after register */
   static async createProfile(user) {

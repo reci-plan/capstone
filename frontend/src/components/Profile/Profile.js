@@ -7,6 +7,18 @@ import location from "../../assets/location.svg";
 import './Profile.css'
 export default function Profile({ user }) {
     const [profile, setProfile] = useState({})
+    const [selectedFlavors, setSelectedFlavors] = useState([])
+    var flavors = []
+
+    const allFlavors = [
+        'spicy', 
+        'salty',
+        'sweet',
+        'sour',
+        'bitter',
+        'savory',
+        'fatty'
+    ];
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -14,6 +26,11 @@ export default function Profile({ user }) {
             if (data) {
                 setProfile(data)
                 console.log(profile)
+                data.fav_flavors.split("").forEach(c => {
+                    let num = Number(c)
+                    flavors.push(allFlavors[num])
+                })
+                setSelectedFlavors(flavors)
             }
             if (error) {
                 console.log(error, "Profile.js")
@@ -21,9 +38,12 @@ export default function Profile({ user }) {
         }
 
         fetchProfile()
-    }, [])
+    }, [user])
+
+    console.log(flavors)
 
     return (
+        
         <div className="Profile">
             <div className="profile-display">
                 <div className="profile-left">
@@ -35,8 +55,10 @@ export default function Profile({ user }) {
                     </div>
                     <div className="fav-flavors">
                     {/* Categories to input flavors */}
-                    {profile.fav_flavors ? 
-                        <div>fav flavors: {profile.fav_flavors}</div> : null
+                    {
+                        selectedFlavors.map(element => (
+                            <div>{element}</div>
+                        )) 
                     }
                     </div>
                 </div>

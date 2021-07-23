@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import apiClient from '../../services/apiClient'
+import Multiselect from 'multiselect-react-dropdown';
 import './EditProfile.css';
 
 export default function EditProfile({ user, handleUpdateUser }) {
@@ -19,6 +20,7 @@ export default function EditProfile({ user, handleUpdateUser }) {
   })
   const [errors, setErrors] = useState([])
   const [profile, setProfile] = useState([])
+  const [flavors, setFlavors] = useState([])
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -70,6 +72,9 @@ export default function EditProfile({ user, handleUpdateUser }) {
   }
 
   const handleSubmit = async () => {
+    for (let key in flavors) {
+      form.fav_flavors += flavors[key]
+    }
     const { data, error } = await apiClient.updateProfile({
       first_name: form.first_name,
       last_name: form.last_name,
@@ -90,6 +95,39 @@ export default function EditProfile({ user, handleUpdateUser }) {
     }
   }
 
+  /** Multi-Select Library */
+  const allFlavors = [
+    {flavor: 'spicy', id: 0},
+    {flavor: 'salty', id: 1},
+    {flavor: 'sweet', id: 2},
+    {flavor: 'sour', id: 3},
+    {flavor: 'bitter', id: 4},
+    {flavor: 'savory', id: 5},
+    {flavor: 'fatty', id: 6}
+  ];
+
+  const selectedFlavors = [
+
+  ];
+
+  const onSelect = (list, item) => {
+    console.log("select", item)
+    setFlavors((p) => ({...p, [item.flavor]: item.id}))
+  }
+
+  const onRemove = (list, item) => {
+    console.log("remove", item)
+    setFlavors((p) => ({...p, [item.flavor]: item.id}))
+  }
+
+  const style = {
+    multiselectContainer: {
+      width: "200px"
+    }
+  };
+
+  console.log(flavors)
+  
   return (
     <div className="EditProfile">
       <div className="profile-display">
@@ -109,88 +147,96 @@ export default function EditProfile({ user, handleUpdateUser }) {
               onChange={handleImageChange}
             />
           </div>
+          <Multiselect
+            options={allFlavors} // Options to display in the dropdown
+            onSelect={onSelect} // Function will trigger on select event
+            onRemove={onRemove} // Function will trigger on remove event
+            displayValue={"flavor"}
+            closeIcon={"cancel"}
+            style={style}
+          />
         </div>
         <div className="profile-right">
-          <div className="form">
-            <div className="profile-basic">
-              <div className="profile-name">{user.first_name} {user.last_name}</div>
-                <div>
-                  <input
-                    type="text"
-                    name="region"
-                    placeholder="region"
-                    value={form.region}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-              <div className="input-name">
-                  <input
-                    type="text"
-                    name="first_name"
-                    placeholder="first name"
-                    value={form.first_name}
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    type="text"
-                    name="last_name"
-                    placeholder="last name"
-                    value={form.last_name}
-                    onChange={handleInputChange}
-                  />
-              </div>
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="email"
-                  value={form.email}
-                  onChange={handleInputChange}
-                />
-              </div>
-              {errors.email}
-              <div>
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="username"
-                  value={form.username}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="password"
-                  value={form.password}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <input
-                  type="password"
-                  name="passwordConfirm"
-                  placeholder="confirm password"
-                  value={form.passwordConfirm}
-                  onChange={handleInputChange}
-                />
-              </div>
-              {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
-              <div>
-                <input
-                  type="text"
-                  name="short_bio"
-                  placeholder="add a short bio"
-                  value={form.short_bio}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>{errors.form}</div>
-              <button className="btn" onClick={handleSubmit}>update</button>
+          <div className="profile-basic">
+            <div className="profile-name">{user.first_name} {user.last_name}</div>
+            <div>
+              <input
+                type="text"
+                name="region"
+                placeholder="region"
+                value={form.region}
+                onChange={handleInputChange}
+              />
             </div>
           </div>
+          <div className="form">
+            <div className="input-name">
+                <input
+                  type="text"
+                  name="first_name"
+                  placeholder="first name"
+                  value={form.first_name}
+                  onChange={handleInputChange}
+                />
+                <input
+                  type="text"
+                  name="last_name"
+                  placeholder="last name"
+                  value={form.last_name}
+                  onChange={handleInputChange}
+                />
+            </div>
+            <div>
+              <input
+                type="email"
+                name="email"
+                placeholder="email"
+                value={form.email}
+                onChange={handleInputChange}
+              />
+            </div>
+            {errors.email}
+            <div>
+              <input
+                type="text"
+                name="username"
+                placeholder="username"
+                value={form.username}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                name="password"
+                placeholder="password"
+                value={form.password}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                name="passwordConfirm"
+                placeholder="confirm password"
+                value={form.passwordConfirm}
+                onChange={handleInputChange}
+              />
+            </div>
+            {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
+            <div>
+              <input
+                type="text"
+                name="short_bio"
+                placeholder="add a short bio"
+                value={form.short_bio}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>{errors.form}</div>
+            <button className="btn" onClick={handleSubmit}>update</button>
+          </div>
+        </div>
       </div>
     </div>
   )
