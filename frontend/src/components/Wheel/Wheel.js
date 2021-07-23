@@ -74,17 +74,20 @@ export default function Generator() {
       console.log("Recipe Id", val)
       recipeId = val;
     });
+    console.log("FETCHED: ", recipeId)
     const { data, err } = await apiClient.fetchLocalDbRecipe(recipeId);
-    console.log("MY PROM DATA", data)
-    console.log("WANT TO RETURN", data.recipe.title)
-    console.log("RESULT PROM", recipeId)
-    titleHere = data.recipe.title;
-    
-    imageHere = data.recipe.image_url;
-    prepHere = data.recipe.prep_time;
-    ratingHere = data.recipe.rating;
+    if (data) {
+      console.log("MY PROM DATA", data)
+      console.log("WANT TO RETURN", data.recipe.title)
+      console.log("RESULT PROM", recipeId)
+      titleHere = data.recipe.title;
+      
+      imageHere = data.recipe.image_url;
+      prepHere = data.recipe.prep_time;
+      ratingHere = data.recipe.rating;
 
-    return data.recipe.title;
+      return data.recipe.title;
+    }
   }
 
   const promise1 = new Promise((resolve, reject) => {
@@ -142,17 +145,25 @@ export default function Generator() {
       {/* https://www.npmjs.com/package/react-wheel-of-prizes?activeTab=readme */}
 
       <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-          {console.log(data[prizeNumber].option)}
-          {console.log("aaaaaAAAAAAAAAAAA", (displayRecipePopup((data[prizeNumber].option)).then(data=>console.log("AAAAAA",data))))}
+          {/* {console.log(data[prizeNumber].option)} */}
+          {data.length !== 0 ?
+                <>
+                {console.log("FINAL DATA", data)}
+                {console.log("aaaaaAAAAAAAAAAAA", (displayRecipePopup((data[prizeNumber].option)).then(data=>console.log("AAAAAA",data))))}
+                </> : 
+                ""
+          }
+          {}
           <h3>{titleHere}</h3>
           <br></br>
-          <img src={imageHere}></img>
+          <img src={imageHere} alt={titleHere}></img>
           <br></br>
           <p>Prep Time: {prepHere} minutes</p>
           <br></br>
           <p>Rating: {ratingHere} stars</p>
           {/* {(data[prizeNumber].option)}
           {(data[prizeNumber].category)} */}
+          <button className="keepBut">Keep (Coming soon!)</button>
 
       </Popup>
     </div>

@@ -34,6 +34,13 @@ export default function Menu(props) {
     const [submitIsVisible, setSubmitIsVisible] = useState(false)
 
     const handleOpenButton = () => {
+        // var categoryCode = 0;
+
+        // userCategories.forEach(element => {
+        //     categoryCode |= 1<<(element.id);
+        // })
+        
+        // console.log("SUBMIT WITH Cat", categoryCode)
         setSubmitIsVisible(true)
     }
     
@@ -87,6 +94,10 @@ export default function Menu(props) {
 
         //load wheel with options
         console.log(userValues[2])
+        console.log("USER VALS.ROWS", userValues[2].rows.length)
+        if (userValues[2].rows.length === 0) {
+            setSubmitIsVisible(false)
+        }
         return userValues[2];
     }
 
