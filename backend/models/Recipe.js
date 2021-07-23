@@ -1,5 +1,7 @@
 const db = require("../db");
 
+const dishTypes = ["vegetarian", "vegan", "glutenFree", "dairyFree", "breakfast", "main course", "side dish", "salad", "appetizer", "soup", "finger food", "drink"]
+
 class Recipe {
     static async getAllRecipes() {
         const results = await db.query(`SELECT * FROM all_recipes`);
@@ -16,19 +18,21 @@ class Recipe {
     
     static async extractInfo(data) {
         const arr = [];
-        const category = [];
+
+        var catCode = 0;
 
         data.results.forEach(async (r, idx) => {
-            category.push({
-                vegetarian: r.vegetarian,
-                vegan: r.vegan,
-                glutenFree: r.glutenFree,
-                dairyFree: r.dairyFree
-            });
+            catCode = ((((r.vegetarian ? 1 : 0) + (r.vegan ? 1 : 0)) + (r.glutenFree ? 1 : 0)) + (r.dairyFree ? 1 : 0))
+            r.dishTypes.forEach(element => {
+                if (dishTypes.includes(element)) {
+                    catCode |= 1<<dishTypes.indexOf(element);
+                  }  
+            })
 
             arr.push({
                 id: r.id,
                 title: r.title,
+                category: catCode,
                 expense: parseInt(r.pricePerServing),
                 prep_time: parseInt(r.readyInMinutes),
                 // description: r.instructions,
@@ -36,7 +40,6 @@ class Recipe {
                 image_url: r.image ? r.image : "no_image",
                 rating: parseInt(r.spoonacularScore),
             });
-            
         });
 
         // console.log("supposed to look like this:", [category[0]]);
@@ -51,17 +54,24 @@ class Recipe {
             const results = await db.query(queryString, [
                 arr[i].id,
                 arr[i].title,
-                [category[i]],
+                arr[i].category,
                 arr[i].image_url,
                 arr[i].prep_time,
                 arr[i].description,
                 arr[i].rating,
-                arr[i].expense
+                arr[i].expense,
             ]);
             result_arr.push(results.rows);
         }
         // console.log(result_arr[0][0].category);
         return result_arr;
+    }
+
+    //Pass in a shifted bit number to get categories
+    static async getRecipeIdsByCategory () {
+        //const results = await db.query(`SELECT id FROM all_recipes WHERE category = `);
+        //return results.rows;
+        return 0;
     }
 }
 
