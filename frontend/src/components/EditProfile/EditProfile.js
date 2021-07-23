@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import apiClient from '../../services/apiClient'
 import './EditProfile.css';
@@ -15,9 +15,24 @@ export default function EditProfile({ user, handleUpdateUser }) {
     short_bio: "",
     region: "",
     fav_flavors: "",
-    image_url: ""
+    image_url: null
   })
   const [errors, setErrors] = useState([])
+  const [profile, setProfile] = useState([])
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+        const { data, error } = await apiClient.fetchProfile()
+        if (data) {
+            setProfile(data)
+        }
+        if (error) {
+            console.log(error, "EditProfile.js")
+        }
+    }
+
+    fetchProfile()
+  }, [])
 
   const handleInputChange = (e) => {
     if (e.target.name === "email") {
@@ -50,6 +65,10 @@ export default function EditProfile({ user, handleUpdateUser }) {
     setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
   }
 
+  const handleImageChange = (e) => {
+    setForm((prevState) => ({ ...prevState, [e.target.name]: URL.createObjectURL(e.target.files[0]) }));
+  }
+
   const handleSubmit = async () => {
     const { data, error } = await apiClient.updateProfile({
       first_name: form.first_name,
@@ -63,7 +82,6 @@ export default function EditProfile({ user, handleUpdateUser }) {
       image_url: form.image_url
     })
     if (data) {
-      console.log(data, "success EditProfile.js")
       handleUpdateUser(data[0])
       navigate('/profile')
     }
@@ -74,82 +92,106 @@ export default function EditProfile({ user, handleUpdateUser }) {
 
   return (
     <div className="EditProfile">
-      <div className="form">
-          <div className="input-name">
-              <input
-                type="text"
-                name="first_name"
-                placeholder="first name"
-                value={form.first_name}
-                onChange={handleInputChange}
-              />
-              <input
-                type="text"
-                name="last_name"
-                placeholder="last name"
-                value={form.last_name}
-                onChange={handleInputChange}
-              />
+      <div className="profile-display">
+        <div className="profile-left">
+          <div className="profile-img">
+            {form.image_url ?
+              <img src={form.image_url} alt=""></img> :
+              <img src={profile.image_url} alt=""></img>
+            }
           </div>
           <div>
             <input
-              type="email"
-              name="email"
-              placeholder="email"
-              value={form.email}
-              onChange={handleInputChange}
+              type="file"
+              name="image_url"
+              placeholder="image"
+              // value={form.image_url}
+              onChange={handleImageChange}
             />
           </div>
-          {errors.email}
-          <div>
-            <input
-              type="text"
-              name="username"
-              placeholder="username"
-              value={form.username}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              name="password"
-              placeholder="password"
-              value={form.password}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              name="passwordConfirm"
-              placeholder="confirm password"
-              value={form.passwordConfirm}
-              onChange={handleInputChange}
-            />
-          </div>
-          {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
-          <div>
-            <input
-              type="text"
-              name="region"
-              placeholder="region"
-              value={form.region}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              name="short_bio"
-              placeholder="add a short bio"
-              value={form.short_bio}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>{errors.form}</div>
-          <button className="btn" onClick={handleSubmit}>update</button>
         </div>
+        <div className="profile-right">
+          <div className="form">
+            <div className="profile-basic">
+              <div className="profile-name">{user.first_name} {user.last_name}</div>
+                <div>
+                  <input
+                    type="text"
+                    name="region"
+                    placeholder="region"
+                    value={form.region}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+              <div className="input-name">
+                  <input
+                    type="text"
+                    name="first_name"
+                    placeholder="first name"
+                    value={form.first_name}
+                    onChange={handleInputChange}
+                  />
+                  <input
+                    type="text"
+                    name="last_name"
+                    placeholder="last name"
+                    value={form.last_name}
+                    onChange={handleInputChange}
+                  />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="email"
+                  value={form.email}
+                  onChange={handleInputChange}
+                />
+              </div>
+              {errors.email}
+              <div>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="username"
+                  value={form.username}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="password"
+                  value={form.password}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  name="passwordConfirm"
+                  placeholder="confirm password"
+                  value={form.passwordConfirm}
+                  onChange={handleInputChange}
+                />
+              </div>
+              {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
+              <div>
+                <input
+                  type="text"
+                  name="short_bio"
+                  placeholder="add a short bio"
+                  value={form.short_bio}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>{errors.form}</div>
+              <button className="btn" onClick={handleSubmit}>update</button>
+            </div>
+          </div>
+      </div>
     </div>
   )
 }

@@ -6,7 +6,6 @@ import tempImg from "../../assets/tempProfileImg.png";
 import location from "../../assets/location.svg";
 import './Profile.css'
 export default function Profile({ user }) {
-    console.log(user)
     const [profile, setProfile] = useState({})
 
     useEffect(() => {
@@ -14,6 +13,7 @@ export default function Profile({ user }) {
             const { data, error } = await apiClient.fetchProfile()
             if (data) {
                 setProfile(data)
+                console.log(profile)
             }
             if (error) {
                 console.log(error, "Profile.js")
@@ -22,8 +22,6 @@ export default function Profile({ user }) {
 
         fetchProfile()
     }, [])
-
-    console.log(profile)
 
     return (
         <div className="Profile">
