@@ -7,8 +7,7 @@ import location from "../../assets/location.svg";
 import './Profile.css'
 export default function Profile({ user }) {
     const [profile, setProfile] = useState({})
-    const [selectedFlavors, setSelectedFlavors] = useState([])
-    var flavors = []
+    const [flavors, setFlavors] = useState([])
 
     const allFlavors = [
         'spicy', 
@@ -26,11 +25,15 @@ export default function Profile({ user }) {
             if (data) {
                 setProfile(data)
                 console.log(profile)
-                data.fav_flavors.split("").forEach(c => {
-                    let num = Number(c)
-                    flavors.push(allFlavors[num])
-                })
-                setSelectedFlavors(flavors)
+                if (data.fav_flavors) {
+                    var flavors = []
+                    data.fav_flavors.split("").forEach(c => {
+                        let num = Number(c)
+                        flavors.push(allFlavors[num])
+                    })
+                    setFlavors(flavors)
+                }
+                
             }
             if (error) {
                 console.log(error, "Profile.js")
@@ -55,10 +58,10 @@ export default function Profile({ user }) {
                     </div>
                     <div className="fav-flavors">
                     {/* Categories to input flavors */}
-                    {
-                        selectedFlavors.map(element => (
+                    {flavors.length > 0 ?
+                        flavors.map(element => (
                             <div>{element}</div>
-                        )) 
+                        )) : null 
                     }
                     </div>
                 </div>

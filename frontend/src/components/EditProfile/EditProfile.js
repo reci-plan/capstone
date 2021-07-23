@@ -111,12 +111,10 @@ export default function EditProfile({ user, handleUpdateUser }) {
   ];
 
   const onSelect = (list, item) => {
-    console.log("select", item)
     setFlavors((p) => ({...p, [item.flavor]: item.id}))
   }
 
   const onRemove = (list, item) => {
-    console.log("remove", item)
     setFlavors((p) => ({...p, [item.flavor]: item.id}))
   }
 
@@ -125,8 +123,6 @@ export default function EditProfile({ user, handleUpdateUser }) {
       width: "200px"
     }
   };
-
-  console.log(flavors)
   
   return (
     <div className="EditProfile">
