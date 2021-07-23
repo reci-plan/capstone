@@ -3,63 +3,46 @@ import apiClient from "../../services/apiClient";
 import { useDataLayerValue } from "../../context/DataLayer";
 import RecipeCard from "../RecipeCard/RecipeCard";
 
-export default function SavedGallery({ user, handleClickOnSave }) {
-    const [saved, setSaved] = useState([]);
-    const [errors, setErrors] = useState("");
-    // Fetch  all of the user's saved recipes
+import "./SavedGallery.css"
 
-    // const [{ saved }, dispatch] = useDataLayerValue();
+export default function SavedGallery({ user, handleSave, handleUnsave }) {
+    const [saved, setSaved] = useState([]);
+    const [unSave, setUnsave] = useState(false)
+    const [errors, setErrors] = useState("");
+    console.log(user)
 
     useEffect(() => {
         const fetchRecipes = async () => {
             const { data, error } = await apiClient.fetchSavedRecipes();
             if (data) {
+                console.log(data.savedRecipes)
                 setSaved(data.savedRecipes);
-                // dispatch({ type: "SET_SAVED", saved: data.savedRecipes });
             }
-
+    
             if (error) {
-                setErrors(error);
+                console.log(error, "fetch saved recipes")
             }
         };
         fetchRecipes();
-    }, []);
+    }, [user, unSave]);
 
-    const handleDelete = async (cur_saved_recipe) => {
-        const { data, error } = await apiClient.deleteSavedRecipe(
-            cur_saved_recipe
-        );
-
-        if (data) {
-            // Filter saved
-            setSaved(saved.filter((item) => item.id !== cur_saved_recipe.id));
-        }
-
-        if (error) {
-            console.log(error);
-        }
-    };
+    const handleUnsaveRemove = (r) => {
+        setUnsave(!unSave)
+        handleUnsave(r)
+    }
 
     return (
-        <div>
-            {errors}
-            <h2> Profile page </h2>
-            <h3> Your stats </h3>
-            <div> username: {user.username}</div>
-            <div> first_name: {user.first_name}</div>
-            <div> last_name: {user.last_name}</div>
-            <div> email: {user.email}</div>
-
-            <h3> Your saved recipes </h3>
-            {/*.sort((a, b) => a.date - b.date)*/}
+        <div className="SavedGallery">
+            <h3> Saved Recipes </h3>
             {saved.map((s) => (
                 <>
                     <RecipeCard
                         user={user}
                         recipeInfo={s}
-                        handleClick={handleClickOnSave}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsaveRemove}
                     />
-                    <button onClick={() => handleDelete(s)}> delete </button>
+                    {/* <button onClick={() => handleDelete(s)}> delete </button> */}
                 </>
             ))}
         </div>

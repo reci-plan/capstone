@@ -5,13 +5,8 @@ const { UnauthorizedError, BadRequestError } = require("../utils/errors")
 const User = require("./user")
 
 class Profile {
-  static flavors = {
-    
-  }
-
   /** Create user profile after register */
   static async createProfile(user) {
-    /* restart table schema since some info are no longer required */
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
     }
@@ -44,7 +39,6 @@ class Profile {
   /** Update user profile
    * If the column value is null or empty, then keep original information
    * If the column value is valid, then change it 
-   * Changed the users table email constraint to allow user to change email
    */
   static async updateProfile(user, profile) {
     if (!user) {

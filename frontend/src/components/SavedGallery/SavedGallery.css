@@ -1,0 +1,8 @@
+.SavedGallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.SavedGallery div {
+  max-width: 250px;
+}

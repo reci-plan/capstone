@@ -65,17 +65,44 @@ function App() {
     fetchRecipes();
   }, []);
 
-  // when user clicks on save button
-  const handleClickOnSave = async (r, saved, setSaved) => {
+  // Fetch saved recipes
+  // useEffect(() => {
+  //   const fetchRecipes = async () => {
+  //       const { data, error } = await apiClient.fetchSavedRecipes();
+  //       if (data) {
+  //           setSaved(data.savedRecipes);
+  //       }
+
+  //       if (error) {
+  //           console.log(error, "fetch saved recipes")
+  //       }
+  //   };
+  //   fetchRecipes();
+  // }, []);
+
+  // Handle save recipe
+  const handleSave = async (r) => {
     const { data, error } = await apiClient.saveRecipe(r);
+
     if (data) {
-      console.log("hi", data);
-      setSaved(!saved);
+        console.log("Save: ", data);
     }
 
     if (error) {
-      const result = await apiClient.deleteSavedRecipe(r);
-      setSaved(false);
+        alert(error);
+    }
+  };
+
+  // Handle unsave recipe
+  const handleUnsave = async (r) => {
+    const { data, error } = await apiClient.unsaveRecipe(r);
+
+    if (data) {
+        console.log("Unsave: ", data);
+    }
+
+    if (error) {
+        alert(error);
     }
   };
 
@@ -99,7 +126,8 @@ function App() {
               <Home
                 user={user}
                 recipes={recipes}
-                handleClickOnSave={handleClickOnSave}
+                handleSave={handleSave}
+                handleUnsave={handleUnsave}
               />
             }
           />
@@ -136,10 +164,14 @@ function App() {
           <Route
             path="/saved"
             element={
-              <SavedGallery user={user} handleClickOnSave={handleClickOnSave} />
+              <SavedGallery 
+                user={user} 
+                handleSave={handleSave} 
+                handleUnsave={handleUnsave}
+              />
             }
           />
-
+          
           <Route
             path="/search"
             element={
@@ -147,7 +179,8 @@ function App() {
                 searchTerm={searchTerm}
                 recipes={recipes}
                 user={user}
-                handleClickOnSave={handleClickOnSave}
+                handleSave={handleSave} 
+                handleUnsave={handleUnsave}
               />
             }
           />

@@ -4,6 +4,7 @@ const { BadRequestError, UnauthorizedError } = require("../utils/errors");
 
 class Save {
   static async fetchSavedRecipes(user) {
+    //TODO::fix returning value for saved recipe
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
     }
@@ -93,6 +94,8 @@ class Save {
       [recipeId, user.username]
     );
 
+    console.log(recipeId)
+    console.log(results.rows[0])
     if (results.rows[0]) {
       return true;
     }
