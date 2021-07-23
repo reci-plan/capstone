@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import apiClient from "../../services/apiClient";
 import { useDataLayerValue } from "../../context/DataLayer";
+import RecipeCard from "../RecipeCard/RecipeCard";
 
-export default function Profile({ user }) {
+export default function Profile({ user, handleClickOnSave }) {
     const [saved, setSaved] = useState([]);
     const [errors, setErrors] = useState("");
     // Fetch  all of the user's saved recipes
@@ -23,7 +24,24 @@ export default function Profile({ user }) {
         };
         fetchRecipes();
     }, []);
+
+    const handleDelete = async (cur_saved_recipe) => {
+        const { data, error } = await apiClient.deleteSavedRecipe(
+            cur_saved_recipe
+        );
+
+        if (data) {
+            // Filter saved
+            setSaved(saved.filter((item) => item.id !== cur_saved_recipe.id));
+        }
+
+        if (error) {
+            console.log(error);
+        }
+    };
+
     console.log(saved);
+    console.log(handleClickOnSave);
     return (
         <div>
             {errors}
@@ -35,14 +53,17 @@ export default function Profile({ user }) {
             <div> email: {user.email}</div>
 
             <h3> Your saved recipes </h3>
-                {/*.sort((a, b) => a.date - b.date)*/}
-            {saved
-                .map((s) => (
-                    <div>
-                        Title: {s.title}, prep_time: {s.prep_time}, date:{" "}
-                        {s.date}
-                    </div>
-                ))}
+            {/*.sort((a, b) => a.date - b.date)*/}
+            {saved.map((s) => (
+                <>
+                    <RecipeCard
+                        user={user}
+                        recipeInfo={s}
+                        handleClick={handleClickOnSave}
+                    />
+                    <button onClick={() => handleDelete(s)}> delete </button>
+                </>
+            ))}
         </div>
     );
 }

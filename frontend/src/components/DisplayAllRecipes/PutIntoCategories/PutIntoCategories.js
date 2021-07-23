@@ -3,8 +3,14 @@ import RecipeCard from "../../RecipeCard/RecipeCard";
 import { useDataLayerValue } from "../../../context/DataLayer";
 import apiClient from '../../../services/apiClient'
 
-import './PutIntoCategories.css'
-export default function PutIntoCategories({ recipes, rangeA, rangeB, user }) {
+
+import "./PutIntoCategories.css";
+export default function PutIntoCategories({
+    recipes,
+    rangeA,
+    rangeB,
+    user
+}) {
     const [{ colors, test }, dispatch] = useDataLayerValue();
 
     useEffect(() => {
@@ -13,12 +19,23 @@ export default function PutIntoCategories({ recipes, rangeA, rangeB, user }) {
 
     // console.log(colors);
 
-    const handleClick = async (r) => {
+    const handleSave = async (r) => {
         const { data, error } = await apiClient.saveRecipe(r);
 
         if (data) {
-            console.log("hi", data);
-            // dispatch({type: "SET_SAVED", saved: })
+            console.log("Save: ", data);
+        }
+
+        if (error) {
+            alert(error);
+        }
+    };
+
+    const handleUnsave = async (r) => {
+        const { data, error } = await apiClient.unsaveRecipe(r);
+
+        if (data) {
+            console.log("Unsave: ", data);
         }
 
         if (error) {
@@ -33,10 +50,7 @@ export default function PutIntoCategories({ recipes, rangeA, rangeB, user }) {
                 .sort((a, b) => a.prep_time - b.prep_time)
                 .slice(0, 25)
                 .map((r) => (
-                    <RecipeCard user={user} recipeInfo={r} handleClick={handleClick}/>
-                    // {user?.email && (
-                    //     <button onClick={() => handleClick(r)}>save</button>
-                    // )}
+                    <RecipeCard user={user} recipeInfo={r} handleSave={handleSave} handleUnsave={handleUnsave}/>
                 ))}
         </div>
     );
