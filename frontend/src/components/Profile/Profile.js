@@ -26,11 +26,11 @@ export default function Profile({ user, handleClickOnSave }) {
     }, []);
 
     const handleDelete = async (cur_saved_recipe) => {
-        const { data, error } = await apiClient.deleteSavedRecipe(
-            cur_saved_recipe
-        );
+        console.log(cur_saved_recipe);
+        const { data, error } = await apiClient.unsaveRecipe(cur_saved_recipe);
 
         if (data) {
+            // console.log("It deleted", data);
             // Filter saved
             setSaved(saved.filter((item) => item.id !== cur_saved_recipe.id));
         }
@@ -40,8 +40,8 @@ export default function Profile({ user, handleClickOnSave }) {
         }
     };
 
-    console.log(saved);
-    console.log(handleClickOnSave);
+    // console.log(saved);
+    // console.log(handleClickOnSave);
     return (
         <div>
             {errors}
