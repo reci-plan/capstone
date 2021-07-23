@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const db = require("../db");
 const { BCRYPT_WORK_FACTOR } = require("../config");
 const { UnauthorizedError, BadRequestError } = require("../utils/errors")
+const User = require("./user")
 
 class Profile {
 
@@ -69,10 +70,9 @@ class Profile {
           email = CASE WHEN COALESCE($4, '') = '' THEN email ELSE $4 END,
           password = CASE WHEN COALESCE($5, '') = '' THEN password ELSE $5 END
       WHERE id = (SELECT id from users WHERE username = $6)
-      RETURNING id, first_name, last_name, username, email;
+      RETURNING id, email, first_name, last_name, username;
     `, [profile.first_name, profile.last_name, profile.username, profile.email, hashedPassword, user.username]
     )
-
     const profileResults = await db.query(`
       UPDATE profile
       SET image_url = CASE WHEN COALESCE($1, '') = '' THEN image_url ELSE $1 END,
@@ -83,8 +83,8 @@ class Profile {
       RETURNING id, user_id, image_url, region, short_bio, fav_flavors;
     `, [profile.image_url, profile.region, profile.short_bio, profile.fav_flavors, user.username]
     )
-    
-    return [userResults.rows[0], profileResults.rows[0]];
+    const userResult = User.makeUser(userResults.rows[0])
+    return [userResult, profileResults.rows[0]];
   }
 }
 

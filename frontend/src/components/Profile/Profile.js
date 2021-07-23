@@ -6,6 +6,7 @@ import tempImg from "../../assets/tempProfileImg.png";
 import location from "../../assets/location.svg";
 import './Profile.css'
 export default function Profile({ user }) {
+    console.log(user)
     const [profile, setProfile] = useState({})
 
     useEffect(() => {
@@ -20,7 +21,7 @@ export default function Profile({ user }) {
         }
 
         fetchProfile()
-    }, [user])
+    }, [])
 
     console.log(profile)
 

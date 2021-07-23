@@ -79,6 +79,11 @@ function App() {
     }
   };
 
+  const handleUpdateUser = async (user) => {
+    setUser(user)
+  }
+
+  console.log(user)
   return (
     <div className="App">
       <BrowserRouter>
@@ -125,7 +130,7 @@ function App() {
           <Route
             path="/profile/edit"
             element={
-              <EditProfile user={user} />
+              <EditProfile user={user} handleUpdateUser={handleUpdateUser}/>
             }
           />
 

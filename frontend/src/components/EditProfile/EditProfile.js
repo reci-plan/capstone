@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import apiClient from '../../services/apiClient'
 import './EditProfile.css';
 
-export default function EditProfile({ user }) {
+export default function EditProfile({ user, handleUpdateUser }) {
   const navigate = useNavigate()
   const [form, setForm] = useState({
     first_name: "",
@@ -64,6 +64,7 @@ export default function EditProfile({ user }) {
     })
     if (data) {
       console.log(data, "success EditProfile.js")
+      handleUpdateUser(data[0])
       navigate('/profile')
     }
     if (error) {
