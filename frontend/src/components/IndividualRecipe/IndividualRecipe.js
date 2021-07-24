@@ -8,7 +8,7 @@ import dairyfreeIcon from "../../assets/dairyfree-icon.svg";
 import glutenfreeIcon from "../../assets/glutenfree-icon.svg";
 import "./IndividualRecipe.css";
 
-export default function IndividualRecipe() {
+export default function IndividualRecipe({ user }) {
   const { recipeId } = useParams();
   // console.log("recipeId", recipeId);
   const [recipeInstructions, setRecipeInstructions] = useState([]);
@@ -17,8 +17,10 @@ export default function IndividualRecipe() {
   const [comment, setComment] = useState("");
   const [curComments, setCurComments] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
-
+  const [usersComment, setUsersComment] = useState(false);
   const [editCommentMsg, setEditCommentMsg] = useState("");
+
+  const [selectedCommentId, setSelectedCommentId] = useState("");
 
   useEffect(() => {
     const fetchRecipeInfo = async () => {
@@ -61,6 +63,7 @@ export default function IndividualRecipe() {
     fetchCurrentComments();
   }, [recipeId]);
 
+  // When user post new comment
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(comment);
@@ -79,6 +82,7 @@ export default function IndividualRecipe() {
     setComment(e.target.value);
   };
 
+  // For deleting a comment.
   const handleDelete = async (e, comment) => {
     // console.log("Before api call", comment);
     const { data, error } = await apiClient.deleteComment(comment);
@@ -92,14 +96,17 @@ export default function IndividualRecipe() {
     }
   };
 
+  // Editing a comment
   const handleEditSubmit = async (e, comment) => {
     e.preventDefault();
-    const newComment = { ...comment, comment: editCommentMsg };
-    const { data, error } = await apiClient.editComment(newComment);
+    const updatedComment = { ...comment, comment: editCommentMsg };
+    const { data, error } = await apiClient.editComment(updatedComment);
     if (data) {
       setCurComments(
         curComments.map((c) =>
-          c.id === newComment.id ? { ...c, comment: newComment.comment } : c
+          c.id === updatedComment.id
+            ? { ...c, comment: updatedComment.comment }
+            : c
         )
       );
     }
@@ -108,8 +115,37 @@ export default function IndividualRecipe() {
     }
   };
 
-  console.log(editCommentMsg, showEdit);
-  console.log("curComments: >>>>>>>> ", curComments);
+  // when user clicks "Edit" or "Unedit" button
+  const handleShowEdit = (e, comment) => {
+    setShowEdit(!showEdit);
+    setEditCommentMsg(comment.comment);
+    setSelectedCommentId(comment.id);
+  };
+
+  const [isLike, setIsLike] = useState();
+  // when user clicks "like" button
+  const handleLike = async (e, comment) => {
+    setSelectedCommentId(comment.id);
+    setIsLike(!isLike);
+
+    const updatedComment = isLike
+      ? { ...comment, likes: comment.likes + 1 }
+      : { ...comment, likes: comment.likes - 1 };
+
+    const { data, error } = await apiClient.likeComment(updatedComment);
+
+    if (data) {
+      setCurComments(
+        curComments.map((c) =>
+          c.id === updatedComment.id ? { ...c, likes: updatedComment.likes } : c
+        )
+      );
+    }
+
+    if (error) {
+      alert(error);
+    }
+  };
 
   return (
     <div className="IndividualRecipe">
@@ -174,12 +210,29 @@ export default function IndividualRecipe() {
         {curComments.map((comment) => (
           <div>
             comment: {comment?.comment}, date: {comment?.date}, user id:
-            {comment?.user_id}, ID (primary key): {comment?.id}
-            <button onClick={(e) => handleDelete(e, comment)}>Delete</button>
-            <button onClick={(e) => setShowEdit(!showEdit)}>
-              {showEdit ? "Unedit" : "Edit"}
-            </button>
-            {showEdit ? (
+            {comment?.user_id}, ID (primary key): {comment?.id}, likes{" "}
+            {comment.likes}
+            {user.id === comment.user_id ? (
+              <>
+                <button onClick={(e) => handleDelete(e, comment)}>
+                  Delete
+                </button>
+                <button onClick={(e, c) => handleShowEdit(e, comment)}>
+                  {showEdit && comment.id === selectedCommentId
+                    ? "Unedit"
+                    : "Edit"}
+                </button>
+                <button onClick={(e, c) => handleLike(e, comment)}>
+                  like
+                  {/*    {isLike && comment.id === selectedCommentId && "like"}
+                  {!isLike && comment.id === selectedCommentId && "unlike"}*/}
+                </button>
+              </>
+            ) : (
+              <> </>
+            )}
+            {/*This is the form for comment editing*/}
+            {showEdit && comment.id === selectedCommentId ? (
               <form
                 onSubmit={(e, commentParameter) => handleEditSubmit(e, comment)}
               >
@@ -188,7 +241,7 @@ export default function IndividualRecipe() {
                   value={editCommentMsg}
                   onChange={(e) => setEditCommentMsg(e.target.value)}
                 ></textarea>
-                <button>submit edit </button>
+                <button> submit edit </button>
               </form>
             ) : (
               <> </>

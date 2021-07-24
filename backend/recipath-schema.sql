@@ -64,5 +64,12 @@ CREATE TABLE comments (
     comment             TEXT NOT NULL,
     user_id             INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     recipe_id           INTEGER NOT NULL REFERENCES all_recipes(id) ON DELETE CASCADE,
+    likes_id            INTEGER NOT NULL REFERENCES likes(id) ON DELETE CASCADE,
     date                TIMESTAMP NOT NULL DEFAULT NOW()
-)
+);
+
+CREATE TABLE likes (
+    id                 SERIAL PRIMARY KEY,
+    amount             INTEGER NOT NULL DEFAULT 0,
+    user_id            INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
+);

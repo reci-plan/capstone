@@ -48,6 +48,17 @@ router.put("/editComment", async (req, res, next) => {
   }
 });
 
+router.put("/likeComment", async (req, res, next) => {
+  try {
+    const user = res.locals.user;
+    const comment = req.body;
+    const likesToModify = await Comment.likesToModify(user, comment);
+    res.status(200).json({ likesToModify });
+  } catch (e) {
+    next(e);
+  }
+});
+
 router.get("/doesItBelongToUser/:recipeId", async (req, res, next) => {
   try {
     const user = res.locals.user;

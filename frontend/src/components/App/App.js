@@ -105,12 +105,15 @@ function App() {
             path="/login"
             element={<Login user={user} setUser={setUser} />}
           />
-          <Route path="/recipes/:recipeId" element={<IndividualRecipe />} />
+          <Route
+            path="/recipes/:recipeId"
+            element={<IndividualRecipe user={user} />}
+          />
 
           {/*Fix this route later*/}
           <Route
             path="/search/recipes/:recipeId"
-            element={<IndividualRecipe />}
+            element={<IndividualRecipe user={user} />}
           />
 
           <Route

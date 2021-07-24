@@ -104,6 +104,23 @@ class Comment {
         // return results.rows[0];
     }
 
+    static async likesToModify(user, comment) {
+        if (!user) {
+            throw new UnauthorizedError(`No user logged in`);
+        }
+        console.log(comment);
+        const results = await db.query(
+            `UPDATE likes
+            SET amount = $1
+            WHERE user_id = (SELECT id FROM users WHERE username = $2)
+            AND comment_id = $3
+            RETURNING amount, id
+            `,
+            [10, user.username, comment.id]
+        );
+        return results.rows[0];
+    }
+
     static async belongsToUser(user, cur_api_id) {
         if (!user) {
             throw new UnauthorizedError(`No user logged in`);

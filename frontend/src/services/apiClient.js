@@ -141,6 +141,14 @@ class ApiCalls {
         });
     }
 
+    async likeComment(comment) {
+        return await this.request({
+            endpoint: `comment/likeComment`,
+            method: `PUT`,
+            data: comment,
+        });
+    }
+
     async checkIfCommentBelongsToUser(api_id) {
         return await this.request({
             endpoint: `comment/doesItBelongToUser/${api_id}`,
