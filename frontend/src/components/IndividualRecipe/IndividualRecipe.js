@@ -222,15 +222,15 @@ export default function IndividualRecipe({ user }) {
                     ? "Unedit"
                     : "Edit"}
                 </button>
-                <button onClick={(e, c) => handleLike(e, comment)}>
-                  like
-                  {/*    {isLike && comment.id === selectedCommentId && "like"}
-                  {!isLike && comment.id === selectedCommentId && "unlike"}*/}
-                </button>
               </>
             ) : (
               <> </>
             )}
+            <button onClick={(e, c) => handleLike(e, comment)}>
+              like
+              {/*    {isLike && comment.id === selectedCommentId && "like"}
+                  {!isLike && comment.id === selectedCommentId && "unlike"}*/}
+            </button>
             {/*This is the form for comment editing*/}
             {showEdit && comment.id === selectedCommentId ? (
               <form

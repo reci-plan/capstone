@@ -29,7 +29,7 @@ class Comment {
 
         const results = await db.query(query, [
             user.username,
-            parseInt(api_id),
+            api_id,
             comment,
         ]);
 
