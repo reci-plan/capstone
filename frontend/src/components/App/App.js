@@ -9,6 +9,7 @@ import IndividualRecipe from "../IndividualRecipe/IndividualRecipe";
 import Profile from "../Profile/Profile";
 import SearchPage from "../SearchPage/SearchPage";
 import apiClient from "../../services/apiClient";
+import Wheel from "../Wheel/Wheel"
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
@@ -115,6 +116,11 @@ function App() {
             path="/search/recipes/:recipeId"
             element={<IndividualRecipe user={user} />}
           />
+          <Route
+            path="/wheel"
+            element={<Wheel />}
+          />
+          <Route path="/profile" element={<Profile user={user} />} />
 
           <Route
             path="/profile"

@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;300;400;500&display=swap');
+
+* {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.menuLine {
+    display: flex;
+    flex-direction: row;
+    background-color: #C4C4C4;
+    align-items:center;
+    padding-left:23px;
+    font-size: 20px;
+}
+
+.userInput {
+    padding-left: 20px;
+    width: 200px;
+}
+
+#time {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 20px;
+}
+
+.menu-input {
+    background-color: #CECECE;
+    display:flex;
+    align-items: center;
+}
+
+.text {
+    font-size: 26px;
+}
+
+.Multiselect {
+    display: flex;
+    flex-wrap: wrap;
+    height: 60px;
+    font-size: 23px;
+}
+
+.setWidth {
+    font-size:23px;
+}
+
+.submit-but {
+    display: flex;
+    justify-content: center;
+    background-color: #C4C4C4;
+}

@@ -11,6 +11,7 @@ const authRoutes = require("./routes/auth");
 const recipeRoutes = require("./routes/recipes");
 const saveRoutes = require("./routes/save");
 const commentRoutes = require("./routes/comments");
+const searchRoutes = require("./routes/search");
 
 // import errors
 const { NotFoundError } = require("./utils/errors");
@@ -29,6 +30,7 @@ app.use("/recipes", recipeRoutes);
 app.use("/auth", authRoutes);
 app.use("/save", saveRoutes);
 app.use("/comment", commentRoutes);
+app.use("/search", searchRoutes);
 
 // Error handlers
 app.use((req, res, next) => {
