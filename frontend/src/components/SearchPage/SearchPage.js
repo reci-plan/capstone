@@ -2,12 +2,32 @@ import "./SearchPage.css";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import apiClient from "../../services/apiClient";
 
-export default function SearchPage({
-    searchTerm,
-    recipes,
-    user,
-    handleClickOnSave,
-}) {
+export default function SearchPage({ searchTerm, recipes, user }) {
+    const handleSave = async (r) => {
+        console.log(r);
+        const { data, error } = await apiClient.saveRecipe(r);
+
+        if (data) {
+            console.log("Save: ", data);
+        }
+
+        if (error) {
+            alert(error);
+        }
+    };
+
+    const handleUnsave = async (r) => {
+        console.log(r);
+        const { data, error } = await apiClient.unsaveRecipe(r);
+
+        if (data) {
+            console.log("Unsave: ", data);
+        }
+
+        if (error) {
+            alert(error);
+        }
+    };
 
     return (
         <div className="SearchPage">
@@ -27,7 +47,8 @@ export default function SearchPage({
                         <RecipeCard
                             user={user}
                             recipeInfo={filteredRecipes}
-                            handleClick={handleClickOnSave}
+                            handleSave={handleSave}
+                            handleUnsave={handleUnsave}
                         />
                     ))}
             </div>

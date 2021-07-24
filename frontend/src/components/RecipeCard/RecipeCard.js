@@ -49,7 +49,7 @@ export default function RecipeCard({
 
   return (
     <div className="RecipeCard">
-      <div className="card-img">
+      <div className="card-img" style={{ height: "200px", width: "200px" }}>
         <img src={recipeInfo.image_url} alt={recipeInfo.title}></img>
       </div>
       <div className="card-info">
@@ -69,7 +69,11 @@ export default function RecipeCard({
       </div>
       <div className="card-links">
         <Link to={`recipes/${recipeInfo.api_id}`}>View more &#187;</Link>
-        <button className="save-btn" onClick={handleOnClick}>
+        <button
+          className="save-btn"
+          onClick={handleOnClick}
+          style={{ border: "1px solid black" }}
+        >
           {saved ? (
             <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
           ) : (

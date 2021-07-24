@@ -110,6 +110,14 @@ class ApiCalls {
         });
     }
 
+    async deleteSavedRecipe(cur_saved_recipe) {
+        return await this.request({
+            endpoint: `save/recipe`,
+            method: `DELETE`,
+            data: cur_saved_recipe,
+        });
+    }
+
     async getCurrentComments(api_id) {
         return await this.request({
             endpoint: `comment/getComment/${api_id}`,
