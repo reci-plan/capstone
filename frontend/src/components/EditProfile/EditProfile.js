@@ -4,7 +4,7 @@ import apiClient from '../../services/apiClient'
 import Multiselect from 'multiselect-react-dropdown';
 import './EditProfile.css';
 
-export default function EditProfile({ user, handleUpdateUser, profile, flavors, setFlavors }) {
+export default function EditProfile({ user, handleUpdateUser, profile, flavors }) {
   const navigate = useNavigate()
   const [form, setForm] = useState({
     first_name: "",
@@ -19,6 +19,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors, 
     image_url: null
   })
   const [errors, setErrors] = useState({})
+  const [addFlavors, setAddFlavors] = useState(flavors)
 
   const handleInputChange = (e) => {
     if (e.target.name === "email") {
@@ -56,9 +57,8 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors, 
   }
 
   const handleSubmit = async () => {
-    for (let key in flavors) {
-      form.fav_flavors += flavors[key]
-    }
+    addFlavors.forEach(item => form.fav_flavors += item.id)
+      
     const { data, error } = await apiClient.updateProfile({
       first_name: form.first_name,
       last_name: form.last_name,
@@ -90,23 +90,12 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors, 
     {flavor: 'fatty', id: 6}
   ];
 
-  // const selectedFlavors = []
-  // console.log(originalFlavors)
-  // originalFlavors.forEach(item => {
-  //   selectedFlavors.push(item)
-  // })
-
-  // const selectedFlavors = [
-  //   {flavor: 'spicy', id: 0},
-  //   {flavor: 'salty', id: 1},
-  // ];
-
   const onSelect = (list, item) => {
-    setFlavors((p) => ({...p, [item.flavor]: item.id}))
+    setAddFlavors(list)
   }
 
   const onRemove = (list, item) => {
-    setFlavors((p) => ({...p, [item.flavor]: item.id}))
+    setAddFlavors(list)
   }
 
   const style = {
@@ -117,7 +106,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors, 
   
   return (
     <div className="EditProfile">
-      {user?.email ? 
+      {!user.email ? 
         <div>Login <Link to="/login">here</Link> to edit your profile page</div> :
 
         <div className="profile-display">

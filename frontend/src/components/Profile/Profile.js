@@ -6,10 +6,9 @@ import tempImg from "../../assets/tempProfileImg.png";
 import location from "../../assets/location.svg";
 import './Profile.css'
 export default function Profile({ user, profile, flavors }) {
-    console.log(user)
     return (
         <div className="Profile">
-            {user?.email ? 
+            {!user.email ? 
             <div>Login <Link to="/login">here</Link> to view your profile page</div> :
 
             <div className="profile-display">
@@ -22,9 +21,9 @@ export default function Profile({ user, profile, flavors }) {
                     </div>
                     <div className="fav-flavors">
                     {/* Categories to input flavors */}
-                    {flavors.length > 0 ?
+                    {flavors?.length > 0 ?
                         flavors.map(element => (
-                            <div>{element}</div>
+                            <div>{element.flavor}</div>
                         )) : null 
                     }
                     </div>

@@ -21,6 +21,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [profile, setProfile] = useState({})
+  // const flavors = [];
   const [flavors, setFlavors] = useState([])
 
   const allFlavors = [
@@ -84,17 +85,18 @@ function App() {
     const fetchProfile = async () => {
         const { data, error } = await apiClient.fetchProfile()
         if (data) {
-            setProfile(data)
-            console.log(profile)
+          setProfile(data)
+          console.log(profile)
             if (data.fav_flavors) {
                 var flavors = []
                 data.fav_flavors.split("").forEach(c => {
                     let num = Number(c)
-                    flavors.push(allFlavors[num])
+                    var obj = {"flavor": allFlavors[num], "id": c};
+                    flavors.push(obj)
                 })
+                console.log(flavors)
                 setFlavors(flavors)
             }
-            
         }
         if (error) {
             console.log(error, "Profile.js")
@@ -102,7 +104,9 @@ function App() {
     }
 
     fetchProfile()
-  }, [])
+  }, [user])
+
+  console.log(flavors)
 
   // Handle save recipe
   const handleSave = async (r) => {
@@ -189,7 +193,7 @@ function App() {
           <Route
             path="/profile/edit"
             element={
-              <EditProfile user={user} handleUpdateUser={handleUpdateUser} profile={profile} flavors={flavors} setFlavors={setFlavors}/>
+              <EditProfile user={user} handleUpdateUser={handleUpdateUser} profile={profile} flavors={flavors}/>
             }
           />
 
