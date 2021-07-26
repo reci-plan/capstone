@@ -33,14 +33,28 @@ export default function Home({ user, handleSave, handleUnsave }) {
         toggleSortbyBtn();
     };
 
+    const getGreeting = () => {
+        var today = new Date()
+        var curHr = today.getHours()
+
+        if (curHr < 12) {
+        return ('Good Morning')
+        } else if (curHr < 18) {
+        return ('Good Afternoon')
+        } else {
+        return ('Good Evening')
+        }
+    }
+
     return (
         <div className="Home" style={{ backgroundImage: `url(${home})` }}>
             <div className="home-header">
                 {user.email ? (
                     <div>
                         <div>
-                            Welcome to Reciplan, {user.first_name}{" "}
-                            {user.last_name}
+                            {getGreeting()}
+                            , {user.first_name}{" "}
+                            {user.last_name}!
                         </div>
                     </div>
                 ) : (
