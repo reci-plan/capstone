@@ -8,17 +8,6 @@ class Comment {
             throw new UnauthorizedError(`No user logged in.`);
         }
 
-        // SELECT * FROM comments
-        // JOIN users ON users.id = comments.user_id
-        // WHERE recipe_id = (SELECT id FROM all_recipes WHERE api_id = $1)
-        // GROUP BY users.id, comments.id, comments.user_id
-        // ORDER BY date DESC
-
-        // likes.user_id, likes.amount
-        // JOIN likes ON likes.user_id = users.id
-
-        // JOIN likes ON likes.comment_id = comments.id
-
         const query = `SELECT
                     comments.comment, comments.date, comments.user_id, comments.recipe_id, users.username, comments.id, likes.id AS likesPrimaryId, likes.amount
                 FROM comments
@@ -45,7 +34,8 @@ class Comment {
         `;
 
         const results = await db.query(query, [user.username, api_id, comment]);
-        // console.log(results.rows[0].id);
+
+
         const insert_to_likes_table_query = `
             INSERT INTO likes (amount, user_id, comment_id)
             VALUES ($1, (SELECT id FROM users WHERE username = $2), (SELECT id FROM comments WHERE id = $3))
@@ -53,7 +43,7 @@ class Comment {
         `;
 
         const insert_to_likes = await db.query(insert_to_likes_table_query, [
-            parseInt(0),
+            0,
             user.username,
             results.rows[0].id,
         ]);

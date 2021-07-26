@@ -71,7 +71,14 @@ export default function IndividualRecipe({ user }) {
     const { data, error } = await apiClient.postComment({ comment }, recipeId);
     if (data) {
       console.log("data.publishComment: >>>>>>>>> ", data.publishComment);
-      setCurComments((prevState) => [...prevState, data.publishComment]);
+      const published_comment_with_zero_likes = {
+        ...data.publishComment,
+        amount: 0,
+      };
+      setCurComments((prevState) => [
+        ...prevState,
+        published_comment_with_zero_likes,
+      ]);
     }
     if (error) {
       alert(error);
@@ -125,16 +132,17 @@ export default function IndividualRecipe({ user }) {
 
   // const [isLike, setIsLike] = useState(false);
   // when user clicks "like" button
-  const handleLike = async (e, comment) => {
+  const handleLike = async (e, comment, type) => {
     setSelectedCommentId(comment.id);
 
     // setIsLike(!isLike);
+    console.log("The comment u clicked on", comment);
+    const updatedComment =
+      type === "upvote"
+        ? { ...comment, amount: comment.amount + 1 }
+        : { ...comment, amount: comment.amount - 1 };
 
-    // const updatedComment = isLike
-    //   ? { ...comment, amount: comment.amount + 1 }
-    //   : { ...comment, amount: comment.amount - 1 };
-
-    const updatedComment = { ...comment, amount: comment.amount + 1 };
+    // const updatedComment = { ...comment, amount: comment.amount + 1 };
     console.log(updatedComment);
     const { data, error } = await apiClient.likeComment(updatedComment);
 
@@ -240,10 +248,11 @@ export default function IndividualRecipe({ user }) {
             ) : (
               <> </>
             )}
-            <button onClick={(e, c) => handleLike(e, comment)}>
+            <button onClick={(e, c) => handleLike(e, comment, "upvote")}>
               like
-              {/*    {isLike && comment.id === selectedCommentId && "like"}
-                  {!isLike && comment.id === selectedCommentId && "unlike"}*/}
+            </button>
+            <button onClick={(e, c) => handleLike(e, comment, "downvote")}>
+              downvote
             </button>
             {/*This is the form for comment editing*/}
             {showEdit && comment.id === selectedCommentId ? (
