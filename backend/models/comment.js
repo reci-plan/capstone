@@ -135,7 +135,8 @@ class Comment {
         if (!user) {
             throw new UnauthorizedError(`No user logged in`);
         }
-        console.log(comment);
+        console.log("This is comment", comment);
+        console.log("COMMENT AMOUNT: ", comment.amount);
         const results = await db.query(
             `UPDATE likes
             SET amount = $1
@@ -143,7 +144,7 @@ class Comment {
             AND comment_id = $3
             RETURNING amount, id
             `,
-            [10, user.username, comment.id]
+            [comment.amount, user.username, comment.id]
         );
         return results.rows[0];
     }

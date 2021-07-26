@@ -127,6 +127,7 @@ export default function IndividualRecipe({ user }) {
   // when user clicks "like" button
   const handleLike = async (e, comment) => {
     setSelectedCommentId(comment.id);
+
     // setIsLike(!isLike);
 
     // const updatedComment = isLike
@@ -134,14 +135,14 @@ export default function IndividualRecipe({ user }) {
     //   : { ...comment, amount: comment.amount - 1 };
 
     const updatedComment = { ...comment, amount: comment.amount + 1 };
-
+    console.log(updatedComment);
     const { data, error } = await apiClient.likeComment(updatedComment);
 
     if (data) {
       setCurComments(
         curComments.map((c) =>
           c.id === updatedComment.id
-            ? { ...c, likes: updatedComment.amount }
+            ? { ...c, amount: updatedComment.amount }
             : c
         )
       );
@@ -224,7 +225,7 @@ export default function IndividualRecipe({ user }) {
           <div>
             comment: {comment?.comment}, date: {comment?.date}, user id:
             {comment?.user_id}, ID (primary key): {comment?.id}, likes{" "}
-            {comment.amount}, posted by: {comment.username}
+            {comment?.amount}, posted by: {comment.username}
             {user.id === comment.user_id ? (
               <>
                 <button onClick={(e) => handleDelete(e, comment)}>
