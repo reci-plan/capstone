@@ -6,6 +6,9 @@ const SECRET_KEY = process.env.SECRET_KEY || "recipath";
 const BASE_RECIPES_URL = "https://api.spoonacular.com/recipes";
 const BCRYPT_WORK_FACTOR = 10;
 
+const RAPID_KEY = process.env.RAPID_KEY;
+const RAPID_HOST = process.env.RAPID_HOST;
+
 function getDatabaseUri() {
     const dbUser = process.env.DATABASE_USER || "postgres";
     const dbPass = process.env.DATABASE_PASS
@@ -28,4 +31,6 @@ module.exports = {
     SECRET_KEY,
     getDatabaseUri,
     BCRYPT_WORK_FACTOR,
+    RAPID_KEY,
+    RAPID_HOST
 };
