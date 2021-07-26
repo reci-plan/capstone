@@ -5,16 +5,17 @@ import Multiselect from 'multiselect-react-dropdown';
 import './EditProfile.css';
 
 export default function EditProfile({ user, handleUpdateUser, profile, flavors }) {
+  console.log(user, profile)
   const navigate = useNavigate()
   const [form, setForm] = useState({
-    first_name: "",
-    last_name: "",
-    username: "",
-    email: "",
+    first_name: user.first_name,
+    last_name: user.last_name,
+    username: user.username,
+    email: user.email,
     password: "",
     passwordConfirm: "",
-    short_bio: "",
-    region: "",
+    short_bio: profile.short_bio,
+    region: profile.region,
     fav_flavors: "",
     image_url: null
   })
@@ -139,18 +140,21 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
           <div className="profile-right">
             <div className="profile-basic">
               <div className="profile-name">{user.first_name} {user.last_name}</div>
-              <div>
-                <input
-                  type="text"
-                  name="region"
-                  placeholder="region"
-                  value={form.region}
-                  onChange={handleInputChange}
-                />
-              </div>
             </div>
             <div className="form">
-              <div className="input-name">
+              <div className="form-input">
+                  <label>region</label>
+                  <input
+                    type="text"
+                    name="region"
+                    placeholder="region"
+                    value={form.region}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              <div className="">
+                <div className="form-input">
+                  <label>first name</label>
                   <input
                     type="text"
                     name="first_name"
@@ -158,6 +162,9 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                     value={form.first_name}
                     onChange={handleInputChange}
                   />
+                </div>
+                <div className="form-input">
+                  <label className="form-input">last name</label>
                   <input
                     type="text"
                     name="last_name"
@@ -165,8 +172,10 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                     value={form.last_name}
                     onChange={handleInputChange}
                   />
+                </div>
               </div>
-              <div>
+              <div className="form-input">
+                <label>email</label>
                 <input
                   type="email"
                   name="email"
@@ -176,7 +185,8 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                 />
               </div>
               {errors.email}
-              <div>
+              <div className="form-input">
+                <label>username</label>
                 <input
                   type="text"
                   name="username"
@@ -185,7 +195,8 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                   onChange={handleInputChange}
                 />
               </div>
-              <div>
+              <div className="form-input">
+                <label>password</label>
                 <input
                   type="password"
                   name="password"
@@ -194,7 +205,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                   onChange={handleInputChange}
                 />
               </div>
-              <div>
+              <div className="form-input">
                 <input
                   type="password"
                   name="passwordConfirm"
@@ -204,7 +215,8 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                 />
               </div>
               {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
-              <div>
+              <div className="form-input">
+                <label>short bio</label>
                 <input
                   type="text"
                   name="short_bio"
