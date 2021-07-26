@@ -20,6 +20,20 @@ function App() {
   const [user, setUser] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
+  const [profile, setProfile] = useState({})
+  // const flavors = [];
+  const [flavors, setFlavors] = useState([])
+
+  const allFlavors = [
+      'spicy', 
+      'salty',
+      'sweet',
+      'sour',
+      'bitter',
+      'savory',
+      'fatty'
+  ];
+  
   const [alreadyExist, setAlreadyExist] = useState(false);
   // const [recipes, setRecipes] = useState({})
 
@@ -66,20 +80,32 @@ function App() {
     fetchRecipes();
   }, []);
 
-  // Fetch saved recipes
-  // useEffect(() => {
-  //   const fetchRecipes = async () => {
-  //       const { data, error } = await apiClient.fetchSavedRecipes();
-  //       if (data) {
-  //           setSaved(data.savedRecipes);
-  //       }
+  // Fetch user profile 
+  useEffect(() => {
+    const fetchProfile = async () => {
+        const { data, error } = await apiClient.fetchProfile()
+        if (data) {
+          setProfile(data)
+            if (data.fav_flavors) {
+                var flavors = []
+                data.fav_flavors.split("").forEach(c => {
+                    let num = Number(c)
+                    var obj = {"flavor": allFlavors[num], "id": c};
+                    flavors.push(obj)
+                })
+                setFlavors(flavors)
+            }
+            else {
+              setFlavors([])
+            }
+        }
+        if (error) {
+            console.log(error, "Profile.js")
+        }
+    }
 
-  //       if (error) {
-  //           console.log(error, "fetch saved recipes")
-  //       }
-  //   };
-  //   fetchRecipes();
-  // }, []);
+    fetchProfile()
+  }, [user])
 
   // Handle save recipe
   const handleSave = async (r) => {
@@ -150,23 +176,23 @@ function App() {
             path="/search/recipes/:recipeId"
             element={<IndividualRecipe user={user} />}
           />
+          
           <Route
             path="/wheel"
             element={<Wheel />}
           />
-          <Route path="/profile" element={<Profile user={user} />} />
 
           <Route
             path="/profile"
             element={
-              <Profile user={user} />
+              <Profile user={user} profile={profile} flavors={flavors} />
             }
           />
 
           <Route
             path="/profile/edit"
             element={
-              <EditProfile user={user} handleUpdateUser={handleUpdateUser}/>
+              <EditProfile user={user} handleUpdateUser={handleUpdateUser} profile={profile} flavors={flavors}/>
             }
           />
 
