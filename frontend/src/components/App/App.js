@@ -21,8 +21,9 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [profile, setProfile] = useState({})
-  // const flavors = [];
   const [flavors, setFlavors] = useState([])
+  const [saved, setSaved] = useState([]);
+  const [changeSave, setChangeSave] = useState(false)
 
   const allFlavors = [
       'spicy', 
@@ -107,16 +108,33 @@ function App() {
     fetchProfile()
   }, [user])
 
+  // Fetch saved recipes
+  useEffect(() => {
+    const fetchRecipes = async () => {
+        const { data, error } = await apiClient.fetchSavedRecipes();
+        if (data) {
+            setSaved(data.savedRecipes);
+            console.log(saved)
+        }
+
+        if (error) {
+            console.log(error, "fetch saved recipes")
+        }
+    };
+    fetchRecipes();
+  }, [user, changeSave]);
+
   // Handle save recipe
   const handleSave = async (r) => {
     const { data, error } = await apiClient.saveRecipe(r);
 
     if (data) {
-        console.log("Save: ", data);
+      setChangeSave(!changeSave)
+      console.log("Save: ", data);
     }
 
     if (error) {
-        alert(error);
+      alert(error);
     }
   };
 
@@ -125,11 +143,12 @@ function App() {
     const { data, error } = await apiClient.unsaveRecipe(r);
 
     if (data) {
-        console.log("Unsave: ", data);
+      setChangeSave(!changeSave)
+      console.log("Unsave: ", data);
     }
 
     if (error) {
-        alert(error);
+      alert(error);
     }
   };
 
@@ -201,6 +220,7 @@ function App() {
             element={
               <SavedGallery 
                 user={user} 
+                saved={saved}
                 handleSave={handleSave} 
                 handleUnsave={handleUnsave}
               />
