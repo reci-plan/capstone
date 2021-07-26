@@ -75,5 +75,6 @@ CREATE TABLE comments (
 CREATE TABLE likes (
     id                 SERIAL PRIMARY KEY,
     amount             INTEGER NOT NULL DEFAULT 0,
-    user_id            INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
+    user_id            INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    comment_id         INTEGER NOT NULL REFERENCES comments(id) ON DELETE CASCADE
 );

@@ -59,6 +59,17 @@ router.put("/likeComment", async (req, res, next) => {
   }
 });
 
+router.post("/checkCommentOwner", async (req, res, next) => {
+  try {
+    const user = res.locals.user;
+    const comment = req.body;
+    const checkTheCommentOwner = await Comment.getCommentOwner(user, comment);
+    res.status(200).json({ checkTheCommentOwner });
+  } catch (e) {
+    next(e);
+  }
+});
+
 router.get("/doesItBelongToUser/:recipeId", async (req, res, next) => {
   try {
     const user = res.locals.user;

@@ -22,6 +22,8 @@ export default function IndividualRecipe({ user }) {
 
   const [selectedCommentId, setSelectedCommentId] = useState("");
 
+  const [postedBy, setPostedBy] = useState();
+
   useEffect(() => {
     const fetchRecipeInfo = async () => {
       const { data, error } = await apiClient.fetchIndividualRecipeInfo(
@@ -121,22 +123,26 @@ export default function IndividualRecipe({ user }) {
     setSelectedCommentId(comment.id);
   };
 
-  const [isLike, setIsLike] = useState();
+  // const [isLike, setIsLike] = useState(false);
   // when user clicks "like" button
   const handleLike = async (e, comment) => {
     setSelectedCommentId(comment.id);
-    setIsLike(!isLike);
+    // setIsLike(!isLike);
 
-    const updatedComment = isLike
-      ? { ...comment, likes: comment.likes + 1 }
-      : { ...comment, likes: comment.likes - 1 };
+    // const updatedComment = isLike
+    //   ? { ...comment, amount: comment.amount + 1 }
+    //   : { ...comment, amount: comment.amount - 1 };
+
+    const updatedComment = { ...comment, amount: comment.amount + 1 };
 
     const { data, error } = await apiClient.likeComment(updatedComment);
 
     if (data) {
       setCurComments(
         curComments.map((c) =>
-          c.id === updatedComment.id ? { ...c, likes: updatedComment.likes } : c
+          c.id === updatedComment.id
+            ? { ...c, likes: updatedComment.amount }
+            : c
         )
       );
     }
@@ -185,12 +191,12 @@ export default function IndividualRecipe({ user }) {
         {/* Right Side */}
         <div className="recipe-right">
           <div className="jumpto">
-            {recipeInstructions.length > 0 ?
-              Array.from(recipeInstructions.length, (i) => {
-                console.log("here",i)
-                return <div>i</div>
-              }) : null
-            }
+            {recipeInstructions.length > 0
+              ? Array.from(recipeInstructions.length, (i) => {
+                  console.log("here", i);
+                  return <div>i</div>;
+                })
+              : null}
           </div>
           <div className="heading">Instructions</div>
           {recipeInstructions.length > 0
@@ -218,7 +224,7 @@ export default function IndividualRecipe({ user }) {
           <div>
             comment: {comment?.comment}, date: {comment?.date}, user id:
             {comment?.user_id}, ID (primary key): {comment?.id}, likes{" "}
-            {comment.likes}
+            {comment.amount}, posted by: {comment.username}
             {user.id === comment.user_id ? (
               <>
                 <button onClick={(e) => handleDelete(e, comment)}>

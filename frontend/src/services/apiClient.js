@@ -157,6 +157,14 @@ class ApiCalls {
         });
     }
 
+    async getTheOwnerOfComment(comment) {
+        return await this.request({
+            endpoint: `comment/checkCommentOwner`,
+            method: `POST`,
+            data: comment,
+        });
+    }
+
     async checkIfCommentBelongsToUser(api_id) {
         return await this.request({
             endpoint: `comment/doesItBelongToUser/${api_id}`,
@@ -166,35 +174,35 @@ class ApiCalls {
 
     async fetchRecipesByCategory(category) {
         return await this.request({
-            endpoint:`search/${category}`
-        })
+            endpoint: `search/${category}`,
+        });
     }
 
     async fetchLocalDbRecipe(recipeId) {
         return await this.request({
-            endpoint:`search/id/${recipeId}`
-        })
+            endpoint: `search/id/${recipeId}`,
+        });
     }
 
     async createProfile() {
         return await this.request({
             endpoint: `profile/create`,
-            method: `POST`
-        })
+            method: `POST`,
+        });
     }
 
     async fetchProfile() {
         return await this.request({
-            endpoint: `profile/`
-        })
+            endpoint: `profile/`,
+        });
     }
 
     async updateProfile(info) {
         return await this.request({
             endpoint: `profile/`,
             method: `PUT`,
-            data: info
-        })
+            data: info,
+        });
     }
 }
 

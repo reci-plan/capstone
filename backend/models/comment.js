@@ -8,9 +8,25 @@ class Comment {
             throw new UnauthorizedError(`No user logged in.`);
         }
 
-        const query = `SELECT * FROM comments
-            WHERE recipe_id = (SELECT id FROM all_recipes WHERE api_id = $1)
-            ORDER BY date DESC
+        // SELECT * FROM comments
+        // JOIN users ON users.id = comments.user_id
+        // WHERE recipe_id = (SELECT id FROM all_recipes WHERE api_id = $1)
+        // GROUP BY users.id, comments.id, comments.user_id
+        // ORDER BY date DESC
+
+        // likes.user_id, likes.amount
+        // JOIN likes ON likes.user_id = users.id
+
+        // JOIN likes ON likes.comment_id = comments.id
+
+        const query = `SELECT
+                    comments.comment, comments.date, comments.user_id, comments.recipe_id, users.username, comments.id, likes.id AS likesPrimaryId, likes.amount
+                FROM comments
+             JOIN users ON users.id = comments.user_id
+             JOIN likes ON likes.comment_id = comments.id
+             WHERE comments.recipe_id = (SELECT id FROM all_recipes WHERE api_id = $1)
+             ORDER BY date DESC
+
             `;
 
         const results = await db.query(query, [api_id]);
@@ -22,16 +38,27 @@ class Comment {
         if (!user) {
             throw new UnauthorizedError(`No user logged in.`);
         }
-        const query = `INSERT INTO comments (user_id, recipe_id, comment)
+        const query = `
+            INSERT INTO comments (user_id, recipe_id, comment)
             VALUES ((SELECT id FROM users WHERE username = $1), (SELECT id FROM all_recipes WHERE api_id = $2), $3)
             RETURNING comment, user_id, recipe_id, date, id
         `;
 
-        const results = await db.query(query, [
+        const results = await db.query(query, [user.username, api_id, comment]);
+        // console.log(results.rows[0].id);
+        const insert_to_likes_table_query = `
+            INSERT INTO likes (amount, user_id, comment_id)
+            VALUES ($1, (SELECT id FROM users WHERE username = $2), (SELECT id FROM comments WHERE id = $3))
+            RETURNING id, amount, user_id, comment_id
+        `;
+
+        const insert_to_likes = await db.query(insert_to_likes_table_query, [
+            parseInt(0),
             user.username,
-            api_id,
-            comment,
+            results.rows[0].id,
         ]);
+
+        console.log(`insert_to_likes: `, insert_to_likes.rows[0]);
 
         return results.rows[0];
     }
@@ -54,8 +81,8 @@ class Comment {
             AND id = $2`,
             [user.username, comment_id]
         );
-
-        if (checkIfExisting.rows.length !== 1) {
+        console.log("testing", checkIfExisting.rows.length === 0);
+        if (checkIfExisting.rows.length === 0) {
             throw new BadRequestError("You don't own this comment");
         }
 
@@ -118,6 +145,24 @@ class Comment {
             `,
             [10, user.username, comment.id]
         );
+        return results.rows[0];
+    }
+
+    static async getCommentOwner(user, comment) {
+        if (!user) {
+            throw new UnauthorizedError(`No user logged in`);
+        }
+
+        // const query = `SELECT * FROM comments
+        //     JOIN users ON users.id = comments.user_id
+        //     WHERE comments.user_id = (SELECT id FROM users WHERE username = $1)
+        //     AND
+        // `;
+        const query = `SELECT * FROM users
+            JOIN comments ON comments.user_id = users.id
+            WHERE comments.user_id = $1
+        `;
+        const results = await db.query(query, [comment.user_id]);
         return results.rows[0];
     }
 
