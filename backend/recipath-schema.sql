@@ -69,12 +69,14 @@ CREATE TABLE comments (
     comment             TEXT NOT NULL,
     user_id             INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     recipe_id           INTEGER NOT NULL REFERENCES all_recipes(id) ON DELETE CASCADE,
-    date                TIMESTAMP NOT NULL DEFAULT NOW()
+    date                TIMESTAMP NOT NULL DEFAULT NOW(),
+    isLiked             BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE likes (
     id                 SERIAL PRIMARY KEY,
     amount             INTEGER NOT NULL DEFAULT 0,
     user_id            INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    comment_id         INTEGER NOT NULL REFERENCES comments(id) ON DELETE CASCADE
+    comment_id         INTEGER NOT NULL REFERENCES comments(id) ON DELETE CASCADE,
+    arrayOfUserId      TEXT []
 );

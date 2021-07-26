@@ -65,9 +65,9 @@ export default function IndividualRecipe({ user }) {
   }, [recipeId]);
 
   // When user post new comment
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(comment);
     const { data, error } = await apiClient.postComment({ comment }, recipeId);
     if (data) {
       console.log("data.publishComment: >>>>>>>>> ", data.publishComment);

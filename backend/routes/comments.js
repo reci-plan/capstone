@@ -70,6 +70,17 @@ router.post("/checkCommentOwner", async (req, res, next) => {
   }
 });
 
+router.get("/checkIfUserIsInLikes/:api_id", async (req, res, next) => {
+  try {
+    const user = res.locals.user;
+    const { api_id } = req.params;
+    const isUserInLikes = await Comment.checkIfUserIsInLikes(user, api_id);
+    res.status(200).json({ isUserInLikes });
+  } catch (e) {
+    next(e);
+  }
+});
+
 router.get("/doesItBelongToUser/:recipeId", async (req, res, next) => {
   try {
     const user = res.locals.user;
