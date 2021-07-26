@@ -4,7 +4,7 @@ import apiClient from '../../services/apiClient'
 import Multiselect from 'multiselect-react-dropdown';
 import './EditProfile.css';
 
-export default function EditProfile({ user, handleUpdateUser }) {
+export default function EditProfile({ user, handleUpdateUser, profile, flavors, setFlavors }) {
   const navigate = useNavigate()
   const [form, setForm] = useState({
     first_name: "",
@@ -18,23 +18,7 @@ export default function EditProfile({ user, handleUpdateUser }) {
     fav_flavors: "",
     image_url: null
   })
-  const [errors, setErrors] = useState([])
-  const [profile, setProfile] = useState([])
-  const [flavors, setFlavors] = useState([])
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-        const { data, error } = await apiClient.fetchProfile()
-        if (data) {
-            setProfile(data)
-        }
-        if (error) {
-            console.log(error, "EditProfile.js")
-        }
-    }
-
-    fetchProfile()
-  }, [])
+  const [errors, setErrors] = useState({})
 
   const handleInputChange = (e) => {
     if (e.target.name === "email") {
@@ -96,7 +80,7 @@ export default function EditProfile({ user, handleUpdateUser }) {
   }
 
   /** Multi-Select Library */
-  const allFlavors = [
+  const flavorOptions = [
     {flavor: 'spicy', id: 0},
     {flavor: 'salty', id: 1},
     {flavor: 'sweet', id: 2},
@@ -106,9 +90,16 @@ export default function EditProfile({ user, handleUpdateUser }) {
     {flavor: 'fatty', id: 6}
   ];
 
-  const selectedFlavors = [
+  // const selectedFlavors = []
+  // console.log(originalFlavors)
+  // originalFlavors.forEach(item => {
+  //   selectedFlavors.push(item)
+  // })
 
-  ];
+  // const selectedFlavors = [
+  //   {flavor: 'spicy', id: 0},
+  //   {flavor: 'salty', id: 1},
+  // ];
 
   const onSelect = (list, item) => {
     setFlavors((p) => ({...p, [item.flavor]: item.id}))
@@ -126,114 +117,119 @@ export default function EditProfile({ user, handleUpdateUser }) {
   
   return (
     <div className="EditProfile">
-      <div className="profile-display">
-        <div className="profile-left">
-          <div className="profile-img">
-            {form.image_url ?
-              <img src={form.image_url} alt=""></img> :
-              <img src={profile.image_url} alt=""></img>
-            }
-          </div>
-          <div>
-            <input
-              type="file"
-              name="image_url"
-              placeholder="image"
-              // value={form.image_url}
-              onChange={handleImageChange}
+      {user?.email ? 
+        <div>Login <Link to="/login">here</Link> to edit your profile page</div> :
+
+        <div className="profile-display">
+          <div className="profile-left">
+            <div className="profile-img">
+              {form.image_url ?
+                <img src={form.image_url} alt=""></img> :
+                <img src={profile.image_url} alt=""></img>
+              }
+            </div>
+            <div>
+              <input
+                type="file"
+                name="image_url"
+                placeholder="image"
+                // value={form.image_url}
+                onChange={handleImageChange}
+              />
+            </div>
+            <Multiselect
+              options={flavorOptions} // Options to display in the dropdown
+              selectedValues={flavors}
+              onSelect={onSelect} // Function will trigger on select event
+              onRemove={onRemove} // Function will trigger on remove event
+              displayValue={"flavor"}
+              closeIcon={"cancel"}
+              style={style}
             />
           </div>
-          <Multiselect
-            options={allFlavors} // Options to display in the dropdown
-            onSelect={onSelect} // Function will trigger on select event
-            onRemove={onRemove} // Function will trigger on remove event
-            displayValue={"flavor"}
-            closeIcon={"cancel"}
-            style={style}
-          />
-        </div>
-        <div className="profile-right">
-          <div className="profile-basic">
-            <div className="profile-name">{user.first_name} {user.last_name}</div>
-            <div>
-              <input
-                type="text"
-                name="region"
-                placeholder="region"
-                value={form.region}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-          <div className="form">
-            <div className="input-name">
+          <div className="profile-right">
+            <div className="profile-basic">
+              <div className="profile-name">{user.first_name} {user.last_name}</div>
+              <div>
                 <input
                   type="text"
-                  name="first_name"
-                  placeholder="first name"
-                  value={form.first_name}
+                  name="region"
+                  placeholder="region"
+                  value={form.region}
                   onChange={handleInputChange}
                 />
+              </div>
+            </div>
+            <div className="form">
+              <div className="input-name">
+                  <input
+                    type="text"
+                    name="first_name"
+                    placeholder="first name"
+                    value={form.first_name}
+                    onChange={handleInputChange}
+                  />
+                  <input
+                    type="text"
+                    name="last_name"
+                    placeholder="last name"
+                    value={form.last_name}
+                    onChange={handleInputChange}
+                  />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="email"
+                  value={form.email}
+                  onChange={handleInputChange}
+                />
+              </div>
+              {errors.email}
+              <div>
                 <input
                   type="text"
-                  name="last_name"
-                  placeholder="last name"
-                  value={form.last_name}
+                  name="username"
+                  placeholder="username"
+                  value={form.username}
                   onChange={handleInputChange}
                 />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="password"
+                  value={form.password}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  name="passwordConfirm"
+                  placeholder="confirm password"
+                  value={form.passwordConfirm}
+                  onChange={handleInputChange}
+                />
+              </div>
+              {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
+              <div>
+                <input
+                  type="text"
+                  name="short_bio"
+                  placeholder="add a short bio"
+                  value={form.short_bio}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>{errors.form}</div>
+              <button className="btn" onClick={handleSubmit}>update</button>
             </div>
-            <div>
-              <input
-                type="email"
-                name="email"
-                placeholder="email"
-                value={form.email}
-                onChange={handleInputChange}
-              />
-            </div>
-            {errors.email}
-            <div>
-              <input
-                type="text"
-                name="username"
-                placeholder="username"
-                value={form.username}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <input
-                type="password"
-                name="password"
-                placeholder="password"
-                value={form.password}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <input
-                type="password"
-                name="passwordConfirm"
-                placeholder="confirm password"
-                value={form.passwordConfirm}
-                onChange={handleInputChange}
-              />
-            </div>
-            {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
-            <div>
-              <input
-                type="text"
-                name="short_bio"
-                placeholder="add a short bio"
-                value={form.short_bio}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>{errors.form}</div>
-            <button className="btn" onClick={handleSubmit}>update</button>
           </div>
         </div>
-      </div>
+      }
     </div>
   )
 }

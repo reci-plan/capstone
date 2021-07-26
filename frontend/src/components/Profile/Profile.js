@@ -5,49 +5,13 @@ import apiClient from "../../services/apiClient";
 import tempImg from "../../assets/tempProfileImg.png";
 import location from "../../assets/location.svg";
 import './Profile.css'
-export default function Profile({ user }) {
-    const [profile, setProfile] = useState({})
-    const [flavors, setFlavors] = useState([])
-
-    const allFlavors = [
-        'spicy', 
-        'salty',
-        'sweet',
-        'sour',
-        'bitter',
-        'savory',
-        'fatty'
-    ];
-
-    useEffect(() => {
-        const fetchProfile = async () => {
-            const { data, error } = await apiClient.fetchProfile()
-            if (data) {
-                setProfile(data)
-                console.log(profile)
-                if (data.fav_flavors) {
-                    var flavors = []
-                    data.fav_flavors.split("").forEach(c => {
-                        let num = Number(c)
-                        flavors.push(allFlavors[num])
-                    })
-                    setFlavors(flavors)
-                }
-                
-            }
-            if (error) {
-                console.log(error, "Profile.js")
-            }
-        }
-
-        fetchProfile()
-    }, [user])
-
-    console.log(flavors)
-
+export default function Profile({ user, profile, flavors }) {
+    console.log(user)
     return (
-        
         <div className="Profile">
+            {user?.email ? 
+            <div>Login <Link to="/login">here</Link> to view your profile page</div> :
+
             <div className="profile-display">
                 <div className="profile-left">
                     <div className="profile-img">
@@ -85,6 +49,7 @@ export default function Profile({ user }) {
                 </div>
                 <Link to='/profile/edit' className="edit-btn">...</Link>
             </div>
+            }
         </div>
     );
 }
