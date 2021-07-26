@@ -20,12 +20,11 @@ export default function Profile({ user, profile, flavors }) {
                         }
                     </div>
                     <div className="fav-flavors">
-                    {/* Categories to input flavors */}
-                    {flavors?.length > 0 ?
-                        flavors.map(element => (
-                            <div>{element.flavor}</div>
-                        )) : null 
-                    }
+                        {flavors?.length > 0 ?
+                            flavors.map(element => (
+                                <div>{element.flavor}</div>
+                            )) : null 
+                        }
                     </div>
                 </div>
                 <div className="profile-right">

@@ -86,7 +86,6 @@ function App() {
         const { data, error } = await apiClient.fetchProfile()
         if (data) {
           setProfile(data)
-          console.log(profile)
             if (data.fav_flavors) {
                 var flavors = []
                 data.fav_flavors.split("").forEach(c => {
@@ -94,8 +93,10 @@ function App() {
                     var obj = {"flavor": allFlavors[num], "id": c};
                     flavors.push(obj)
                 })
-                console.log(flavors)
                 setFlavors(flavors)
+            }
+            else {
+              setFlavors([])
             }
         }
         if (error) {
@@ -105,8 +106,6 @@ function App() {
 
     fetchProfile()
   }, [user])
-
-  console.log(flavors)
 
   // Handle save recipe
   const handleSave = async (r) => {

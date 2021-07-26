@@ -5,7 +5,6 @@ import Multiselect from 'multiselect-react-dropdown';
 import './EditProfile.css';
 
 export default function EditProfile({ user, handleUpdateUser, profile, flavors }) {
-  console.log(user, profile)
   const navigate = useNavigate()
   const [form, setForm] = useState({
     first_name: user.first_name,
@@ -58,8 +57,16 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
   }
 
   const handleSubmit = async () => {
+    // check that the password and email fields are valid before registering user
+    if (form.passwordConfirm !== form.password) {
+      setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match." }))
+      return
+    } else {
+      setErrors((e) => ({ ...e, passwordConfirm: null }))
+    }
+
     addFlavors.forEach(item => form.fav_flavors += item.id)
-      
+
     const { data, error } = await apiClient.updateProfile({
       first_name: form.first_name,
       last_name: form.last_name,
@@ -96,6 +103,10 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
   }
 
   const onRemove = (list, item) => {
+    if (list.length == 0) {
+      setAddFlavors([])
+      return
+    }
     setAddFlavors(list)
   }
 
