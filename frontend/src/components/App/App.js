@@ -12,6 +12,7 @@ import SearchPage from "../SearchPage/SearchPage";
 import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
 import Wheel from "../Wheel/Wheel"
+import SearchFilter from "../SearchFilter/SearchFilter";
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
@@ -229,6 +230,16 @@ function App() {
           
           <Route
             path="/search"
+            element={
+              <SearchFilter
+                user={user}
+                recipes={recipes}
+              />
+            }
+          />
+
+          <Route
+            path="/searchResults"
             element={
               <SearchPage
                 searchTerm={searchTerm}

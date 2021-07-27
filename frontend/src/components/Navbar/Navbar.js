@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import apiClient from "../../services/apiClient";
 import logo from "../../assets/logo.svg";
 import search from "../../assets/search-icon.svg";
@@ -7,6 +8,7 @@ import wheel from "../../assets/wheel-icon.svg";
 import close from "../../assets/close.svg";
 import userlogo from "../../assets/user.svg";
 
+import SearchPage from "../SearchPage/SearchPage";
 import "./Navbar.css";
 
 export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
@@ -17,6 +19,7 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
 
   const handleOnSearchClick = () => {
     isSearch ? setIsSearch(false) : setIsSearch(true);
+    navigate("/search");
   };
 
   const handleOnUserClick = () => {
@@ -34,7 +37,7 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    navigate("/search");
+    navigate("/searchResults");
   };
 
   return (
