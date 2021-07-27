@@ -42,7 +42,6 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
   const handleOnClick = (e) => {
     const index = data.indexOf(e.target.innerHTML)
     setCategory(1 << (11 - index))
-    console.log(category)
     setShow(!show)
   }
 
@@ -78,7 +77,7 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
                 (r.category & category) === category
               ))
               .map((r) => (
-                console.log((`${r.category} & ${category} = ${(r.category & category)}, result: ${Boolean((r.category & category) === category)}`)),
+                // console.log((`${r.category} & ${category} = ${(r.category & category)}, result: ${Boolean((r.category & category) === category)}`)),
                 <RecipeCard
                   key={r.id}
                   user={user}
