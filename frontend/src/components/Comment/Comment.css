@@ -1,0 +1,13 @@
+.comment_div {
+    border: 0.3px solid black;
+}
+
+.comment_headers {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment_headers,
+.comment_desc {
+    margin: 20px;
+}

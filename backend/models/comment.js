@@ -24,6 +24,7 @@ class Comment {
     }
 
     static async postComment(user, comment, api_id) {
+        console.log(user.username);
         if (!user) {
             throw new UnauthorizedError(`No user logged in.`);
         }
@@ -134,7 +135,7 @@ class Comment {
         //     JOIN likes ON likes.comment_id = comments.id
         //     WHERE comments.user_id = (SELECT id FROM users WHERE username = $1)
         //     AND comments.recipe_id = (SELECT id FROM all_recipes WHERE api_id = $2)
-            // AND $3 = ANY(likes.arrayOfUserId)
+        // AND $3 = ANY(likes.arrayOfUserId)
 
         const query = `SELECT * FROM comments
             JOIN likes ON likes.comment_id = comments.id
@@ -142,10 +143,7 @@ class Comment {
             AND $2 = ANY(likes.arrayOfUserId)
         `;
 
-        const results = await db.query(query, [
-            api_id,
-            user.username,
-        ]);
+        const results = await db.query(query, [api_id, user.username]);
 
         console.log("checkIfUserIsInLikes(): ", results.rows);
         if (results.rows.length > 0) {
@@ -207,10 +205,6 @@ class Comment {
 
         return results.rows[0];
     }
-
-
-
-
 }
 
 module.exports = Comment;

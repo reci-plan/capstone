@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import moment from "moment";
 
 import apiClient from "../../services/apiClient";
+import "./Comment.css";
 
 export default function Comment({
     comment,
@@ -15,6 +17,7 @@ export default function Comment({
     selectedCommentId,
     user,
 }) {
+    console.log("comment is", comment);
     const { recipeId } = useParams();
     const [alreadyLiked, setAlreadyLiked] = useState(false);
     // Pseudo Code
@@ -106,13 +109,36 @@ export default function Comment({
             alert(error);
         }
     };
-
+    console.log(comment.user_first_name);
     return (
         <div>
-            comment: {comment?.comment}, date: {comment?.date}, user id:
+            {/*   comment: {comment?.comment}, date: {comment?.date}, user id:
             {comment?.user_id}, ID (primary key): {comment?.id}, likes{" "}
             {comment?.amount}, posted by: {comment.username}, alreadyLiked:
-            {alreadyLiked ? "true" : "false"}
+            {alreadyLiked ? "true" : "false"}*/}
+            <div className="comment_div">
+                <div className="comment_headers">
+                    <div>
+                        <span
+                            style={{
+                                border: "1px solid black",
+                                marginRight: "20px",
+                            }}
+                        >
+                            Image
+                        </span>
+                        Posted by {""}
+                        <b>
+                            {comment.user_first_name} {comment.user_last_name}{" "}
+                        </b>
+                    </div>
+                    <div>
+                        {" "}
+                        <b> {moment(comment?.date).fromNow()} </b>{" "}
+                    </div>
+                </div>
+                <div className="comment_desc">{comment?.comment}</div>
+            </div>
             {user.id === comment.user_id ? (
                 <>
                     <button onClick={(e) => handleDelete(e, comment)}>

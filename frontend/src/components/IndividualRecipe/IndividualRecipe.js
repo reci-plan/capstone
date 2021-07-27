@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
+import cn from "classnames";
 
 import apiClient from "../../services/apiClient";
 import veganIcon from "../../assets/vegan-icon.svg";
@@ -9,10 +10,12 @@ import glutenfreeIcon from "../../assets/glutenfree-icon.svg";
 import "./IndividualRecipe.css";
 
 import Comment from "../Comment/Comment";
+import useDynamicHeightField from "./useDynamicHeightField";
 
 export default function IndividualRecipe({ user }) {
+  console.log(user);
+
   const { recipeId } = useParams();
-  // console.log("recipeId", recipeId);
   const [recipeInstructions, setRecipeInstructions] = useState([]);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeInfo, setRecipeInfo] = useState([]);
@@ -25,6 +28,28 @@ export default function IndividualRecipe({ user }) {
   const [selectedCommentId, setSelectedCommentId] = useState("");
 
   const [postedBy, setPostedBy] = useState();
+
+  // comment box
+  const INITIAL_HEIGHT = 75;
+  const [isExpanded, setIsExpanded] = useState(false);
+  const outerHeight = useRef(INITIAL_HEIGHT);
+  const textRef = useRef(null);
+  const containerRef = useRef(null);
+  useDynamicHeightField(textRef, comment);
+
+  const onExpand = () => {
+    console.log("hi");
+    if (!isExpanded) {
+      outerHeight.current = containerRef.current.scrollHeight;
+      setIsExpanded(true);
+      console.log("wtf");
+    }
+  };
+
+  const onClose = () => {
+    setComment("");
+    setIsExpanded(false);
+  };
 
   useEffect(() => {
     const fetchRecipeInfo = async () => {
@@ -76,6 +101,8 @@ export default function IndividualRecipe({ user }) {
       const published_comment_with_zero_likes = {
         ...data.publishComment,
         amount: 0,
+        user_first_name: user.first_name,
+        user_last_name: user.last_name,
       };
       setCurComments((prevState) => [
         ...prevState,
@@ -148,18 +175,72 @@ export default function IndividualRecipe({ user }) {
             : null}
         </div>
       </div>
+
       <div>
-        comments
-        <div>
-          <form onSubmit={handleSubmit}>
+        comment section:
+        <div className="container">
+          <form
+            onClick={onExpand}
+            onSubmit={handleSubmit}
+            ref={containerRef}
+            className={cn("comment-box", {
+              expanded: isExpanded,
+              collapsed: !isExpanded,
+              modified: comment.length > 0,
+            })}
+            style={{
+              minHeight: isExpanded ? outerHeight.current : INITIAL_HEIGHT,
+            }}
+          >
+            {!isExpanded && (
+              <div className="shareThoughts">
+                <div> Add a public comment... </div>
+                <button className="shareThoughtsBtn" type="submit"> New Comment </button>
+              </div>
+            )}
+            <div className="header">
+              <div className="user">
+                <img
+                  src="https://i.imgur.com/hepj9ZS.png"
+                  alt="User avatar"
+                  style={{ maxHeight: "30px" }}
+                />
+                <div className="user_info">
+                  {user?.first_name} {user?.last_name}
+                </div>
+              </div>
+            </div>
+            <label htmlFor="textarea">What are your thoughts?</label>
             <textarea
-              name="textarea"
-              value={comment}
+              ref={textRef}
+              onClick={onExpand}
+              onFocus={onExpand}
               onChange={handleTextAreaChange}
-            ></textarea>
-            <button> comment </button>
+              value={comment}
+              className="comment-field"
+              name="textarea"
+              id="comment"
+              placeholder="Share your thoughts here"
+            />
+
+            <div className="actions">
+              <button type="button" className="cancel" onClick={onClose}>
+                Cancel
+              </button>
+              <button type="submit" disabled={comment.length < 1}>
+                Add Comment
+              </button>
+            </div>
           </form>
         </div>
+        <div>
+          {curComments.length} comment{curComments.length !== 1 ? "s" : ""}{" "}
+        </div>
+        {curComments.length === 0 ? (
+          <div> Be the first to comment </div>
+        ) : (
+          <> </>
+        )}
         {curComments.map((comment) => (
           <Comment
             comment={comment}
