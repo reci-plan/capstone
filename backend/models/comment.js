@@ -128,36 +128,33 @@ class Comment {
         if (!user) {
             throw new UnauthorizedError(`No user logged in`);
         }
+        console.log(api_id);
 
-        // get all comments in the page
-        const test = await Comment.getComments(user, api_id);
-        console.log(test);
-
-        // const query = `SELECT * FROM likes
-
-        //     WHERE user_id = (SELECT id FROM users WHERE username = $1)
-        //     AND comment_id = $2
-
-        // `;
-
-        // This gives the owner of the comment:
-        // AND comments.user_id = (SELECT id FROM users WHERE username = $2)
-
-        // const query = `SELECT * FROM comments
+        // SELECT * FROM comments
         //     JOIN likes ON likes.comment_id = comments.id
-        //     WHERE comments.recipe_id = (SELECT id FROM all_recipes WHERE api_id = $1)
-        //     AND likes.user_id = (SELECT id FROM users WHERE username = $2)
-        //     AND likes.arrayOfUserId @> $1
-        // `;
-        // const query = `SELECT * FROM likes WHERE array_agg(arrayOfUserId::VARCHAR) @> $1`;
-        // const query = `SELECT * FROM likes WHERE array_agg(arrayOfUserId::VARCHAR) @> $1`;
+        //     WHERE comments.user_id = (SELECT id FROM users WHERE username = $1)
+        //     AND comments.recipe_id = (SELECT id FROM all_recipes WHERE api_id = $2)
+            // AND $3 = ANY(likes.arrayOfUserId)
 
-        // const results = await db.query(query, [user.username]);
-        // console.log(results.rows[0]);
-        // return results.rows[0];
+        const query = `SELECT * FROM comments
+            JOIN likes ON likes.comment_id = comments.id
+            WHERE comments.recipe_id = (SELECT id FROM all_recipes WHERE api_id = $1)
+            AND $2 = ANY(likes.arrayOfUserId)
+        `;
+
+        const results = await db.query(query, [
+            api_id,
+            user.username,
+        ]);
+
+        console.log("checkIfUserIsInLikes(): ", results.rows);
+        if (results.rows.length > 0) {
+            return true;
+        }
+        return false;
     }
 
-    static async likesToModify(user, comment) {
+    static async likeTheComment(user, comment) {
         if (!user) {
             throw new UnauthorizedError(`No user logged in`);
         }
@@ -165,16 +162,16 @@ class Comment {
         // To add: arrayOfUserId = arrayOfUserId || ARRAY[$2]
         // To remove: arrayOfUserId = array_remove(arrayOfUserId, $2)
         console.log(comment);
-        const determine_if_user_in_likes_arr = await db.query(
-            `SELECT * FROM likes WHERE $1 = ANY(arrayOfUserId) AND comment_id = $2`,
-            [user.username, comment.id]
-        );
+        // const determine_if_user_in_likes_arr = await db.query(
+        //     `SELECT * FROM likes WHERE $1 = ANY(arrayOfUserId) AND comment_id = $2`,
+        //     [user.username, comment.id]
+        // );
 
-        // If length 0 then that means the user has not "Liked" the comment yet
+        // // If length 0 then that means the user has not "Liked" the comment yet
 
-        if (determine_if_user_in_likes_arr.rows.length > 0) {
-            throw new BadRequestError("User already liked");
-        }
+        // if (determine_if_user_in_likes_arr.rows.length > 0) {
+        //     throw new BadRequestError("User already liked");
+        // }
 
         const results = await db.query(
             `UPDATE likes
@@ -191,43 +188,29 @@ class Comment {
         return results.rows[0];
     }
 
-    static async getCommentOwner(user, comment) {
+    static async unlikeTheComment(user, comment) {
         if (!user) {
             throw new UnauthorizedError(`No user logged in`);
         }
 
-        // const query = `SELECT * FROM comments
-        //     JOIN users ON users.id = comments.user_id
-        //     WHERE comments.user_id = (SELECT id FROM users WHERE username = $1)
-        //     AND
-        // `;
-        const query = `SELECT * FROM users
-            JOIN comments ON comments.user_id = users.id
-            WHERE comments.user_id = $1
-        `;
-        const results = await db.query(query, [comment.user_id]);
-        return results.rows[0];
-    }
-
-    static async belongsToUser(user, cur_api_id) {
-        if (!user) {
-            throw new UnauthorizedError(`No user logged in`);
-        }
-        console.log(user, cur_api_id);
         const results = await db.query(
-            `SELECT * FROM comments
-            WHERE user_id = (SELECT id FROM users WHERE username = $1)
-            AND recipe_id = (SELECT id FROM all_recipes WHERE api_id = $2)
+            `UPDATE likes
+            SET amount = $1,
+                arrayOfUserId = array_remove(arrayOfUserId, $2)
+            WHERE comment_id = $3
+            RETURNING amount, id, arrayOfUserId
             `,
-            [user.username, cur_api_id]
+            [comment.amount, user.username, comment.id]
         );
-        console.log(results.rows[0]);
-        // if (results.length === 0) {
-        //     throw new BadRequestError("does not belong to you");
-        // }
+
+        console.log("unlike results", results.rows[0]);
 
         return results.rows[0];
     }
+
+
+
+
 }
 
 module.exports = Comment;

@@ -8,6 +8,8 @@ import dairyfreeIcon from "../../assets/dairyfree-icon.svg";
 import glutenfreeIcon from "../../assets/glutenfree-icon.svg";
 import "./IndividualRecipe.css";
 
+import Comment from "../Comment/Comment";
+
 export default function IndividualRecipe({ user }) {
   const { recipeId } = useParams();
   // console.log("recipeId", recipeId);
@@ -90,77 +92,6 @@ export default function IndividualRecipe({ user }) {
     setComment(e.target.value);
   };
 
-  // For deleting a comment.
-  const handleDelete = async (e, comment) => {
-    // console.log("Before api call", comment);
-    const { data, error } = await apiClient.deleteComment(comment);
-    if (data) {
-      console.log(data);
-      setCurComments(curComments.filter((c) => c.id != comment.id));
-    }
-
-    if (error) {
-      alert(error);
-    }
-  };
-
-  // Editing a comment
-  const handleEditSubmit = async (e, comment) => {
-    e.preventDefault();
-    const updatedComment = { ...comment, comment: editCommentMsg };
-    const { data, error } = await apiClient.editComment(updatedComment);
-    if (data) {
-      setCurComments(
-        curComments.map((c) =>
-          c.id === updatedComment.id
-            ? { ...c, comment: updatedComment.comment }
-            : c
-        )
-      );
-    }
-    if (error) {
-      alert(error);
-    }
-  };
-
-  // when user clicks "Edit" or "Unedit" button
-  const handleShowEdit = (e, comment) => {
-    setShowEdit(!showEdit);
-    setEditCommentMsg(comment.comment);
-    setSelectedCommentId(comment.id);
-  };
-
-  // const [isLike, setIsLike] = useState(false);
-  // when user clicks "like" button
-  const handleLike = async (e, comment, type) => {
-    setSelectedCommentId(comment.id);
-
-    // setIsLike(!isLike);
-    console.log("The comment u clicked on", comment);
-    const updatedComment =
-      type === "upvote"
-        ? { ...comment, amount: comment.amount + 1 }
-        : { ...comment, amount: comment.amount - 1 };
-
-    // const updatedComment = { ...comment, amount: comment.amount + 1 };
-    console.log(updatedComment);
-    const { data, error } = await apiClient.likeComment(updatedComment);
-
-    if (data) {
-      setCurComments(
-        curComments.map((c) =>
-          c.id === updatedComment.id
-            ? { ...c, amount: updatedComment.amount }
-            : c
-        )
-      );
-    }
-
-    if (error) {
-      alert(error);
-    }
-  };
-
   return (
     <div className="IndividualRecipe">
       <div className="recipe-top">
@@ -230,46 +161,18 @@ export default function IndividualRecipe({ user }) {
           </form>
         </div>
         {curComments.map((comment) => (
-          <div>
-            comment: {comment?.comment}, date: {comment?.date}, user id:
-            {comment?.user_id}, ID (primary key): {comment?.id}, likes{" "}
-            {comment?.amount}, posted by: {comment.username}
-            {user.id === comment.user_id ? (
-              <>
-                <button onClick={(e) => handleDelete(e, comment)}>
-                  Delete
-                </button>
-                <button onClick={(e, c) => handleShowEdit(e, comment)}>
-                  {showEdit && comment.id === selectedCommentId
-                    ? "Unedit"
-                    : "Edit"}
-                </button>
-              </>
-            ) : (
-              <> </>
-            )}
-            <button onClick={(e, c) => handleLike(e, comment, "upvote")}>
-              like
-            </button>
-            <button onClick={(e, c) => handleLike(e, comment, "downvote")}>
-              downvote
-            </button>
-            {/*This is the form for comment editing*/}
-            {showEdit && comment.id === selectedCommentId ? (
-              <form
-                onSubmit={(e, commentParameter) => handleEditSubmit(e, comment)}
-              >
-                <textarea
-                  name="textareaEdit"
-                  value={editCommentMsg}
-                  onChange={(e) => setEditCommentMsg(e.target.value)}
-                ></textarea>
-                <button> submit edit </button>
-              </form>
-            ) : (
-              <> </>
-            )}
-          </div>
+          <Comment
+            comment={comment}
+            setCurComments={setCurComments}
+            curComments={curComments}
+            editCommentMsg={editCommentMsg}
+            setEditCommentMsg={setEditCommentMsg}
+            showEdit={showEdit}
+            setShowEdit={setShowEdit}
+            setSelectedCommentId={setSelectedCommentId}
+            selectedCommentId={selectedCommentId}
+            user={user}
+          />
         ))}
       </div>
     </div>

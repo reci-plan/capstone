@@ -52,7 +52,18 @@ router.put("/likeComment", async (req, res, next) => {
   try {
     const user = res.locals.user;
     const comment = req.body;
-    const likesToModify = await Comment.likesToModify(user, comment);
+    const likesToModify = await Comment.likeTheComment(user, comment);
+    res.status(200).json({ likesToModify });
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.put("/unlikeComment", async (req, res, next) => {
+  try {
+    const user = res.locals.user;
+    const comment = req.body;
+    const likesToModify = await Comment.unlikeTheComment(user, comment);
     res.status(200).json({ likesToModify });
   } catch (e) {
     next(e);
@@ -81,15 +92,6 @@ router.get("/checkIfUserIsInLikes/:api_id", async (req, res, next) => {
   }
 });
 
-router.get("/doesItBelongToUser/:recipeId", async (req, res, next) => {
-  try {
-    const user = res.locals.user;
-    const { recipeId } = req.params;
-    const theComment = await Comment.belongsToUser(user, recipeId);
-    res.status(200).json({ theComment });
-  } catch (e) {
-    next(e);
-  }
-});
+
 
 module.exports = router;

@@ -69,8 +69,7 @@ CREATE TABLE comments (
     comment             TEXT NOT NULL,
     user_id             INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     recipe_id           INTEGER NOT NULL REFERENCES all_recipes(id) ON DELETE CASCADE,
-    date                TIMESTAMP NOT NULL DEFAULT NOW(),
-    isLiked             BOOLEAN NOT NULL DEFAULT FALSE
+    date                TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE likes (

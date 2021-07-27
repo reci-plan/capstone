@@ -157,17 +157,17 @@ class ApiCalls {
         });
     }
 
-    async getTheOwnerOfComment(comment) {
+    async unlikeComment(comment) {
         return await this.request({
-            endpoint: `comment/checkCommentOwner`,
-            method: `POST`,
+            endpoint: `comment/unlikeComment`,
+            method: `PUT`,
             data: comment,
         });
     }
 
-    async checkIfCommentBelongsToUser(api_id) {
+    async checkIfUserIsInLikes(api_id) {
         return await this.request({
-            endpoint: `comment/doesItBelongToUser/${api_id}`,
+            endpoint: `comment/checkIfUserIsInLikes/${api_id}`,
             method: `GET`,
         });
     }
