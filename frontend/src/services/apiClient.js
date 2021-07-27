@@ -157,6 +157,14 @@ class ApiCalls {
         });
     }
 
+    async getOwnerOfComment(comment) {
+        return await this.request({
+            endpoint: `comment/getOwnerOfComment`,
+            method: `POST`,
+            data: comment,
+        });
+    }
+
     async unlikeComment(comment) {
         return await this.request({
             endpoint: `comment/unlikeComment`,

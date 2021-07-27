@@ -101,8 +101,6 @@ export default function IndividualRecipe({ user }) {
       const published_comment_with_zero_likes = {
         ...data.publishComment,
         amount: 0,
-        user_first_name: user.first_name,
-        user_last_name: user.last_name,
       };
       setCurComments((prevState) => [
         ...prevState,
@@ -214,6 +212,7 @@ export default function IndividualRecipe({ user }) {
               </div>
             </div>
             <label htmlFor="textarea">What are your thoughts?</label>
+            <hr />
             <textarea
               ref={textRef}
               onClick={onExpand}
@@ -244,6 +243,7 @@ export default function IndividualRecipe({ user }) {
         ) : (
           <> </>
         )}
+        {/*{curComments.forEach((c) => console.log("Inside forEach", c))}*/}
         {curComments.map((comment) => (
           <Comment
             comment={comment}

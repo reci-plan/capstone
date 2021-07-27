@@ -19,7 +19,7 @@ class Comment {
             `;
 
         const results = await db.query(query, [api_id]);
-
+        console.log(results.rows);
         return results.rows;
     }
 
@@ -202,6 +202,19 @@ class Comment {
         );
 
         console.log("unlike results", results.rows[0]);
+
+        return results.rows[0];
+    }
+
+    static async getOwnerOfComment(user, comment) {
+        console.log("this is the comment", comment);
+        if (!user) {
+            throw new BadRequestError(`No user logged in`);
+        }
+
+        const results = await db.query(`SELECT * FROM users WHERE id = $1`, [
+            comment.user_id,
+        ]);
 
         return results.rows[0];
     }
