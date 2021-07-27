@@ -75,7 +75,7 @@ class Profile {
       SET image_url = CASE WHEN COALESCE($1, '') = '' THEN image_url ELSE $1 END,
           region = CASE WHEN COALESCE($2, '') = '' THEN region ELSE $2 END,
           short_bio = CASE WHEN COALESCE($3, '') = '' THEN short_bio ELSE $3 END,
-          fav_flavors = CASE WHEN COALESCE($4, '') = '' THEN fav_flavors ELSE $4 END
+          fav_flavors = $4
       WHERE user_id = (SELECT id from users WHERE username = $5)
       RETURNING id, user_id, image_url, region, short_bio, fav_flavors;
     `, [profile.image_url, profile.region, profile.short_bio, profile.fav_flavors, user.username]
