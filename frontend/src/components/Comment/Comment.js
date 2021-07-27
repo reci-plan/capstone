@@ -134,63 +134,79 @@ export default function Comment({
             {comment?.amount}, posted by: {comment.username}, alreadyLiked:
             {alreadyLiked ? "true" : "false"}*/}
             <div className="comment_div">
-                <div className="comment_headers">
-                    <div>
-                        <img
-                            src="https://i.imgur.com/hepj9ZS.png"
-                            alt="User avatar"
-                            style={{ maxHeight: "30px" }}
-                        />
-                        Posted by {authorOfComment}
-                        <b>
-                            {comment.user_first_name} {comment.user_last_name}{" "}
-                        </b>
+                <div className="comment_div_div">
+                    <div className="comment_headers">
+                        <div className="comment_flex">
+                            <img
+                                src="https://i.imgur.com/hepj9ZS.png"
+                                alt="User avatar"
+                            />
+                            <h3 className="comment_flex_h3">
+                                {" "}
+                                <b> {authorOfComment} </b>{" "}
+                            </h3>
+                        </div>
+                        <div>
+                            {" "}
+                            <b> {moment(comment?.date).fromNow()} </b>{" "}
+                        </div>
                     </div>
-                    <div>
-                        {" "}
-                        <b> {moment(comment?.date).fromNow()} </b>{" "}
+                    <div className="comment_desc" style={{ color: "#575757" }}>
+                        {comment?.comment}
                     </div>
+                    {user.id === comment.user_id ? (
+                        <>
+                            <div className="test" style={{marginRight: "20px"}}>
+                                <button
+                                    className="btnStyle"
+                                    id="deleteBtn"
+                                    onClick={(e) => handleDelete(e, comment)}
+                                >
+                                    Delete
+                                </button>
+                                <button
+                                    className="btnStyle"
+                                    id="editBtn"
+                                    onClick={(e, c) =>
+                                        handleShowEdit(e, comment)
+                                    }
+                                >
+                                    {showEdit &&
+                                    comment.id === selectedCommentId
+                                        ? "Unedit"
+                                        : "Edit"}
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        <> </>
+                    )}
+                    {/*{
+    alreadyLiked ? (
+        <button onClick={(e, c) => handleLike(e, comment)}>downvote</button>
+    ) : (
+        <button onClick={(e, c) => handleLike(e, comment)}>like</button>
+    );
+}*/}
+                    {showEdit && comment.id === selectedCommentId ? (
+                        <form
+                            onSubmit={(e, commentParameter) =>
+                                handleEditSubmit(e, comment)
+                            }
+                        >
+                            <textarea
+                                name="textareaEdit"
+                                value={editCommentMsg}
+                                onChange={(e) =>
+                                    setEditCommentMsg(e.target.value)
+                                }
+                            ></textarea>
+                            <button> submit edit </button>
+                        </form>
+                    ) : (
+                        <> </>
+                    )}
                 </div>
-                <div className="comment_desc">{comment?.comment}</div>
-                {user.id === comment.user_id ? (
-                    <>
-                        <button onClick={(e) => handleDelete(e, comment)}>
-                            Delete
-                        </button>
-                        <button onClick={(e, c) => handleShowEdit(e, comment)}>
-                            {showEdit && comment.id === selectedCommentId
-                                ? "Unedit"
-                                : "Edit"}
-                        </button>
-                    </>
-                ) : (
-                    <> </>
-                )}
-                {alreadyLiked ? (
-                    <button onClick={(e, c) => handleLike(e, comment)}>
-                        downvote
-                    </button>
-                ) : (
-                    <button onClick={(e, c) => handleLike(e, comment)}>
-                        like
-                    </button>
-                )}
-                {showEdit && comment.id === selectedCommentId ? (
-                    <form
-                        onSubmit={(e, commentParameter) =>
-                            handleEditSubmit(e, comment)
-                        }
-                    >
-                        <textarea
-                            name="textareaEdit"
-                            value={editCommentMsg}
-                            onChange={(e) => setEditCommentMsg(e.target.value)}
-                        ></textarea>
-                        <button> submit edit </button>
-                    </form>
-                ) : (
-                    <> </>
-                )}
             </div>
         </div>
     );

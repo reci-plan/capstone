@@ -1,5 +1,10 @@
 .comment_div {
-    border: 0.3px solid black;
+    border: 1px solid #c9c1c1;
+}
+
+.comment_div_div {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .comment_headers {
@@ -10,4 +15,47 @@
 .comment_headers,
 .comment_desc {
     margin: 20px;
+}
+
+.comment_flex {
+    display: flex;
+    align-items: center;
+}
+
+.comment_flex img {
+    max-height: 30px;
+    border-radius: 20px;
+    margin-right: 20px;
+}
+
+.comment_flex_h3 {
+    margin-right: 50px;
+}
+
+.comment_desc {
+    margin-left: 70px;
+}
+
+.test {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btnStyle {
+    margin-left: 6px;
+    font-size: 14px;
+    padding: 12px;
+    border: none;
+    line-height: 1;
+    border-radius: 5px;
+}
+
+#deleteBtn {
+    background: #b32929;
+    color: white;
+}
+
+#editBtn {
+    background: #00a9da;
+    color: white;
 }
