@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 
-const useDynamicHeightField = (element, value) => {
+
+// element: ref to text area
+// value: the actua value of the textarea
+
+// resize anytime element or value changes
+const useReadjustTextareaHeight = (element, value) => {
   useEffect(() => {
     if (!element) return;
 
@@ -9,4 +14,4 @@ const useDynamicHeightField = (element, value) => {
   }, [element, value]);
 };
 
-export default useDynamicHeightField;
+export default useReadjustTextareaHeight;

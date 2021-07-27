@@ -10,7 +10,7 @@ import glutenfreeIcon from "../../assets/glutenfree-icon.svg";
 import "./IndividualRecipe.css";
 
 import Comment from "../Comment/Comment";
-import useDynamicHeightField from "./useDynamicHeightField";
+import useReadjustTextareaHeight from "./useReadjustTextareaHeight";
 
 export default function IndividualRecipe({ user }) {
   console.log(user);
@@ -35,7 +35,7 @@ export default function IndividualRecipe({ user }) {
   const outerHeight = useRef(INITIAL_HEIGHT);
   const textRef = useRef(null);
   const containerRef = useRef(null);
-  useDynamicHeightField(textRef, comment);
+  useReadjustTextareaHeight(textRef, comment);
 
   const onExpand = () => {
     console.log("hi");
@@ -195,7 +195,10 @@ export default function IndividualRecipe({ user }) {
             {!isExpanded && (
               <div className="shareThoughts">
                 <div> Add a public comment... </div>
-                <button className="shareThoughtsBtn" type="submit"> New Comment </button>
+                <button className="shareThoughtsBtn" type="submit">
+                  {" "}
+                  New Comment{" "}
+                </button>
               </div>
             )}
             <div className="header">
