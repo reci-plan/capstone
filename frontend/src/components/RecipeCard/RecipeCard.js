@@ -16,6 +16,7 @@ export default function RecipeCard({
   handleUnsave
 }) {
   const [saved, setSaved] = useState(false);
+  console.log(recipeInfo.title, recipeInfo.category)
 
   useEffect(() => {
     const checkRecipe = async () => {

@@ -18,9 +18,18 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
   const [userIsClicked, setUserIsClicked] = useState(false);
 
   const handleOnSearchClick = () => {
-    isSearch ? setIsSearch(false) : setIsSearch(true);
+    setIsSearch(!isSearch)
     navigate("/search");
   };
+  
+  const handleOnInputClick = () => {
+    navigate("/search");
+  }
+
+  const handleOnClose = () => {
+    setIsSearch(!isSearch)
+    navigate("/")
+  }
 
   const handleOnUserClick = () => {
     userIsClicked ? setUserIsClicked(false) : setUserIsClicked(true);
@@ -61,9 +70,10 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
                 type="text"
                 placeholder="search recipes..."
                 onChange={handleInputChange}
+                onClick={handleOnInputClick}
               ></input>
             </form>
-            <div className="search-btn" onClick={handleOnSearchClick}>
+            <div className="search-btn" onClick={handleOnClose}>
               <img src={close} alt="Close button"></img>
             </div>
           </>

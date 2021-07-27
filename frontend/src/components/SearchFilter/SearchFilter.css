@@ -6,7 +6,7 @@
   background-size: 100%;
   width: 100%;
   padding-top: 120px;
-  height: 360px;
+  /* height: 360px; */
 
   display: flex;
   justify-content: center;
@@ -43,4 +43,9 @@ ul {
   border-left: 3px solid rgb(0, 0, 0);
   height: 200px;
   margin: 0 40px;
+}
+
+.filter-display {
+  display: flex;
+  flex-wrap: wrap;
 }

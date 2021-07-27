@@ -115,7 +115,6 @@ function App() {
         const { data, error } = await apiClient.fetchSavedRecipes();
         if (data) {
             setSaved(data.savedRecipes);
-            console.log(saved)
         }
 
         if (error) {
@@ -234,6 +233,8 @@ function App() {
               <SearchFilter
                 user={user}
                 recipes={recipes}
+                handleSave={handleSave}
+                handleUnsave={handleUnsave}
               />
             }
           />
