@@ -4,31 +4,13 @@ const { BadRequestError, UnauthorizedError } = require("../utils/errors");
 
 class Save {
   static async fetchSavedRecipes(user) {
-    //TODO::fix returning value for saved recipe
     if (!user) {
       throw new UnauthorizedError(`No user logged in.`);
     }
 
-    // const query = `
-    //   SELECT * FROM all_recipes
-    //   JOIN saved_recipes ON all_recipes.id = saved_recipes.recipe_id
-    //   WHERE user_id = (SELECT id FROM users WHERE username = $1)
-    //   ORDER BY saved_recipes.date DESC
-    // `;
-
-    // correct id is saved_recipes.recipe_id
     const query = `
-      SELECT all_recipes.id,
-        all_recipes.api_id,
-        all_recipes.title,
-        all_recipes.category,
-        all_recipes.image_url,
-        all_recipes.prep_time,
-        all_recipes.description,
-        all_recipes.rating,
-        all_recipes.expense
-      FROM all_recipes
-      JOIN saved_recipes ON all_recipes.id = saved_recipes.recipe_id
+      SELECT * FROM saved_recipes
+      JOIN all_recipes ON all_recipes.id = saved_recipes.recipe_id
       WHERE user_id = (SELECT id FROM users WHERE username = $1)
       ORDER BY saved_recipes.date DESC
     `;

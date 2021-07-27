@@ -20,7 +20,6 @@ export default function RecipeCard({
   useEffect(() => {
     const checkRecipe = async () => {
       const { data, error } = await apiClient.checkSavedRecipe(recipeInfo.id);
-      console.log(recipeInfo.title, data);
       if (data) {
         setSaved(data);
       }

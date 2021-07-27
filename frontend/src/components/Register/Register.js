@@ -50,6 +50,14 @@ export default function Register({ user, setUser }) {
   };
 
   const handleSubmit = async () => {
+    // check that the password and email fields are valid before registering user
+    if (form.passwordConfirm !== form.password) {
+      setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match." }))
+      return
+    } else {
+      setErrors((e) => ({ ...e, passwordConfirm: null }))
+    }
+    
     const { data, error } = await apiClient.register({
       email: form.email,
       password: form.password,
