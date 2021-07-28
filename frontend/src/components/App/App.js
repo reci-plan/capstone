@@ -11,8 +11,9 @@ import EditProfile from "../EditProfile/EditProfile";
 import SearchPage from "../SearchPage/SearchPage";
 import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
-import Wheel from "../Wheel/Wheel";
 import PublicProfile from "../PublicProfile/PublicProfile";
+import Wheel from "../Wheel/Wheel"
+import SearchFilter from "../SearchFilter/SearchFilter";
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
@@ -111,11 +112,18 @@ function App() {
   // Fetch saved recipes
   useEffect(() => {
     const fetchRecipes = async () => {
+<<<<<<< HEAD
       const { data, error } = await apiClient.fetchSavedRecipes();
       if (data) {
         setSaved(data.savedRecipes);
         console.log(saved);
       }
+=======
+        const { data, error } = await apiClient.fetchSavedRecipes();
+        if (data) {
+            setSaved(data.savedRecipes);
+        }
+>>>>>>> 54f385221f1e7a5bace3c56d140bad830da34a79
 
       if (error) {
         console.log(error, "fetch saved recipes");
@@ -236,6 +244,18 @@ function App() {
 
           <Route
             path="/search"
+            element={
+              <SearchFilter
+                user={user}
+                recipes={recipes}
+                handleSave={handleSave}
+                handleUnsave={handleUnsave}
+              />
+            }
+          />
+
+          <Route
+            path="/searchResults"
             element={
               <SearchPage
                 searchTerm={searchTerm}

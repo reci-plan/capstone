@@ -53,6 +53,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
   }
 
   const handleImageChange = (e) => {
+    console.log(e.target.files)
     setForm((prevState) => ({ ...prevState, [e.target.name]: URL.createObjectURL(e.target.files[0]) }));
   }
 
