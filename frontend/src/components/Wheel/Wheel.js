@@ -119,7 +119,7 @@ export default function Generator() {
           </div>
           <div className="subHeader">Meals</div>
           <div className="box"><p>{times[dum]}</p><p>{meals[dum]}</p><div className="penIc"><div onClick={(handleOpenForm)}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div></div>
-          <RenderBox/>
+          <div className="leftMenuArea"><RenderBox/></div>
         </div>
         <div className="wheelView">
         {wheelIsVisible ?

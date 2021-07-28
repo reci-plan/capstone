@@ -75,3 +75,8 @@
     display: flex;
     margin-left: auto;
 }
+
+.leftMenuArea {
+    display: flex;
+    flex-direction: column;
+}

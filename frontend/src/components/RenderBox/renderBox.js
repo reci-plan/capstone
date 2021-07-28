@@ -8,6 +8,6 @@ export default function RenderBox(props) {
   const [lines, setLines] = useState([0]);
 
     return (
-        lines.map(m=><Box key={m} caption={`Click ${m}`} pstate={{lines, setLines}}/>)
+        lines.slice(0,4).map(m=><Box key={m} caption={`Click ${m}`} pstate={{lines, setLines}}/>)
     )
 }
