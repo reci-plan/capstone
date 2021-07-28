@@ -119,6 +119,8 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
     const data = new FormData()
     data.append("file", image)
     data.append("upload_preset", "profile")
+    // data.append("public_id", profile.user_id)
+    // data.append("overwrite", true)
     fetch("https://api.cloudinary.com/v1_1/dkp449p00/image/upload", {
       method: "POST",
       body: data
