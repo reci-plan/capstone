@@ -32,7 +32,7 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
   }
 
   const handleOnUserClick = () => {
-    userIsClicked ? setUserIsClicked(false) : setUserIsClicked(true);
+    setUserIsClicked(!userIsClicked)
   };
 
   const handleLogout = async () => {
@@ -42,6 +42,7 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
+    navigate("/searchResults");
   };
 
   const handleOnSubmit = (e) => {

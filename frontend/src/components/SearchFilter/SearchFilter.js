@@ -6,6 +6,7 @@ import "./SearchFilter.css"
 export default function SearchFilter({ user, recipes, handleSave, handleUnsave }) {
   const [show, setShow] = useState(false)
   const [category, setCategory] = useState(Number(-1))
+  const [categoryName, setCategoryName] = useState("")
   const mealTypes = [
     'Breakfast',
     'Main Course',
@@ -41,12 +42,18 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
 
   const handleOnClick = (e) => {
     const index = data.indexOf(e.target.innerHTML)
+    setCategoryName(e.target.innerHTML)
     setCategory(1 << (11 - index))
     setShow(!show)
   }
 
+  const handleViewAll = () => {
+    setCategory(0)
+    setShow(!show)
+  }
+
   return (
-    <div className="SearchFilter" style={{ backgroundImage: `url(${search})`}}>
+    <div className={`SearchFilter ${show ? 'searchoff' : null}`} style={{ backgroundImage: `url(${search})`}}>
       {!show ?
       <>
         <div className="filter-by">
@@ -58,7 +65,10 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
           </ul>
         </div>
 
-        <div className="vl"></div>
+        <div className="center">
+          <div className="vl"></div>
+          <div className="viewall" onClick={handleViewAll}>View all</div>
+        </div>
 
         <div className="filter-by">
           <div className="filter-name">Diets</div>
@@ -70,14 +80,19 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
         </div>
       </> 
       : 
-        <div className="filter-display">
+        <div className="filter-display-name">
           {recipes
-              .filter((r) => Boolean(
-                // console.log((`${r.category} & ${category} = ${(r.category & category)}, result: ${Boolean(r.category & category === category)}`)),
-                (r.category & category) === category
-              ))
+              .filter((r) => Boolean((r.category & category) === category)).length === 0 ? 
+              <div className="results">No results for {categoryName}</div> 
+              : 
+              <div className="results">{categoryName}</div> 
+            
+          }
+          <div className="filter-display">
+          {
+            recipes
+              .filter((r) => Boolean((r.category & category) === category))
               .map((r) => (
-                // console.log((`${r.category} & ${category} = ${(r.category & category)}, result: ${Boolean((r.category & category) === category)}`)),
                 <RecipeCard
                   key={r.id}
                   user={user}
@@ -88,30 +103,9 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
               )
             ) 
           }
+          </div>
         </div>
       }
-
-      {/* {show ?
-        <div className="filter-display">
-        {recipes
-            .filter((r) => Boolean(
-              console.log((`${r.category} & ${category} = ${(r.category & category)}`)),
-              (r.category & category) === category
-            ))
-            .map((r) => (
-              console.log(`result: ${category & r.category === r.category}`),
-              <RecipeCard
-                key={r.id}
-                user={user}
-                recipeInfo={r}
-                handleSave={handleSave}
-                handleUnsave={handleUnsave}
-              />
-            )
-          ) 
-        }
-      </div> : null} */}
-      
     </div>
   )
 }
