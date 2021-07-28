@@ -7,10 +7,16 @@ import apiClient from "../../services/apiClient";
 
 import pencil from '../../assets/pencil.svg'
 
-var titleHere = "";
-var imageHere = "";
-var prepHere = "";
-var ratingHere = "";
+var times = [''];
+var meals = [''];
+
+var titles = [''];
+var images = [''];
+var preps = [''];
+var ratings = [''];
+var numMeal = 0;
+var dum = -1;
+
 export default function Generator() {
   const [wheelIsVisible, setWheelIsVisible] = useState(true)
   const [mustSpin, setMustSpin] = useState(false);
@@ -18,11 +24,16 @@ export default function Generator() {
   //for recipe popup
   const [buttonPopup, setButtonPopup] = useState(false);
   const [spinIsVisible, setSpinIsVisible] = useState(false);
+  const [boxVals, setBoxVals] = useState(-1)
   const [loadWheel, setLoadWheel] = useState([
     { option: "meal to"},
     { option: "begin"},
     { option: "Add a new"},
   ])
+
+  const increment = () => {
+    setBoxVals(dum += 1)
+  }
   //const [recipePopup, setRecipePopup] = useState(false)
   const data = loadWheel;
   
@@ -61,10 +72,13 @@ export default function Generator() {
     console.log("---------- TESTING ----------")
     if (passToParent) {
 
-      passToParent.then(result => setLoadWheel(result.rows)).catch( err => console.log(err))
+      passToParent.then(result => setLoadWheel(result[2].rows)).catch( err => console.log(err))
+      passToParent.then(result => times[numMeal] = result[0]).catch( err => console.log(err))
+      passToParent.then(result => meals[numMeal] = result[1]).catch( err => console.log(err))
     }
   }
 
+  //Should return values to display for current recipe popup.
   const displayRecipePopup = async (recipeId) => {
     console.log("------------------------->", Promise.resolve(recipeId))
     var promise = Promise.resolve(recipeId);
@@ -80,13 +94,13 @@ export default function Generator() {
       console.log("MY PROM DATA", data)
       console.log("WANT TO RETURN", data.recipe.title)
       console.log("RESULT PROM", recipeId)
-      titleHere = data.recipe.title;
+      titles[numMeal] = data.recipe.title;
       
-      imageHere = data.recipe.image_url;
-      prepHere = data.recipe.prep_time;
-      ratingHere = data.recipe.rating;
+      images[numMeal] = data.recipe.image_url;
+      preps[numMeal] = data.recipe.prep_time;
+      ratings[numMeal] = data.recipe.rating;
 
-      var tempAr = [titleHere, imageHere, prepHere, ratingHere]
+      var tempAr = [titles[numMeal], images[numMeal], preps[numMeal], ratings[numMeal]]
 
       return tempAr;
     }
@@ -98,7 +112,21 @@ export default function Generator() {
   // const childCallBack = (passToParent) => {
   //   console.log("This is the wheel", passToParent);
   // }
+
+  // const keepMeal = async () => {
+  //   console.log("KEPT", times[numMeal], meals[numMeal], titles[numMeal])
+  //   console.log("UPDATED COUNTER TO PREP FOR NEXT MEAL")
+  //   numMeal = numMeal + 1;
+  // }
   
+  const keepMeal = () => {
+    console.log("TRY KEEP MEAL", times[numMeal], meals[numMeal])
+    console.log("---------- TESTING ----------")
+    increment();
+    setButtonPopup();
+    setSpinIsVisible();
+    console.log("IND", dum)
+  }
 
   return (
     <div className="Generator">
@@ -110,7 +138,7 @@ export default function Generator() {
               <img src={pencil} width="25" alt="Edit your plan name"></img>
           </div>
           <div className="subHeader">Meals</div>
-          <div className="box"><div className="penIc"><div onClick={(handleOpenForm)}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div></div>
+          <div className="box"><p>{times[dum]}</p><p>{meals[dum]}</p><div className="penIc"><div onClick={(handleOpenForm)}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div></div>
         </div>
         <div className="wheelView">
         {wheelIsVisible ?
@@ -159,16 +187,16 @@ export default function Generator() {
                           ""
                     }
                     {}
-                    <h3>{titleHere}</h3>
+                    <h3>{titles[numMeal]}</h3>
                     <br></br>
-                    <img src={imageHere} alt={titleHere}></img>
+                    <img src={images[numMeal]} alt={titles[numMeal]}></img>
                     <br></br>
-                    <p>Prep Time: {prepHere} minutes</p>
+                    <p>Prep Time: {preps[numMeal]} minutes</p>
                     <br></br>
-                    <p>Rating: {ratingHere} stars</p>
+                    <p>Rating: {ratings[numMeal]} stars</p>
                     {/* {(data[prizeNumber].option)}
                     {(data[prizeNumber].category)} */}
-                    <button className="keepBut">Keep (Coming soon!)</button>
+                    <button className="keepBut" onClick={keepMeal}>Keep (Coming soon!)</button>
                   </> : 
                   ""
         }

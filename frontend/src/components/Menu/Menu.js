@@ -66,6 +66,7 @@ export default function Menu(props) {
         console.log(selectedCategories)
     }
 
+    //returns an array of [time, mealName, pssible recipes]
     const returnValues = async () => {
         var categoryCode = 0;
         userTime = document.getElementById('time').value;
@@ -98,7 +99,7 @@ export default function Menu(props) {
         if (userValues[2].rows.length === 0) {
             setSubmitIsVisible(false)
         }
-        return userValues[2];
+        return userValues;
     }
 
     return (
