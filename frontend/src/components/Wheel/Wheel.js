@@ -4,6 +4,7 @@ import { Wheel } from 'react-custom-roulette'
 import Popup from '../Popup/Popup'
 import Menu from '../Menu/Menu'
 import apiClient from "../../services/apiClient";
+import RenderBox from "../RenderBox/renderBox";
 
 import pencil from '../../assets/pencil.svg'
 
@@ -18,6 +19,7 @@ var numMeal = 0;
 var dum = -1;
 
 export default function Generator() {
+
   const [wheelIsVisible, setWheelIsVisible] = useState(true)
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
@@ -34,19 +36,10 @@ export default function Generator() {
   const increment = () => {
     setBoxVals(dum += 1)
   }
-  //const [recipePopup, setRecipePopup] = useState(false)
+  
   const data = loadWheel;
   
   console.log("HERE'S THE DATA: ", data)
-  
-  //Use a query to get all the recipes that fit the category selected.
-  //SELECT id or name FROM all_recipes WHERE category = [SELECTED CATEGORY FROM WHEEL]
-  //load options into an array like so: 
-  /*var ar =[];
-  for (let i = 0; i < 4; i++) {
-    ar.push({ "option": i});
-    console.log(ar[i])
-  }*/
 
   console.log(data)
 
@@ -105,19 +98,6 @@ export default function Generator() {
       return tempAr;
     }
   }
-
-  const promise1 = new Promise((resolve, reject) => {
-    resolve('Success');
-  });
-  // const childCallBack = (passToParent) => {
-  //   console.log("This is the wheel", passToParent);
-  // }
-
-  // const keepMeal = async () => {
-  //   console.log("KEPT", times[numMeal], meals[numMeal], titles[numMeal])
-  //   console.log("UPDATED COUNTER TO PREP FOR NEXT MEAL")
-  //   numMeal = numMeal + 1;
-  // }
   
   const keepMeal = () => {
     console.log("TRY KEEP MEAL", times[numMeal], meals[numMeal])
@@ -139,6 +119,7 @@ export default function Generator() {
           </div>
           <div className="subHeader">Meals</div>
           <div className="box"><p>{times[dum]}</p><p>{meals[dum]}</p><div className="penIc"><div onClick={(handleOpenForm)}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div></div>
+          <RenderBox/>
         </div>
         <div className="wheelView">
         {wheelIsVisible ?
@@ -194,8 +175,6 @@ export default function Generator() {
                     <p>Prep Time: {preps[numMeal]} minutes</p>
                     <br></br>
                     <p>Rating: {ratings[numMeal]} stars</p>
-                    {/* {(data[prizeNumber].option)}
-                    {(data[prizeNumber].category)} */}
                     <button className="keepBut" onClick={keepMeal}>Keep (Coming soon!)</button>
                   </> : 
                   ""
