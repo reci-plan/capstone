@@ -112,18 +112,10 @@ function App() {
   // Fetch saved recipes
   useEffect(() => {
     const fetchRecipes = async () => {
-<<<<<<< HEAD
-      const { data, error } = await apiClient.fetchSavedRecipes();
-      if (data) {
-        setSaved(data.savedRecipes);
-        console.log(saved);
-      }
-=======
         const { data, error } = await apiClient.fetchSavedRecipes();
         if (data) {
             setSaved(data.savedRecipes);
         }
->>>>>>> 54f385221f1e7a5bace3c56d140bad830da34a79
 
       if (error) {
         console.log(error, "fetch saved recipes");

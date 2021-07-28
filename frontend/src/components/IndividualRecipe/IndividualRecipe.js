@@ -11,10 +11,10 @@ import "./IndividualRecipe.css";
 
 import Comment from "../Comment/Comment";
 import useReadjustTextareaHeight from "./useReadjustTextareaHeight";
+import SocialMediaShare from "./SocialMediaShare/SocialMediaShare";
 
 export default function IndividualRecipe({ user }) {
-  console.log(user);
-
+  // console.log(user);
   const { recipeId } = useParams();
   const [recipeInstructions, setRecipeInstructions] = useState([]);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
@@ -172,6 +172,7 @@ export default function IndividualRecipe({ user }) {
               ))
             : null}
         </div>
+        <SocialMediaShare recipeInfo={recipeInfo} />
       </div>
 
       <div>

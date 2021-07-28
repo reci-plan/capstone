@@ -27,7 +27,7 @@ export default function Comment({
         const checkAuthorOfComment = async () => {
             const { data, error } = await apiClient.getOwnerOfComment(comment);
             if (data) {
-                console.log("valid call", data);
+                // console.log("valid call", data);
                 setAuthorOfComment(data.ownerOfComment.username);
             }
             if (error) {
@@ -126,7 +126,6 @@ export default function Comment({
             alert(error);
         }
     };
-    console.log(comment.user_id);
     return (
         <div>
             {/*   comment: {comment?.comment}, date: {comment?.date}, user id:
@@ -144,7 +143,9 @@ export default function Comment({
                             <h3 className="comment_flex_h3">
                                 {" "}
                                 <b>
-                                    <Link to={`/publicProfile/${comment.user_id}`}>
+                                    <Link
+                                        to={`/publicProfile/${comment.user_id}`}
+                                    >
                                         {authorOfComment}{" "}
                                     </Link>{" "}
                                 </b>{" "}
