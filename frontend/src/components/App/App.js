@@ -12,6 +12,7 @@ import SearchPage from "../SearchPage/SearchPage";
 import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
 import Wheel from "../Wheel/Wheel"
+import SearchFilter from "../SearchFilter/SearchFilter";
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
@@ -114,7 +115,6 @@ function App() {
         const { data, error } = await apiClient.fetchSavedRecipes();
         if (data) {
             setSaved(data.savedRecipes);
-            console.log(saved)
         }
 
         if (error) {
@@ -229,6 +229,18 @@ function App() {
           
           <Route
             path="/search"
+            element={
+              <SearchFilter
+                user={user}
+                recipes={recipes}
+                handleSave={handleSave}
+                handleUnsave={handleUnsave}
+              />
+            }
+          />
+
+          <Route
+            path="/searchResults"
             element={
               <SearchPage
                 searchTerm={searchTerm}

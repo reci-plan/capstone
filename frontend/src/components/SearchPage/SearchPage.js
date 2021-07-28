@@ -2,35 +2,11 @@ import "./SearchPage.css";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import apiClient from "../../services/apiClient";
 
-export default function SearchPage({ searchTerm, recipes, user }) {
-    const handleSave = async (r) => {
-        console.log(r);
-        const { data, error } = await apiClient.saveRecipe(r);
-
-        if (data) {
-            console.log("Save: ", data);
-        }
-
-        if (error) {
-            alert(error);
-        }
-    };
-
-    const handleUnsave = async (r) => {
-        console.log(r);
-        const { data, error } = await apiClient.unsaveRecipe(r);
-
-        if (data) {
-            console.log("Unsave: ", data);
-        }
-
-        if (error) {
-            alert(error);
-        }
-    };
+export default function SearchPage({ searchTerm, recipes, user, handleSave, handleUnsave }) {
 
     return (
         <div className="SearchPage">
+            
             Search Page Component (This currently has margin-top: 150px)
             <div className="placeholder">
                 <h2> Search Results </h2>
