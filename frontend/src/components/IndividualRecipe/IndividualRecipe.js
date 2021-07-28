@@ -243,7 +243,7 @@ export default function IndividualRecipe({ user }) {
         ) : (
           <> </>
         )}
-
+        {/*{curComments.forEach((c) => console.log("Inside forEach", c))}*/}
         {curComments.map((comment) => (
           <Comment
             comment={comment}

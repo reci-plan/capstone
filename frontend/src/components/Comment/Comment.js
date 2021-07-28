@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import moment from "moment";
 
 import apiClient from "../../services/apiClient";
@@ -126,7 +126,7 @@ export default function Comment({
             alert(error);
         }
     };
-    console.log(comment);
+    console.log(comment.user_id);
     return (
         <div>
             {/*   comment: {comment?.comment}, date: {comment?.date}, user id:
@@ -143,7 +143,11 @@ export default function Comment({
                             />
                             <h3 className="comment_flex_h3">
                                 {" "}
-                                <b> {authorOfComment} </b>{" "}
+                                <b>
+                                    <Link to={`/publicProfile/${comment.user_id}`}>
+                                        {authorOfComment}{" "}
+                                    </Link>{" "}
+                                </b>{" "}
                             </h3>
                         </div>
                         <div>
@@ -156,7 +160,10 @@ export default function Comment({
                     </div>
                     {user.id === comment.user_id ? (
                         <>
-                            <div className="test" style={{marginRight: "20px"}}>
+                            <div
+                                className="test"
+                                style={{ marginRight: "20px" }}
+                            >
                                 <button
                                     className="btnStyle"
                                     id="deleteBtn"

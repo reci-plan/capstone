@@ -212,6 +212,13 @@ class ApiCalls {
             data: info,
         });
     }
+
+    async getPublicUserInformation(user_id) {
+        return await this.request({
+            endpoint: `profile/getProfile/${user_id}`,
+            method: `GET`,
+        });
+    }
 }
 
 const API = new ApiCalls(
