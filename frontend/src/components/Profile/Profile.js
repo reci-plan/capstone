@@ -1,69 +1,53 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 import apiClient from "../../services/apiClient";
-import { useDataLayerValue } from "../../context/DataLayer";
-import RecipeCard from "../RecipeCard/RecipeCard";
 
-export default function Profile({ user, handleClickOnSave }) {
-    const [saved, setSaved] = useState([]);
-    const [errors, setErrors] = useState("");
-    // Fetch  all of the user's saved recipes
-
-    // const [{ saved }, dispatch] = useDataLayerValue();
-
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            const { data, error } = await apiClient.fetchSavedRecipes();
-            if (data) {
-                setSaved(data.savedRecipes);
-                // dispatch({ type: "SET_SAVED", saved: data.savedRecipes });
-            }
-
-            if (error) {
-                setErrors(error);
-            }
-        };
-        fetchRecipes();
-    }, []);
-
-    const handleDelete = async (cur_saved_recipe) => {
-        const { data, error } = await apiClient.deleteSavedRecipe(
-            cur_saved_recipe
-        );
-
-        if (data) {
-            // Filter saved
-            setSaved(saved.filter((item) => item.id !== cur_saved_recipe.id));
-        }
-
-        if (error) {
-            console.log(error);
-        }
-    };
-
-    console.log(saved);
-    console.log(handleClickOnSave);
+import tempImg from "../../assets/tempProfileImg.png";
+import location from "../../assets/location.svg";
+import './Profile.css'
+export default function Profile({ user, profile, flavors }) {
     return (
-        <div>
-            {errors}
-            <h2> Profile page </h2>
-            <h3> Your stats </h3>
-            <div> username: {user.username}</div>
-            <div> first_name: {user.first_name}</div>
-            <div> last_name: {user.last_name}</div>
-            <div> email: {user.email}</div>
+        <div className="Profile">
+            {!user.email ? 
+            <div>Login <Link to="/login">here</Link> to view your profile page</div> :
 
-            <h3> Your saved recipes </h3>
-            {/*.sort((a, b) => a.date - b.date)*/}
-            {saved.map((s) => (
-                <>
-                    <RecipeCard
-                        user={user}
-                        recipeInfo={s}
-                        handleClick={handleClickOnSave}
-                    />
-                    <button onClick={() => handleDelete(s)}> delete </button>
-                </>
-            ))}
+            <div className="profile-display">
+                <div className="profile-left">
+                    <div className="profile-img">
+                        {profile.image_url ?
+                            <img src={profile.image_url} alt="User profile img"></img> : 
+                            <img src={tempImg} alt="Placeholder img"></img>
+                        }
+                    </div>
+                    <div className="fav-flavors">
+                        {flavors?.length > 0 ?
+                            flavors.map(element => (
+                                <div>{element.flavor}</div>
+                            )) : null 
+                        }
+                    </div>
+                </div>
+                <div className="profile-right">
+                    <div className="profile-basic">
+                        <div className="profile-name">{user.first_name} {user.last_name}</div>
+                        <div className="location">
+                            {profile.region ? 
+                            <>
+                                <img src={location} alt="Location Icon"></img>
+                                <span>{profile.region}</span> 
+                            </> : null
+                            }
+                        </div>
+                    </div>
+                    <div> username: {user.username}</div>
+                    <div> email: {user.email}</div>
+                    {profile.short_bio ? 
+                        <div>short bio: {profile.short_bio}</div> : null
+                    }
+                </div>
+                <Link to='/profile/edit' className="edit-btn">...</Link>
+            </div>
+            }
         </div>
     );
 }

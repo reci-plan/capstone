@@ -7,8 +7,12 @@ import Login from "../Login/Login";
 import Navbar from "../Navbar/Navbar";
 import IndividualRecipe from "../IndividualRecipe/IndividualRecipe";
 import Profile from "../Profile/Profile";
+import EditProfile from "../EditProfile/EditProfile";
 import SearchPage from "../SearchPage/SearchPage";
+import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
+import Wheel from "../Wheel/Wheel"
+import SearchFilter from "../SearchFilter/SearchFilter";
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
@@ -17,6 +21,21 @@ function App() {
   const [user, setUser] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
+  const [profile, setProfile] = useState({})
+  const [flavors, setFlavors] = useState([])
+  const [saved, setSaved] = useState([]);
+  const [changeSave, setChangeSave] = useState(false)
+
+  const allFlavors = [
+      'spicy', 
+      'salty',
+      'sweet',
+      'sour',
+      'bitter',
+      'savory',
+      'fatty'
+  ];
+  
   const [alreadyExist, setAlreadyExist] = useState(false);
   // const [recipes, setRecipes] = useState({})
 
@@ -63,19 +82,79 @@ function App() {
     fetchRecipes();
   }, []);
 
-  // when user clicks on save button
-  const handleClickOnSave = async (r, saved, setSaved) => {
+  // Fetch user profile 
+  useEffect(() => {
+    const fetchProfile = async () => {
+        const { data, error } = await apiClient.fetchProfile()
+        if (data) {
+          setProfile(data)
+            if (data.fav_flavors) {
+                var flavors = []
+                data.fav_flavors.split("").forEach(c => {
+                    let num = Number(c)
+                    var obj = {"flavor": allFlavors[num], "id": c};
+                    flavors.push(obj)
+                })
+                setFlavors(flavors)
+            }
+            else {
+              setFlavors([])
+            }
+        }
+        if (error) {
+            console.log(error, "Profile.js")
+        }
+    }
+
+    fetchProfile()
+  }, [user])
+
+  // Fetch saved recipes
+  useEffect(() => {
+    const fetchRecipes = async () => {
+        const { data, error } = await apiClient.fetchSavedRecipes();
+        if (data) {
+            setSaved(data.savedRecipes);
+        }
+
+        if (error) {
+            console.log(error, "fetch saved recipes")
+        }
+    };
+    fetchRecipes();
+  }, [user, changeSave]);
+
+  // Handle save recipe
+  const handleSave = async (r) => {
     const { data, error } = await apiClient.saveRecipe(r);
+
     if (data) {
-      console.log("hi", data);
-      setSaved(!saved);
+      setChangeSave(!changeSave)
+      console.log("Save: ", data);
     }
 
     if (error) {
-      const result = await apiClient.deleteSavedRecipe(r);
-      setSaved(false);
+      alert(error);
     }
   };
+
+  // Handle unsave recipe
+  const handleUnsave = async (r) => {
+    const { data, error } = await apiClient.unsaveRecipe(r);
+
+    if (data) {
+      setChangeSave(!changeSave)
+      console.log("Unsave: ", data);
+    }
+
+    if (error) {
+      alert(error);
+    }
+  };
+
+  const handleUpdateUser = async (user) => {
+    setUser(user)
+  }
 
   return (
     <div className="App">
@@ -93,7 +172,8 @@ function App() {
               <Home
                 user={user}
                 recipes={recipes}
-                handleClickOnSave={handleClickOnSave}
+                handleSave={handleSave}
+                handleUnsave={handleUnsave}
               />
             }
           />
@@ -105,28 +185,69 @@ function App() {
             path="/login"
             element={<Login user={user} setUser={setUser} />}
           />
-          <Route path="/recipes/:recipeId" element={<IndividualRecipe />} />
+          <Route
+            path="/recipes/:recipeId"
+            element={<IndividualRecipe user={user} />}
+          />
 
           {/*Fix this route later*/}
           <Route
             path="/search/recipes/:recipeId"
-            element={<IndividualRecipe />}
+            element={<IndividualRecipe user={user} />}
+          />
+          
+          <Route
+            path="/wheel"
+            element={<Wheel />}
           />
 
           <Route
             path="/profile"
             element={
-              <Profile user={user} handleClickOnSave={handleClickOnSave} />
+              <Profile user={user} profile={profile} flavors={flavors} />
             }
           />
+
+          <Route
+            path="/profile/edit"
+            element={
+              <EditProfile user={user} handleUpdateUser={handleUpdateUser} profile={profile} flavors={flavors}/>
+            }
+          />
+
+          <Route
+            path="/saved"
+            element={
+              <SavedGallery 
+                user={user} 
+                saved={saved}
+                handleSave={handleSave} 
+                handleUnsave={handleUnsave}
+              />
+            }
+          />
+          
           <Route
             path="/search"
+            element={
+              <SearchFilter
+                user={user}
+                recipes={recipes}
+                handleSave={handleSave}
+                handleUnsave={handleUnsave}
+              />
+            }
+          />
+
+          <Route
+            path="/searchResults"
             element={
               <SearchPage
                 searchTerm={searchTerm}
                 recipes={recipes}
                 user={user}
-                handleClickOnSave={handleClickOnSave}
+                handleSave={handleSave} 
+                handleUnsave={handleUnsave}
               />
             }
           />

@@ -1,0 +1,8 @@
+.EditProfile {
+  margin-top: 100px;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+}

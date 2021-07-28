@@ -2,15 +2,11 @@ import "./SearchPage.css";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import apiClient from "../../services/apiClient";
 
-export default function SearchPage({
-    searchTerm,
-    recipes,
-    user,
-    handleClickOnSave,
-}) {
+export default function SearchPage({ searchTerm, recipes, user, handleSave, handleUnsave }) {
 
     return (
         <div className="SearchPage">
+            
             Search Page Component (This currently has margin-top: 150px)
             <div className="placeholder">
                 <h2> Search Results </h2>
@@ -27,7 +23,8 @@ export default function SearchPage({
                         <RecipeCard
                             user={user}
                             recipeInfo={filteredRecipes}
-                            handleClick={handleClickOnSave}
+                            handleSave={handleSave}
+                            handleUnsave={handleUnsave}
                         />
                     ))}
             </div>

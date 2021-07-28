@@ -107,6 +107,93 @@ class ApiCalls {
     async checkSavedRecipe(recipeId) {
         return await this.request({
             endpoint: `save/check/${recipeId}`,
+        });
+    }
+
+    async deleteSavedRecipe(cur_saved_recipe) {
+        return await this.request({
+            endpoint: `save/recipe`,
+            method: `DELETE`,
+            data: cur_saved_recipe,
+        });
+    }
+
+    async getCurrentComments(api_id) {
+        return await this.request({
+            endpoint: `comment/getComment/${api_id}`,
+            method: `GET`,
+        });
+    }
+
+    async postComment(comment, api_id) {
+        return await this.request({
+            endpoint: `comment/postComment/${api_id}`,
+            method: `POST`,
+            data: comment,
+        });
+    }
+
+    async deleteComment(comment_primary_id) {
+        return await this.request({
+            endpoint: `comment/deleteComment`,
+            method: `DELETE`,
+            data: comment_primary_id,
+        });
+    }
+
+    async editComment(comment) {
+        return await this.request({
+            endpoint: `comment/editComment`,
+            method: `PUT`,
+            data: comment,
+        });
+    }
+
+    async likeComment(comment) {
+        return await this.request({
+            endpoint: `comment/likeComment`,
+            method: `PUT`,
+            data: comment,
+        });
+    }
+
+    async checkIfCommentBelongsToUser(api_id) {
+        return await this.request({
+            endpoint: `comment/doesItBelongToUser/${api_id}`,
+            method: `GET`,
+        });
+    }
+
+    async fetchRecipesByCategory(category) {
+        return await this.request({
+            endpoint:`search/${category}`
+        })
+    }
+
+    async fetchLocalDbRecipe(recipeId) {
+        return await this.request({
+            endpoint:`search/id/${recipeId}`
+        })
+    }
+
+    async createProfile() {
+        return await this.request({
+            endpoint: `profile/create`,
+            method: `POST`
+        })
+    }
+
+    async fetchProfile() {
+        return await this.request({
+            endpoint: `profile/`
+        })
+    }
+
+    async updateProfile(info) {
+        return await this.request({
+            endpoint: `profile/`,
+            method: `PUT`,
+            data: info
         })
     }
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import apiClient from "../../services/apiClient";
 import logo from "../../assets/logo.svg";
 import search from "../../assets/search-icon.svg";
@@ -7,6 +8,7 @@ import wheel from "../../assets/wheel-icon.svg";
 import close from "../../assets/close.svg";
 import userlogo from "../../assets/user.svg";
 
+import SearchPage from "../SearchPage/SearchPage";
 import "./Navbar.css";
 
 export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
@@ -16,11 +18,21 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
   const [userIsClicked, setUserIsClicked] = useState(false);
 
   const handleOnSearchClick = () => {
-    isSearch ? setIsSearch(false) : setIsSearch(true);
+    setIsSearch(!isSearch)
+    navigate("/search");
   };
+  
+  const handleOnInputClick = () => {
+    navigate("/search");
+  }
+
+  const handleOnClose = () => {
+    setIsSearch(!isSearch)
+    navigate("/")
+  }
 
   const handleOnUserClick = () => {
-    userIsClicked ? setUserIsClicked(false) : setUserIsClicked(true);
+    setUserIsClicked(!userIsClicked)
   };
 
   const handleLogout = async () => {
@@ -30,11 +42,12 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
+    navigate("/searchResults");
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    navigate("/search");
+    navigate("/searchResults");
   };
 
   return (
@@ -58,9 +71,10 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
                 type="text"
                 placeholder="search recipes..."
                 onChange={handleInputChange}
+                onClick={handleOnInputClick}
               ></input>
             </form>
-            <div className="search-btn" onClick={handleOnSearchClick}>
+            <div className="search-btn" onClick={handleOnClose}>
               <img src={close} alt="Close button"></img>
             </div>
           </>

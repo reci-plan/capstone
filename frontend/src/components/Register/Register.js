@@ -50,6 +50,14 @@ export default function Register({ user, setUser }) {
   };
 
   const handleSubmit = async () => {
+    // check that the password and email fields are valid before registering user
+    if (form.passwordConfirm !== form.password) {
+      setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match." }))
+      return
+    } else {
+      setErrors((e) => ({ ...e, passwordConfirm: null }))
+    }
+    
     const { data, error } = await apiClient.register({
       email: form.email,
       password: form.password,
@@ -60,11 +68,24 @@ export default function Register({ user, setUser }) {
     if (data) {
       setUser(data.user);
       apiClient.setToken(data.token);
+      createProfile()
     }
     if (error) {
       setErrors((prevState) => ({ ...prevState, form: error }));
     }
   };
+
+  const createProfile = async () => {
+    const { data, error } = await apiClient.createProfile();
+
+    if (data) {
+      console.log("success.........Profile.js")
+    }
+
+    if (error) {
+      console.log(error, "error........Profile.js")
+    }
+  }
 
   // redirect, when user registers
   useEffect(() => {

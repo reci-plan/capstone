@@ -10,6 +10,9 @@ const { PORT, API_KEY } = require("./config");
 const authRoutes = require("./routes/auth");
 const recipeRoutes = require("./routes/recipes");
 const saveRoutes = require("./routes/save");
+const profileRoutes = require("./routes/profile")
+const commentRoutes = require("./routes/comments");
+const searchRoutes = require("./routes/search");
 
 // import errors
 const { NotFoundError } = require("./utils/errors");
@@ -19,7 +22,6 @@ const security = require("./middleware/security");
 
 const app = express();
 
-
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -28,6 +30,9 @@ app.use(security.extractUserFromJwt);
 app.use("/recipes", recipeRoutes);
 app.use("/auth", authRoutes);
 app.use("/save", saveRoutes);
+app.use("/profile", profileRoutes);
+app.use("/comment", commentRoutes);
+app.use("/search", searchRoutes);
 
 // Error handlers
 app.use((req, res, next) => {
