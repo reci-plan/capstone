@@ -5,7 +5,9 @@ import apiClient from "../../services/apiClient";
 import tempImg from "../../assets/tempProfileImg.png";
 import location from "../../assets/location.svg";
 import './Profile.css'
+
 export default function Profile({ user, profile, flavors }) {
+    console.log(profile)
     return (
         <div className="Profile">
             {!user.email ? 

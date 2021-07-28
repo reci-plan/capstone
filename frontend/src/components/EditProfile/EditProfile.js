@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import apiClient from '../../services/apiClient'
 import Multiselect from 'multiselect-react-dropdown';
+
+import tempImg from "../../assets/tempProfileImg.png";
 import './EditProfile.css';
 
 export default function EditProfile({ user, handleUpdateUser, profile, flavors }) {
@@ -16,10 +18,11 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
     short_bio: profile.short_bio,
     region: profile.region,
     fav_flavors: "",
-    image_url: null
+    image_url: ""
   })
   const [errors, setErrors] = useState({})
   const [addFlavors, setAddFlavors] = useState(flavors)
+  const [image, setImage ] = useState("");
 
   const handleInputChange = (e) => {
     if (e.target.name === "email") {
@@ -50,11 +53,6 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
     }
 
     setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
-  }
-
-  const handleImageChange = (e) => {
-    console.log(e.target.files)
-    setForm((prevState) => ({ ...prevState, [e.target.name]: URL.createObjectURL(e.target.files[0]) }));
   }
 
   const handleSubmit = async () => {
@@ -116,6 +114,22 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
       width: "200px"
     }
   };
+
+  const uploadImage = () => {
+    const data = new FormData()
+    data.append("file", image)
+    data.append("upload_preset", "profile")
+    fetch("https://api.cloudinary.com/v1_1/dkp449p00/image/upload", {
+      method: "POST",
+      body: data
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+      setForm((prevState) => ({...prevState, image_url: res.url}))
+    })
+    .catch(err => console.log(err))
+  }
   
   return (
     <div className="EditProfile">
@@ -127,7 +141,12 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
             <div className="profile-img">
               {form.image_url ?
                 <img src={form.image_url} alt=""></img> :
-                <img src={profile.image_url} alt=""></img>
+                <>
+                {profile.image_url ?
+                  <img src={profile.image_url} alt="User profile img"></img> : 
+                  <img src={tempImg} alt="Placeholder img"></img>
+                }
+                </>
               }
             </div>
             <div>
@@ -135,9 +154,9 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                 type="file"
                 name="image_url"
                 placeholder="image"
-                // value={form.image_url}
-                onChange={handleImageChange}
+                onChange={(e)=> setImage(e.target.files[0])}
               />
+              <button onClick={uploadImage}>Upload</button>
             </div>
             <Multiselect
               options={flavorOptions} // Options to display in the dropdown
