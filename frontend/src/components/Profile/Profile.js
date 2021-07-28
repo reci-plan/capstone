@@ -14,6 +14,7 @@ export default function Profile({ user, profile, flavors }) {
             <div>Login <Link to="/login">here</Link> to view your profile page</div> :
 
             <div className="profile-display">
+
                 <div className="profile-left">
                     <div className="profile-img">
                         {profile.image_url ?
@@ -29,6 +30,7 @@ export default function Profile({ user, profile, flavors }) {
                         }
                     </div>
                 </div>
+                
                 <div className="profile-right">
                     <div className="profile-basic">
                         <div className="profile-name">{user.first_name} {user.last_name}</div>
@@ -41,10 +43,19 @@ export default function Profile({ user, profile, flavors }) {
                             }
                         </div>
                     </div>
-                    <div> username: {user.username}</div>
-                    <div> email: {user.email}</div>
-                    {profile.short_bio ? 
-                        <div>short bio: {profile.short_bio}</div> : null
+                    <div> 
+                        <span className="input-type">username: </span>
+                        <span className="input-type-res">{user.username}</span>
+                    </div>
+                    <div> 
+                        <span className="input-type">email: </span>
+                        <span className="input-type-res">{user.email}</span>
+                    </div>
+                    {profile.short_bio ?
+                        <div> 
+                            <span className="input-type">short bio: </span>
+                            <span className="input-type-res">{profile.short_bio}</span>
+                        </div> : null
                     }
                 </div>
                 <Link to='/profile/edit' className="edit-btn">...</Link>

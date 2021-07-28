@@ -4,7 +4,6 @@
 .profile-name {
   font-family: 'Josefin Sans', sans-serif;
   font-size: 35px;
-
 }
 
 .profile-display {
@@ -21,9 +20,11 @@
   height: 200px;
   overflow: hidden;
   border: 2px solid #cecece;
+  border-radius: 20px;
 }
 .profile-img img {
   width: 100%;
+  min-height: 100%;
 }
 
 .profile-right {
@@ -50,4 +51,15 @@
   font-size: 20px;
   font-weight: 600;
   text-decoration: none;
+}
+
+.input-type {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+.input-type-res {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
 }
