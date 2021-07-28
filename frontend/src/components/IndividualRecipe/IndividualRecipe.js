@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import cn from "classnames";
+// import cn from "classnames";
 
 import apiClient from "../../services/apiClient";
 import veganIcon from "../../assets/vegan-icon.svg";
@@ -181,11 +181,13 @@ export default function IndividualRecipe({ user }) {
             onClick={onExpand}
             onSubmit={handleSubmit}
             ref={containerRef}
-            className={cn("comment-box", {
-              expanded: isExpanded,
-              collapsed: !isExpanded,
-              modified: comment.length > 0,
-            })}
+            // className={cn("comment-box", {
+            //   expanded: isExpanded,
+            //   collapsed: !isExpanded,
+            //   modified: comment.length > 0,
+            // })}
+            className={`comment-box ${isExpanded ? "expanded" : "collapsed"}
+            ${comment.length > 0 ? "modified" : ""}`}
             style={{
               minHeight: isExpanded ? outerHeight.current : INITIAL_HEIGHT,
             }}

@@ -11,7 +11,9 @@ export default function CarouselDisplay({
   rangeA,
   rangeB,
   handleSave,
-  handleUnsave
+  handleUnsave,
+  justOnce,
+  bitValue,
 }) {
   const responsive = {
     largeDesktop: {
@@ -35,8 +37,29 @@ export default function CarouselDisplay({
       items: 1,
     },
   };
+
+  // const figureOutTheRecommendationsBasedOnTheUsersTime = () => {
+  // if (theCurrentTime)
+  // }
+
   return (
     <div className="CarouselDisplay">
+      {justOnce && (
+        <Carousel responsive={responsive}>
+          {recipes
+            .filter((r) => (r.category & bitValue) === bitValue)
+            .map((r) => (
+              <RecipeCard
+                key={r.id}
+                user={user}
+                recipeInfo={r}
+                handleSave={handleSave}
+                handleUnsave={handleUnsave}
+              />
+            ))}
+        </Carousel>
+      )}
+
       {type === "expense" ? (
         <Carousel responsive={responsive}>
           {recipes
