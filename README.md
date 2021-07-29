@@ -18,3 +18,4 @@ Deployment Website: **Add Link to Deployed Project**
 
 * Wheel: [https://github.com/effectussoftware/react-custom-roulette](https://github.com/effectussoftware/react-custom-roulette)
 * Carousel: [https://www.npmjs.com/package/react-multi-carousel](https://www.npmjs.com/package/react-multi-carousel)
+* Multi-select Dropdown: [https://www.npmjs.com/package/multiselect-react-dropdown](https://www.npmjs.com/package/multiselect-react-dropdown)
