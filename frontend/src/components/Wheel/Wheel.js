@@ -35,12 +35,14 @@ export default function Generator() {
 
   const increment = () => {
     console.log("INCREMENTED")
+    numMeal += 1
     setBoxVals(dum += 1)
   }
   
   const data = loadWheel;
   
   console.log("HERE'S THE DATA: ", data)
+  console.log("MY ARR: ", titles)
 
   console.log(data)
 
@@ -50,7 +52,7 @@ export default function Generator() {
     setPrizeNumber(newPrizeNumber)
     setMustSpin(true)
     console.log(data[newPrizeNumber].option)
-    console.log(data[prizeNumber].category)
+    //console.log(data[prizeNumber].category)
   }
   
   const handleOpenForm = () => {
@@ -159,8 +161,8 @@ export default function Generator() {
       <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
         {spinIsVisible ?
                   <>
-                    {/* {console.log(data[prizeNumber].option)} */}
-                    {data.length !== 0 ?
+                    {console.log("CRASH AT", data)}
+                    {(data.length !== 0) && (data != null) && (typeof (data[prizeNumber]) !== 'undefined') ?
                           <>
                           {console.log("FINAL DATA", data)}
                           {console.log("aaaaaAAAAAAAAAAAA", (displayRecipePopup((data[prizeNumber].option)).then(data=>console.log("AAAAAA",data))))}

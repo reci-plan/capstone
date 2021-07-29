@@ -19,6 +19,7 @@ export default function Box(props) {
         <div className="boxHolder">
             {console.log("TEST", test)}
             {console.log("TEST COMP", test, lines.length)}
+            {console.log("MY CAPTION", caption)}
             {test === (lines.length - 1) ?
                 <>
                 <div className="box"><div className="penIc" onClick={() => props.handleOpenForm()}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div>
