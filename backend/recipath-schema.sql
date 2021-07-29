@@ -34,10 +34,10 @@ CREATE TABLE community_all_recipes (
 
 CREATE TABLE community_ratings (
     rating          INTEGER NOT NULL CHECK (rating > 0 AND rating <= 5),
-    recipe_id         INTEGER NOT NULL REFERENCES community_all_recipes(id) ON DELETE CASCADE,
+    post_id         INTEGER NOT NULL REFERENCES community_all_recipes(id) ON DELETE CASCADE,
     user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     created_at      TIMESTAMP NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (recipe_id, user_id)
+    PRIMARY KEY (post_id, user_id)
 );
 
 CREATE TABLE profile (

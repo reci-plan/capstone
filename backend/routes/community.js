@@ -3,7 +3,7 @@ const router = express.Router();
 const { requireAuthenticatedUser } = require("../middleware/security");
 const Community = require("../models/Community");
 
-router.get("/", async (req, res, next) => {
+router.get("/getPosts", async (req, res, next) => {
   try {
     const allPosts = await Community.getPosts();
     res.status(200).json({ allPosts });
@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", requireAuthenticatedUser, async (req, res, next) => {
+router.post("/newPost", requireAuthenticatedUser, async (req, res, next) => {
   try {
     const user = res.locals.user;
     const post = req.body;
@@ -23,15 +23,35 @@ router.post("/", requireAuthenticatedUser, async (req, res, next) => {
   }
 });
 
-router.delete("/", requireAuthenticatedUser, async (req, res, next) => {
-  try {
-    const user = res.locals.user;
-    const post = req.body;
-    const deleted_post = await Community.deletePost(user, post);
-    res.status(200).json({ deleted_post });
-  } catch (e) {
-    next(e);
+router.delete(
+  "/deletePost",
+  requireAuthenticatedUser,
+  async (req, res, next) => {
+    try {
+      const user = res.locals.user;
+      const post = req.body;
+      const deleted_post = await Community.deletePost(user, post);
+      res.status(200).json({ deleted_post });
+    } catch (e) {
+      next(e);
+    }
   }
-});
+);
+
+router.post(
+  "/postRating/:postId",
+  requireAuthenticatedUser,
+  async (req, res, next) => {
+    try {
+      const user = res.locals.user;
+      const { postId } = req.params;
+      const { rating } = req.body;
+      const postRating = await Community.ratingForPost(rating, user, postId);
+      res.status(200).json({ postRating });
+    } catch (e) {
+      next(e);
+    }
+  }
+);
 
 module.exports = router;

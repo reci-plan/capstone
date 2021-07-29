@@ -4,13 +4,13 @@ const { BadRequestError, UnauthorizedError } = require("../utils/errors");
 
 class Community {
     static async getPosts() {
-        // const query = ` SELECT c.id, c.title, c.category, c.image_url, c.prep_time, c.description, c.date, u.id FROM community_all_recipes AS c
-        //     JOIN users AS u ON u.id = c.user_id
-        //     JOIN community_ratings AS r ON r.recipe_id = c.id
-        //     GROUP BY c.id, u.id`;
         const query = `
-            SELECT c.id, c.title, c.category, c.image_url, c.prep_time, c.description, c.date, u.username, c.user_id FROM community_all_recipes AS c
-            JOIN users AS u ON u.id = c.user_id
+            SELECT
+                c.id, c.title, c.category, c.image_url, c.prep_time, c.description, c.date, u.username, c.user_id, AVG(r.rating) AS "rating" FROM community_all_recipes AS c
+            LEFT JOIN users AS u ON u.id = c.user_id
+            LEFT JOIN community_ratings AS r ON r.post_id = c.id
+            GROUP BY c.id, u.username
+            ORDER BY c.date DESC
         `;
 
         const results = await db.query(query);
@@ -55,6 +55,48 @@ class Community {
                 AND id = $2`,
             [user.username, post.id]
         );
+        return results.rows[0];
+    }
+
+    static async ratingForPost(rating, user, postId) {
+        console.log(rating, user, postId);
+        if (!user) {
+            throw new BadRequestError("no user");
+        }
+        if (!Number(rating)) {
+            throw new BadRequestError(`no num given`);
+        }
+
+        const existingRating = await Community.doesRatingAlreadyExist(
+            user,
+            postId
+        );
+        console.log("existingRating", existingRating);
+        if (existingRating) {
+            throw new BadRequestError("you already voted for this post");
+        }
+
+        const results = await db.query(
+            `
+            INSERT INTO community_ratings (rating, post_id, user_id)
+                VALUES ($1, $2, (SELECT id FROM users WHERE username = $3))
+                RETURNING rating, post_id, user_id, created_at
+            `,
+            [rating, postId, user.username]
+        );
+        return results.rows[0];
+    }
+
+    static async doesRatingAlreadyExist(user, postId) {
+        const results = await db.query(
+            `
+            SELECT rating FROM community_ratings
+            WHERE user_id = (SELECT id FROM users WHERE username = $1)
+            AND post_id = $2
+        `,
+            [user.username, postId]
+        );
+
         return results.rows[0];
     }
 }

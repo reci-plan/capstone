@@ -221,12 +221,15 @@ class ApiCalls {
     }
 
     async fetchAllCommunityPosts() {
-        return await this.request({ endpoint: `community`, method: `GET` });
+        return await this.request({
+            endpoint: `community/getPosts`,
+            method: `GET`,
+        });
     }
 
     async newPostToCommunity(recipe) {
         return await this.request({
-            endpoint: `community`,
+            endpoint: `community/newPost`,
             method: `POST`,
             data: recipe,
         });
@@ -234,7 +237,7 @@ class ApiCalls {
 
     async deletePostFromCommunity(recipe) {
         return await this.request({
-            endpoint: `community`,
+            endpoint: `community/deletePost`,
             method: `DELETE`,
             data: recipe,
         });

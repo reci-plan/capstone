@@ -43,7 +43,15 @@ export default function Community({ user }) {
                     title: <b>{r.title}</b>, category: <b>{r.category}</b>,
                     image_url: <b>{r.image_url}</b>, prep_time:{" "}
                     <b>{r.prep_time}</b>, desc: <b>{r.description}</b>, posted
-                    By: <b>{r.username}</b>{" "}
+                    By: <b>{r.username}</b>
+                    {r.rating && (
+                        <b>
+                            {" "}
+                            {`, rating: ${parseFloat(r.rating).toFixed(
+                                2
+                            )}`}{" "}
+                        </b>
+                    )}
                     {r.user_id === user.id && (
                         <button onClick={() => handleDeletePost(r)}>
                             delete
