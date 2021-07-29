@@ -4,6 +4,7 @@ import apiClient from '../../services/apiClient'
 import Multiselect from 'multiselect-react-dropdown';
 
 import tempImg from "../../assets/tempProfileImg.png";
+import profileBackground from "../../assets/edit-profile.png";
 import './EditProfile.css';
 
 export default function EditProfile({ user, handleUpdateUser, profile, flavors }) {
@@ -111,7 +112,39 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
 
   const style = {
     multiselectContainer: {
-      width: "200px"
+      fontFamily: "Lato, sans-serif",
+      width: "200px",
+      height: "80px",
+      margin: "20px",
+    },
+    searchBox: { 
+      border: "1px solid #CECECE",
+      background: "#fff",
+      borderRadius: "10px",
+      fontSize: "10px",
+      minHeight: "50px",
+    },
+    inputField: {
+      margin: "0px",
+      width: "100%"
+    },
+    chips: {
+      background: "#98B9F2",
+      color: "#000"
+    },
+    optionContainer: { 
+      background: "#fff",
+    },
+    option: {
+      color: "#000"
+    },
+    highlightOption: {
+      background: "transparent",
+      dislay: "none"
+    },
+    hightlight: {
+      background: "transparent",
+      dislay: "none"
     }
   };
 
@@ -134,12 +167,17 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
   }
   
   return (
-    <div className="EditProfile">
+    <div className="EditProfile" style={{backgroundImage: `url(${profileBackground})`}}>
       {!user.email ? 
         <div>Login <Link to="/login">here</Link> to edit your profile page</div> :
 
         <div className="profile-display">
           <div className="profile-left">
+            <input
+                type="file"
+                name="image_url"
+                onChange={(e)=> setImage(e.target.files[0])}
+            />
             <div className="profile-img">
               {form.image_url ?
                 <img src={form.image_url} alt=""></img> :
@@ -151,15 +189,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                 </>
               }
             </div>
-            <div>
-              <input
-                type="file"
-                name="image_url"
-                placeholder="image"
-                onChange={(e)=> setImage(e.target.files[0])}
-              />
-              <button onClick={uploadImage}>Upload</button>
-            </div>
+            <button className="upload-btn" onClick={uploadImage}>Upload</button>
             <Multiselect
               options={flavorOptions} // Options to display in the dropdown
               selectedValues={flavors}
@@ -185,7 +215,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                     onChange={handleInputChange}
                   />
                 </div>
-              <div className="">
+              <div className="form-input-name">
                 <div className="form-input">
                   <label>first name</label>
                   <input
@@ -259,7 +289,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                 />
               </div>
               <div>{errors.form}</div>
-              <button className="btn" onClick={handleSubmit}>update</button>
+              <button className="update-btn" onClick={handleSubmit}>update</button>
             </div>
           </div>
         </div>
