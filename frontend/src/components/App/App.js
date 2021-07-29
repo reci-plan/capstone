@@ -13,6 +13,9 @@ import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
 import Wheel from "../Wheel/Wheel"
 import SearchFilter from "../SearchFilter/SearchFilter";
+import AboutUs from "../About/About";
+import ContactUs from "../Contact/Contact";
+import Footer from "../Footer/Footer";
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
@@ -251,7 +254,13 @@ function App() {
               />
             }
           />
+
+          <Route path="/about" element={<AboutUs />}/>   
+
+          <Route path="/contact" element={<ContactUs />}/>   
+
         </Routes>
+        <Footer />
       </BrowserRouter>
     </div>
   );
