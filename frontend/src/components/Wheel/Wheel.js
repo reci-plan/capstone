@@ -34,6 +34,7 @@ export default function Generator() {
   ])
 
   const increment = () => {
+    console.log("INCREMENTED")
     setBoxVals(dum += 1)
   }
   
@@ -118,8 +119,8 @@ export default function Generator() {
               <img src={pencil} width="25" alt="Edit your plan name"></img>
           </div>
           <div className="subHeader">Meals</div>
-          <div className="box"><p>{times[dum]}</p><p>{meals[dum]}</p><div className="penIc"><div onClick={(handleOpenForm)}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div></div>
-          <div className="leftMenuArea"><RenderBox/></div>
+          {/*<div className="box"><p>{times[dum]}</p><p>{meals[dum]}</p><div className="penIc"><div onClick={(handleOpenForm)}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div></div>*/}
+          <div className="leftMenuArea"><RenderBox handleOpenForm = {handleOpenForm} dataWheelToBox={dum}/></div>
         </div>
         <div className="wheelView">
         {wheelIsVisible ?

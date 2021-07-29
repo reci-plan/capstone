@@ -21,7 +21,7 @@ export default function Box(props) {
             {console.log("TEST COMP", test, lines.length)}
             {test === (lines.length - 1) ?
                 <>
-                <div className="box"><div className="penIc" onClick={() => setLines([...lines, lines.length])}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div>
+                <div className="box"><div className="penIc" onClick={() => props.handleOpenForm()}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div>
                 </> : 
                 <div className="box"><div className= {caption} onClick={() => setLines([...lines, lines.length])}>{caption}</div></div>
             }
