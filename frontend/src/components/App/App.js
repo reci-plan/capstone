@@ -12,8 +12,9 @@ import SearchPage from "../SearchPage/SearchPage";
 import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
 import PublicProfile from "../PublicProfile/PublicProfile";
-import Wheel from "../Wheel/Wheel"
+import Wheel from "../Wheel/Wheel";
 import SearchFilter from "../SearchFilter/SearchFilter";
+import Community from "../Community/Community";
 
 import { useDataLayerValue } from "../../context/DataLayer";
 
@@ -112,10 +113,10 @@ function App() {
   // Fetch saved recipes
   useEffect(() => {
     const fetchRecipes = async () => {
-        const { data, error } = await apiClient.fetchSavedRecipes();
-        if (data) {
-            setSaved(data.savedRecipes);
-        }
+      const { data, error } = await apiClient.fetchSavedRecipes();
+      if (data) {
+        setSaved(data.savedRecipes);
+      }
 
       if (error) {
         console.log(error, "fetch saved recipes");
@@ -258,6 +259,8 @@ function App() {
               />
             }
           />
+
+          <Route path="/community" element={<Community user={user} />} />
         </Routes>
       </BrowserRouter>
     </div>
