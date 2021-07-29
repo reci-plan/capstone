@@ -21,6 +21,8 @@ CREATE TABLE all_recipes (
     expense         INTEGER NOT NULL
 );
 
+
+
 CREATE TABLE profile (
     id              SERIAL PRIMARY KEY,
     user_id         INTEGER NOT NULL,
