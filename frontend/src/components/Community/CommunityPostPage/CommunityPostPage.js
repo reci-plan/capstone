@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import apiClient from "../../../services/apiClient";
 
-export default function CommunityPostPage({ recipes }) {
+export default function CommunityPostPage({ recipes, setRecipes }) {
     const [showForm, setShowForm] = useState(false);
     const [form, setForm] = useState({
         title: "",
@@ -10,14 +11,29 @@ export default function CommunityPostPage({ recipes }) {
         description: "",
     });
 
-    const handleInputChange = () => {
-        console.log("hi");
+
+    const handleInputChange = (e) => {
+        setForm((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }));
     };
 
-    const handleSubmit = () => {
-        console.log("submitted");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const { data, error } = await apiClient.newPostToCommunity(form);
+        if (data) {
+            console.log(data.new_post);
+            setRecipes((prevState) => [data.new_post, ...prevState]);
+            setShowForm(false);
+        }
+        if (error) {
+            alert(error);
+        }
+        setForm({});
     };
-
+    console.log(form);
+    console.log(recipes);
     return (
         <div>
             <button onClick={() => setShowForm(!showForm)}>

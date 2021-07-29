@@ -219,6 +219,26 @@ class ApiCalls {
             method: `GET`,
         });
     }
+
+    async fetchAllCommunityPosts() {
+        return await this.request({ endpoint: `community`, method: `GET` });
+    }
+
+    async newPostToCommunity(recipe) {
+        return await this.request({
+            endpoint: `community`,
+            method: `POST`,
+            data: recipe,
+        });
+    }
+
+    async deletePostFromCommunity(recipe) {
+        return await this.request({
+            endpoint: `community`,
+            method: `DELETE`,
+            data: recipe,
+        });
+    }
 }
 
 const API = new ApiCalls(
