@@ -6,6 +6,7 @@
   height: 100vh;
   overflow: hidden;
   background-position: center;
+  background-size: 100%;
 }
 .profile-name {
   font-family: 'Josefin Sans', sans-serif;
