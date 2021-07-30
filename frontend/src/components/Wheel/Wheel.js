@@ -180,7 +180,7 @@ export default function Generator() {
           <div className="subHeader">Meals</div>
           {/*<div className="box"><p>{times[dum]}</p><p>{meals[dum]}</p><div className="penIc"><div onClick={(handleOpenForm)}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div></div>*/}
           <div className="leftMenuArea"><RenderBox handleOpenForm = {handleOpenForm} dataWheelToBox={dum} renderMealData={[times, meals]}/></div>
-          {dum >= -1 ?
+          {dum >= 1 ?
                 <>
                   <div onClick={()=>setMealPlanPopup(true)}><button className="saveMealPlan">Save Meal Plan</button></div>
                 </> : 
