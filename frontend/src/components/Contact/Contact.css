@@ -1,4 +1,6 @@
 .Contact {
   padding: 0 75px;
   padding-top: 100px;
+  background-repeat: no-repeat;
+  background-position-x: 40%;
 }

@@ -1,24 +1,28 @@
 
+import navbar from "../../assets/navbar.png"
 import "./About.css"
 
 export default function About() {
   const aboutus = [
     {
       name: "Maritza Padilla",
-      bio: ""
+      image: "",
+      bio: "this is maritza"
     },
     {
       name: "Andrew Lee",
-      bio: ""
+      image: "",
+      bio: "this is andrew"
     },
     {
       name: "Ann Wang",
-      bio: ""
+      image: "",
+      bio: "this is ann"
     }
   ];
 
   return (
-    <div className="About">
+    <div className="About" style={{backgroundImage: `url(${navbar})`}}>
 
       <section className="mission">
         <div>Our Mission</div>
@@ -34,8 +38,9 @@ export default function About() {
         <div className="people">
           {aboutus.map((item, i) => (
             <div key={i} className="person">
-              <div>name</div>
-              <p>content</p>
+              <img src={item.image} alt={item.name}></img>
+              <div>{item.name}</div>
+              <p>{item.bio}</p>
             </div>
           ))}
         </div>
