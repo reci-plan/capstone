@@ -92,7 +92,7 @@ class ApiCalls {
 
     async fetchIndividualRecipeInfo(recipeId) {
         return await this.request({
-            endpoint: `recipes/${recipeId}`,
+            endpoint: `recipes/getMoreInfo/${recipeId}`,
         });
     }
 

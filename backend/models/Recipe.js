@@ -36,7 +36,7 @@ class Recipe {
                 expense: parseInt(r.pricePerServing),
                 prep_time: parseInt(r.readyInMinutes),
                 // description: r.instructions,
-                description: "placeholder",
+                description: r.summary,
                 image_url: r.image ? r.image : "no_image",
                 rating: parseInt(r.spoonacularScore),
             });
@@ -73,6 +73,8 @@ class Recipe {
         //return results.rows;
         return 0;
     }
+
+    // static async
 }
 
 module.exports = Recipe;
