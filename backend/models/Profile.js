@@ -60,8 +60,17 @@ class Profile {
       hashedPassword = await bcrypt.hash(profile.password, BCRYPT_WORK_FACTOR);
     }
 
-    const userResults = await db.query(
-      `
+    // var cloudinary = require('cloudinary').v2;
+    // cloudinary.uploader.upload(`${profile.image_url}`, {
+    //   public_id: `${profile.id}`,
+    //   overwrite: true
+    // }, function(error, result) {
+    //   console.log(result, error)
+    // });
+
+    // const image_url = result;
+    
+    const userResults = await db.query(`
       UPDATE users
       SET first_name = CASE WHEN COALESCE($1, '') = '' THEN first_name ELSE $1 END,
           last_name = CASE WHEN COALESCE($2, '') = '' THEN last_name ELSE $2 END,

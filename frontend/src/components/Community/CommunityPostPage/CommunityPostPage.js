@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import apiClient from "../../../services/apiClient";
 
-export default function CommunityPostPage({ recipes, setRecipes }) {
-    const [showForm, setShowForm] = useState(false);
+export default function CommunityPostPage({
+    recipes,
+    setRecipes,
+    setShowForm,
+    showForm,
+}) {
     const [form, setForm] = useState({
         title: "",
         category: "",
@@ -10,7 +14,6 @@ export default function CommunityPostPage({ recipes, setRecipes }) {
         prep_time: "",
         description: "",
     });
-
 
     const handleInputChange = (e) => {
         setForm((prevState) => ({
@@ -36,9 +39,6 @@ export default function CommunityPostPage({ recipes, setRecipes }) {
     console.log(recipes);
     return (
         <div>
-            <button onClick={() => setShowForm(!showForm)}>
-                {showForm ? "Cancel Post" : "New Post"}{" "}
-            </button>
             {showForm && (
                 <div>
                     <div>

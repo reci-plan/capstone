@@ -1,8 +1,55 @@
 .EditProfile {
-  margin-top: 100px;
+  padding: 0 150px;
+  padding-top: 100px;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-position: center;
 }
-
 .form-input {
   display: flex;
   flex-direction: column;
+}
+.form-input label {
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+}
+.form-input input {
+  margin: 8px;
+  width: auto;
+}
+
+.profile-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile-left input {
+  cursor: pointer;
+  width: 80%;
+  margin: 0;
+}
+.upload-btn {
+  cursor: pointer;
+}
+
+.highlightOption, .highlight {
+  background-color: transparent;
+}
+.option:hover {
+  background-color: #6F9CEB !important;
+}
+.chip:nth-child(1) {
+  background-color: #fff;
+}
+
+.update-btn {
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  width: 80px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: #a59379;
 }
