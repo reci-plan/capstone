@@ -17,6 +17,6 @@ export default function RenderBox(props) {
   const [lines, setLines] = useState(linesToDisplay);
 
     return (
-        lines.slice(0,4).map(m=><Box key={m} caption={`Click ${m}`} pstate={{lines, setLines}} handleOpenForm = {props.handleOpenForm}/>)
+        lines.slice(0,4).map(m=><Box key={m} caption={`Click ${m}`} pstate={{lines, setLines}} handleOpenForm = {props.handleOpenForm} renderMealData = {props.renderMealData}/>)
     )
 }

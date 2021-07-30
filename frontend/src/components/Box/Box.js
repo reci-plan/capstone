@@ -20,11 +20,12 @@ export default function Box(props) {
             {console.log("TEST", test)}
             {console.log("TEST COMP", test, lines.length)}
             {console.log("MY CAPTION", caption)}
+            {console.log("TRY: ", props.renderMealData)}
             {test === (lines.length - 1) ?
                 <>
                 <div className="box"><div className="penIc" onClick={() => props.handleOpenForm()}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div>
                 </> : 
-                <div className="box"><div className= {caption} onClick={() => setLines([...lines, lines.length])}>{caption}</div></div>
+                <div className="box"><div className= {caption} onClick={() => setLines([...lines, lines.length])}>{props.renderMealData[0][test]}&nbsp;{props.renderMealData[1][test]}</div></div>
             }
             
         </div>

@@ -39,10 +39,10 @@
 
 .box, .fake-input {
     background-color: #CECECE;
-    height:70px;
     display:flex;
     align-items: center;
     font-size: 26px;
+    height: 70px;
 }
   
 .penIc, .fake-input img {
@@ -79,4 +79,13 @@
 .leftMenuArea {
     display: flex;
     flex-direction: column;
+}
+
+.mealPlan {
+    display: flex;
+    flex-direction: row;
+}
+
+.mealPlanHead {
+    background-color: #BDB2AE;
 }
