@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import apiClient from '../../services/apiClient'
 import Multiselect from 'multiselect-react-dropdown';
+
+import tempImg from "../../assets/tempProfileImg.png";
+import profileBackground from "../../assets/edit-profile.png";
 import './EditProfile.css';
 
 export default function EditProfile({ user, handleUpdateUser, profile, flavors }) {
@@ -16,10 +19,11 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
     short_bio: profile.short_bio,
     region: profile.region,
     fav_flavors: "",
-    image_url: null
+    image_url: ""
   })
   const [errors, setErrors] = useState({})
   const [addFlavors, setAddFlavors] = useState(flavors)
+  const [image, setImage ] = useState("");
 
   const handleInputChange = (e) => {
     if (e.target.name === "email") {
@@ -50,10 +54,6 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
     }
 
     setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
-  }
-
-  const handleImageChange = (e) => {
-    setForm((prevState) => ({ ...prevState, [e.target.name]: URL.createObjectURL(e.target.files[0]) }));
   }
 
   const handleSubmit = async () => {
@@ -112,32 +112,84 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
 
   const style = {
     multiselectContainer: {
-      width: "200px"
+      fontFamily: "Lato, sans-serif",
+      width: "200px",
+      height: "80px",
+      margin: "20px",
+    },
+    searchBox: { 
+      border: "1px solid #CECECE",
+      background: "#fff",
+      borderRadius: "10px",
+      fontSize: "10px",
+      minHeight: "50px",
+    },
+    inputField: {
+      margin: "0px",
+      width: "100%"
+    },
+    chips: {
+      background: "#98B9F2",
+      color: "#000"
+    },
+    optionContainer: { 
+      background: "#fff",
+    },
+    option: {
+      color: "#000"
+    },
+    highlightOption: {
+      background: "transparent",
+      dislay: "none"
+    },
+    hightlight: {
+      background: "transparent",
+      dislay: "none"
     }
   };
+
+  const uploadImage = () => {
+    const data = new FormData()
+    data.append("file", image)
+    data.append("upload_preset", "profile")
+    // data.append("public_id", profile.user_id)
+    // data.append("overwrite", true)
+    fetch("https://api.cloudinary.com/v1_1/dkp449p00/image/upload", {
+      method: "POST",
+      body: data
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+      setForm((prevState) => ({...prevState, image_url: res.url}))
+    })
+    .catch(err => console.log(err))
+  }
   
   return (
-    <div className="EditProfile">
+    <div className="EditProfile" style={{backgroundImage: `url(${profileBackground})`}}>
       {!user.email ? 
         <div>Login <Link to="/login">here</Link> to edit your profile page</div> :
 
         <div className="profile-display">
           <div className="profile-left">
+            <input
+                type="file"
+                name="image_url"
+                onChange={(e)=> setImage(e.target.files[0])}
+            />
             <div className="profile-img">
               {form.image_url ?
                 <img src={form.image_url} alt=""></img> :
-                <img src={profile.image_url} alt=""></img>
+                <>
+                {profile.image_url ?
+                  <img src={profile.image_url} alt="User profile img"></img> : 
+                  <img src={tempImg} alt="Placeholder img"></img>
+                }
+                </>
               }
             </div>
-            <div>
-              <input
-                type="file"
-                name="image_url"
-                placeholder="image"
-                // value={form.image_url}
-                onChange={handleImageChange}
-              />
-            </div>
+            <button className="upload-btn" onClick={uploadImage}>Upload</button>
             <Multiselect
               options={flavorOptions} // Options to display in the dropdown
               selectedValues={flavors}
@@ -163,7 +215,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                     onChange={handleInputChange}
                   />
                 </div>
-              <div className="">
+              <div className="form-input-name">
                 <div className="form-input">
                   <label>first name</label>
                   <input
@@ -237,7 +289,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                 />
               </div>
               <div>{errors.form}</div>
-              <button className="btn" onClick={handleSubmit}>update</button>
+              <button className="update-btn" onClick={handleSubmit}>update</button>
             </div>
           </div>
         </div>

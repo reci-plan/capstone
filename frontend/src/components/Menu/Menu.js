@@ -80,7 +80,7 @@ export default function Menu(props) {
         })
 
         userCategories.forEach(element => {
-            categoryCode |= 1<<(element.id);
+            categoryCode |= 1<<(11 - element.id);
         })
         
         console.log("Cat", categoryCode)
