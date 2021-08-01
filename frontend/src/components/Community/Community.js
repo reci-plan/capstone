@@ -174,7 +174,7 @@ export default function Community({ user }) {
                                                 aria-label="recipe"
                                                 className={classes.avatar}
                                             >
-                                                {user.username[0].toUpperCase()}
+                                                {r.username[0].toUpperCase()}
                                             </Avatar>
                                         }
                                         action={
@@ -182,10 +182,10 @@ export default function Community({ user }) {
                                                 <MoreVertIcon />
                                             </IconButton>
                                         }
-                                        title="Shrimp and Chorizo Paella"
-                                        subheader={`${moment(r.date)
-                                            .format("MMMM Do, YYYY")
-                                            }`}
+                                        title={`${r.title}`}
+                                        subheader={`${moment(r.date).format(
+                                            "MMMM Do, YYYY"
+                                        )}`}
                                     />
                                     <CardMedia
                                         className={classes.media}
