@@ -1,0 +1,30 @@
+.About {
+  /* padding: 0 75px; */
+  padding-top: 120px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 30px;
+  background-repeat: no-repeat;
+  background-position-x: 40%;
+}
+.mission p, .aboutus p {
+  font-family: 'Lato', sans-serif;
+  font-size: 25px;
+  font-weight: 300;
+}
+.mission {
+  padding: 10px 75px;
+  background-color: #f9dcc4;
+}
+
+.aboutus {
+  padding: 10px 75px;
+  margin: 10px 0;
+  background-color: #e2ece9;
+}
+.people {
+  display: flex;
+  justify-content: space-evenly;
+}
+.person {
+  border: 2px solid #000;
+}
