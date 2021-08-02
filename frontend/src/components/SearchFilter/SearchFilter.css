@@ -15,6 +15,7 @@ ul {
 }
 
 .searchoff {
+  padding-bottom: 120px;
   background-position-y: -380px;
   height: auto;
 }

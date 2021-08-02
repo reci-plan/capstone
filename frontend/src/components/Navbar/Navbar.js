@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import apiClient from "../../services/apiClient";
@@ -13,12 +13,14 @@ import "./Navbar.css";
 
 export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
   const navigate = useNavigate();
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef);
 
   const [isSearch, setIsSearch] = useState(false);
   const [userIsClicked, setUserIsClicked] = useState(false);
-
+  
   const handleOnSearchClick = () => {
-    setIsSearch(!isSearch)
+    setIsSearch(true)
     navigate("/search");
   };
   
@@ -27,7 +29,7 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
   }
 
   const handleOnClose = () => {
-    setIsSearch(!isSearch)
+    setIsSearch(false)
     navigate("/")
   }
 
@@ -49,6 +51,28 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
     e.preventDefault();
     navigate("/searchResults");
   };
+
+  /* https://stackoverflow.com/questions/32553158/detect-click-outside-react-component */
+  function useOutsideAlerter(ref) {
+    useEffect(() => {
+      /**
+       * Alert if clicked on outside of element
+       */
+      function handleClickOutside(event) {
+          if (ref.current && !ref.current.contains(event.target)) {
+              setIsSearch(false)
+          }
+      }
+
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+          // Unbind the event listener on clean up
+          document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
+
 
   return (
     <div className="Navbar">
@@ -72,6 +96,7 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
                 placeholder="search recipes..."
                 onChange={handleInputChange}
                 onClick={handleOnInputClick}
+                ref={wrapperRef}
               ></input>
             </form>
             <div className="search-btn" onClick={handleOnClose}>
