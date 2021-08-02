@@ -49,10 +49,15 @@ ul {
   margin: 10px 40px;
 }
 
+/* .filter-display-ct {
+  display: flex;
+  flex-direction: column;
+} */
+
 .filter-display {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .center {
@@ -70,6 +75,16 @@ ul {
   margin-top: 10px;
   font-family: 'Lato', sans-serif;
   font-size: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.close-btn {
+  cursor: pointer;
+  border: 2px solid #000;
+  border-radius: 10px;
+  width: 30px;
+  margin: 0 10px;
 }
 
 .phone-visible {

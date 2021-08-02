@@ -73,8 +73,9 @@
 .search-input {
   width: 200px;
   margin: 0 0;
-  padding: 8px;
-  border-radius: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
 }
 
 @media only screen and (max-width: 700px) {
