@@ -9,6 +9,15 @@
 .heading {
   font-size: 30px;
 }
+
+.steps_div {
+  display: flex;
+  flex-wrap: wrap;
+}
+.steps_div_a {
+  /*margin: 20px;*/
+}
+
 .recipe-top {
   display: flex;
   flex-direction: row;
@@ -47,6 +56,14 @@
 }
 .recipe-ingre {
   font-size: 20px;
+}
+
+.recipe-additional-info {
+  /*border: 1px solid black;*/
+  display: flex;
+  justify-content: space-between;
+  /*padding: 20px;*/
+  padding: 20px 0px;
 }
 
 * {
@@ -200,5 +217,10 @@ button[type="submit"] {
 
 .extraInformation {
   display: flex;
+
   flex-direction: column;
+}
+
+.active {
+  background-color: #a7d2c5;
 }

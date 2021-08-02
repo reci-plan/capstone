@@ -39,6 +39,8 @@ export default function IndividualRecipe({ user }) {
 
   const [extraInformation, setExtraInformation] = useState([]);
 
+  const [numPicked, setNumPicked] = useState(0);
+
   // comment box
   const INITIAL_HEIGHT = 75;
   const [isExpanded, setIsExpanded] = useState(false);
@@ -148,7 +150,8 @@ export default function IndividualRecipe({ user }) {
   const additionalInfoTheme = createMuiTheme({
     palette: {
       primary: { main: "#618833", contrastText: "#fff" },
-      secondary: { main: "#8bc34a", contrastText: "#fff" },
+      secondary: { main: "#0586AB", contrastText: "#fff" },
+      third: { main: "#8bc34a", contrastText: "#fff" },
     },
   });
 
@@ -171,6 +174,35 @@ export default function IndividualRecipe({ user }) {
           ) : null}
         </div>
       </div>
+      {/*This is where the additional info go. E.g: ready in minutes, calories, etc*/}
+      <div className="recipe-additional-info">
+        {Object.entries(extraInformation).map(([key, val], i) => (
+          <>
+            <MuiThemeProvider theme={additionalInfoTheme}>
+              <Paper
+                elevation={3}
+                className={classes.paper}
+                style={{ minWidth: "280px" }}
+              >
+                <Typography
+                  variant="h4"
+                  color={i % 2 == 0 ? "primary" : "secondary"}
+                  gutterBottom
+                >
+                  {key}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  color={i % 2 == 0 ? "secondary" : "primary"}
+                >
+                  {val}
+                </Typography>
+              </Paper>
+              <br />
+            </MuiThemeProvider>
+          </>
+        ))}
+      </div>
       <div className="recipe-display">
         {/* Left Side */}
         <div className="recipe-left">
@@ -189,51 +221,89 @@ export default function IndividualRecipe({ user }) {
 
         {/* Right Side */}
         <div className="recipe-right">
-          <div className="jumpto">
+          {/*<div className="jumpto">
             {recipeInstructions.length > 0
               ? Array.from(recipeInstructions.length, (i) => {
                   console.log("here", i);
                   return <div>i</div>;
                 })
               : null}
-          </div>
+          </div>*/}
+          {/*<div className="heading">Steps</div>
+          {recipeInstructions.length > 0
+            ? recipeInstructions.map((element) => (
+                <>
+                  <a
+                    href={`#${element.number}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Paper
+                      key={element.number}
+                      className={`${classes.paper} ${
+                        numPicked === element.number ? "active" : ""
+                      }`}
+                      onClick={() => setNumPicked(element.number)}
+                    >
+                      <Typography variant="h6">
+                        Step {element.number}
+                      </Typography>
+                    </Paper>
+                  </a>
+                  <br />
+                </>
+              ))
+            : null}*/}
           <div className="heading">Instructions</div>
           {recipeInstructions.length > 0
             ? recipeInstructions.map((element) => (
-                <div key={element.number}>
-                  {element.number}. {element.step}
-                </div>
+                <>
+                  <Paper
+                    key={element.number}
+                    id={`${element.number}`}
+                    className={`${classes.paper} ${
+                      numPicked === element.number ? "active" : ""
+                    }`}
+                    elevation={3}
+                    // style={{ color: numPicked === element.number && "blue" }}
+                  >
+                    <Typography variant="h6">
+                      {element.number}. {element.step}
+                    </Typography>
+                    <Typography variant="h6">Hello</Typography>
+                  </Paper>
+                  <br />
+                </>
               ))
             : null}
         </div>
-        <SocialMediaShare recipeInfo={recipeInfo} />
-        <div className="extraInformation">
-          <Typography componet="h2" variant="h5" gutterBottom>
-            Information
-          </Typography>
 
-          {Object.entries(extraInformation).map(([key, val], i) => (
-            <>
-              <MuiThemeProvider theme={additionalInfoTheme}>
-                <Paper elevation={3} className={classes.paper}>
-                  <Typography
-                    variant="h6"
-                    color={i % 2 == 0 ? "primary" : "secondary"}
-                    gutterBottom
+        <SocialMediaShare recipeInfo={recipeInfo} />
+        <div className="heading">Steps</div>
+        <div className="steps_div">
+          {recipeInstructions.length > 0
+            ? recipeInstructions.map((element) => (
+                <>
+                  <a
+                    href={`#${element.number}`}
+                    style={{ textDecoration: "none" }}
+                    className="steps_div_a"
                   >
-                    {key}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    color={i % 2 == 0 ? "secondary" : "primary"}
-                  >
-                    {val}
-                  </Typography>
-                </Paper>
-                <br />
-              </MuiThemeProvider>
-            </>
-          ))}
+                    <Paper
+                      key={element.number}
+                      className={`${classes.paper} ${
+                        numPicked === element.number ? "active" : ""
+                      }`}
+                      onClick={() => setNumPicked(element.number)}
+                    >
+                      <Typography variant="h6">
+                        Step {element.number}
+                      </Typography>
+                    </Paper>
+                  </a>
+                  <br />
+                </>
+              ))
+            : null}
         </div>
       </div>
       <b> summary </b> : {recipeInfo.summary}

@@ -23,7 +23,7 @@
     transition: 0.2s ease-in-out;
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 1900px) {
     .share-btn-container {
         transform: unset;
         top: unset;
