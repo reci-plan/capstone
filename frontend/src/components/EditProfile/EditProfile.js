@@ -110,44 +110,6 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
     setAddFlavors(list)
   }
 
-  const style = {
-    multiselectContainer: {
-      fontFamily: "Lato, sans-serif",
-      width: "200px",
-      height: "80px",
-      margin: "20px",
-    },
-    searchBox: { 
-      border: "1px solid #CECECE",
-      background: "#fff",
-      borderRadius: "10px",
-      fontSize: "10px",
-      minHeight: "50px",
-    },
-    inputField: {
-      margin: "0px",
-      width: "100%"
-    },
-    chips: {
-      background: "#98B9F2",
-      color: "#000"
-    },
-    optionContainer: { 
-      background: "#fff",
-    },
-    option: {
-      color: "#000"
-    },
-    highlightOption: {
-      background: "transparent",
-      dislay: "none"
-    },
-    hightlight: {
-      background: "transparent",
-      dislay: "none"
-    }
-  };
-
   const uploadImage = () => {
     const data = new FormData()
     data.append("file", image)
@@ -197,7 +159,6 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
               onRemove={onRemove} // Function will trigger on remove event
               displayValue={"flavor"}
               closeIcon={"cancel"}
-              style={style}
             />
           </div>
           <div className="profile-right">

@@ -251,6 +251,15 @@ export default function Generator() {
         <h3 className="mealPlanHead">You did it! (almost)</h3>
         {/* {mapMealPlan()} */}
         <div className="mealPlan">
+          {titles.length > 0
+          ? titles.map((element, idx) => (
+            <div className="holdMeal">
+              {times[idx]} {meals[idx]} {titles[idx]} <img src={images[idx]} alt={titles[idx]}></img> {preps[idx]} {ratings[idx]}
+            </div>
+          ))
+          : null}
+        </div>
+        {/* <div className="mealPlan">
           <div className="holdMeal">
             <div>{times[0]}</div>
             <div>{meals[0]}</div>
@@ -283,7 +292,7 @@ export default function Generator() {
             <div>{preps[3]}</div>
             <div>{ratings[3]}</div>
           </div>
-        </div>
+        </div>*/}
         <button className="keepBut" onClick={logMealPlan}>Keep Meal</button>
       </Popup>
 
