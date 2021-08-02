@@ -8,7 +8,7 @@ import "./SavedGallery.css"
 export default function SavedGallery({ user, saved, handleSave, handleUnsave }) {
     return (
         <div className="SavedGallery">
-            <div className="section-title"> Saved Recipes</div>
+            <div className="section-title">Saved Recipes</div>
             <div className="filter-display">
             {saved ?
                 saved.map((s) => (

@@ -8,7 +8,7 @@
   background-size: 100%;
 }
 .profile-name {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-size: 35px;
 }
 
@@ -102,8 +102,7 @@
 
 @media only screen and (max-width: 700px) {
   .Profile {
-    padding: 0 50px;
-    padding-top: 80px;
+    padding: 80px 50px;
     background-position-x: 60%;
     background-size: cover;
     height: 100%;
