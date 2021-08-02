@@ -14,9 +14,21 @@ import "./Navbar.css";
 export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
   const navigate = useNavigate();
 
+  // const searchBox = useRef();
   const [isSearch, setIsSearch] = useState(false);
   const [userIsClicked, setUserIsClicked] = useState(false);
   
+  // useEffect(() => {
+  //   function handleOutsideClick(event) {
+  //     if (searchBox.current && !searchBox.current.contains(event.target)) {
+  //       setIsSearch(false)
+  //     }
+  //   }
+
+  //   window.addEventListener('click', handleOutsideClick)
+  //   return () => window.removeEventListener('click', handleOutsideClick)
+  // }, []);
+
   const handleOnSearchClick = () => {
     setIsSearch(true)
     navigate("/search");
@@ -59,9 +71,10 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
                 type="text"
                 placeholder="search recipes..."
                 onChange={handleInputChange}
+                // ref={searchBox}
               ></input>
             </form>
-            <div className="search-btn">
+            <div className="search-btn" onClick={e => setIsSearch(false)}>
               <img src={close} alt="Close button"></img>
             </div>
           </>
