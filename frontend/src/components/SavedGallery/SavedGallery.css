@@ -1,9 +1,4 @@
 .SavedGallery {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: 100px;
-}
-.SavedGallery div {
-  max-width: 250px;
+  padding: 0 120px;
+  padding-top: 120px;
 }

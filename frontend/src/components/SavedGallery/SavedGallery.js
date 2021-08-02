@@ -8,18 +8,20 @@ import "./SavedGallery.css"
 export default function SavedGallery({ user, saved, handleSave, handleUnsave }) {
     return (
         <div className="SavedGallery">
-            <h3> Saved Recipes </h3>
+            <div className="section-title"> Saved Recipes</div>
+            <div className="filter-display">
             {saved ?
-            saved.map((s) => (
-                <RecipeCard
-                    key={s.id}
-                    user={user}
-                    recipeInfo={s}
-                    handleSave={handleSave}
-                    handleUnsave={handleUnsave}
-                />
-            )) : null
-        }
+                saved.map((s) => (
+                    <RecipeCard
+                        key={s.id}
+                        user={user}
+                        recipeInfo={s}
+                        handleSave={handleSave}
+                        handleUnsave={handleUnsave}
+                    />
+                )) : null
+            }
+             </div>
         </div>
     );
 }
