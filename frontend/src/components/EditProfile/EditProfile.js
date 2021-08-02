@@ -114,7 +114,6 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
     multiselectContainer: {
       fontFamily: "Lato, sans-serif",
       width: "200px",
-      height: "80px",
       margin: "20px",
     },
     searchBox: { 

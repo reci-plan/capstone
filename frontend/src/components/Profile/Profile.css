@@ -1,7 +1,6 @@
 .Profile {
   padding: 0 150px;
   padding-top: 100px;
-  background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -22,6 +21,7 @@
   display: flex;
   flex-direction: column;
   max-width: 200px;
+  margin: 0 100px;
 }
 .profile-img {
   background-color: #fff;
@@ -98,4 +98,32 @@
   padding: 4px 10px;
   margin: 5px;
   background-color: rgb(152, 185, 242, 0.8);
+}
+
+@media only screen and (max-width: 700px) {
+  .Profile {
+    padding: 0 50px;
+    padding-top: 80px;
+    background-position-x: 60%;
+    background-size: cover;
+    height: 100%;
+    overflow: unset;
+  }
+  .profile-display {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .profile-left {
+    margin-bottom: 20px;
+  }
+  .profile-right {
+    min-width: auto;
+  }
+  .profile-basic > div {
+    flex-direction: column;
+  }
+  .location {
+    flex-direction: row;
+  }
 }

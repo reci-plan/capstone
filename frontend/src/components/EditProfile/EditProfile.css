@@ -1,10 +1,9 @@
 .EditProfile {
   padding: 0 150px;
   padding-top: 100px;
-  background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
   background-position: center;
   background-size: 100%;
 }
@@ -55,16 +54,37 @@
   background-color: #a59379;
 }
 
-@media only screen and (max-width: 700px) {
-  .profile-display {
-    flex-direction: column;
+@media only screen and (max-width: 1400px) {
+  .EditProfile {
+    background-size: cover;
+    height: 100%;
+    overflow: unset;
   }
-  .profile-basic div {
-    display: flex;
-    flex-direction: column;
-  }
-  .profile-left {
 
+  .profile-left {
+    margin: 0 40px;
   }
-  
+
+  .profile-right {
+    min-width: 370px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .EditProfile {
+    padding: 0 50px;
+    padding-top: 80px;
+    background-position-x: 60%;
+    background-size: cover;
+    height: 100%;
+    overflow: unset;
+  }
+
+  .form-input input {
+    width: 90%;
+  }
+
+  .form-input-name input {
+    width: 80%;
+  }
 }

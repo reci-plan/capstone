@@ -31,7 +31,7 @@ export default function Profile({ user, profile, flavors }) {
                         {flavors?.length > 0 ?
                             flavors.map(element => (
                                 <div className="flavor">{element.flavor}</div>
-                            )) : null 
+                            )) : <div>none</div>
                         }
                     </div>
                     </div>
