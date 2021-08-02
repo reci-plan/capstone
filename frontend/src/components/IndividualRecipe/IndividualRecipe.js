@@ -154,7 +154,7 @@ export default function IndividualRecipe({ user }) {
       third: { main: "#8bc34a", contrastText: "#fff" },
     },
   });
-
+  console.log("numPicked is", numPicked);
   return (
     <div className="IndividualRecipe">
       <div className="recipe-top">
@@ -260,16 +260,25 @@ export default function IndividualRecipe({ user }) {
                   <Paper
                     key={element.number}
                     id={`${element.number}`}
-                    className={`${classes.paper} ${
-                      numPicked === element.number ? "active" : ""
-                    }`}
                     elevation={3}
-                    // style={{ color: numPicked === element.number && "blue" }}
+                    // style={{
+                    //   backgroundColor:
+                    //     "#a7d2c5" && numPicked === element.number,
+                    // }}
                   >
-                    <Typography variant="h6">
+                    {console.log(
+                      numPicked,
+                      element.number,
+                      numPicked === element.number
+                    )}
+                    <Typography
+                      variant="h6"
+                      className={`${classes.paper} ${
+                        numPicked === element.number ? "active" : ""
+                      }`}
+                    >
                       {element.number}. {element.step}
                     </Typography>
-                    <Typography variant="h6">Hello</Typography>
                   </Paper>
                   <br />
                 </>
@@ -284,18 +293,19 @@ export default function IndividualRecipe({ user }) {
             ? recipeInstructions.map((element) => (
                 <>
                   <a
+                    onClick={() => setNumPicked(element.number)}
                     href={`#${element.number}`}
-                    style={{ textDecoration: "none" }}
+                    style={{ textDecoration: "none", maxHeight: "100px" }}
                     className="steps_div_a"
                   >
-                    <Paper
-                      key={element.number}
-                      className={`${classes.paper} ${
-                        numPicked === element.number ? "active" : ""
-                      }`}
-                      onClick={() => setNumPicked(element.number)}
-                    >
-                      <Typography variant="h6">
+                    <Paper key={element.number}>
+                      <Typography
+                        variant="h6"
+                        className={`${classes.paper} ${
+                          numPicked === element.number ? "active" : ""
+                        }`}
+                        onClick={(e) => console.log(e.target.className)}
+                      >
                         Step {element.number}
                       </Typography>
                     </Paper>

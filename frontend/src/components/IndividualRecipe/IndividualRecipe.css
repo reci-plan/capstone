@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .IndividualRecipe {
   max-width: 100%;
   display: flex;
@@ -11,11 +15,14 @@
 }
 
 .steps_div {
-  display: flex;
-  flex-wrap: wrap;
+  /*display: flex;*/
+  /*flex-wrap: wrap;*/
 }
 .steps_div_a {
-  /*margin: 20px;*/
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 20px;
 }
 
 .recipe-top {
