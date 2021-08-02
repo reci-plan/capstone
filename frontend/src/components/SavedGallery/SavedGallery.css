@@ -1,3 +1,10 @@
 .SavedGallery {
   padding: 120px;
 }
+
+
+@media only screen and (max-width: 700px) {
+  .SavedGallery {
+    padding: 80px 50px;
+  }
+}

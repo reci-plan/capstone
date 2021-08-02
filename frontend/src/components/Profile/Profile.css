@@ -116,9 +116,6 @@
   .profile-left {
     margin-bottom: 20px;
   }
-  .profile-right {
-    min-width: auto;
-  }
   .profile-basic > div {
     flex-direction: column;
   }
