@@ -15,7 +15,7 @@ ul {
 }
 
 .searchoff {
-  background-position-y: -300px;
+  background-position-y: -380px;
   height: auto;
 }
 .filter-by {
@@ -51,6 +51,7 @@ ul {
 .filter-display {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .center {
@@ -87,6 +88,11 @@ hr {
     height: 100%;
     flex-direction: column;
     align-items: center;
+  }
+
+  .searchoff {
+    background-position-y: -400px;
+    background-size: auto;
   }
 
   .list-flex {

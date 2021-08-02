@@ -78,6 +78,10 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
             ))}
           </ul>
         </div>
+        <div className="phone-visible">
+          <hr></hr>
+          <div className="viewall" onClick={handleViewAll}>View all</div>
+      </div>
       </> 
       : 
         <div className="filter-display-name">
@@ -106,12 +110,6 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
           </div>
         </div>
       }
-      <div className="phone-visible">
-        <hr></hr>
-        <div className="viewall" onClick={handleViewAll}>View all</div>
-      </div>
-
-      
     </div>
   )
 }
