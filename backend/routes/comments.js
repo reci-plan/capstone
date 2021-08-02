@@ -3,35 +3,25 @@ const router = express.Router();
 const { requireAuthenticatedUser } = require("../middleware/security");
 const Comment = require("../models/Comment");
 
-router.post(
-  "/getOwnerOfComment",
-  requireAuthenticatedUser,
-  async (req, res, next) => {
-    try {
-      const user = res.locals.user;
-      const comment = req.body;
-      const ownerOfComment = await Comment.getOwnerOfComment(user, comment);
-      res.status(201).json({ ownerOfComment });
-    } catch (e) {
-      next(e);
-    }
+router.post("/getOwnerOfComment", async (req, res, next) => {
+  try {
+    const comment = req.body;
+    const ownerOfComment = await Comment.getOwnerOfComment(comment);
+    res.status(201).json({ ownerOfComment });
+  } catch (e) {
+    next(e);
   }
-);
+});
 
-router.get(
-  "/getComment/:recipeId",
-  requireAuthenticatedUser,
-  async (req, res, next) => {
-    try {
-      const user = res.locals.user;
-      const { recipeId } = req.params;
-      const getAllComments = await Comment.getComments(user, recipeId);
-      res.status(201).json({ getAllComments });
-    } catch (e) {
-      next(e);
-    }
+router.get("/getComment/:recipeId", async (req, res, next) => {
+  try {
+    const { recipeId } = req.params;
+    const getAllComments = await Comment.getComments(recipeId);
+    res.status(201).json({ getAllComments });
+  } catch (e) {
+    next(e);
   }
-);
+});
 
 router.post(
   "/postComment/:recipeId",

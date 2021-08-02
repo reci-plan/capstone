@@ -2,6 +2,14 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 // import cn from "classnames";
 
+import { Paper, Typography } from "@material-ui/core";
+import {
+  makeStyles,
+  createMuiTheme,
+  MuiThemeProvider,
+} from "@material-ui/core/styles";
+import green from "@material-ui/core/colors/green";
+
 import apiClient from "../../services/apiClient";
 import veganIcon from "../../assets/vegan-icon.svg";
 import vegetarianIcon from "../../assets/vegetarian-icon.svg";
@@ -29,6 +37,8 @@ export default function IndividualRecipe({ user }) {
 
   const [postedBy, setPostedBy] = useState();
 
+  const [extraInformation, setExtraInformation] = useState([]);
+
   // comment box
   const INITIAL_HEIGHT = 75;
   const [isExpanded, setIsExpanded] = useState(false);
@@ -38,7 +48,6 @@ export default function IndividualRecipe({ user }) {
   useReadjustTextareaHeight(textRef, comment);
 
   const onExpand = () => {
-    console.log("hi");
     if (!isExpanded) {
       outerHeight.current = containerRef.current.scrollHeight;
       setIsExpanded(true);
@@ -58,6 +67,13 @@ export default function IndividualRecipe({ user }) {
       );
       if (data) {
         setRecipeInfo(data);
+        setExtraInformation({
+          ingredients: data.extendedIngredients.length,
+          healthScore: data.healthScore,
+          readyInMinutes: data.readyInMinutes,
+          servings: data.servings,
+          pricePerServing: data.pricePerServing,
+        });
       }
       if (data?.analyzedInstructions[0]?.steps) {
         setRecipeInstructions(data.analyzedInstructions[0].steps);
@@ -85,7 +101,7 @@ export default function IndividualRecipe({ user }) {
         setCurComments(data.getAllComments);
       }
       if (error) {
-        alert(error);
+        alert(`IndividualRecipe.js ${error}`);
       }
     };
     fetchCurrentComments();
@@ -117,6 +133,25 @@ export default function IndividualRecipe({ user }) {
     setComment(e.target.value);
   };
 
+  // console.log(recipeInfo);
+
+  // Material ui
+
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      padding: theme.spacing(2),
+    },
+  }));
+
+  const classes = useStyles();
+
+  const additionalInfoTheme = createMuiTheme({
+    palette: {
+      primary: { main: "#618833", contrastText: "#fff" },
+      secondary: { main: "#8bc34a", contrastText: "#fff" },
+    },
+  });
+
   return (
     <div className="IndividualRecipe">
       <div className="recipe-top">
@@ -136,7 +171,6 @@ export default function IndividualRecipe({ user }) {
           ) : null}
         </div>
       </div>
-
       <div className="recipe-display">
         {/* Left Side */}
         <div className="recipe-left">
@@ -173,8 +207,36 @@ export default function IndividualRecipe({ user }) {
             : null}
         </div>
         <SocialMediaShare recipeInfo={recipeInfo} />
-      </div>
+        <div className="extraInformation">
+          <Typography componet="h2" variant="h5" gutterBottom>
+            Information
+          </Typography>
 
+          {Object.entries(extraInformation).map(([key, val], i) => (
+            <>
+              <MuiThemeProvider theme={additionalInfoTheme}>
+                <Paper elevation={3} className={classes.paper}>
+                  <Typography
+                    variant="h6"
+                    color={i % 2 == 0 ? "primary" : "secondary"}
+                    gutterBottom
+                  >
+                    {key}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    color={i % 2 == 0 ? "secondary" : "primary"}
+                  >
+                    {val}
+                  </Typography>
+                </Paper>
+                <br />
+              </MuiThemeProvider>
+            </>
+          ))}
+        </div>
+      </div>
+      <b> summary </b> : {recipeInfo.summary}
       <div>
         comment section:
         <div className="container">
@@ -182,11 +244,6 @@ export default function IndividualRecipe({ user }) {
             onClick={onExpand}
             onSubmit={handleSubmit}
             ref={containerRef}
-            // className={cn("comment-box", {
-            //   expanded: isExpanded,
-            //   collapsed: !isExpanded,
-            //   modified: comment.length > 0,
-            // })}
             className={`comment-box ${isExpanded ? "expanded" : "collapsed"}
             ${comment.length > 0 ? "modified" : ""}`}
             style={{
@@ -197,8 +254,7 @@ export default function IndividualRecipe({ user }) {
               <div className="shareThoughts">
                 <div> Add a public comment... </div>
                 <button className="shareThoughtsBtn" type="submit">
-                  {" "}
-                  New Comment{" "}
+                  New Comment
                 </button>
               </div>
             )}
@@ -210,12 +266,20 @@ export default function IndividualRecipe({ user }) {
                   style={{ maxHeight: "30px" }}
                 />
                 <div className="user_info">
-                  {user?.first_name} {user?.last_name}
+                  {user?.email ? (
+                    <>
+                      {" "}
+                      {user?.first_name} {user?.last_name}
+                    </>
+                  ) : (
+                    "Guest User"
+                  )}
                 </div>
               </div>
             </div>
             <label htmlFor="textarea">What are your thoughts?</label>
             <hr />
+
             <textarea
               ref={textRef}
               onClick={onExpand}
@@ -225,7 +289,12 @@ export default function IndividualRecipe({ user }) {
               className="comment-field"
               name="textarea"
               id="comment"
-              placeholder="Share your thoughts here"
+              placeholder={
+                !user?.email
+                  ? `You must be logged in to do that. Don't have an account? Sign up here`
+                  : `Share your thoughts here`
+              }
+              disabled={!user?.email ? true : false}
             />
 
             <div className="actions">

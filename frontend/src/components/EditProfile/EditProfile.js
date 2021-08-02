@@ -1,14 +1,19 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import apiClient from '../../services/apiClient'
-import Multiselect from 'multiselect-react-dropdown';
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import apiClient from "../../services/apiClient";
+import Multiselect from "multiselect-react-dropdown";
 
 import tempImg from "../../assets/tempProfileImg.png";
 import profileBackground from "../../assets/edit-profile.png";
-import './EditProfile.css';
+import "./EditProfile.css";
 
-export default function EditProfile({ user, handleUpdateUser, profile, flavors }) {
-  const navigate = useNavigate()
+export default function EditProfile({
+  user,
+  handleUpdateUser,
+  profile,
+  flavors,
+}) {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     first_name: user.first_name,
     last_name: user.last_name,
@@ -19,11 +24,11 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
     short_bio: profile.short_bio,
     region: profile.region,
     fav_flavors: "",
-    image_url: ""
-  })
-  const [errors, setErrors] = useState({})
-  const [addFlavors, setAddFlavors] = useState(flavors)
-  const [image, setImage ] = useState("");
+    image_url: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [addFlavors, setAddFlavors] = useState(flavors);
+  const [image, setImage] = useState("");
 
   const handleInputChange = (e) => {
     if (e.target.name === "email") {
@@ -37,36 +42,36 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
       }
     }
 
-     if (e.target.name === "password") {
+    if (e.target.name === "password") {
       if (form.passwordConfirm && form.passwordConfirm !== e.target.value) {
-        setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match" }))
+        setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match" }));
       } else {
-        setErrors((e) => ({ ...e, passwordConfirm: null }))
+        setErrors((e) => ({ ...e, passwordConfirm: null }));
       }
     }
-    
+
     if (e.target.name === "passwordConfirm") {
       if (form.password && form.password !== e.target.value) {
-        setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match" }))
+        setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match" }));
       } else {
-        setErrors((e) => ({ ...e, passwordConfirm: null }))
+        setErrors((e) => ({ ...e, passwordConfirm: null }));
       }
     }
 
     setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
-  }
+  };
 
   const handleSubmit = async () => {
     // check that the password and email fields are valid before registering user
     if (form.passwordConfirm !== form.password) {
-      setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match." }))
-      return
+      setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match." }));
+      return;
     } else {
-      setErrors((e) => ({ ...e, passwordConfirm: null }))
+      setErrors((e) => ({ ...e, passwordConfirm: null }));
     }
 
-    addFlavors.forEach(item => form.fav_flavors += item.id)
-
+    addFlavors.forEach((item) => (form.fav_flavors += item.id));
+    console.log(form.fav_flavors);
     const { data, error } = await apiClient.updateProfile({
       first_name: form.first_name,
       last_name: form.last_name,
@@ -76,39 +81,40 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
       short_bio: form.short_bio,
       region: form.region,
       fav_flavors: form.fav_flavors,
-      image_url: form.image_url
-    })
+      image_url: form.image_url,
+    });
     if (data) {
-      handleUpdateUser(data[0])
-      navigate('/profile')
+      console.log(form.fav_flavors);
+      handleUpdateUser(data[0]);
+      navigate("/profile");
     }
     if (error) {
-      console.log(error, "error EditProfile.js")
+      console.log(error, "error EditProfile.js");
     }
-  }
+  };
 
   /** Multi-Select Library */
   const flavorOptions = [
-    {flavor: 'spicy', id: 0},
-    {flavor: 'salty', id: 1},
-    {flavor: 'sweet', id: 2},
-    {flavor: 'sour', id: 3},
-    {flavor: 'bitter', id: 4},
-    {flavor: 'savory', id: 5},
-    {flavor: 'fatty', id: 6}
+    { flavor: "spicy", id: 0 },
+    { flavor: "salty", id: 1 },
+    { flavor: "sweet", id: 2 },
+    { flavor: "sour", id: 3 },
+    { flavor: "bitter", id: 4 },
+    { flavor: "savory", id: 5 },
+    { flavor: "fatty", id: 6 },
   ];
 
   const onSelect = (list, item) => {
-    setAddFlavors(list)
-  }
+    setAddFlavors(list);
+  };
 
   const onRemove = (list, item) => {
     if (list.length == 0) {
-      setAddFlavors([])
-      return
+      setAddFlavors([]);
+      return;
     }
-    setAddFlavors(list)
-  }
+    setAddFlavors(list);
+  };
 
   const style = {
     multiselectContainer: {
@@ -117,7 +123,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
       height: "80px",
       margin: "20px",
     },
-    searchBox: { 
+    searchBox: {
       border: "1px solid #CECECE",
       background: "#fff",
       borderRadius: "10px",
@@ -126,70 +132,79 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
     },
     inputField: {
       margin: "0px",
-      width: "100%"
+      width: "100%",
     },
     chips: {
       background: "#98B9F2",
-      color: "#000"
+      color: "#000",
     },
-    optionContainer: { 
+    optionContainer: {
       background: "#fff",
     },
     option: {
-      color: "#000"
+      color: "#000",
     },
     highlightOption: {
       background: "transparent",
-      dislay: "none"
+      dislay: "none",
     },
     hightlight: {
       background: "transparent",
-      dislay: "none"
-    }
+      dislay: "none",
+    },
   };
 
   const uploadImage = () => {
-    const data = new FormData()
-    data.append("file", image)
-    data.append("upload_preset", "profile")
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "profile");
     // data.append("public_id", profile.user_id)
     // data.append("overwrite", true)
     fetch("https://api.cloudinary.com/v1_1/dkp449p00/image/upload", {
       method: "POST",
-      body: data
+      body: data,
     })
-    .then(res => res.json())
-    .then(res => {
-      console.log(res)
-      setForm((prevState) => ({...prevState, image_url: res.url}))
-    })
-    .catch(err => console.log(err))
-  }
-  
-  return (
-    <div className="EditProfile" style={{backgroundImage: `url(${profileBackground})`}}>
-      {!user.email ? 
-        <div>Login <Link to="/login">here</Link> to edit your profile page</div> :
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setForm((prevState) => ({ ...prevState, image_url: res.url }));
+      })
+      .catch((err) => console.log(err));
+  };
 
+  return (
+    <div
+      className="EditProfile"
+      style={{ backgroundImage: `url(${profileBackground})` }}
+    >
+      {!user.email ? (
+        <div>
+          Login <Link to="/login">here</Link> to edit your profile page
+        </div>
+      ) : (
         <div className="profile-display">
           <div className="profile-left">
             <input
-                type="file"
-                name="image_url"
-                onChange={(e)=> setImage(e.target.files[0])}
+              type="file"
+              name="image_url"
+              onChange={(e) => setImage(e.target.files[0])}
             />
             <div className="profile-img">
-              {form.image_url ?
-                <img src={form.image_url} alt=""></img> :
+              {form.image_url ? (
+                <img src={form.image_url} alt=""></img>
+              ) : (
                 <>
-                {profile.image_url ?
-                  <img src={profile.image_url} alt="User profile img"></img> : 
-                  <img src={tempImg} alt="Placeholder img"></img>
-                }
+                  {profile.image_url ? (
+                    <img src={profile.image_url} alt="User profile img"></img>
+                  ) : (
+                    <img src={tempImg} alt="Placeholder img"></img>
+                  )}
                 </>
-              }
+              )}
             </div>
-            <button className="upload-btn" onClick={uploadImage}>Upload</button>
+            <button className="upload-btn" onClick={uploadImage}>
+              Upload
+            </button>
             <Multiselect
               options={flavorOptions} // Options to display in the dropdown
               selectedValues={flavors}
@@ -202,19 +217,21 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
           </div>
           <div className="profile-right">
             <div className="profile-basic">
-              <div className="profile-name">{user.first_name} {user.last_name}</div>
+              <div className="profile-name">
+                {user.first_name} {user.last_name}
+              </div>
             </div>
             <div className="form">
               <div className="form-input">
-                  <label>region</label>
-                  <input
-                    type="text"
-                    name="region"
-                    placeholder="region"
-                    value={form.region}
-                    onChange={handleInputChange}
-                  />
-                </div>
+                <label>region</label>
+                <input
+                  type="text"
+                  name="region"
+                  placeholder="region"
+                  value={form.region}
+                  onChange={handleInputChange}
+                />
+              </div>
               <div className="form-input-name">
                 <div className="form-input">
                   <label>first name</label>
@@ -277,7 +294,9 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                   onChange={handleInputChange}
                 />
               </div>
-              {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
+              {errors.passwordConfirm && (
+                <span className="error">{errors.passwordConfirm}</span>
+              )}
               <div className="form-input">
                 <label>short bio</label>
                 <input
@@ -289,11 +308,13 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                 />
               </div>
               <div>{errors.form}</div>
-              <button className="update-btn" onClick={handleSubmit}>update</button>
+              <button className="update-btn" onClick={handleSubmit}>
+                update
+              </button>
             </div>
           </div>
         </div>
-      }
+      )}
     </div>
-  )
+  );
 }

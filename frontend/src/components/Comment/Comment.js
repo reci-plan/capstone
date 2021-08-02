@@ -31,28 +31,28 @@ export default function Comment({
                 setAuthorOfComment(data.ownerOfComment.username);
             }
             if (error) {
-                alert(error);
+                alert(`Comment.js checkAuthorOfComment(): ${error}`);
             }
         };
         checkAuthorOfComment();
     }, []);
 
     // Pseudo Code
-    useEffect(() => {
-        const checkCommentAlreadyLiked = async () => {
-            const { data, error } = await apiClient.checkIfUserIsInLikes(
-                recipeId
-            );
-            if (data) {
-                setAlreadyLiked(data.isUserInLikes);
-            }
+    // useEffect(() => {
+    //     const checkCommentAlreadyLiked = async () => {
+    //         const { data, error } = await apiClient.checkIfUserIsInLikes(
+    //             recipeId
+    //         );
+    //         if (data) {
+    //             setAlreadyLiked(data.isUserInLikes);
+    //         }
 
-            if (error) {
-                alert(error);
-            }
-        };
-        checkCommentAlreadyLiked();
-    }, [comment, curComments]);
+    //         if (error) {
+    //             alert(error);
+    //         }
+    //     };
+    //     checkCommentAlreadyLiked();
+    // }, [comment, curComments]);
 
     // For deleting a comment.
     const handleDelete = async (e, comment) => {
@@ -141,30 +141,27 @@ export default function Comment({
                                 alt="User avatar"
                             />
                             <h3 className="comment_flex_h3">
-                                {" "}
                                 <b>
                                     <Link
                                         to={`/publicProfile/${comment.user_id}`}
                                     >
-                                        {authorOfComment}{" "}
-                                    </Link>{" "}
-                                </b>{" "}
+                                        {authorOfComment}
+                                    </Link>
+                                </b>
                             </h3>
-                        </div>
-                        <div>
-                            {" "}
-                            <b> {moment(comment?.date).fromNow()} </b>{" "}
                         </div>
                     </div>
                     <div className="comment_desc" style={{ color: "#575757" }}>
                         {comment?.comment}
                     </div>
-                    {user.id === comment.user_id ? (
-                        <>
-                            <div
-                                className="test"
-                                style={{ marginRight: "20px" }}
-                            >
+
+                    <div> {moment(comment.date).fromNow()} </div>
+                    <div
+                        className="comment_footer"
+                        style={{ marginRight: "20px" }}
+                    >
+                        {user.id === comment.user_id ? (
+                            <>
                                 <button
                                     className="btnStyle"
                                     id="deleteBtn"
@@ -184,11 +181,12 @@ export default function Comment({
                                         ? "Unedit"
                                         : "Edit"}
                                 </button>
-                            </div>
-                        </>
-                    ) : (
-                        <> </>
-                    )}
+                            </>
+                        ) : (
+                            <> </>
+                        )}
+                    </div>
+
                     {/*{
     alreadyLiked ? (
         <button onClick={(e, c) => handleLike(e, comment)}>downvote</button>

@@ -109,7 +109,6 @@ button[type="submit"] {
   padding: 20px;
 }
 
-
 .comment-box {
   background: #fff;
   border-radius: 5px;
@@ -147,6 +146,7 @@ button[type="submit"] {
   min-height: 60px;
   transform: translateY(-32px);
   line-height: 1;
+  background-color: white;
 }
 
 .comment-box.expanded .comment-field {
@@ -192,4 +192,13 @@ button[type="submit"] {
 .user_info {
   /*border: 1px solid black;*/
   margin-left: 30px;
+}
+
+/*textarea::placeholder {
+  color: black;
+}*/
+
+.extraInformation {
+  display: flex;
+  flex-direction: column;
 }

@@ -4,19 +4,15 @@ const { requireAuthenticatedUser } = require("../middleware/security");
 
 const Profile = require("../models/Profile");
 
-router.get(
-  "/getProfile/:user_id",
-  requireAuthenticatedUser,
-  async (req, res, next) => {
-    try {
-      const { user_id } = req.params;
-      const theUser = await Profile.getPublicProfileInformation(user_id);
-      res.status(200).json({ theUser });
-    } catch (e) {
-      next(e);
-    }
+router.get("/getProfile/:user_id", async (req, res, next) => {
+  try {
+    const { user_id } = req.params;
+    const theUser = await Profile.getPublicProfileInformation(user_id);
+    res.status(200).json({ theUser });
+  } catch (e) {
+    next(e);
   }
-);
+});
 
 router.post("/create", requireAuthenticatedUser, async (req, res, next) => {
   try {

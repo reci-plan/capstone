@@ -17,7 +17,7 @@ export default function PublicProfile() {
             }
             console.log(data);
             if (error) {
-                alert(error);
+                alert(`PublicProfile.js fetchUser: ${error}`);
             }
         };
         fetchUser();
@@ -33,7 +33,7 @@ export default function PublicProfile() {
                     </div>
                 ))}
                 When the account was created:{" "}
-                <b> {moment(userYouAreViewing).fromNow()} </b>
+                <b> {moment(userYouAreViewing.created_at).fromNow()} </b>
             </div>
         </div>
     );

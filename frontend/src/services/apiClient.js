@@ -242,6 +242,21 @@ class ApiCalls {
             data: recipe,
         });
     }
+
+    async fetchPostById(postId) {
+        return await this.request({
+            endpoint: `community/getPost/${postId}`,
+            method: `GET`,
+        });
+    }
+
+    async updatePost(post) {
+        return await this.request({
+            endpoint: `community/updatePost/${post.id}`,
+            method: `PUT`,
+            data: post,
+        });
+    }
 }
 
 const API = new ApiCalls(

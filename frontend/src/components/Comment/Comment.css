@@ -1,5 +1,7 @@
 .comment_div {
-    border: 1px solid #c9c1c1;
+    border: 1px solid #d8e1f3;
+    box-sizing: border-box;
+    border-radius: 10px;
 }
 
 .comment_div_div {
@@ -36,9 +38,15 @@
     margin-left: 70px;
 }
 
-.test {
+.comment_footer {
     display: flex;
     justify-content: flex-end;
+}
+
+.time_under_comment {
+    display: flex;
+    justify-content: flex-end;
+    border: 1px solid black;
 }
 
 .btnStyle {

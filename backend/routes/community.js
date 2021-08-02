@@ -12,6 +12,36 @@ router.get("/getPosts", async (req, res, next) => {
   }
 });
 
+router.get(
+  "/getPost/:postId",
+  requireAuthenticatedUser,
+  async (req, res, next) => {
+    try {
+      const user = res.locals.user;
+      const { postId } = req.params;
+      const specific_post = await Community.fetchPostById(user, postId);
+      res.status(200).json({ specific_post });
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+router.put(
+  "/updatePost/:postId",
+  requireAuthenticatedUser,
+  async (req, res, next) => {
+    try {
+      const user = res.locals.user;
+      const post = req.body;
+      const updatedPost = await Community.updatePost(user, post);
+      res.status(200).json(updatedPost);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
 router.post("/newPost", requireAuthenticatedUser, async (req, res, next) => {
   try {
     const user = res.locals.user;

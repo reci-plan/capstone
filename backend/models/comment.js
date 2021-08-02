@@ -3,11 +3,7 @@ const db = require("../db");
 const { BadRequestError, UnauthorizedError } = require("../utils/errors");
 
 class Comment {
-    static async getComments(user, api_id) {
-        if (!user) {
-            throw new UnauthorizedError(`No user logged in.`);
-        }
-
+    static async getComments(api_id) {
         const query = `SELECT
                     comments.comment, comments.date, comments.user_id, comments.recipe_id, users.username, comments.id, likes.id AS likesPrimaryId, likes.amount
                 FROM comments
@@ -206,12 +202,7 @@ class Comment {
         return results.rows[0];
     }
 
-    static async getOwnerOfComment(user, comment) {
-        console.log("this is the comment", comment);
-        if (!user) {
-            throw new BadRequestError(`No user logged in`);
-        }
-
+    static async getOwnerOfComment(comment) {
         const results = await db.query(`SELECT * FROM users WHERE id = $1`, [
             comment.user_id,
         ]);

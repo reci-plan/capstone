@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import apiClient from "../../../services/apiClient";
 
+import Multiselect from "multiselect-react-dropdown";
+
 export default function CommunityPostPage({
     recipes,
     setRecipes,
     setShowForm,
     showForm,
+    flavorOptions,
+    style
 }) {
     const [form, setForm] = useState({
         title: "",
@@ -13,7 +17,24 @@ export default function CommunityPostPage({
         image_url: "",
         prep_time: "",
         description: "",
+        flavors: "",
     });
+    const [flavors, setFlavors] = useState([]);
+    // const [addFlavors, setAddFlavors] = useState(flavors);
+
+
+
+    const onSelect = (list, item) => {
+        setFlavors(list);
+    };
+
+    const onRemove = (list, item) => {
+        if (list.length == 0) {
+            setFlavors([]);
+            return;
+        }
+        setFlavors(list);
+    };
 
     const handleInputChange = (e) => {
         setForm((prevState) => ({
@@ -24,19 +45,22 @@ export default function CommunityPostPage({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        flavors.forEach((item) => (form.flavors += item.id));
         const { data, error } = await apiClient.newPostToCommunity(form);
         if (data) {
             console.log(data.new_post);
             setRecipes((prevState) => [data.new_post, ...prevState]);
             setShowForm(false);
+            setForm({});
         }
         if (error) {
-            alert(error);
+            alert("CommunityPostPage: " + error);
         }
-        setForm({});
     };
-    console.log(form);
+
     console.log(recipes);
+    console.log(flavors);
+    console.log(form);
     return (
         <div>
             {showForm && (
@@ -59,6 +83,15 @@ export default function CommunityPostPage({
                             onChange={handleInputChange}
                         />
                     </div>
+                    <Multiselect
+                        options={flavorOptions}
+                        selectedValues={flavors}
+                        onSelect={onSelect}
+                        onRemove={onRemove}
+                        displayValue={"flavor"}
+                        closeIcon={"cancel"}
+                        style={style}
+                    />
                     <div>
                         <input
                             type="text"

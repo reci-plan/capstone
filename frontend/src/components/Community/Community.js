@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink } from "react-router-dom";
 import CommunityPostPage from "./CommunityPostPage/CommunityPostPage";
 import apiClient from "../../services/apiClient";
 
@@ -28,6 +28,8 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 function Copyright() {
     return (
@@ -65,13 +67,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Community({ user }) {
+export default function Community({ user, flavorOptions, style }) {
     const classes = useStyles();
     const [recipes, setRecipes] = useState([]);
     const [value, setValue] = React.useState(2);
     const [showForm, setShowForm] = useState(false);
 
     const [expanded, setExpanded] = React.useState(false);
+
+    // For the top right click
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleVertClick = (e) => {
+        setAnchorEl(e.currentTarget);
+    };
+
+    const handleVertClose = (e) => {
+        setAnchorEl(null);
+        console.log(e.nativeEvent.target.outerText);
+    };
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -103,7 +118,14 @@ export default function Community({ user }) {
         }
     };
 
-    console.log(recipes);
+    // const handleEditClick = () => {
+
+    // }
+
+    // console.log("recipes", recipes);
+    console.table(recipes);
+
+    const options = ["Delete", "Edit"];
 
     return (
         <div style={{ marginTop: "150px" }}>
@@ -156,6 +178,8 @@ export default function Community({ user }) {
                             setRecipes={setRecipes}
                             showForm={showForm}
                             setShowForm={setShowForm}
+                            style={style}
+                            flavorOptions={flavorOptions}
                         />
                     </div>
                 </Container>
@@ -167,6 +191,21 @@ export default function Community({ user }) {
                     <Grid container spacing={3}>
                         {recipes.map((r) => (
                             <Grid item key={r} xs={12} sm={6} md={4}>
+                                {user.id === r.user_id ? (
+                                    <>
+                                        <ReactLink to={`edit/${r.id}`}>
+                                            <button> Edit </button>
+                                        </ReactLink>
+                                        <button
+                                            onClick={() => handleDeletePost(r)}
+                                        >
+                                            {" "}
+                                            Delete{" "}
+                                        </button>
+                                    </>
+                                ) : (
+                                    <> </>
+                                )}
                                 <Card className={classes.root}>
                                     <CardHeader
                                         avatar={
@@ -178,9 +217,45 @@ export default function Community({ user }) {
                                             </Avatar>
                                         }
                                         action={
-                                            <IconButton aria-label="settings">
-                                                <MoreVertIcon />
-                                            </IconButton>
+                                            <div>
+                                                <IconButton
+                                                    aria-label="settings"
+                                                    onClick={handleVertClick}
+                                                >
+                                                    <MoreVertIcon />
+                                                </IconButton>
+                                                <Menu
+                                                    id="long-menu"
+                                                    anchorEl={anchorEl}
+                                                    keepMounted
+                                                    open={open}
+                                                    onClose={handleVertClose}
+                                                    PaperProps={{
+                                                        style: {
+                                                            maxHeight: 20 * 4.5,
+                                                            width: "20ch",
+                                                        },
+                                                    }}
+                                                >
+                                                    {options.map((option) => (
+                                                        <MenuItem
+                                                            key={option}
+                                                            data-my-value={
+                                                                option
+                                                            }
+                                                            // selected={
+                                                            //     option ===
+                                                            //     var_here
+                                                            // }
+                                                            onClick={
+                                                                handleVertClose
+                                                            }
+                                                        >
+                                                            {option}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Menu>
+                                            </div>
                                         }
                                         title={`${r.title}`}
                                         subheader={`${moment(r.date).format(
@@ -203,7 +278,19 @@ export default function Community({ user }) {
                                             together with your guests. Add 1 cup
                                             of frozen peas along with the
                                             mussels, if you like.*/}
-                                            {r.description}
+                                            {`desc: ${r.description}`}
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            color="textSecondary"
+                                            component="p"
+                                        >
+                                            {`flavors: ${r.flavors
+                                                .split("")
+                                                .map(
+                                                    (r) =>
+                                                        flavorOptions[r].flavor
+                                                )}`}
                                         </Typography>
                                     </CardContent>
                                     <CardActions disableSpacing>

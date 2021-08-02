@@ -29,6 +29,7 @@ CREATE TABLE community_all_recipes (
     image_url       TEXT NOT NULL,
     prep_time       INTEGER NOT NULL,
     description     TEXT NOT NULL,
+    flavors         TEXT,
     date            TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
