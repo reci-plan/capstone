@@ -1,8 +1,8 @@
 const bcrypt = require("bcrypt");
 const db = require("../db");
 const { BCRYPT_WORK_FACTOR } = require("../config");
-const { UnauthorizedError, BadRequestError } = require("../utils/errors")
-const User = require("./user")
+const { UnauthorizedError, BadRequestError } = require("../utils/errors");
+const User = require("./user");
 
 class Profile {
   /** Create user profile after register */
@@ -11,14 +11,16 @@ class Profile {
       throw new UnauthorizedError(`No user logged in.`);
     }
 
-    const results = await db.query(`
+    const results = await db.query(
+      `
       INSERT INTO profile (user_id)
       VALUES ((SELECT id FROM users WHERE username = $1))
       RETURNING id, user_id AS "userId";
-    `, [user.username]
-    )
+    `,
+      [user.username]
+    );
 
-    return results.rows[0]
+    return results.rows[0];
   }
 
   /** Fetch user profile */
@@ -27,18 +29,20 @@ class Profile {
       throw new UnauthorizedError(`No user logged in.`);
     }
 
-    const results = await db.query(`
+    const results = await db.query(
+      `
       SELECT * FROM profile
       WHERE user_id = (SELECT id FROM users WHERE username = $1)
-    `, [user.username]
-    )
+    `,
+      [user.username]
+    );
 
     return results.rows[0];
   }
 
   /** Update user profile
    * If the column value is null or empty, then keep original information
-   * If the column value is valid, then change it 
+   * If the column value is valid, then change it
    */
   static async updateProfile(user, profile) {
     if (!user) {
@@ -53,10 +57,7 @@ class Profile {
 
     var hashedPassword = "";
     if (profile.password) {
-      hashedPassword = await bcrypt.hash(
-        profile.password,
-        BCRYPT_WORK_FACTOR
-      );
+      hashedPassword = await bcrypt.hash(profile.password, BCRYPT_WORK_FACTOR);
     }
 
     // var cloudinary = require('cloudinary').v2;
@@ -78,9 +79,18 @@ class Profile {
           password = CASE WHEN COALESCE($5, '') = '' THEN password ELSE $5 END
       WHERE id = (SELECT id from users WHERE username = $6)
       RETURNING id, email, first_name, last_name, username;
-    `, [profile.first_name, profile.last_name, profile.username, profile.email, hashedPassword, user.username]
-    )
-    const profileResults = await db.query(`
+    `,
+      [
+        profile.first_name,
+        profile.last_name,
+        profile.username,
+        profile.email,
+        hashedPassword,
+        user.username,
+      ]
+    );
+    const profileResults = await db.query(
+      `
       UPDATE profile
       SET image_url = CASE WHEN COALESCE($1, '') = '' THEN image_url ELSE $1 END,
           region = CASE WHEN COALESCE($2, '') = '' THEN region ELSE $2 END,
@@ -88,11 +98,27 @@ class Profile {
           fav_flavors = $4
       WHERE user_id = (SELECT id from users WHERE username = $5)
       RETURNING id, user_id, image_url, region, short_bio, fav_flavors;
-    `, [profile.image_url, profile.region, profile.short_bio, profile.fav_flavors, user.username]
-    )
-    const userResult = User.makeUser(userResults.rows[0])
+    `,
+      [
+        profile.image_url,
+        profile.region,
+        profile.short_bio,
+        profile.fav_flavors,
+        user.username,
+      ]
+    );
+    const userResult = User.makeUser(userResults.rows[0]);
     return [userResult, profileResults.rows[0]];
+  }
+
+  static async getPublicProfileInformation(user_id) {
+    console.log(user_id);
+    const results = await db.query(`SELECT * FROM users WHERE id = $1`, [
+      user_id,
+    ]);
+
+    return results.rows[0];
   }
 }
 
-module.exports = Profile
+module.exports = Profile;

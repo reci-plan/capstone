@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3001;
 const API_KEY = process.env.API_KEY;
+const API_KEY2 = process.env.API_KEY2;
 const SECRET_KEY = process.env.SECRET_KEY || "recipath";
 const BASE_RECIPES_URL = "https://api.spoonacular.com/recipes";
 const BCRYPT_WORK_FACTOR = 10;
@@ -24,6 +25,7 @@ function getDatabaseUri() {
 module.exports = {
     PORT,
     API_KEY,
+    API_KEY2,
     BASE_RECIPES_URL,
     SECRET_KEY,
     getDatabaseUri,

@@ -21,6 +21,26 @@ CREATE TABLE all_recipes (
     expense         INTEGER NOT NULL
 );
 
+CREATE TABLE community_all_recipes (
+    id              SERIAL PRIMARY KEY,
+    user_id         INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    title           TEXT NOT NULL,
+    category        TEXT NOT NULL,
+    image_url       TEXT NOT NULL,
+    prep_time       INTEGER NOT NULL,
+    description     TEXT NOT NULL,
+    flavors         TEXT,
+    date            TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE community_ratings (
+    rating          INTEGER NOT NULL CHECK (rating > 0 AND rating <= 5),
+    post_id         INTEGER NOT NULL REFERENCES community_all_recipes(id) ON DELETE CASCADE,
+    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    created_at      TIMESTAMP NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (post_id, user_id)
+);
+
 CREATE TABLE profile (
     id              SERIAL PRIMARY KEY,
     user_id         INTEGER NOT NULL,
@@ -75,5 +95,7 @@ CREATE TABLE comments (
 CREATE TABLE likes (
     id                 SERIAL PRIMARY KEY,
     amount             INTEGER NOT NULL DEFAULT 0,
-    user_id            INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
+    user_id            INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    comment_id         INTEGER NOT NULL REFERENCES comments(id) ON DELETE CASCADE,
+    arrayOfUserId      TEXT []
 );

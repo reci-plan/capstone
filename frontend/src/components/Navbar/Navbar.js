@@ -18,21 +18,21 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
   const [userIsClicked, setUserIsClicked] = useState(false);
 
   const handleOnSearchClick = () => {
-    setIsSearch(!isSearch)
+    setIsSearch(!isSearch);
     navigate("/search");
   };
-  
+
   const handleOnInputClick = () => {
     navigate("/search");
-  }
+  };
 
   const handleOnClose = () => {
-    setIsSearch(!isSearch)
-    navigate("/")
-  }
+    setIsSearch(!isSearch);
+    navigate("/");
+  };
 
   const handleOnUserClick = () => {
-    setUserIsClicked(!userIsClicked)
+    setUserIsClicked(!userIsClicked);
   };
 
   const handleLogout = async () => {
@@ -95,6 +95,9 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
             ></img>
             {userIsClicked ? (
               <div className="user-drop">
+                {/*      <Link onClick={handleOnUserClick} to="/community">
+                  community
+                </Link>*/}
                 <Link onClick={handleOnUserClick} to="/profile">
                   profile
                 </Link>

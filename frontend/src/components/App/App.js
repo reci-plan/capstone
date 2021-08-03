@@ -11,8 +11,11 @@ import EditProfile from "../EditProfile/EditProfile";
 import SearchPage from "../SearchPage/SearchPage";
 import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
-import Wheel from "../Wheel/Wheel"
+import PublicProfile from "../PublicProfile/PublicProfile";
+import Wheel from "../Wheel/Wheel";
 import SearchFilter from "../SearchFilter/SearchFilter";
+// import Community from "../Community/Community";
+// import CommunityEdit from "../CommunityEdit/CommunityEdit";
 import AboutUs from "../About/About";
 import ContactUs from "../Contact/Contact";
 import Footer from "../Footer/Footer";
@@ -24,22 +27,21 @@ function App() {
   const [user, setUser] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
-  const [profile, setProfile] = useState({})
-  const [flavors, setFlavors] = useState([])
+  const [profile, setProfile] = useState({});
+  const [flavors, setFlavors] = useState([]);
   const [saved, setSaved] = useState([]);
-  const [changeSave, setChangeSave] = useState(false)
+  const [changeSave, setChangeSave] = useState(false);
 
   const allFlavors = [
-      'spicy', 
-      'salty',
-      'sweet',
-      'sour',
-      'bitter',
-      'savory',
-      'fatty'
+    "spicy",
+    "salty",
+    "sweet",
+    "sour",
+    "bitter",
+    "savory",
+    "fatty",
   ];
-  
-  const [alreadyExist, setAlreadyExist] = useState(false);
+
   // const [recipes, setRecipes] = useState({})
 
   const [{ colors }, dispatch] = useDataLayerValue();
@@ -85,44 +87,43 @@ function App() {
     fetchRecipes();
   }, []);
 
-  // Fetch user profile 
+  // Fetch user profile
   useEffect(() => {
     const fetchProfile = async () => {
-        const { data, error } = await apiClient.fetchProfile()
-        if (data) {
-          setProfile(data)
-            if (data.fav_flavors) {
-                var flavors = []
-                data.fav_flavors.split("").forEach(c => {
-                    let num = Number(c)
-                    var obj = {"flavor": allFlavors[num], "id": c};
-                    flavors.push(obj)
-                })
-                setFlavors(flavors)
-            }
-            else {
-              setFlavors([])
-            }
+      const { data, error } = await apiClient.fetchProfile();
+      if (data) {
+        setProfile(data);
+        if (data.fav_flavors) {
+          var flavors = [];
+          data.fav_flavors.split("").forEach((c) => {
+            let num = Number(c);
+            var obj = { flavor: allFlavors[num], id: c };
+            flavors.push(obj);
+          });
+          setFlavors(flavors);
+        } else {
+          setFlavors([]);
         }
-        if (error) {
-            console.log(error, "Profile.js")
-        }
-    }
+      }
+      if (error) {
+        console.log(error, "Profile.js");
+      }
+    };
 
-    fetchProfile()
-  }, [user])
+    fetchProfile();
+  }, [user]);
 
   // Fetch saved recipes
   useEffect(() => {
     const fetchRecipes = async () => {
-        const { data, error } = await apiClient.fetchSavedRecipes();
-        if (data) {
-            setSaved(data.savedRecipes);
-        }
+      const { data, error } = await apiClient.fetchSavedRecipes();
+      if (data) {
+        setSaved(data.savedRecipes);
+      }
 
-        if (error) {
-            console.log(error, "fetch saved recipes")
-        }
+      if (error) {
+        console.log(error, "fetch saved recipes");
+      }
     };
     fetchRecipes();
   }, [user, changeSave]);
@@ -132,7 +133,7 @@ function App() {
     const { data, error } = await apiClient.saveRecipe(r);
 
     if (data) {
-      setChangeSave(!changeSave)
+      setChangeSave(!changeSave);
       console.log("Save: ", data);
     }
 
@@ -146,7 +147,7 @@ function App() {
     const { data, error } = await apiClient.unsaveRecipe(r);
 
     if (data) {
-      setChangeSave(!changeSave)
+      setChangeSave(!changeSave);
       console.log("Unsave: ", data);
     }
 
@@ -156,8 +157,8 @@ function App() {
   };
 
   const handleUpdateUser = async (user) => {
-    setUser(user)
-  }
+    setUser(user);
+  };
 
   return (
     <div className="App">
@@ -198,11 +199,8 @@ function App() {
             path="/search/recipes/:recipeId"
             element={<IndividualRecipe user={user} />}
           />
-          
-          <Route
-            path="/wheel"
-            element={<Wheel />}
-          />
+
+          <Route path="/wheel" element={<Wheel />} />
 
           <Route
             path="/profile"
@@ -214,22 +212,32 @@ function App() {
           <Route
             path="/profile/edit"
             element={
-              <EditProfile user={user} handleUpdateUser={handleUpdateUser} profile={profile} flavors={flavors}/>
+              <EditProfile
+                user={user}
+                handleUpdateUser={handleUpdateUser}
+                profile={profile}
+                flavors={flavors}
+              />
             }
+          />
+
+          <Route
+            path="/publicProfile/:user_id_here"
+            element={<PublicProfile />}
           />
 
           <Route
             path="/saved"
             element={
-              <SavedGallery 
-                user={user} 
+              <SavedGallery
+                user={user}
                 saved={saved}
-                handleSave={handleSave} 
+                handleSave={handleSave}
                 handleUnsave={handleUnsave}
               />
             }
           />
-          
+
           <Route
             path="/search"
             element={
@@ -249,16 +257,37 @@ function App() {
                 searchTerm={searchTerm}
                 recipes={recipes}
                 user={user}
-                handleSave={handleSave} 
+                handleSave={handleSave}
                 handleUnsave={handleUnsave}
               />
             }
           />
 
-          <Route path="/about" element={<AboutUs />}/>   
+          {/*     <Route
+            path="/community"
+            element={
+              <Community
+                user={user}
+                style={style}
+                flavorOptions={flavorOptions}
+              />
+            }
+          />
 
-          <Route path="/contact" element={<ContactUs />}/>   
+          <Route
+            path="/community/edit/:postId"
+            element={
+              <CommunityEdit
+                user={user}
+                style={style}
+                flavorOptions={flavorOptions}
+              />
+            }
+          />*/}
 
+          <Route path="/about" element={<AboutUs />} />
+
+          <Route path="/contact" element={<ContactUs />} />
         </Routes>
         <Footer />
       </BrowserRouter>
