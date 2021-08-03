@@ -15,7 +15,6 @@
 .popup-inner {
     position: relative;
     padding: 32px;
-    max-width: 640px;
     background-color: #FFF;
     display: flex;
     justify-content: center;

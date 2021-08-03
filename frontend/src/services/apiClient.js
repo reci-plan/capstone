@@ -257,6 +257,11 @@ class ApiCalls {
             data: post,
         });
     }
+
+    async saveMealPlan(mealPlan) {
+        console.log("WAAIT", mealPlan)
+        return await this.request({ endpoint: `save/recipe/x`, method:`POST`, data: mealPlan});
+    }
 }
 
 const API = new ApiCalls(

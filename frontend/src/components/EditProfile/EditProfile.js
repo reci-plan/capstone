@@ -211,7 +211,6 @@ export default function EditProfile({
               onRemove={onRemove} // Function will trigger on remove event
               displayValue={"flavor"}
               closeIcon={"cancel"}
-              style={style}
             />
           </div>
           <div className="profile-right">

@@ -12,7 +12,7 @@ import SearchPage from "../SearchPage/SearchPage";
 import SavedGallery from "../SavedGallery/SavedGallery";
 import apiClient from "../../services/apiClient";
 import PublicProfile from "../PublicProfile/PublicProfile";
-import Wheel from "../Wheel/Wheel";
+import Generator from "../Generator/Generator";
 import SearchFilter from "../SearchFilter/SearchFilter";
 // import Community from "../Community/Community";
 // import CommunityEdit from "../CommunityEdit/CommunityEdit";
@@ -200,7 +200,10 @@ function App() {
             element={<IndividualRecipe user={user} />}
           />
 
-          <Route path="/wheel" element={<Wheel />} />
+          <Route 
+            path="/wheel" 
+            element={<Generator user={user}/>}
+          />
 
           <Route
             path="/profile"
