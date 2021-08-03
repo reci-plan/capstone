@@ -5,12 +5,14 @@ import Popup from '../Popup/Popup'
 import Menu from '../Menu/Menu'
 import apiClient from "../../services/apiClient";
 import RenderBox from "../RenderBox/renderBox";
+import RecipeCard from '../RecipeCard/RecipeCard'
 
 import pencil from '../../assets/pencil.svg'
 
 var times = [''];
 var meals = [''];
 var recIds = [-1];
+var recipes = []
 
 var titles = [''];
 var images = [''];
@@ -19,7 +21,7 @@ var ratings = [''];
 var numMeal = 0;
 var dum = -1;
 
-export default function Generator() {
+export default function Generator({user}) {
 
   const [wheelIsVisible, setWheelIsVisible] = useState(true)
   const [mustSpin, setMustSpin] = useState(false);
@@ -95,12 +97,13 @@ export default function Generator() {
       console.log("RESULT PROM", recipeId)
       recIds[numMeal] = recipeId;
       titles[numMeal] = data.recipe.title;
+      recipes[numMeal] = data.recipe;
       
       images[numMeal] = data.recipe.image_url;
       preps[numMeal] = data.recipe.prep_time;
       ratings[numMeal] = data.recipe.rating;
 
-      var tempAr = [titles[numMeal], images[numMeal], preps[numMeal], ratings[numMeal]]
+      var tempAr = [titles[numMeal], images[numMeal], preps[numMeal], ratings[numMeal], recipes[numMeal]]
 
       return tempAr;
     }
@@ -146,6 +149,7 @@ export default function Generator() {
     if (data) {
       console.log("Successful load!")
     }
+    console.log("Recipe list: ", recipes)
   }
 
   const mealIn = (i) => {
@@ -229,19 +233,21 @@ export default function Generator() {
                           <>
                           {console.log("FINAL DATA", data)}
                           {console.log("aaaaaAAAAAAAAAAAA", (displayRecipePopup((data[prizeNumber].option)).then(data=>console.log("AAAAAA",data))))}
-                          {console.log("DATA TTLE",data.title)}
                           </> : 
                           ""
                     }
-                    {}
-                    <h3>{titles[numMeal]}</h3>
-                    <br></br>
-                    <img src={images[numMeal]} alt={titles[numMeal]}></img>
-                    <br></br>
-                    <p>Prep Time: {preps[numMeal]} minutes</p>
-                    <br></br>
-                    <p>Rating: {ratings[numMeal]} stars</p>
-                    <button className="keepBut" onClick={keepMeal}>Keep (Coming soon!)</button>
+                    {console.log("Is this it?", recipes[numMeal])}
+                    {typeof recipes[numMeal] !== 'undefined' ?
+                    <>
+                      {console.log("RECX", recipes[numMeal], recipes[numMeal].title, recipes[numMeal])}
+                      <RecipeCard
+                        user={user}
+                        recipeInfo={recipes[numMeal]}
+                        handleLinks={(false)}
+                      />
+                      <button className="keepBut" onClick={keepMeal}>Keep</button>
+                    </> :
+                    ""}
                   </> : 
                   ""
         }
@@ -251,48 +257,19 @@ export default function Generator() {
         <h3 className="mealPlanHead">You did it! (almost)</h3>
         {/* {mapMealPlan()} */}
         <div className="mealPlan">
-          {titles.length > 0
-          ? titles.map((element, idx) => (
-            <div className="holdMeal">
-              {times[idx]} {meals[idx]} {titles[idx]} <img src={images[idx]} alt={titles[idx]}></img> {preps[idx]} {ratings[idx]}
-            </div>
-          ))
-          : null}
+        {titles.length > 0
+        ? titles.map((element, idx) => (
+          <div className="mod-box">
+            <RecipeCard
+              user={user}
+              recipeInfo={recipes[idx]}
+              handleLinks={(false)}
+            />
+            {/* {times[idx]} {meals[idx]} {titles[idx]} <img src={images[idx]}></img> {preps[idx]} {ratings[idx]} */}
+          </div>
+        ))
+        : null}
         </div>
-        {/* <div className="mealPlan">
-          <div className="holdMeal">
-            <div>{times[0]}</div>
-            <div>{meals[0]}</div>
-            <div>{titles[0]}</div>
-            <img src={images[0]}></img>
-            <div>{preps[0]}</div>
-            <div>{ratings[0]}</div>
-          </div>
-          <div className="holdMeal">
-            <div>{times[1]}</div>
-            <div>{meals[1]}</div>
-            <div>{titles[1]}</div>
-            <img src={images[1]}></img>
-            <div>{preps[1]}</div>
-            <div>{ratings[1]}</div>
-          </div>
-          <div className="holdMeal">
-            <div>{times[2]}</div>
-            <div>{meals[2]}</div>
-            <div>{titles[2]}</div>
-            <img src={images[2]}></img>
-            <div>{preps[2]}</div>
-            <div>{ratings[2]}</div>
-          </div>
-          <div className="holdMeal">
-            <div>{times[3]}</div>
-            <div>{meals[3]}</div>
-            <div>{titles[3]}</div>
-            <img src={images[3]}></img>
-            <div>{preps[3]}</div>
-            <div>{ratings[3]}</div>
-          </div>
-        </div>*/}
         <button className="keepBut" onClick={logMealPlan}>Keep Meal</button>
       </Popup>
 
