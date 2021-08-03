@@ -14,20 +14,32 @@ import "./Navbar.css";
 export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
   const navigate = useNavigate();
 
-  // const searchBox = useRef();
+  const searchBox = useRef(null);
+  const userBox = useRef(null);
   const [isSearch, setIsSearch] = useState(false);
   const [userIsClicked, setUserIsClicked] = useState(false);
   
-  // useEffect(() => {
-  //   function handleOutsideClick(event) {
-  //     if (searchBox.current && !searchBox.current.contains(event.target)) {
-  //       setIsSearch(false)
-  //     }
-  //   }
+  useEffect(() => {
+    function handleOutsideClick(event) {
+      if (searchBox.current && !searchBox.current.contains(event.target)) {
+        setIsSearch(false)
+      }
+    }
 
-  //   window.addEventListener('click', handleOutsideClick)
-  //   return () => window.removeEventListener('click', handleOutsideClick)
-  // }, []);
+    window.addEventListener('click', handleOutsideClick)
+    return () => window.removeEventListener('click', handleOutsideClick)
+  }, []);
+
+  useEffect(() => {
+    function handleOutsideClick(event) {
+      if (userBox.current && !userBox.current.contains(event.target)) {
+        setUserIsClicked(false)
+      }
+    }
+
+    window.addEventListener('click', handleOutsideClick)
+    return () => window.removeEventListener('click', handleOutsideClick)
+  }, []);
 
   const handleOnSearchClick = () => {
     setIsSearch(true)
@@ -71,7 +83,6 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
                 type="text"
                 placeholder="search recipes..."
                 onChange={handleInputChange}
-                // ref={searchBox}
               ></input>
             </form>
             <div className="search-btn" onClick={e => setIsSearch(false)}>
@@ -87,7 +98,7 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
         </Link>
 
         {user?.email ? (
-          <div className={`user-btn ${isSearch ? 'phone-view': ''}`}>
+          <div className={`user-btn ${isSearch ? 'phone-view': ''}`} ref={userBox}>
             <img
               onClick={handleOnUserClick}
               src={userlogo}
