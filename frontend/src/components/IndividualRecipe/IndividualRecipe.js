@@ -93,7 +93,9 @@ export default function IndividualRecipe({ user }) {
       if (error) {
         console.log(error, "IndividualRecipe.js");
       }
-      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     };
     fetchRecipeInfo();
   }, [recipeId]);
@@ -164,249 +166,338 @@ export default function IndividualRecipe({ user }) {
     filter: "blur(8px)",
   };
 
+  const EXTRA_INFO_ARRAY = [
+    "ingredients",
+    "healthScore",
+    "readyInMinutes",
+    "servings",
+  ];
   //    // style={{ backgroundImage: `url(${home})` }}
   return (
     <>
-      {isLoading ? (
-        <img src={`${placeholder}`} />
-      ) : (
-        <div>
-          {" "}
-          <div
-            className="IndividualRecipe"
-            // style={isLoading ? { filter: "blur(2px)" } : {}}
-          >
-            <div className="recipe-top">
-              <div className="recipe-title">{recipeInfo.title}</div>
-              <div className="recipe-diet">
-                {recipeInfo.vegan ? (
-                  <img src={veganIcon} alt="Vegan Icon"></img>
-                ) : null}
-                {recipeInfo.vegetarian ? (
-                  <img src={vegetarianIcon} alt="Vegetarian Icon"></img>
-                ) : null}
-                {recipeInfo.dairyFree ? (
-                  <img src={dairyfreeIcon} alt="Dairy Free Icon"></img>
-                ) : null}
-                {recipeInfo.glutenFree ? (
-                  <img src={glutenfreeIcon} alt="Gluten Free Icon"></img>
-                ) : null}
-              </div>
+      <div>
+        <div
+          className="IndividualRecipe"
+          // style={isLoading ? { filter: "blur(2px)" } : {}}
+        >
+          <div className="recipe-top">
+            <div className="recipe-title">{recipeInfo.title}</div>
+            <div className="recipe-diet">
+              {recipeInfo.vegan ? (
+                <img src={veganIcon} alt="Vegan Icon"></img>
+              ) : null}
+              {recipeInfo.vegetarian ? (
+                <img src={vegetarianIcon} alt="Vegetarian Icon"></img>
+              ) : null}
+              {recipeInfo.dairyFree ? (
+                <img src={dairyfreeIcon} alt="Dairy Free Icon"></img>
+              ) : null}
+              {recipeInfo.glutenFree ? (
+                <img src={glutenfreeIcon} alt="Gluten Free Icon"></img>
+              ) : null}
             </div>
-            {/*This is where the additional info go. E.g: ready in minutes, calories, etc*/}
-            <div className="recipe-additional-info">
-              {Object.entries(extraInformation).map(([key, val], i) => (
-                <>
-                  <MuiThemeProvider theme={additionalInfoTheme}>
-                    <Paper
-                      elevation={3}
-                      className={classes.paper}
-                      style={{ minWidth: "280px" }}
-                    >
+          </div>
+          {/*This is where the additional info go. E.g: ready in minutes, calories, etc*/}
+          <div className="recipe-additional-info">
+            {/*<div> hi </div>*/}
+            {[...Array(4)].map((r, i) => (
+              <>
+                <MuiThemeProvider theme={additionalInfoTheme}>
+                  <Paper
+                    elevation={3}
+                    className={classes.paper}
+                    style={{ minWidth: "280px" }}
+                  >
+                    {isLoading ? (
+                      <Typography
+                        variant="h4"
+                        color={i % 2 == 0 ? "primary" : "secondary"}
+                        gutterBottom
+                        className="boxGrayBig"
+                      ></Typography>
+                    ) : (
                       <Typography
                         variant="h4"
                         color={i % 2 == 0 ? "primary" : "secondary"}
                         gutterBottom
                       >
-                        {key}
+                        {EXTRA_INFO_ARRAY[i]}
                       </Typography>
+                    )}
+
+                    {isLoading ? (
+                      <Typography
+                        variant="body1"
+                        color={i % 2 == 0 ? "secondary" : "primary"}
+                        className={`${isLoading} ? boxGraySmall : ""`}
+                      ></Typography>
+                    ) : (
                       <Typography
                         variant="body1"
                         color={i % 2 == 0 ? "secondary" : "primary"}
                       >
-                        {val}
+                        {extraInformation[EXTRA_INFO_ARRAY[i]]}
                       </Typography>
-                    </Paper>
-                    <br />
-                  </MuiThemeProvider>
-                </>
-              ))}
-            </div>
-            <div className="recipe-display">
-              {/* Left Side */}
-              <div className="recipe-left">
-                <div className="recipe-img">
-                  <img src={recipeInfo.image} alt={recipeInfo.title}></img>
-                </div>
-                <div className="recipe-ingre">
-                  <div className="heading">Ingredients</div>
-                  {recipeIngredients.length > 0
-                    ? recipeIngredients.map((element) => (
-                        <div key={element.id}>{element.original}</div>
-                      ))
-                    : null}
-                </div>
-              </div>
+                    )}
+                  </Paper>
+                  <br />
+                </MuiThemeProvider>
+              </>
+            ))}
 
-              {/* Right Side */}
-              <div className="recipe-right">
-                <div className="heading">Instructions</div>
-                {recipeInstructions.length > 0
-                  ? recipeInstructions.map((element) => (
-                      <>
-                        <Paper
-                          key={element.number}
-                          id={`${element.number}`}
-                          elevation={3}
-                          // style={{
-                          //   backgroundColor:
-                          //     "#a7d2c5" && numPicked === element.number,
-                          // }}
+            {/* {Object.entries(extraInformation).map(([key, val], i) => (
+              <>
+                <MuiThemeProvider theme={additionalInfoTheme}>
+                  <Paper
+                    elevation={3}
+                    className={classes.paper}
+                    style={{ minWidth: "280px" }}
+                  >
+                    <Typography
+                      variant="h4"
+                      color={i % 2 == 0 ? "primary" : "secondary"}
+                      gutterBottom
+                      className={`${isLoading} ? boxGrayBig : "hi"`}
+                    >
+                      {!isLoading && key}
+                    </Typography>
+
+                    <Typography
+                      variant="body1"
+                      color={i % 2 == 0 ? "secondary" : "primary"}
+                      className={`${isLoading} ? boxGraySmall : ""`}
+                    >
+                      {extraInformation[EXTRA_INFO_ARRAY[i]]}
+                      {console.log(extraInformation)}
+
+                    </Typography>
+                  </Paper>
+                  <br />
+                </MuiThemeProvider>
+              </>
+            ))}*/}
+          </div>
+          <div className="recipe-display">
+            {/* Left Side */}
+            <div className="recipe-left">
+              <div className="recipe-img">
+                {isLoading ? (
+                  <div className="imagePlaceholder">
+                    <CircularProgress
+                      color="primary"
+                      style={{
+                        position: "absolute",
+                        left: "50%",
+                        top: "50%",
+                        transform: "translate(-50%, -50%)",
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <img src={recipeInfo.image} alt={recipeInfo.title}></img>
+                )}
+              </div>
+              <div className="recipe-ingre">
+                <div className="heading">Ingredients</div>
+                {recipeIngredients.length > 0
+                  ? recipeIngredients.map((element) => (
+                      <div key={element.id}>{element.original}</div>
+                    ))
+                  : null}
+              </div>
+            </div>
+
+            {/* Right Side */}
+            <div className="recipe-right">
+              <div className="heading">Instructions</div>
+              {isLoading
+                ? [...Array(5)].map((x) => (
+                    <>
+                      <Paper
+                        elevation={3}
+                        className={classes.paper}
+                        style={{ minWidth: "280px" }}
+                      >
+                        <Typography
+                          variant="body1"
+                          className={`${isLoading} ? boxGrayDescription : ""`}
+                        ></Typography>
+                      </Paper>
+                      <br />
+                    </>
+                  ))
+                : recipeInstructions.length > 0
+                ? recipeInstructions.map((element) => (
+                    <>
+                      <Paper
+                        key={element.number}
+                        id={`${element.number}`}
+                        elevation={3}
+                        // style={{
+                        //   backgroundColor:
+                        //     "#a7d2c5" && numPicked === element.number,
+                        // }}
+                      >
+                        <Typography
+                          variant="h6"
+                          className={`${classes.paper} ${
+                            numPicked === element.number ? "active" : ""
+                          }`}
                         >
-                          {console.log(
-                            numPicked,
-                            element.number,
-                            numPicked === element.number
-                          )}
+                          {element.number}. {element.step}
+                        </Typography>
+                      </Paper>
+                      <br />
+                    </>
+                  ))
+                : null}
+            </div>
+
+            <SocialMediaShare recipeInfo={recipeInfo} />
+            <div className="heading">Steps</div>
+            <div className="steps_div">
+              {isLoading
+                ? [...Array(5)].map((x) => (
+                    <>
+                      <Paper
+                        elevation={3}
+                        className={classes.paper}
+                        style={{ minWidth: "120px" }}
+                      >
+                        <Typography
+                          variant="body1"
+                          className={`${isLoading} ? boxGraySmall : ""`}
+                        ></Typography>
+                      </Paper>
+                      <br />
+                    </>
+                  ))
+                : recipeInstructions.length > 0
+                ? recipeInstructions.map((element) => (
+                    <>
+                      <a
+                        onClick={() => setNumPicked(element.number)}
+                        href={`#${element.number}`}
+                        style={{ textDecoration: "none", maxHeight: "100px" }}
+                        className="steps_div_a"
+                      >
+                        <Paper key={element.number}>
                           <Typography
                             variant="h6"
                             className={`${classes.paper} ${
                               numPicked === element.number ? "active" : ""
                             }`}
+                            onClick={(e) => console.log(e.target.className)}
                           >
-                            {element.number}. {element.step}
+                            Step {element.number}
                           </Typography>
                         </Paper>
-                        <br />
-                      </>
-                    ))
-                  : null}
-              </div>
-
-              <SocialMediaShare recipeInfo={recipeInfo} />
-              <div className="heading">Steps</div>
-              <div className="steps_div">
-                {recipeInstructions.length > 0
-                  ? recipeInstructions.map((element) => (
-                      <>
-                        <a
-                          onClick={() => setNumPicked(element.number)}
-                          href={`#${element.number}`}
-                          style={{ textDecoration: "none", maxHeight: "100px" }}
-                          className="steps_div_a"
-                        >
-                          <Paper key={element.number}>
-                            <Typography
-                              variant="h6"
-                              className={`${classes.paper} ${
-                                numPicked === element.number ? "active" : ""
-                              }`}
-                              onClick={(e) => console.log(e.target.className)}
-                            >
-                              Step {element.number}
-                            </Typography>
-                          </Paper>
-                        </a>
-                        <br />
-                      </>
-                    ))
-                  : null}
-              </div>
-            </div>
-
-            {/*<b> summary </b> : {recipeInfo.summary}*/}
-
-            {/*Ignore for now*/}
-            <div>
-              comment section:
-              <div className="container">
-                <form
-                  onClick={onExpand}
-                  onSubmit={handleSubmit}
-                  ref={containerRef}
-                  className={`comment-box ${
-                    isExpanded ? "expanded" : "collapsed"
-                  }
-            ${comment.length > 0 ? "modified" : ""}`}
-                  style={{
-                    minHeight: isExpanded
-                      ? outerHeight.current
-                      : INITIAL_HEIGHT,
-                  }}
-                >
-                  {!isExpanded && (
-                    <div className="shareThoughts">
-                      <div> Add a public comment... </div>
-                      <button className="shareThoughtsBtn" type="submit">
-                        New Comment
-                      </button>
-                    </div>
-                  )}
-                  <div className="header">
-                    <div className="user">
-                      <img
-                        src="https://i.imgur.com/hepj9ZS.png"
-                        alt="User avatar"
-                        style={{ maxHeight: "30px" }}
-                      />
-                      <div className="user_info">
-                        {user?.email ? (
-                          <>
-                            {user?.first_name} {user?.last_name}
-                          </>
-                        ) : (
-                          "Guest User"
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  <label htmlFor="textarea">What are your thoughts?</label>
-                  <hr />
-
-                  <textarea
-                    ref={textRef}
-                    onClick={onExpand}
-                    onFocus={onExpand}
-                    onChange={handleTextAreaChange}
-                    value={comment}
-                    className="comment-field"
-                    name="textarea"
-                    id="comment"
-                    placeholder={
-                      !user?.email
-                        ? `You must be logged in to do that. Don't have an account? Sign up here`
-                        : `Share your thoughts here`
-                    }
-                    disabled={!user?.email ? true : false}
-                  />
-
-                  <div className="actions">
-                    <button type="button" className="cancel" onClick={onClose}>
-                      Cancel
-                    </button>
-                    <button type="submit" disabled={comment.length < 1}>
-                      Add Comment
-                    </button>
-                  </div>
-                </form>
-              </div>
-              <div>
-                {curComments.length} comment
-                {curComments.length !== 1 ? "s" : ""}{" "}
-              </div>
-              {curComments.length === 0 ? (
-                <div> Be the first to comment </div>
-              ) : (
-                <> </>
-              )}
-              {curComments.map((comment) => (
-                <Comment
-                  comment={comment}
-                  setCurComments={setCurComments}
-                  curComments={curComments}
-                  editCommentMsg={editCommentMsg}
-                  setEditCommentMsg={setEditCommentMsg}
-                  showEdit={showEdit}
-                  setShowEdit={setShowEdit}
-                  setSelectedCommentId={setSelectedCommentId}
-                  selectedCommentId={selectedCommentId}
-                  user={user}
-                />
-              ))}
+                      </a>
+                      <br />
+                    </>
+                  ))
+                : null}
             </div>
           </div>
+
+          {/*<b> summary </b> : {recipeInfo.summary}*/}
+
+          {/*Ignore for now*/}
+          <div>
+            comment section:
+            <div className="container">
+              <form
+                onClick={onExpand}
+                onSubmit={handleSubmit}
+                ref={containerRef}
+                className={`comment-box ${isExpanded ? "expanded" : "collapsed"}
+            ${comment.length > 0 ? "modified" : ""}`}
+                style={{
+                  minHeight: isExpanded ? outerHeight.current : INITIAL_HEIGHT,
+                }}
+              >
+                {!isExpanded && (
+                  <div className="shareThoughts">
+                    <div> Add a public comment... </div>
+                    <button className="shareThoughtsBtn" type="submit">
+                      New Comment
+                    </button>
+                  </div>
+                )}
+                <div className="header">
+                  <div className="user">
+                    <img
+                      src="https://i.imgur.com/hepj9ZS.png"
+                      alt="User avatar"
+                      style={{ maxHeight: "30px" }}
+                    />
+                    <div className="user_info">
+                      {user?.email ? (
+                        <>
+                          {user?.first_name} {user?.last_name}
+                        </>
+                      ) : (
+                        "Guest User"
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <label htmlFor="textarea">What are your thoughts?</label>
+                <hr />
+
+                <textarea
+                  ref={textRef}
+                  onClick={onExpand}
+                  onFocus={onExpand}
+                  onChange={handleTextAreaChange}
+                  value={comment}
+                  className="comment-field"
+                  name="textarea"
+                  id="comment"
+                  placeholder={
+                    !user?.email
+                      ? `You must be logged in to do that. Don't have an account? Sign up here`
+                      : `Share your thoughts here`
+                  }
+                  disabled={!user?.email ? true : false}
+                />
+
+                <div className="actions">
+                  <button type="button" className="cancel" onClick={onClose}>
+                    Cancel
+                  </button>
+                  <button type="submit" disabled={comment.length < 1}>
+                    Add Comment
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div>
+              {curComments.length} comment
+              {curComments.length !== 1 ? "s" : ""}{" "}
+            </div>
+            {curComments.length === 0 ? (
+              <div> Be the first to comment </div>
+            ) : (
+              <> </>
+            )}
+            {curComments.map((comment) => (
+              <Comment
+                comment={comment}
+                setCurComments={setCurComments}
+                curComments={curComments}
+                editCommentMsg={editCommentMsg}
+                setEditCommentMsg={setEditCommentMsg}
+                showEdit={showEdit}
+                setShowEdit={setShowEdit}
+                setSelectedCommentId={setSelectedCommentId}
+                selectedCommentId={selectedCommentId}
+                user={user}
+              />
+            ))}
+          </div>
         </div>
-      )}
+      </div>
     </>
   );
 }
