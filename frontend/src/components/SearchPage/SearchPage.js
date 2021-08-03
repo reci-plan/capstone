@@ -2,19 +2,17 @@ import "./SearchPage.css";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import apiClient from "../../services/apiClient";
 
-export default function SearchPage({ searchTerm, recipes, user, handleSave, handleUnsave }) {
-
+export default function SearchPage({
+    searchTerm,
+    recipes,
+    user,
+    handleSave,
+    handleUnsave,
+}) {
     return (
         <div className="SearchPage">
-            
-            Search Page Component (This currently has margin-top: 150px)
-            <div className="placeholder">
-                <h2> Search Results </h2>
-                <p>
-                    The word you searched for was: <b> {searchTerm} </b>
-                </p>
-            </div>
-            <div className="filtered-recipes">
+            <div className="results">Search Results: {searchTerm}</div>
+            <div className="filter-display">
                 {recipes
                     .filter((r) =>
                         r.title.toLowerCase().includes(searchTerm.toLowerCase())

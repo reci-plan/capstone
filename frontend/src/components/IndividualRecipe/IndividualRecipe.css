@@ -231,3 +231,11 @@ button[type="submit"] {
 .active {
   background-color: #a7d2c5;
 }
+
+.loadingIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /*align-items: center;*/
+}
