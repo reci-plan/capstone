@@ -19,6 +19,7 @@
 .form-input input {
   margin: 8px;
   width: auto;
+  border: 1.5px solid #ffffff;
 }
 
 .profile-left {
@@ -30,6 +31,7 @@
   cursor: pointer;
   width: 100%;
   margin: 0;
+  border: none;
 }
 .upload-btn {
   cursor: pointer;

@@ -239,6 +239,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
               <div className="form-input">
                 <label>email</label>
                 <input
+                  className={`${errors.email ? `error-border` : ``}`}
                   type="email"
                   name="email"
                   placeholder="email"
@@ -246,7 +247,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
                   onChange={handleInputChange}
                 />
               </div>
-              {errors.email}
+              <div className="error">{errors.email}</div>
               <div className="form-input">
                 <label>username</label>
                 <input
@@ -260,6 +261,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
               <div className="form-input">
                 <label>password</label>
                 <input
+                  className={`${errors.password ? `error-border` : ``}`}
                   type="password"
                   name="password"
                   placeholder="password"
@@ -269,6 +271,7 @@ export default function EditProfile({ user, handleUpdateUser, profile, flavors }
               </div>
               <div className="form-input">
                 <input
+                  className={`${errors.passwordConfirm ? `error-border` : ``}`}
                   type="password"
                   name="passwordConfirm"
                   placeholder="confirm password"

@@ -1,4 +1,5 @@
 .Login {
+  padding: 120px;
   font-family: 'Lato', sans-serif;
   display: flex;
   flex-direction: column;
@@ -6,7 +7,6 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
   background-position: center;
   background-size: 100%;
 }
@@ -24,7 +24,7 @@ input {
   width: 90%;
   padding: 15px;
   border-radius: 8px;
-  margin: 20px 0;
+  margin: 15px 0;
 }
 .form {
   display: flex;
@@ -46,11 +46,11 @@ input {
 }
 
 .error-border {
-  border: 1.5px solid #e95146;
+  border: 1.5px solid #e95146 !important;
 }
 
 .error {
-  height: 10px;
+  height: 8px;
   color: #e95146;
   margin: 0;
 }
