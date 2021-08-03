@@ -20,6 +20,7 @@
   border: 2px solid #E1B5A1;
   background-color: #E1B5A1;
   font-size: 15px;
+  margin-top: 15px;
 }
 .input-name {
   display: flex;

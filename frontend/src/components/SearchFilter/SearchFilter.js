@@ -96,7 +96,7 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
                 <img className="close-btn" onClick={handleOnClose} src={close} alt="Close button"></img>
               </div> 
               : 
-              <div className="results">{categoryName} 
+              <div className="results">{categoryName ? categoryName : <>All Recipes</>} 
                 <img className="close-btn" onClick={handleOnClose} src={close} alt="Close button"></img>
               </div> 
             

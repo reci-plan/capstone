@@ -20,7 +20,7 @@
   font-weight: 350;
 }
 input {
-  border: none;
+  border: 1.5px solid #ffffff;
   width: 90%;
   padding: 15px;
   border-radius: 8px;
@@ -44,6 +44,17 @@ input {
   background-color: #B3C1D5;
   font-size: 15px;
 }
+
+.error-border {
+  border: 1.5px solid #e95146;
+}
+
+.error {
+  height: 10px;
+  color: #e95146;
+  margin: 0;
+}
+
 
 @media only screen and (max-width: 700px) {
   .Login {
