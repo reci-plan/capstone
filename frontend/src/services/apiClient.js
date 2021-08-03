@@ -92,7 +92,7 @@ class ApiCalls {
 
     async fetchIndividualRecipeInfo(recipeId) {
         return await this.request({
-            endpoint: `recipes/${recipeId}`,
+            endpoint: `recipes/getMoreInfo/${recipeId}`,
         });
     }
 
@@ -157,44 +157,105 @@ class ApiCalls {
         });
     }
 
-    async checkIfCommentBelongsToUser(api_id) {
+    async getOwnerOfComment(comment) {
         return await this.request({
-            endpoint: `comment/doesItBelongToUser/${api_id}`,
+            endpoint: `comment/getOwnerOfComment`,
+            method: `POST`,
+            data: comment,
+        });
+    }
+
+    async unlikeComment(comment) {
+        return await this.request({
+            endpoint: `comment/unlikeComment`,
+            method: `PUT`,
+            data: comment,
+        });
+    }
+
+    async checkIfUserIsInLikes(api_id) {
+        return await this.request({
+            endpoint: `comment/checkIfUserIsInLikes/${api_id}`,
             method: `GET`,
         });
     }
 
     async fetchRecipesByCategory(category) {
         return await this.request({
-            endpoint:`search/${category}`
-        })
+            endpoint: `search/${category}`,
+        });
     }
 
     async fetchLocalDbRecipe(recipeId) {
         return await this.request({
-            endpoint:`search/id/${recipeId}`
-        })
+            endpoint: `search/id/${recipeId}`,
+        });
     }
 
     async createProfile() {
         return await this.request({
             endpoint: `profile/create`,
-            method: `POST`
-        })
+            method: `POST`,
+        });
     }
 
     async fetchProfile() {
         return await this.request({
-            endpoint: `profile/`
-        })
+            endpoint: `profile/`,
+        });
     }
 
     async updateProfile(info) {
         return await this.request({
             endpoint: `profile/`,
             method: `PUT`,
-            data: info
-        })
+            data: info,
+        });
+    }
+
+    async getPublicUserInformation(user_id) {
+        return await this.request({
+            endpoint: `profile/getProfile/${user_id}`,
+            method: `GET`,
+        });
+    }
+
+    async fetchAllCommunityPosts() {
+        return await this.request({
+            endpoint: `community/getPosts`,
+            method: `GET`,
+        });
+    }
+
+    async newPostToCommunity(recipe) {
+        return await this.request({
+            endpoint: `community/newPost`,
+            method: `POST`,
+            data: recipe,
+        });
+    }
+
+    async deletePostFromCommunity(recipe) {
+        return await this.request({
+            endpoint: `community/deletePost`,
+            method: `DELETE`,
+            data: recipe,
+        });
+    }
+
+    async fetchPostById(postId) {
+        return await this.request({
+            endpoint: `community/getPost/${postId}`,
+            method: `GET`,
+        });
+    }
+
+    async updatePost(post) {
+        return await this.request({
+            endpoint: `community/updatePost/${post.id}`,
+            method: `PUT`,
+            data: post,
+        });
     }
 
     async saveMealPlan(mealPlan) {

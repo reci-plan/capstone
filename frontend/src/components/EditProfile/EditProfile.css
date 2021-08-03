@@ -1,1 +1,59 @@
+.EditProfile {
+  padding: 0 150px;
+  padding-top: 100px;
+  padding-bottom: 80px;
+  background-repeat: no-repeat;
+  max-width: 100vw;
+  background-position: center;
+}
+.form-input {
+  display: flex;
+  flex-direction: column;
+}
+.form-input label {
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+}
+.form-input input {
+  margin: 8px;
+  width: auto;
+}
 
+.profile-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile-left input {
+  cursor: pointer;
+  width: 100%;
+  margin: 0;
+}
+.upload-btn {
+  cursor: pointer;
+}
+
+.highlightOption, .highlight {
+  background-color: transparent;
+}
+.option:hover {
+  background-color: #6F9CEB !important;
+}
+/* .chip:nth-child(1) {
+  background-color: rgb(255, 0, 0) !important;
+}
+
+.chip:nth-child(2) {
+  background-color: rgb(1, 0, 88) !important;
+} */
+
+.update-btn {
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  width: 80px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: #a59379;
+  margin: 10px;
+}

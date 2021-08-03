@@ -3,7 +3,7 @@ import apiClient from "../../services/apiClient";
 import { useDataLayerValue } from "../../context/DataLayer";
 import RecipeCard from "../RecipeCard/RecipeCard";
 
-import "./SavedGallery.css"
+import "./SavedGallery.css";
 
 export default function SavedGallery({ user, saved, handleSave, handleUnsave }) {
     return (

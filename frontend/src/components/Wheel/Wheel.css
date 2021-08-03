@@ -2,8 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;300;400;500&display=swap');
 
 .Generator {
-    max-height:100px;
-    margin:80px;
+    max-height: 100px;
+    margin: 0 80px;
+    padding-top: 100px;
 }
 
 .header {
