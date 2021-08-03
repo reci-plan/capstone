@@ -11,6 +11,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
     const [recipes, setRecipes] = useState([]);
     const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
     const [sortby, setSortby] = useState("price");
+    const [bitValue, setBitValue] = useState(0);
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -34,17 +35,31 @@ export default function Home({ user, handleSave, handleUnsave }) {
     };
 
     const getGreeting = () => {
-        var today = new Date()
-        var curHr = today.getHours()
+        var today = new Date();
+        var curHr = today.getHours();
 
         if (curHr < 12) {
-        return ('Good Morning')
+            // setTheCurrentTime("morning");
+            return "Good Morning";
         } else if (curHr < 18) {
-        return ('Good Afternoon')
+            // setTheCurrentTime("afternoon");
+            return "Good Afternoon";
         } else {
-        return ('Good Evening')
+            // setTheCurrentTime("evening");
+            return "Good Evening";
         }
-    }
+    };
+
+    useEffect(() => {
+        const time = getGreeting();
+        if (time === "Good Morning") {
+            setBitValue(128);
+        } else if (time === "Good Afternoon") {
+            setBitValue(64);
+        } else {
+            setBitValue(64);
+        }
+    }, []);
 
     return (
         <div className="Home" style={{ backgroundImage: `url(${home})` }}>
@@ -52,9 +67,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
                 {user.email ? (
                     <div>
                         <div>
-                            {getGreeting()}
-                            , {user.first_name}{" "}
-                            {user.last_name}!
+                            {getGreeting()}, {user.first_name} {user.last_name}!
                         </div>
                     </div>
                 ) : (
@@ -80,7 +93,17 @@ export default function Home({ user, handleSave, handleUnsave }) {
                     </button>
                 </div>
             ) : null}
-
+            <div>
+                <div className="category-header">Recommendations</div>
+                <CarouselDisplay
+                    user={user}
+                    recipes={recipes}
+                    handleSave={handleSave}
+                    handleUnsave={handleUnsave}
+                    justOnce={true}
+                    bitValue={bitValue}
+                />
+            </div>
             {sortby === "price" ? (
                 <>
                     <div className="category-header">Under $30</div>
@@ -114,7 +137,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
                         rangeB={50}
                         handleSave={handleSave}
                         handleUnsave={handleUnsave}
-                    />                      
+                    />
                 </>
             ) : null}
 

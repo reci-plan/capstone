@@ -13,9 +13,11 @@ export default function RecipeCard({
   user,
   recipeInfo,
   handleSave,
-  handleUnsave
+  handleUnsave,
+  handleLinks
 }) {
   const [saved, setSaved] = useState(false);
+  const [links, setLinks] = useState(true);
 
   useEffect(() => {
     const checkRecipe = async () => {
@@ -26,6 +28,9 @@ export default function RecipeCard({
 
       if (error) {
         console.log("Check saved recipe error.......RecipeCard.js");
+      }
+      if (handleLinks === false) {
+        setLinks(false)
       }
     };
 
@@ -66,19 +71,25 @@ export default function RecipeCard({
           <span>Time (min) : {recipeInfo.prep_time}</span>
         </div>
       </div>
-      <div className="card-links">
-        <Link to={`recipes/${recipeInfo.api_id}`}>View more &#8594;</Link>
-        <button
-          className="save-btn"
-          onClick={handleOnClick}
-        >
-          {saved ? (
-            <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
-          ) : (
-            <img src={heart} alt="Heart to save recipe"></img>
-          )}
-        </button>
-      </div>
+      {links ? 
+        <>
+        <div className="card-links">
+          <Link to={`recipes/${recipeInfo.api_id}`}>View more &#8594;</Link>
+          <button
+            className="save-btn"
+            onClick={handleOnClick}
+          >
+            {saved ? (
+              <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
+            ) : (
+              <img src={heart} alt="Heart to save recipe"></img>
+            )}
+          </button>
+        </div>
+        </>
+        :
+        ""
+      }
     </div>
   );
 }

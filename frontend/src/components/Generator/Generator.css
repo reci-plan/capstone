@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;300;400;500&display=swap');
 
+.WheelMessage {
+    max-height: 100px;
+    margin: 0 80px;
+    padding-top: 100px;
+}
 .Generator {
     max-height: 100px;
     margin: 0 80px;
@@ -23,7 +28,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .menuView {
@@ -40,10 +45,10 @@
 
 .box, .fake-input {
     background-color: #CECECE;
-    height:70px;
     display:flex;
     align-items: center;
     font-size: 26px;
+    height: 70px;
 }
   
 .penIc, .fake-input img {
@@ -75,4 +80,18 @@
 .close {
     display: flex;
     margin-left: auto;
+}
+
+.leftMenuArea {
+    display: flex;
+    flex-direction: column;
+}
+
+.mealPlan {
+    display: flex;
+    flex-direction: row;
+}
+
+.mealPlanHead {
+    background-color: #BDB2AE;
 }

@@ -39,9 +39,15 @@
 
 .highlightOption, .highlight {
   background-color: transparent;
+  color: #000;
 }
 .option:hover {
   background-color: #6F9CEB !important;
+}
+
+.chip {
+  background: #98B9F2 !important;
+  color: #000 !important;
 }
 
 .update-btn {
@@ -68,6 +74,7 @@
 
   .profile-right {
     min-width: 370px;
+    
   }
 }
 

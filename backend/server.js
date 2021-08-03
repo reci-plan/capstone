@@ -10,9 +10,10 @@ const { PORT, API_KEY } = require("./config");
 const authRoutes = require("./routes/auth");
 const recipeRoutes = require("./routes/recipes");
 const saveRoutes = require("./routes/save");
-const profileRoutes = require("./routes/profile")
+const profileRoutes = require("./routes/profile");
 const commentRoutes = require("./routes/comments");
 const searchRoutes = require("./routes/search");
+const communityRoutes = require("./routes/community");
 
 // import errors
 const { NotFoundError } = require("./utils/errors");
@@ -33,6 +34,7 @@ app.use("/save", saveRoutes);
 app.use("/profile", profileRoutes);
 app.use("/comment", commentRoutes);
 app.use("/search", searchRoutes);
+app.use("/community", communityRoutes);
 
 // Error handlers
 app.use((req, res, next) => {

@@ -48,7 +48,8 @@ export default function Menu(props) {
         setSubmitIsVisible(false)
     }
 
-    const handleButton = () => {
+    const handleButton = (e) => {
+        console.log("TAR", e.target.value)
         console.log(document.getElementById('time').value)
         console.log((document.getElementById('meal-name').value))
         console.log(selectedCategories)
@@ -66,7 +67,9 @@ export default function Menu(props) {
         console.log(selectedCategories)
     }
 
+    //returns an array of [time, mealName, pssible recipes]
     const returnValues = async () => {
+        console.log("TIIIME", document.getElementById('time').value)
         var categoryCode = 0;
         userTime = document.getElementById('time').value;
         userMeal =document.getElementById('meal-name').value;
@@ -98,7 +101,7 @@ export default function Menu(props) {
         if (userValues[2].rows.length === 0) {
             setSubmitIsVisible(false)
         }
-        return userValues[2];
+        return userValues;
     }
 
     return (
@@ -106,7 +109,7 @@ export default function Menu(props) {
             
             <div className="menuLine">
                 <p>Time to eat: </p>
-                <div className="userInput"><TextField type="time" id="time" onChange={(handleButton)}></TextField></div>
+                <div className="userInput"><TextField type="time" id="time" onChange={(handleButton)}/></div>
             </div>
             <div className="menuLine">
                 <p>Meal Name: </p>
