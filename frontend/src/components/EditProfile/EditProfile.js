@@ -71,7 +71,7 @@ export default function EditProfile({
     }
 
     addFlavors.forEach((item) => (form.fav_flavors += item.id));
-    console.log(form.fav_flavors);
+
     const { data, error } = await apiClient.updateProfile({
       first_name: form.first_name,
       last_name: form.last_name,
@@ -84,7 +84,6 @@ export default function EditProfile({
       image_url: form.image_url,
     });
     if (data) {
-      console.log(form.fav_flavors);
       handleUpdateUser(data[0]);
       navigate("/profile");
     }

@@ -42,55 +42,6 @@ function App() {
     "fatty",
   ];
 
-  const style = {
-    multiselectContainer: {
-      fontFamily: "Lato, sans-serif",
-      width: "200px",
-      height: "80px",
-      margin: "20px",
-    },
-    searchBox: {
-      border: "1px solid #CECECE",
-      background: "#fff",
-      borderRadius: "10px",
-      fontSize: "10px",
-      minHeight: "50px",
-    },
-    inputField: {
-      margin: "0px",
-      width: "100%",
-    },
-    chips: {
-      background: "#98B9F2",
-      color: "#000",
-    },
-    optionContainer: {
-      background: "#fff",
-    },
-    option: {
-      color: "#000",
-    },
-    highlightOption: {
-      background: "transparent",
-      dislay: "none",
-    },
-    hightlight: {
-      background: "transparent",
-      dislay: "none",
-    },
-  };
-
-  const flavorOptions = [
-    { flavor: "spicy", id: 0 },
-    { flavor: "salty", id: 1 },
-    { flavor: "sweet", id: 2 },
-    { flavor: "sour", id: 3 },
-    { flavor: "bitter", id: 4 },
-    { flavor: "savory", id: 5 },
-    { flavor: "fatty", id: 6 },
-  ];
-
-  const [alreadyExist, setAlreadyExist] = useState(false);
   // const [recipes, setRecipes] = useState({})
 
   const [{ colors }, dispatch] = useDataLayerValue();
