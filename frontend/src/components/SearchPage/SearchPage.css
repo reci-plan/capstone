@@ -1,23 +1,9 @@
 .SearchPage {
-    padding-top: 150px;
-    margin-left: 150px;
-    margin-right: 150px;
+    padding: 120px;
 }
 
 .filtered-recipes {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-}
-
-.placeholder {
-    display: grid;
-    place-items: center;
-
-    font-family: Roboto Slab;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 50px;
-    line-height: 106px;
-    color: #0e0755;
 }

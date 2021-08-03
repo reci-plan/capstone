@@ -1,6 +1,5 @@
 .About {
-  /* padding: 0 75px; */
-  padding-top: 120px;
+  padding: 120px 0;
   font-family: 'Nunito', sans-serif;
   font-size: 30px;
   background-repeat: no-repeat;
@@ -12,12 +11,12 @@
   font-weight: 300;
 }
 .mission {
-  padding: 10px 75px;
+  padding: 10px 100px;
   background-color: #f9dcc4;
 }
 
 .aboutus {
-  padding: 10px 75px;
+  padding: 10px 100px;
   margin: 10px 0;
   background-color: #e2ece9;
 }
@@ -26,5 +25,28 @@
   justify-content: space-evenly;
 }
 .person {
-  border: 2px solid #000;
+  max-width: 300px;
+  margin: 20px;
+  /* border: 2px solid rgb(100, 100, 100);
+  border-radius: 10px; */
+}
+.person div { 
+  font-size: 28px;
+}
+.person p { 
+  padding: 0;
+  font-size: 22px;
+}
+
+.about-img img {
+  width: 100%;
+}
+
+@media only screen and (max-width: 700px) {
+  .About {
+    padding: 50px 0;
+  }
+  .people {
+    flex-direction: column;
+  }
 }

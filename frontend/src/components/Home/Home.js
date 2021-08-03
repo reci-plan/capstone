@@ -72,7 +72,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
                     </div>
                 ) : (
                     <div>
-                        <span>Welcome to Reciplan!</span>
+                        Welcome to Reciplan!
                     </div>
                 )}
             </div>
@@ -94,7 +94,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
                 </div>
             ) : null}
             <div>
-                <h2> Recommendations based on your time </h2>
+                <div className="category-header">Recommendations</div>
                 <CarouselDisplay
                     user={user}
                     recipes={recipes}

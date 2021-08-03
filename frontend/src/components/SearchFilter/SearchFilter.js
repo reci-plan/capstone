@@ -1,6 +1,7 @@
 import { useState } from "react";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import search from "../../assets/search.png";
+import close from "../../assets/close.svg";
 import "./SearchFilter.css"
 
 export default function SearchFilter({ user, recipes, handleSave, handleUnsave }) {
@@ -44,12 +45,16 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
     const index = data.indexOf(e.target.innerHTML)
     setCategoryName(e.target.innerHTML)
     setCategory(1 << (11 - index))
-    setShow(!show)
+    setShow(true)
   }
 
   const handleViewAll = () => {
     setCategory(0)
-    setShow(!show)
+    setShow(true)
+  }
+
+  const handleOnClose = () => {
+    setShow(false)
   }
 
   return (
@@ -78,14 +83,22 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
             ))}
           </ul>
         </div>
+        <div className="phone-visible">
+          <hr></hr>
+          <div className="viewall" onClick={handleViewAll}>View all</div>
+      </div>
       </> 
       : 
         <div className="filter-display-name">
           {recipes
               .filter((r) => Boolean((r.category & category) === category)).length === 0 ? 
-              <div className="results">No results for {categoryName}</div> 
+              <div className="results">No results for {categoryName}
+                <img className="close-btn" onClick={handleOnClose} src={close} alt="Close button"></img>
+              </div> 
               : 
-              <div className="results">{categoryName}</div> 
+              <div className="results">{categoryName ? categoryName : <>All Recipes</>} 
+                <img className="close-btn" onClick={handleOnClose} src={close} alt="Close button"></img>
+              </div> 
             
           }
           <div className="filter-display">

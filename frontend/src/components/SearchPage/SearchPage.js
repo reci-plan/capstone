@@ -6,15 +6,10 @@ export default function SearchPage({ searchTerm, recipes, user, handleSave, hand
 
     return (
         <div className="SearchPage">
-            
-            Search Page Component (This currently has margin-top: 150px)
-            <div className="placeholder">
-                <h2> Search Results </h2>
-                <p>
-                    The word you searched for was: <b> {searchTerm} </b>
-                </p>
+            <div className="results">
+                Search Results: {searchTerm}
             </div>
-            <div className="filtered-recipes">
+            <div className="filter-display">
                 {recipes
                     .filter((r) =>
                         r.title.toLowerCase().includes(searchTerm.toLowerCase())

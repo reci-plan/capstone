@@ -59,6 +59,7 @@ export default function Login({ user, setUser }) {
         <div className="form">
           <div>
             <input
+              className={`${errors.email ? `error-border` : ``}`}
               type="email"
               name="email"
               placeholder="email"
@@ -66,7 +67,7 @@ export default function Login({ user, setUser }) {
               onChange={handleInputChange}
             />
           </div>
-          {errors.email}
+          <div className="error">{errors.email}</div>
           <div>
             <input
               type="password"
@@ -76,7 +77,7 @@ export default function Login({ user, setUser }) {
               onChange={handleInputChange}
             />
           </div>
-          <div>{errors.form}</div>
+          <div className="error">{errors.form}</div>
           <button className="btn login-btn" onClick={handleLogin}>login</button>
 
           <div className="login-footer">

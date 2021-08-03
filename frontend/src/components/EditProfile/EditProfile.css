@@ -1,10 +1,12 @@
 .EditProfile {
   padding: 0 150px;
   padding-top: 100px;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
   padding-bottom: 80px;
-  background-repeat: no-repeat;
-  max-width: 100vw;
   background-position: center;
+  background-size: 100%;
 }
 .form-input {
   display: flex;
@@ -17,6 +19,7 @@
 .form-input input {
   margin: 8px;
   width: auto;
+  border: 1.5px solid #ffffff;
 }
 
 .profile-left {
@@ -28,6 +31,7 @@
   cursor: pointer;
   width: 100%;
   margin: 0;
+  border: none;
 }
 .upload-btn {
   cursor: pointer;
@@ -35,17 +39,16 @@
 
 .highlightOption, .highlight {
   background-color: transparent;
+  color: #000;
 }
 .option:hover {
   background-color: #6F9CEB !important;
 }
-/* .chip:nth-child(1) {
-  background-color: rgb(255, 0, 0) !important;
-}
 
-.chip:nth-child(2) {
-  background-color: rgb(1, 0, 88) !important;
-} */
+.chip {
+  background: #98B9F2 !important;
+  color: #000 !important;
+}
 
 .update-btn {
   cursor: pointer;
@@ -56,4 +59,41 @@
   border-radius: 8px;
   background-color: #a59379;
   margin: 10px;
+}
+
+@media only screen and (max-width: 1400px) {
+  .EditProfile {
+    background-size: cover;
+    height: 100%;
+    overflow: unset;
+  }
+
+  .profile-left {
+    margin: 0 40px;
+  }
+
+  .profile-right {
+    min-width: 370px;
+    
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .EditProfile {
+    padding: 80px 50px;
+    background-position-x: 60%;
+    background-size: cover;
+    height: 100%;
+    overflow: unset;
+  }
+  .profile-right {
+    min-width: 280px;
+  }
+  .form-input input {
+    width: 90%;
+  }
+
+  .form-input-name input {
+    width: 80%;
+  }
 }
