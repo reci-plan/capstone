@@ -39,7 +39,7 @@
   margin-right: 40px;
 }
 
-.navbar-right {
+.navbar-right, .navbar-right > div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,6 +76,10 @@
   padding: 10px;
   border-radius: 10px;
   outline: none;
+}
+
+.hidden {
+  display: none;
 }
 
 @media only screen and (max-width: 700px) {
