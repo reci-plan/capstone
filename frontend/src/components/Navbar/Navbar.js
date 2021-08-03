@@ -95,9 +95,9 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
             ></img>
             {userIsClicked ? (
               <div className="user-drop">
-                <Link onClick={handleOnUserClick} to="/community">
+                {/*      <Link onClick={handleOnUserClick} to="/community">
                   community
-                </Link>
+                </Link>*/}
                 <Link onClick={handleOnUserClick} to="/profile">
                   profile
                 </Link>

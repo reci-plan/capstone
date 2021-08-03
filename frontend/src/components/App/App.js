@@ -14,8 +14,8 @@ import apiClient from "../../services/apiClient";
 import PublicProfile from "../PublicProfile/PublicProfile";
 import Wheel from "../Wheel/Wheel";
 import SearchFilter from "../SearchFilter/SearchFilter";
-import Community from "../Community/Community";
-import CommunityEdit from "../CommunityEdit/CommunityEdit";
+// import Community from "../Community/Community";
+// import CommunityEdit from "../CommunityEdit/CommunityEdit";
 import AboutUs from "../About/About";
 import ContactUs from "../Contact/Contact";
 import Footer from "../Footer/Footer";
@@ -312,7 +312,7 @@ function App() {
             }
           />
 
-          <Route
+          {/*     <Route
             path="/community"
             element={
               <Community
@@ -332,11 +332,11 @@ function App() {
                 flavorOptions={flavorOptions}
               />
             }
-          />
-          <Route path="/about" element={<AboutUs />}/>   
+          />*/}
 
-          <Route path="/contact" element={<ContactUs />}/>   
+          <Route path="/about" element={<AboutUs />} />
 
+          <Route path="/contact" element={<ContactUs />} />
         </Routes>
         <Footer />
       </BrowserRouter>
