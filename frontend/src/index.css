@@ -16,3 +16,7 @@ a {
 a:hover {
   color: #000;
 }
+
+input {
+  outline: none;
+}

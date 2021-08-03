@@ -11,7 +11,9 @@ export default function SearchPage({
 }) {
     return (
         <div className="SearchPage">
-            <div className="results">Search Results: {searchTerm}</div>
+            <div className="results">
+                Search Results: {searchTerm}
+            </div>
             <div className="filter-display">
                 {recipes
                     .filter((r) =>

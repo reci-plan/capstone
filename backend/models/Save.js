@@ -98,6 +98,42 @@ class Save {
     }
     return false;
   }
+
+    // TRY SAVE MEAL PLAN (mealPlan is an object)
+    static async saveMealPlan(user, mealPlan) {
+      const requiredFields = [
+        "title"
+    ];
+
+      requiredFields.forEach((field) => {
+        if (!mealPlan[field]) {
+            throw new BadRequestError(`missing ${field} in request.body`);
+        }
+    });
+
+      if (!user) {
+        throw new UnauthorizedError(`No user logged in.`);
+      }
+  
+      if (!mealPlan) {
+        throw new BadRequestError("no meal plan in request.body");
+      }
+  
+      if (!mealPlan.hasOwnProperty("title")) {
+        throw new BadRequestError(`Missing title in request body.`);
+      }
+  
+      const results = await db.query(
+        `
+        INSERT INTO saved_meal_plans (user_id, title, recipe_id1, recipe_id2, recipe_id3, recipe_id4, meal_name1, meal_name2, meal_name3, meal_name4, time1, time2, time3, time4)
+        VALUES ((SELECT id FROM users WHERE username = $1), $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+        RETURNING id, user_id, title, recipe_id1, recipe_id2, recipe_id3, recipe_id4, meal_name1, meal_name2, meal_name3, meal_name4, time1, time2, time3, time4, date;
+      `,
+        [user.username, mealPlan.title, mealPlan.recipe_id1, mealPlan.recipe_id2, mealPlan.recipe_id3, mealPlan.recipe_id4, mealPlan.meal_name1, mealPlan.meal_name2, mealPlan.meal_name3, mealPlan.meal_name4, mealPlan.time1, mealPlan.time2, mealPlan.time3, mealPlan.time4]
+      );
+  
+      return results.rows[0];
+    }
 }
 
 module.exports = Save;

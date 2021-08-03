@@ -10,8 +10,6 @@ import "./Profile.css";
 export default function Profile({ user, profile, flavors }) {
     const colors = [{}];
 
-
-
     return (
         <div
             className="Profile"

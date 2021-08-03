@@ -119,7 +119,6 @@ export default function EditProfile({
     multiselectContainer: {
       fontFamily: "Lato, sans-serif",
       width: "200px",
-      height: "80px",
       margin: "20px",
     },
     searchBox: {
@@ -132,10 +131,6 @@ export default function EditProfile({
     inputField: {
       margin: "0px",
       width: "100%",
-    },
-    chips: {
-      background: "#98B9F2",
-      color: "#000",
     },
     optionContainer: {
       background: "#fff",
@@ -211,7 +206,6 @@ export default function EditProfile({
               onRemove={onRemove} // Function will trigger on remove event
               displayValue={"flavor"}
               closeIcon={"cancel"}
-              style={style}
             />
           </div>
           <div className="profile-right">
@@ -256,6 +250,7 @@ export default function EditProfile({
               <div className="form-input">
                 <label>email</label>
                 <input
+                  className={`${errors.email ? `error-border` : ``}`}
                   type="email"
                   name="email"
                   placeholder="email"
@@ -263,7 +258,7 @@ export default function EditProfile({
                   onChange={handleInputChange}
                 />
               </div>
-              {errors.email}
+              <div className="error">{errors.email}</div>
               <div className="form-input">
                 <label>username</label>
                 <input
@@ -277,6 +272,7 @@ export default function EditProfile({
               <div className="form-input">
                 <label>password</label>
                 <input
+                  className={`${errors.password ? `error-border` : ``}`}
                   type="password"
                   name="password"
                   placeholder="password"
@@ -286,6 +282,7 @@ export default function EditProfile({
               </div>
               <div className="form-input">
                 <input
+                  className={`${errors.passwordConfirm ? `error-border` : ``}`}
                   type="password"
                   name="passwordConfirm"
                   placeholder="confirm password"
