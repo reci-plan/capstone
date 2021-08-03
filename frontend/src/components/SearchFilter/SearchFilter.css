@@ -49,15 +49,10 @@ ul {
   margin: 10px 40px;
 }
 
-/* .filter-display-ct {
-  display: flex;
-  flex-direction: column;
-} */
-
 .filter-display {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .center {
