@@ -194,12 +194,6 @@ function App() {
             element={<IndividualRecipe user={user} />}
           />
 
-          {/*Fix this route later*/}
-          <Route
-            path="/search/recipes/:recipeId"
-            element={<IndividualRecipe user={user} />}
-          />
-
           <Route 
             path="/wheel" 
             element={<Generator user={user}/>}

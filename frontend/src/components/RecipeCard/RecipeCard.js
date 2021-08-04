@@ -74,7 +74,7 @@ export default function RecipeCard({
       {links ? 
         <>
         <div className="card-links">
-          <Link to={`recipes/${recipeInfo.api_id}`}>View more &#8594;</Link>
+          <Link to={`/recipes/${recipeInfo.api_id}`}>View more &#8594;</Link>
           <button
             className="save-btn"
             onClick={handleOnClick}
