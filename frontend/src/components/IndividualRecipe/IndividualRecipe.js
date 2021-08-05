@@ -1,8 +1,10 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 // import cn from "classnames";
+import placeholder from "../../assets/placeholder.svg";
+import fbLogo from "../../assets/facebook-brands.svg";
 
-import { Paper, Typography } from "@material-ui/core";
+import { Paper, Typography, CircularProgress } from "@material-ui/core";
 import {
   makeStyles,
   createMuiTheme,
@@ -21,6 +23,30 @@ import Comment from "../Comment/Comment";
 import useReadjustTextareaHeight from "./useReadjustTextareaHeight";
 import SocialMediaShare from "./SocialMediaShare/SocialMediaShare";
 
+// convert string to array, the str is in format of:
+// Number + "[" + ingrdients + "]"
+// brackets used to determine start and ending of current string
+
+const stringToArray = (str, setState) => {
+  let i = 0;
+  while (i < str.length) {
+    if (str[i] === "[") {
+      let tmp_str = "";
+      while (str[i] !== "]") {
+        if (str[i] === "[") {
+          i++;
+          continue;
+        }
+        tmp_str += str[i];
+        i++;
+      }
+      // translated_arr.push(tmp_str);
+      setState((prevState) => [...prevState, tmp_str]);
+    }
+    i++;
+  }
+};
+
 export default function IndividualRecipe({ user }) {
   // console.log(user);
   const { recipeId } = useParams();
@@ -37,9 +63,13 @@ export default function IndividualRecipe({ user }) {
 
   const [postedBy, setPostedBy] = useState();
 
+  // For extra information, e.g calories, health score, ready time
   const [extraInformation, setExtraInformation] = useState([]);
 
   const [numPicked, setNumPicked] = useState(0);
+
+  // loading gif, when api is still fetching data
+  const [isLoading, setIsLoading] = useState(false);
 
   // comment box
   const INITIAL_HEIGHT = 75;
@@ -53,7 +83,6 @@ export default function IndividualRecipe({ user }) {
     if (!isExpanded) {
       outerHeight.current = containerRef.current.scrollHeight;
       setIsExpanded(true);
-      console.log("wtf");
     }
   };
 
@@ -62,33 +91,70 @@ export default function IndividualRecipe({ user }) {
     setIsExpanded(false);
   };
 
+  // Method 1:
+
+  // useEffect(() => {
+  //   const fetchRecipeInfo = async () => {
+  //     setIsLoading(true);
+  //     const { data, error } = await apiClient.fetchIndividualRecipeInfo(
+  //       recipeId
+  //     );
+  //     if (data) {
+  //       setRecipeInfo(data);
+  //       setExtraInformation({
+  //         ingredients: data.extendedIngredients.length,
+  //         healthScore: data.healthScore,
+  //         readyInMinutes: data.readyInMinutes,
+  //         servings: data.servings,
+  //         pricePerServing: data.pricePerServing,
+  //       });
+  //     }
+  //     if (data?.analyzedInstructions[0]?.steps) {
+  //       setRecipeInstructions(data.analyzedInstructions[0].steps);
+  //     }
+
+  //     if (data?.extendedIngredients) {
+  //       setRecipeIngredients(data.extendedIngredients);
+  //     }
+  //     if (error) {
+  //       console.log(error, "IndividualRecipe.js");
+  //     }
+  //     setTimeout(() => {
+  //       setIsLoading(false);
+  //     }, 1000);
+  //   };
+  //   fetchRecipeInfo();
+  // }, [recipeId]);
+
+  // method 2:
+
   useEffect(() => {
-    const fetchRecipeInfo = async () => {
-      const { data, error } = await apiClient.fetchIndividualRecipeInfo(
-        recipeId
-      );
+    const fetchCurrentRecipe = async () => {
+      setIsLoading(true);
+      const { data, error } = await apiClient.getIndividualRecipe(recipeId);
+
       if (data) {
+        stringToArray(data.ingredients, setRecipeIngredients);
+        stringToArray(data.steps, setRecipeInstructions);
         setRecipeInfo(data);
         setExtraInformation({
-          ingredients: data.extendedIngredients.length,
-          healthScore: data.healthScore,
-          readyInMinutes: data.readyInMinutes,
-          servings: data.servings,
-          pricePerServing: data.pricePerServing,
+          ingredients: data.ingredients.split("[").length - 1,
+          healthScore: "healthScore",
+          readyInMinutes: data.prep_time,
+          servings: "servings",
+          pricePerServing: data.expense / 100,
         });
       }
-      if (data?.analyzedInstructions[0]?.steps) {
-        setRecipeInstructions(data.analyzedInstructions[0].steps);
+
+      if (error) {
+        alert("IndividualRecipe.js useEffect: " + error);
       }
 
-      if (data?.extendedIngredients) {
-        setRecipeIngredients(data.extendedIngredients);
-      }
-      if (error) {
-        console.log(error, "IndividualRecipe.js");
-      }
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 800);
     };
-    fetchRecipeInfo();
+    fetchCurrentRecipe();
   }, [recipeId]);
 
   // get comments for cur recipe.
@@ -121,8 +187,8 @@ export default function IndividualRecipe({ user }) {
         amount: 0,
       };
       setCurComments((prevState) => [
-        ...prevState,
         published_comment_with_zero_likes,
+        ...prevState,
       ]);
     }
     if (error) {
@@ -134,8 +200,6 @@ export default function IndividualRecipe({ user }) {
   const handleTextAreaChange = (e) => {
     setComment(e.target.value);
   };
-
-  // console.log(recipeInfo);
 
   // Material ui
 
@@ -154,263 +218,331 @@ export default function IndividualRecipe({ user }) {
       third: { main: "#8bc34a", contrastText: "#fff" },
     },
   });
-  console.log("numPicked is", numPicked);
-  return (
-    <div className="IndividualRecipe">
-      <div className="recipe-top">
-        <div className="recipe-title">{recipeInfo.title}</div>
-        <div className="recipe-diet">
-          {recipeInfo.vegan ? (
-            <img src={veganIcon} alt="Vegan Icon"></img>
-          ) : null}
-          {recipeInfo.vegetarian ? (
-            <img src={vegetarianIcon} alt="Vegetarian Icon"></img>
-          ) : null}
-          {recipeInfo.dairyFree ? (
-            <img src={dairyfreeIcon} alt="Dairy Free Icon"></img>
-          ) : null}
-          {recipeInfo.glutenFree ? (
-            <img src={glutenfreeIcon} alt="Gluten Free Icon"></img>
-          ) : null}
-        </div>
-      </div>
-      {/*This is where the additional info go. E.g: ready in minutes, calories, etc*/}
-      <div className="recipe-additional-info">
-        {Object.entries(extraInformation).map(([key, val], i) => (
-          <>
-            <MuiThemeProvider theme={additionalInfoTheme}>
-              <Paper
-                elevation={3}
-                className={classes.paper}
-                style={{ minWidth: "280px" }}
-              >
-                <Typography
-                  variant="h4"
-                  color={i % 2 == 0 ? "primary" : "secondary"}
-                  gutterBottom
-                >
-                  {key}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  color={i % 2 == 0 ? "secondary" : "primary"}
-                >
-                  {val}
-                </Typography>
-              </Paper>
-              <br />
-            </MuiThemeProvider>
-          </>
-        ))}
-      </div>
-      <div className="recipe-display">
-        {/* Left Side */}
-        <div className="recipe-left">
-          <div className="recipe-img">
-            <img src={recipeInfo.image} alt={recipeInfo.title}></img>
-          </div>
-          <div className="recipe-ingre">
-            <div className="heading">Ingredients</div>
-            {recipeIngredients.length > 0
-              ? recipeIngredients.map((element) => (
-                  <div key={element.id}>{element.original}</div>
-                ))
-              : null}
-          </div>
-        </div>
 
-        {/* Right Side */}
-        <div className="recipe-right">
-          {/*<div className="jumpto">
-            {recipeInstructions.length > 0
-              ? Array.from(recipeInstructions.length, (i) => {
-                  console.log("here", i);
-                  return <div>i</div>;
-                })
-              : null}
-          </div>*/}
-          {/*<div className="heading">Steps</div>
-          {recipeInstructions.length > 0
-            ? recipeInstructions.map((element) => (
-                <>
-                  <a
-                    href={`#${element.number}`}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Paper
-                      key={element.number}
-                      className={`${classes.paper} ${
-                        numPicked === element.number ? "active" : ""
-                      }`}
-                      onClick={() => setNumPicked(element.number)}
-                    >
-                      <Typography variant="h6">
-                        Step {element.number}
-                      </Typography>
-                    </Paper>
-                  </a>
-                  <br />
-                </>
-              ))
-            : null}*/}
-          <div className="heading">Instructions</div>
-          {recipeInstructions.length > 0
-            ? recipeInstructions.map((element) => (
-                <>
+  const blurStyle = {
+    filter: "blur(8px)",
+  };
+
+  const EXTRA_INFO_ARRAY = [
+    "ingredients",
+    "healthScore",
+    "readyInMinutes",
+    "servings",
+    "pricePerServing",
+  ];
+
+  console.log(recipeInfo);
+  console.log(recipeInfo.description);
+  return (
+    <>
+      <div>
+        <div
+          className="IndividualRecipe"
+          // style={isLoading ? { filter: "blur(2px)" } : {}}
+        >
+          <div className="recipe-top">
+            <div className="recipe-title">{recipeInfo.title}</div>
+            <div className="recipe-diet">
+              {recipeInfo.vegan ? (
+                <img src={veganIcon} alt="Vegan Icon"></img>
+              ) : null}
+              {recipeInfo.vegetarian ? (
+                <img src={vegetarianIcon} alt="Vegetarian Icon"></img>
+              ) : null}
+              {recipeInfo.dairyfree ? (
+                <img src={dairyfreeIcon} alt="Dairy Free Icon"></img>
+              ) : null}
+              {recipeInfo.glutenfree ? (
+                <img src={glutenfreeIcon} alt="Gluten Free Icon"></img>
+              ) : null}
+            </div>
+          </div>
+          {/*This is where the additional info go. E.g: ready in minutes, calories, etc*/}
+          <div className="recipe-additional-info">
+            {EXTRA_INFO_ARRAY.map((r, i) => (
+              <>
+                <MuiThemeProvider theme={additionalInfoTheme}>
                   <Paper
-                    key={element.number}
-                    id={`${element.number}`}
                     elevation={3}
-                    // style={{
-                    //   backgroundColor:
-                    //     "#a7d2c5" && numPicked === element.number,
-                    // }}
+                    className={classes.paper}
+                    style={{ minWidth: "280px" }}
                   >
-                    {console.log(
-                      numPicked,
-                      element.number,
-                      numPicked === element.number
+                    {isLoading ? (
+                      <Typography
+                        variant="h4"
+                        color={i % 2 == 0 ? "primary" : "secondary"}
+                        gutterBottom
+                        className="boxGrayBig"
+                      ></Typography>
+                    ) : (
+                      <Typography
+                        variant="h4"
+                        color={i % 2 == 0 ? "primary" : "secondary"}
+                        gutterBottom
+                      >
+                        {EXTRA_INFO_ARRAY[i]}
+                      </Typography>
                     )}
-                    <Typography
-                      variant="h6"
-                      className={`${classes.paper} ${
-                        numPicked === element.number ? "active" : ""
-                      }`}
-                    >
-                      {element.number}. {element.step}
-                    </Typography>
+
+                    {isLoading ? (
+                      <Typography
+                        variant="body1"
+                        color={i % 2 == 0 ? "secondary" : "primary"}
+                        className={`${isLoading} ? boxGraySmall : ""`}
+                      ></Typography>
+                    ) : (
+                      <Typography
+                        variant="body1"
+                        color={i % 2 == 0 ? "secondary" : "primary"}
+                      >
+                        {extraInformation[EXTRA_INFO_ARRAY[i]]}
+                      </Typography>
+                    )}
                   </Paper>
                   <br />
-                </>
-              ))
-            : null}
-        </div>
-
-        <SocialMediaShare recipeInfo={recipeInfo} />
-        <div className="heading">Steps</div>
-        <div className="steps_div">
-          {recipeInstructions.length > 0
-            ? recipeInstructions.map((element) => (
-                <>
-                  <a
-                    onClick={() => setNumPicked(element.number)}
-                    href={`#${element.number}`}
-                    style={{ textDecoration: "none", maxHeight: "100px" }}
-                    className="steps_div_a"
-                  >
-                    <Paper key={element.number}>
-                      <Typography
-                        variant="h6"
-                        className={`${classes.paper} ${
-                          numPicked === element.number ? "active" : ""
-                        }`}
-                        onClick={(e) => console.log(e.target.className)}
-                      >
-                        Step {element.number}
-                      </Typography>
-                    </Paper>
-                  </a>
-                  <br />
-                </>
-              ))
-            : null}
-        </div>
-      </div>
-      <b> summary </b> : {recipeInfo.summary}
-      <div>
-        comment section:
-        <div className="container">
-          <form
-            onClick={onExpand}
-            onSubmit={handleSubmit}
-            ref={containerRef}
-            className={`comment-box ${isExpanded ? "expanded" : "collapsed"}
-            ${comment.length > 0 ? "modified" : ""}`}
-            style={{
-              minHeight: isExpanded ? outerHeight.current : INITIAL_HEIGHT,
-            }}
-          >
-            {!isExpanded && (
-              <div className="shareThoughts">
-                <div> Add a public comment... </div>
-                <button className="shareThoughtsBtn" type="submit">
-                  New Comment
-                </button>
+                </MuiThemeProvider>
+              </>
+            ))}
+          </div>
+          <div className="recipe-display">
+            {/* Left Side */}
+            <div className="recipe-left">
+              <div className="recipe-img">
+                {isLoading ? (
+                  <div className="imagePlaceholder">
+                    <CircularProgress
+                      color="primary"
+                      style={{
+                        position: "absolute",
+                        left: "50%",
+                        top: "50%",
+                        transform: "translate(-50%, -50%)",
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <img src={recipeInfo.image_url} alt={recipeInfo.title}></img>
+                )}
               </div>
-            )}
-            <div className="header">
-              <div className="user">
-                <img
-                  src="https://i.imgur.com/hepj9ZS.png"
-                  alt="User avatar"
-                  style={{ maxHeight: "30px" }}
-                />
-                <div className="user_info">
-                  {user?.email ? (
+              <div className="recipe-ingre">
+                <div className="heading">Ingredients</div>
+                {recipeIngredients.length > 0
+                  ? recipeIngredients.map((element, idx) => (
+                      <div key={idx}>{element} </div>
+                    ))
+                  : null}
+              </div>
+            </div>
+
+            {/* Right Side */}
+            <div className="recipe-right">
+              <div className="heading">Instructions</div>
+              {isLoading
+                ? [...Array(5)].map((x) => (
                     <>
-                      {" "}
-                      {user?.first_name} {user?.last_name}
+                      <Paper
+                        elevation={3}
+                        className={classes.paper}
+                        style={{ minWidth: "280px" }}
+                      >
+                        <Typography
+                          variant="body1"
+                          className={`${isLoading} ? boxGrayDescription : ""`}
+                        ></Typography>
+                      </Paper>
+                      <br />
                     </>
-                  ) : (
-                    "Guest User"
-                  )}
+                  ))
+                : recipeInstructions.length > 0
+                ? recipeInstructions.map((element, idx) => (
+                    <>
+                      <Paper
+                        key={idx}
+                        id={`${element.idx}`}
+                        elevation={3}
+                        // style={{
+                        //   backgroundColor:
+                        //     "#a7d2c5" && numPicked === element.number,
+                        // }}
+                      >
+                        <Typography
+                          variant="h6"
+                          className={`${classes.paper} ${
+                            numPicked === idx ? "active" : ""
+                          }`}
+                        >
+                          {idx + 1}. {element}
+                        </Typography>
+                      </Paper>
+                      <br />
+                    </>
+                  ))
+                : null}
+            </div>
+
+            <SocialMediaShare recipeInfo={recipeInfo} />
+            <div className="heading">Steps</div>
+            <div className="steps_div">
+              {isLoading
+                ? [...Array(5)].map((x) => (
+                    <>
+                      <Paper
+                        elevation={3}
+                        className={classes.paper}
+                        style={{ minWidth: "120px" }}
+                      >
+                        <Typography
+                          variant="body1"
+                          className={`${isLoading} ? boxGraySmall : ""`}
+                        ></Typography>
+                      </Paper>
+                      <br />
+                    </>
+                  ))
+                : recipeInstructions.length > 0
+                ? recipeInstructions.map((element, idx) => (
+                    <>
+                      <a
+                        onClick={() => setNumPicked(idx)}
+                        href={`#${idx}`}
+                        style={{ textDecoration: "none", maxHeight: "100px" }}
+                        className="steps_div_a"
+                      >
+                        <Paper key={idx}>
+                          <Typography
+                            variant="h6"
+                            className={`${classes.paper} ${
+                              numPicked === idx ? "active" : ""
+                            }`}
+                            onClick={(e) => console.log(e.target.className)}
+                          >
+                            Step {idx + 1}
+                          </Typography>
+                        </Paper>
+                      </a>
+                      <br />
+                    </>
+                  ))
+                : null}
+            </div>
+          </div>
+
+          {/*<b> summary </b> : {recipeInfo.summary}*/}
+
+          {/*Ignore for now*/}
+          <div>
+            comment section:
+            <div className="container">
+              {!user?.email ? (
+                <div className="comment-box">
+                  <div className="shareThoughts_notLoggedIn">
+                    You must be{" "}
+                    <Link to="/login" style={{ textDecoration: "none" }}>
+                      logged in{" "}
+                    </Link>{" "}
+                    to do that. Don't have an account? Sign up{" "}
+                    <Link to="/register" style={{ textDecoration: "none" }}>
+                      {" "}
+                      here{" "}
+                    </Link>
+                  </div>
+                  <textarea ref={textRef} />
                 </div>
-              </div>
-            </div>
-            <label htmlFor="textarea">What are your thoughts?</label>
-            <hr />
+              ) : (
+                <form
+                  onClick={onExpand}
+                  onSubmit={handleSubmit}
+                  ref={containerRef}
+                  className={`comment-box ${
+                    isExpanded ? "expanded" : "collapsed"
+                  }
+                ${comment.length > 0 ? "modified" : ""}`}
+                  style={{
+                    minHeight: isExpanded
+                      ? outerHeight.current
+                      : INITIAL_HEIGHT,
+                  }}
+                >
+                  {!isExpanded && (
+                    <div className="shareThoughts">
+                      <div> Add a public comment... </div>
+                      <button className="shareThoughtsBtn" type="submit">
+                        New Comment
+                      </button>
+                    </div>
+                  )}
 
-            <textarea
-              ref={textRef}
-              onClick={onExpand}
-              onFocus={onExpand}
-              onChange={handleTextAreaChange}
-              value={comment}
-              className="comment-field"
-              name="textarea"
-              id="comment"
-              placeholder={
-                !user?.email
-                  ? `You must be logged in to do that. Don't have an account? Sign up here`
-                  : `Share your thoughts here`
-              }
-              disabled={!user?.email ? true : false}
-            />
+                  <div className="header">
+                    <div className="user">
+                      <img
+                        src="https://i.imgur.com/hepj9ZS.png"
+                        alt="User avatar"
+                        style={{ maxHeight: "30px" }}
+                      />
+                      <div className="user_info">
+                        {user?.email ? (
+                          <>
+                            {user?.first_name} {user?.last_name}
+                          </>
+                        ) : (
+                          "Guest User"
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <label htmlFor="textarea">What are your thoughts?</label>
+                  <hr />
 
-            <div className="actions">
-              <button type="button" className="cancel" onClick={onClose}>
-                Cancel
-              </button>
-              <button type="submit" disabled={comment.length < 1}>
-                Add Comment
-              </button>
+                  <textarea
+                    ref={textRef}
+                    onClick={onExpand}
+                    onFocus={onExpand}
+                    onChange={handleTextAreaChange}
+                    value={comment}
+                    className="comment-field"
+                    name="textarea"
+                    id="comment"
+                    placeholder={`Share your thoughts here`}
+                    disabled={!user?.email ? true : false}
+                  />
+
+                  <div className="actions">
+                    <button type="button" className="cancel" onClick={onClose}>
+                      Cancel
+                    </button>
+                    <button type="submit" disabled={comment.length < 1}>
+                      Add Comment
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
-          </form>
+            <div>
+              {curComments.length} comment
+              {curComments.length !== 1 ? "s" : ""}{" "}
+            </div>
+            {curComments.length === 0 ? (
+              <div> Be the first to comment </div>
+            ) : (
+              <> </>
+            )}
+            {curComments.map((comment) => (
+              <Comment
+                comment={comment}
+                setCurComments={setCurComments}
+                curComments={curComments}
+                editCommentMsg={editCommentMsg}
+                setEditCommentMsg={setEditCommentMsg}
+                showEdit={showEdit}
+                setShowEdit={setShowEdit}
+                setSelectedCommentId={setSelectedCommentId}
+                selectedCommentId={selectedCommentId}
+                user={user}
+              />
+            ))}
+          </div>
         </div>
-        <div>
-          {curComments.length} comment{curComments.length !== 1 ? "s" : ""}{" "}
-        </div>
-        {curComments.length === 0 ? (
-          <div> Be the first to comment </div>
-        ) : (
-          <> </>
-        )}
-        {/*{curComments.forEach((c) => console.log("Inside forEach", c))}*/}
-        {curComments.map((comment) => (
-          <Comment
-            comment={comment}
-            setCurComments={setCurComments}
-            curComments={curComments}
-            editCommentMsg={editCommentMsg}
-            setEditCommentMsg={setEditCommentMsg}
-            showEdit={showEdit}
-            setShowEdit={setShowEdit}
-            setSelectedCommentId={setSelectedCommentId}
-            selectedCommentId={selectedCommentId}
-            user={user}
-          />
-        ))}
       </div>
-    </div>
+    </>
   );
 }

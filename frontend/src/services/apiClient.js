@@ -96,6 +96,12 @@ class ApiCalls {
         });
     }
 
+    async getIndividualRecipe(recipeId) {
+        return await this.request({
+            endpoint: `recipes/individualRecipe/${recipeId}`,
+        });
+    }
+
     async checkIfRecipeExists(cur_recipe) {
         return await this.request({
             endpoint: `save/isRecipeSaved`,
@@ -259,8 +265,12 @@ class ApiCalls {
     }
 
     async saveMealPlan(mealPlan) {
-        console.log("WAAIT", mealPlan)
-        return await this.request({ endpoint: `save/recipe/x`, method:`POST`, data: mealPlan});
+        console.log("WAAIT", mealPlan);
+        return await this.request({
+            endpoint: `save/recipe/x`,
+            method: `POST`,
+            data: mealPlan,
+        });
     }
 }
 

@@ -16,12 +16,21 @@
 
 .comment_headers,
 .comment_desc {
-    margin: 20px;
+    margin: 10px 20px;
 }
 
 .comment_flex {
     display: flex;
     align-items: center;
+}
+
+.comment_flex_menu {
+    /*flex: 2;*/
+    flex: 0.7;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 60px;
 }
 
 .comment_flex img {
@@ -31,11 +40,13 @@
 }
 
 .comment_flex_h3 {
-    margin-right: 50px;
+    margin-right: 20px;
 }
 
 .comment_desc {
+    word-wrap: break-word;
     margin-left: 70px;
+    margin-right: 70px;
 }
 
 .comment_footer {
@@ -66,4 +77,9 @@
 #editBtn {
     background: #00a9da;
     color: white;
+}
+
+.comment_flex_wrapper {
+    display: flex;
+    justify-content: space-between;
 }
