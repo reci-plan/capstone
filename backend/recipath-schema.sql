@@ -20,7 +20,11 @@ CREATE TABLE all_recipes (
     rating          INTEGER NOT NULL,
     expense         INTEGER NOT NULL,
     ingredients     TEXT,
-    steps           TEXT
+    steps           TEXT,
+    vegan           BOOLEAN DEFAULT FALSE,
+    vegetarian      BOOLEAN DEFAULT FALSE,
+    glutenFree      BOOLEAN DEFAULT FALSE,
+    dairyFree       BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE community_all_recipes (

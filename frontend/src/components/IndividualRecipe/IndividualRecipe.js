@@ -136,7 +136,7 @@ export default function IndividualRecipe({ user }) {
       if (data) {
         stringToArray(data.ingredients, setRecipeIngredients);
         stringToArray(data.steps, setRecipeInstructions);
-        // setRecipeInfo(data);
+        setRecipeInfo(data);
         // setExtraInformation({
         //   ingredients: "ingredients",
         //   healthScore: "healthScore",
@@ -149,6 +149,7 @@ export default function IndividualRecipe({ user }) {
       if (error) {
         alert("IndividualRecipe.js useEffect: " + error);
       }
+
       setTimeout(() => {
         setIsLoading(false);
       }, 800);
@@ -317,7 +318,7 @@ export default function IndividualRecipe({ user }) {
                     />
                   </div>
                 ) : (
-                  <img src={recipeInfo.image} alt={recipeInfo.title}></img>
+                  <img src={recipeInfo.image_url} alt={recipeInfo.title}></img>
                 )}
               </div>
               <div className="recipe-ingre">

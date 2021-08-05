@@ -81,6 +81,11 @@ class Recipe {
                 }
             });
 
+            // vegan
+            // vegetarian
+            // dairyFree
+            // glutenFree
+
             arr.push({
                 id: r.id,
                 title: r.title,
@@ -92,6 +97,10 @@ class Recipe {
                 rating: parseInt(r.spoonacularScore),
                 steps: steps_str,
                 ingredients: ingredients_str,
+                vegan: r.vegan,
+                vegetarian: r.vegetarian,
+                dairyFree: r.dairyFree,
+                glutenFree: r.glutenFree,
             });
         });
 
@@ -104,9 +113,9 @@ class Recipe {
             }
 
             const queryString = `
-            INSERT INTO all_recipes (api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-                RETURNING id, api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps
+            INSERT INTO all_recipes (api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+                RETURNING id, api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree
             `;
             const results = await db.query(queryString, [
                 arr[i].id,
@@ -119,6 +128,10 @@ class Recipe {
                 arr[i].expense,
                 arr[i].ingredients,
                 arr[i].steps,
+                arr[i].vegan,
+                arr[i].vegetarian,
+                arr[i].glutenFree,
+                arr[i].dairyFree,
             ]);
             result_arr.push(results.rows);
         }
@@ -144,7 +157,7 @@ class Recipe {
     static async getIndividualRecipe(api_id) {
         const results = await db.query(
             `
-            SELECT title, category, image_url, prep_time, description, rating, expense, ingredients, steps FROM all_recipes
+            SELECT title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree FROM all_recipes
             WHERE api_id = $1
         `,
             [api_id]
