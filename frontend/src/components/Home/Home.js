@@ -56,12 +56,16 @@ export default function Home({ user, handleSave, handleUnsave }) {
 
     useEffect(() => {
         const time = getGreeting();
+
+        // Main course || side dish || salad || appetizer || soup 
+        const meals = [64, 32, 16, 8, 4]
         if (time === "Good Morning") {
-            setBitValue(128);
+            // breakfast
+            setBitValue(128)
         } else if (time === "Good Afternoon") {
-            setBitValue(64);
+            setBitValue(meals[Math.floor(Math.random() * meals.length)]);
         } else {
-            setBitValue(64);
+            setBitValue(meals[Math.floor(Math.random() * meals.length)]);
         }
     }, []);
 
