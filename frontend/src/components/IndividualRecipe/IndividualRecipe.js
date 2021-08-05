@@ -187,8 +187,8 @@ export default function IndividualRecipe({ user }) {
         amount: 0,
       };
       setCurComments((prevState) => [
-        ...prevState,
         published_comment_with_zero_likes,
+        ...prevState,
       ]);
     }
     if (error) {
