@@ -79,9 +79,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
             <div className="home-header">
                 {user.email ? (
                     <div>
-                        <div>
-                            {getGreeting()}, {user.first_name} {user.last_name}!
-                        </div>
+                        {getGreeting()}, {user.first_name} {user.last_name}!
                     </div>
                 ) : (
                     <div>
