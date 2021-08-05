@@ -70,6 +70,10 @@ export default function RecipeCard({
           <img src={timeIcon} alt="Time sign"></img>
           <span>Time (min) : {recipeInfo.prep_time}</span>
         </div>
+        <div className="card-tips">
+          <img src={timeIcon} alt="Time sign"></img>
+          <span>Rating (%) : {recipeInfo.rating}</span>
+        </div>
       </div>
       {links ? 
         <>

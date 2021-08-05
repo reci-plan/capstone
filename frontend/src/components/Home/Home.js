@@ -211,7 +211,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
     
                 {sortby === "rating" ? (
                     <>
-                        <div className="category-header">Over 80 points</div>
+                        <div className="category-header">Over 80%</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}
@@ -222,7 +222,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
                             handleUnsave={handleUnsave}
                         />
     
-                        <div className="category-header">Over 60 points</div>
+                        <div className="category-header">Over 60%</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}
@@ -233,7 +233,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
                             handleUnsave={handleUnsave}
                         />
     
-                        <div className="category-header">Over 40 points</div>
+                        <div className="category-header">Over 40%</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}
