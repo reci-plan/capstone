@@ -134,6 +134,22 @@ class Save {
   
       return results.rows[0];
     }
+
+    static async fetchSavedMealPlans(user) {
+      if (!user) {
+        throw new UnauthorizedError(`No user logged in.`);
+      }
+  
+      const query = `
+        SELECT * FROM saved_meal_plans
+        WHERE user_id = (SELECT id FROM users WHERE username = $1)
+        ORDER BY saved_meal_plans.date DESC
+      `;
+  
+      const results = await db.query(query, [user.username]);
+  
+      return results.rows;
+    }
 }
 
 module.exports = Save;

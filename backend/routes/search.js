@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Search = require('../models/search')
+const Search = require('../models/Search')
 
 router.get('/', async(req, res, next) => {
   try {

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Save = require("../models/save");
+const Save = require("../models/Save");
 const { requireAuthenticatedUser } = require("../middleware/security");
 
 router.get("/recipes", requireAuthenticatedUser, async (req, res, next) => {
@@ -54,6 +54,16 @@ router.get('/check/:recipeId', requireAuthenticatedUser, async (req, res, next) 
         const mealPlan = req.body;
         const saveMealPlan = await Save.saveMealPlan(user, mealPlan);
         res.status(201).json({ saveMealPlan });
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get("/mealPlans", requireAuthenticatedUser, async (req, res, next) => {
+    try {
+        const user = res.locals.user;
+        const savedMealPlans = await Save.fetchSavedMealPlans(user);
+        res.status(200).json({ savedMealPlans });
     } catch (err) {
         next(err);
     }

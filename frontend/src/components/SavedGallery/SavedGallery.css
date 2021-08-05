@@ -4,6 +4,13 @@
   flex-wrap: wrap;
   padding-top: 100px;
 }
-.SavedGallery div {
-  max-width: 250px;
+
+.saveRow {
+  display: flex;
+  flex-direction: column;
+}
+
+.mealPlan {
+  background-color: yellowgreen;
+  margin: 10px 0px;
 }

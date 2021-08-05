@@ -44,6 +44,7 @@ export default function SearchFilter({ user, recipes, handleSave, handleUnsave }
     const index = data.indexOf(e.target.innerHTML)
     setCategoryName(e.target.innerHTML)
     setCategory(1 << (11 - index))
+    //console.log("CAT", category, "INDEX", index, "NAME", e.target.innerHTML, "RESULT", 1 << (11 - index))
     setShow(!show)
   }
 

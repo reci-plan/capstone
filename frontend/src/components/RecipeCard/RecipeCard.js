@@ -14,10 +14,13 @@ export default function RecipeCard({
   recipeInfo,
   handleSave,
   handleUnsave,
-  handleLinks
+  handleLinks,
+  handleLikes
 }) {
   const [saved, setSaved] = useState(false);
   const [links, setLinks] = useState(true);
+  
+  const [likes, setLikes] = useState(true);
 
   useEffect(() => {
     const checkRecipe = async () => {
@@ -32,10 +35,13 @@ export default function RecipeCard({
       if (handleLinks === false) {
         setLinks(false)
       }
+      if (handleLikes === false) {
+        setLikes(false)
+      }
     };
 
     checkRecipe();
-  }, [recipeInfo]);
+  }, [recipeInfo, handleLinks, handleLikes]);
 
   const limit = 17;
 
@@ -53,6 +59,8 @@ export default function RecipeCard({
 
   return (
     <div className="RecipeCard">
+      {/* {Promise.resolve(recipeInfo).then(function(val) {console.log(val)})} */}
+      {console.log("RECINFO", recipeInfo)}
       <div className="card-img">
         <img src={recipeInfo.image_url} alt={recipeInfo.title}></img>
       </div>
@@ -71,25 +79,32 @@ export default function RecipeCard({
           <span>Time (min) : {recipeInfo.prep_time}</span>
         </div>
       </div>
-      {links ? 
-        <>
+
         <div className="card-links">
-          <Link to={`recipes/${recipeInfo.api_id}`}>View more &#8594;</Link>
-          <button
-            className="save-btn"
-            onClick={handleOnClick}
-          >
-            {saved ? (
-              <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
-            ) : (
-              <img src={heart} alt="Heart to save recipe"></img>
-            )}
-          </button>
+          {links ? 
+            <>
+              <Link to={`/recipes/${recipeInfo.api_id}`}>View more &#8594;</Link>
+              </>
+            :
+            ""
+          }
+
+          {likes ?
+            <>
+              <button
+                className="save-btn"
+                onClick={handleOnClick}
+              >
+                {saved ? (
+                  <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
+                ) : (
+                  <img src={heart} alt="Heart to save recipe"></img>
+                )}
+              </button>
+            </>
+            : ""
+          }
         </div>
-        </>
-        :
-        ""
-      }
     </div>
   );
 }

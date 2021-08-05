@@ -30,7 +30,11 @@ function App() {
   const [profile, setProfile] = useState({});
   const [flavors, setFlavors] = useState([]);
   const [saved, setSaved] = useState([]);
+  const [changeSavePlan, setChangeSavePlan] = useState(false);
+  const [savePlan, setSavePlan] = useState([]);
   const [changeSave, setChangeSave] = useState(false);
+
+  const array1 = [1, 2, 3, 4]
 
   const allFlavors = [
     "spicy",
@@ -118,6 +122,7 @@ function App() {
     const fetchRecipes = async () => {
       const { data, error } = await apiClient.fetchSavedRecipes();
       if (data) {
+        console.log("SAVED REC",data.savedRecipes)
         setSaved(data.savedRecipes);
       }
 
@@ -127,7 +132,7 @@ function App() {
     };
     fetchRecipes();
   }, [user, changeSave]);
-
+  
   // Handle save recipe
   const handleSave = async (r) => {
     const { data, error } = await apiClient.saveRecipe(r);
@@ -159,6 +164,65 @@ function App() {
   const handleUpdateUser = async (user) => {
     setUser(user);
   };
+
+  const fetchRecipeInfo = async (id) => {
+    // console.log("ID------------>", id)
+    if ( id != null) {
+        console.log("ID------------>", id)
+        const { data, error } = await apiClient.fetchLocalDbRecipe(id);
+        
+        if (data) {
+            console.log("MY SAVED RECIPE DATA TO PASS TO CARD: ", data.recipe)
+            return data.recipe;
+        }
+        else {
+            console.log("ERROR IN SAVED GALLERY")
+        }
+    }
+}
+  // Fetch saved meal plans
+  useEffect(() => {
+    const fetchPlans = async () => {
+      const { data, error } = await apiClient.fetchSavedMealPlans();
+      console.log("SAVED MEAL PLANS: ", data.savedMealPlans)
+      if (data) {
+        console.log("Success- continue");
+      }
+      if (error) {
+        console.log(error, "fetch saved meal plans");
+      }
+      var setMealPlans = []
+      var recData = []
+      data.savedMealPlans.forEach((s) => {
+        var mealPlan = []
+        for (let i = 0; i < 4; i++) {
+          if (s[`recipe_id${i}`] !== null && typeof s[`recipe_id${i}`] != 'undefined') {
+            mealPlan.push(s[`recipe_id${i}`])
+          }
+        }
+        setMealPlans.push(mealPlan)
+        console.log("SET PLANS", setMealPlans)
+      })
+      //const dataOne = await apiClient.fetchLocalDbRecipe(recId[0]);
+      //console.log("FIRST REC", dataOne.data.recipe, recId[0])
+      for (const rec of setMealPlans) {
+        var temp =[]
+        for (let i = 0; i < rec.length; i++) {
+          const recipeInfo = await apiClient.fetchLocalDbRecipe(rec[i])
+          console.log("PEND", recipeInfo.data.recipe)
+          temp.push(recipeInfo.data.recipe)
+        }
+        recData.push(temp)
+        // const recipeInfo = await apiClient.fetchLocalDbRecipe(rec)
+        // recData.push(recipeInfo.data.recipe)
+      }
+      console.log("SET:", recData)
+      if (recData) {
+        setSavePlan(recData);
+      }
+    };
+    fetchPlans();
+  }, [user, changeSavePlan]);
 
   return (
     <div className="App">
@@ -235,6 +299,7 @@ function App() {
               <SavedGallery
                 user={user}
                 saved={saved}
+                savePlan={savePlan}
                 handleSave={handleSave}
                 handleUnsave={handleUnsave}
               />

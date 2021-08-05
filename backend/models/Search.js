@@ -28,9 +28,8 @@ class Search {
         SELECT * FROM all_recipes
         WHERE id = $1
     `, [recipeId])
-    
     return results.rows[0]
-}
+  }
 }
 
 module.exports = Search

@@ -189,6 +189,7 @@ class ApiCalls {
     async fetchLocalDbRecipe(recipeId) {
         return await this.request({
             endpoint: `search/id/${recipeId}`,
+            method: `GET`
         });
     }
 
@@ -261,6 +262,10 @@ class ApiCalls {
     async saveMealPlan(mealPlan) {
         console.log("WAAIT", mealPlan)
         return await this.request({ endpoint: `save/recipe/x`, method:`POST`, data: mealPlan});
+    }
+
+    async fetchSavedMealPlans() {
+        return await this.request({ endpoint: `save/mealPlans`, method: `GET` });
     }
 }
 

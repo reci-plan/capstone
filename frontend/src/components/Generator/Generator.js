@@ -233,6 +233,7 @@ export default function Generator({user}) {
                           user={user}
                           recipeInfo={recipes[numMeal]}
                           handleLinks={(false)}
+                          handleLikes={(false)}
                         />
                         <button className="keepBut" onClick={keepMeal}>Keep</button>
                       </> :
@@ -253,6 +254,7 @@ export default function Generator({user}) {
                 user={user}
                 recipeInfo={recipes[idx]}
                 handleLinks={(false)}
+                handleLikes={(false)}
               />
               {/* {times[idx]} {meals[idx]} {titles[idx]} <img src={images[idx]}></img> {preps[idx]} {ratings[idx]} */}
             </div>
