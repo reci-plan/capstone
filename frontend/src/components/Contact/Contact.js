@@ -9,7 +9,7 @@ export default function Contact() {
       <div className="contact-img">
         <img src={envelope} alt="Envelope"></img>
       </div>
-      <form>
+      <form className="contact-form">
         <div className="section-title">Have Questions?</div>
         <div className="input-name">
           <input
