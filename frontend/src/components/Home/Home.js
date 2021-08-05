@@ -28,6 +28,11 @@ export default function Home({ user, handleSave, handleUnsave }) {
         fetchRecipes();
     }, []);
 
+    const toggleRecBtn = () => {
+        setDisplayByRec(true)
+        setDropdownIsOpen(false);
+    }
+    
     const toggleSortbyBtn = () => {
         setDropdownIsOpen(!dropdownIsOpen);
         setDisplayByRec(false)
@@ -86,7 +91,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
             </div>
 
             <div className="btn-display">
-                <button className="rec-btn" onClick={e => setDisplayByRec(true)}>
+                <button className="rec-btn" onClick={toggleRecBtn}>
                     Recommendations
                 </button>
                 <div>
