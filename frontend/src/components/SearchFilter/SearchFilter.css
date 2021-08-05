@@ -5,7 +5,7 @@
   width: 100vw;
   overflow: hidden;
   height: 360px;
-  background-size: 100%;
+  background-size: cover;
   background-position: center;
 
   display: flex;

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useParams } from "react-router"
 import RecipeCard from "../../RecipeCard/RecipeCard";
-import close from "../../../assets/close.svg";
+import navbar from "../../../assets/navbar.png"
 import "./FilterResults.css"
 
 export default function FilterResults({ user, recipes, handleSave, handleUnsave }) {
@@ -23,10 +23,9 @@ export default function FilterResults({ user, recipes, handleSave, handleUnsave 
   ]
 
   const [category, setCategory] = useState(categoryType !== "View All" ? (1 << (11 - data.indexOf(categoryType))) : 0)
-  console.log(categoryType, category)
 
   return (
-    <div className="FilterResults">
+    <div className="FilterResults" style={{backgroundImage: `url(${navbar})`}}>
       <div className="filter-display-name">
         {recipes
             .filter((r) => Boolean((r.category & category) === category)).length === 0 ? 

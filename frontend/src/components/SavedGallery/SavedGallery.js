@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import apiClient from "../../services/apiClient";
 import { useDataLayerValue } from "../../context/DataLayer";
 import RecipeCard from "../RecipeCard/RecipeCard";
+import navbar from "../../assets/navbar.png"
 
 import "./SavedGallery.css";
 
 export default function SavedGallery({ user, saved, handleSave, handleUnsave }) {
     return (
-        <div className="SavedGallery">
+        <div className="SavedGallery" style={{backgroundImage: `url(${navbar})`}}>
             <div className="section-title">Saved Recipes</div>
             <div className="filter-display">
             {saved ?

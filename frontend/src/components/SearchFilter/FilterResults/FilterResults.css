@@ -1,12 +1,8 @@
 .FilterResults {
   padding: 120px;
-  /* padding-bottom: 0;
   background-repeat: no-repeat;
-  width: 100vw;
-  overflow: hidden;
-  height: 360px;
+  background-position-x: 40%;
   background-size: 100%;
-  background-position: center; */
 
   display: flex;
   justify-content: center;

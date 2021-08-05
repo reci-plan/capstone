@@ -4,6 +4,7 @@
   font-size: 30px;
   background-repeat: no-repeat;
   background-position-x: 40%;
+  background-size: 100%;
 }
 .mission p, .aboutus a {
   font-family: 'Lato', sans-serif;
@@ -18,7 +19,6 @@
 
 .aboutus {
   padding: 10px 100px;
-  margin: 10px 0;
 }
 .people {
   display: flex;

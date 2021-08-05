@@ -1,5 +1,8 @@
 .SavedGallery {
   padding: 120px;
+  background-repeat: no-repeat;
+  background-position-x: 40%;
+  background-size: 100%;
 }
 
 
