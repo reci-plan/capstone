@@ -14,6 +14,7 @@ import apiClient from "../../services/apiClient";
 import PublicProfile from "../PublicProfile/PublicProfile";
 import Generator from "../Generator/Generator";
 import SearchFilter from "../SearchFilter/SearchFilter";
+import FilterResults from "../SearchFilter/FilterResults/FilterResults";
 // import Community from "../Community/Community";
 // import CommunityEdit from "../CommunityEdit/CommunityEdit";
 import AboutUs from "../About/About";
@@ -239,6 +240,15 @@ function App() {
             path="/search"
             element={
               <SearchFilter
+                user={user}
+              />
+            }
+          />
+
+          <Route
+            path="/search/:categoryType"
+            element={
+              <FilterResults
                 user={user}
                 recipes={recipes}
                 handleSave={handleSave}

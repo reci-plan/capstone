@@ -21,7 +21,6 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
   
   useEffect(() => {
     function handleOutsideClick(event) {
-      console.log(event.target)
       if (searchBox.current && !searchBox.current.contains(event.target)) {
         setIsSearch(false)
       }
