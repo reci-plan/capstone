@@ -133,9 +133,10 @@ export default function Home({ user, handleSave, handleUnsave }) {
                 </div>
                 :
                 <>
+                {/* fix price */}
                 {sortby === "price" ? (
                     <>
-                        <div className="category-header">Under $30</div>
+                        <div className="category-header">Under $10</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}
@@ -146,7 +147,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
                             handleUnsave={handleUnsave}
                         />
     
-                        <div className="category-header">Under $40</div>
+                        <div className="category-header">Under $20</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}
@@ -157,7 +158,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
                             handleUnsave={handleUnsave}
                         />
     
-                        <div className="category-header">Under $50</div>
+                        <div className="category-header">Under $30</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}
