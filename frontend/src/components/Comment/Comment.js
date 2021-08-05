@@ -5,6 +5,21 @@ import moment from "moment";
 import apiClient from "../../services/apiClient";
 import "./Comment.css";
 
+import { makeStyles } from "@material-ui/core/styles";
+import Popover from "@material-ui/core/Popover";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Menu from "@material-ui/core/Menu";
+import Grid from "@material-ui/core/Grid";
+import MenuItem from "@material-ui/core/MenuItem";
+
+const useStyles = makeStyles((theme) => ({
+    typography: {
+        padding: theme.spacing(2),
+    },
+}));
+
 export default function Comment({
     comment,
     setCurComments,
@@ -17,18 +32,36 @@ export default function Comment({
     selectedCommentId,
     user,
 }) {
-    // console.log("comment is", comment);
     const { recipeId } = useParams();
     const [alreadyLiked, setAlreadyLiked] = useState(false);
 
     const [authorOfComment, setAuthorOfComment] = useState("");
+
+    const classes = useStyles();
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
 
     useEffect(() => {
         const checkAuthorOfComment = async () => {
             const { data, error } = await apiClient.getOwnerOfComment(comment);
             if (data) {
                 // console.log("valid call", data);
-                setAuthorOfComment(data.ownerOfComment.username);
+                setAuthorOfComment(
+                    data.ownerOfComment.first_name[0].toUpperCase() +
+                        data.ownerOfComment.first_name.slice(1) +
+                        " " +
+                        data.ownerOfComment.last_name[0].toUpperCase()
+                );
             }
             if (error) {
                 alert(`Comment.js checkAuthorOfComment(): ${error}`);
@@ -56,6 +89,7 @@ export default function Comment({
 
     // For deleting a comment.
     const handleDelete = async (e, comment) => {
+        handleClose();
         // console.log("Before api call", comment);
         const { data, error } = await apiClient.deleteComment(comment);
         if (data) {
@@ -89,6 +123,7 @@ export default function Comment({
 
     // when user clicks "Edit" or "Unedit" button
     const handleShowEdit = (e, comment) => {
+        handleClose();
         setShowEdit(!showEdit);
         setEditCommentMsg(comment.comment);
         setSelectedCommentId(comment.id);
@@ -143,20 +178,70 @@ export default function Comment({
                             <h3 className="comment_flex_h3">
                                 <b>
                                     <Link
+                                        style={{ textDecoration: "none" }}
                                         to={`/publicProfile/${comment.user_id}`}
                                     >
-                                        {authorOfComment}
+                                        {authorOfComment}.
                                     </Link>
                                 </b>
                             </h3>
+                            <div style={{ color: "#B8B7B4" }}>
+                                {moment(comment.date).fromNow()}{" "}
+                            </div>
+                        </div>
+                        <div className="comment_flex_menu">
+                            <IconButton
+                                aria-label="more"
+                                aria-controls="long-menu"
+                                aria-haspopup="true"
+                                onClick={handleClick}
+                            >
+                                <MoreVertIcon />
+                            </IconButton>
+                            <Menu
+                                id="long-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={open}
+                                onClose={handleClose}
+                                PaperProps={{
+                                    style: {
+                                        maxHeight: 20 * 4.5,
+                                        width: "9.5ch",
+                                    },
+                                }}
+                                anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "right",
+                                }}
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "left",
+                                }}
+                            >
+                                <MenuItem
+                                    key={"edit"}
+                                    onClick={(e, c) =>
+                                        handleShowEdit(e, comment)
+                                    }
+                                >
+                                    Edit
+                                </MenuItem>
+                                <MenuItem
+                                    key={"delete"}
+                                    onClick={(e) => handleDelete(e, comment)}
+                                >
+                                    Delete
+                                </MenuItem>
+                            </Menu>
                         </div>
                     </div>
+
                     <div className="comment_desc" style={{ color: "#575757" }}>
                         {comment?.comment}
                     </div>
 
-                    <div> {moment(comment.date).fromNow()} </div>
-                    <div
+                    {/*<div
                         className="comment_footer"
                         style={{ marginRight: "20px" }}
                     >
@@ -185,7 +270,7 @@ export default function Comment({
                         ) : (
                             <> </>
                         )}
-                    </div>
+                    </div>*/}
 
                     {/*{
     alreadyLiked ? (

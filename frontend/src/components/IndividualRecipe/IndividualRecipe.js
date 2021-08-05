@@ -137,13 +137,13 @@ export default function IndividualRecipe({ user }) {
         stringToArray(data.ingredients, setRecipeIngredients);
         stringToArray(data.steps, setRecipeInstructions);
         setRecipeInfo(data);
-        // setExtraInformation({
-        //   ingredients: "ingredients",
-        //   healthScore: "healthScore",
-        //   readyInMinutes: "readyInMinutes",
-        //   servings: "servings",
-        //   pricePerServing: "pricePerServing",
-        // });
+        setExtraInformation({
+          ingredients: data.ingredients.split("[").length - 1,
+          healthScore: "healthScore",
+          readyInMinutes: data.prep_time,
+          servings: "servings",
+          pricePerServing: data.expense / 100,
+        });
       }
 
       if (error) {
@@ -228,8 +228,11 @@ export default function IndividualRecipe({ user }) {
     "healthScore",
     "readyInMinutes",
     "servings",
+    "pricePerServing",
   ];
-  //    // style={{ backgroundImage: `url(${home})` }}
+
+  console.log(recipeInfo);
+  console.log(recipeInfo.description);
   return (
     <>
       <div>
@@ -246,17 +249,17 @@ export default function IndividualRecipe({ user }) {
               {recipeInfo.vegetarian ? (
                 <img src={vegetarianIcon} alt="Vegetarian Icon"></img>
               ) : null}
-              {recipeInfo.dairyFree ? (
+              {recipeInfo.dairyfree ? (
                 <img src={dairyfreeIcon} alt="Dairy Free Icon"></img>
               ) : null}
-              {recipeInfo.glutenFree ? (
+              {recipeInfo.glutenfree ? (
                 <img src={glutenfreeIcon} alt="Gluten Free Icon"></img>
               ) : null}
             </div>
           </div>
           {/*This is where the additional info go. E.g: ready in minutes, calories, etc*/}
           <div className="recipe-additional-info">
-            {[...Array(4)].map((r, i) => (
+            {EXTRA_INFO_ARRAY.map((r, i) => (
               <>
                 <MuiThemeProvider theme={additionalInfoTheme}>
                   <Paper

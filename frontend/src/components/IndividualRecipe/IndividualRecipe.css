@@ -107,7 +107,7 @@ button:disabled {
 }
 
 button[type="submit"] {
-  background: #1a8917;
+  background: #6210f5;
   color: #fff;
   border-radius: 5px;
 }
@@ -175,6 +175,10 @@ button[type="submit"] {
   transform: translateY(-32px);
   line-height: 1;
   background-color: white;
+}
+
+.comment-box.expanded {
+  border: 1px solid black;
 }
 
 .comment-box.expanded .comment-field {
