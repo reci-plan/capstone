@@ -18,7 +18,9 @@ CREATE TABLE all_recipes (
     prep_time       INTEGER NOT NULL,
     description     TEXT,
     rating          INTEGER NOT NULL,
-    expense         INTEGER NOT NULL
+    expense         INTEGER NOT NULL,
+    ingredients     TEXT,
+    steps           TEXT
 );
 
 CREATE TABLE community_all_recipes (
