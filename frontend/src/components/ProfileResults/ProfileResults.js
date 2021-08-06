@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom"
+
+import tempImg from "../../assets/tempProfileImg.png";
 import "./ProfileResults.css"
 
 export default function ProfileResults({ user, profile, allProfiles, profileTerm, setProfileId }) {
@@ -6,7 +8,7 @@ export default function ProfileResults({ user, profile, allProfiles, profileTerm
   console.log(allProfiles)
   return (
     <div className="ProfileResults">
-      <div>Profile Results</div>
+      <div className="section-title">Profile Search Results: {profileTerm}</div>
       {allProfiles.length > 0 ?
         allProfiles[0]
           .filter((r) => (
@@ -16,8 +18,14 @@ export default function ProfileResults({ user, profile, allProfiles, profileTerm
           ))
           
           .map((r) => (
-            <Link to={`/profile/${r.id}`} onClick={e => setProfileId(r.id)}>
-              <div key={r.id}>{r.first_name} {r.last_name}</div>
+            <Link key={r.id} to={`/profile/${r.id}`} onClick={e => setProfileId(r.id)}>
+              {allProfiles[1]
+                .filter((p) => p.id === r.id)
+                .map((p) => (
+                  <img src={p.image_url ? p.image_url : tempImg} alt={`${r.first_name} profile img`}></img>
+                ))
+              } 
+              <div>{r.first_name} {r.last_name}</div>
             </Link>
           ))
 

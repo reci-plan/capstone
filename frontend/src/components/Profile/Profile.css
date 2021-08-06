@@ -103,13 +103,14 @@
 .profile-search {
   display: flex;
   height: 30px;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   overflow: hidden;
 }
 
 .profile-search input {
   height: 100%;
+  width: auto;
 }
 
 .profile-search > div {
@@ -119,7 +120,7 @@
 }
 
 .profile-search > div > img {
-  width: 80%;
+  width: 60%;
 }
 
 @media only screen and (max-width: 700px) {

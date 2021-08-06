@@ -8,7 +8,7 @@ import location from "../../assets/location.svg";
 import profileBackground from "../../assets/profile.png";
 import "./Profile.css";
 
-export default function Profile({ user, profile = {}, setProfileTerm, isCurrentUser = true }) {
+export default function Profile({ user, profile, setProfileTerm, isCurrentUser = true }) {
     const navigate = useNavigate()
     const [flavors, setFlavors] = useState("")
 

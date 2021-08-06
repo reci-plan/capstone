@@ -27,7 +27,6 @@ export default function EditProfile({
   });
   const [errors, setErrors] = useState({});
   const [flavors, setFlavors] = useState("");
-  const [addFlavors, setAddFlavors] = useState(flavors);
   const [image, setImage] = useState("");
 
   const handleInputChange = (e) => {
@@ -70,7 +69,7 @@ export default function EditProfile({
       setErrors((e) => ({ ...e, passwordConfirm: null }));
     }
 
-    addFlavors.forEach((item) => (form.fav_flavors += item.id));
+    flavors.forEach((item) => (form.fav_flavors += item.id));
 
     const { data, error } = await apiClient.updateProfile({
       first_name: form.first_name,
@@ -104,15 +103,15 @@ export default function EditProfile({
   ];
 
   const onSelect = (list, item) => {
-    setAddFlavors(list);
+    setFlavors(list);
   };
 
   const onRemove = (list, item) => {
     if (list.length == 0) {
-      setAddFlavors([]);
+      setFlavors([]);
       return;
     }
-    setAddFlavors(list);
+    setFlavors(list);
   };
 
   const allFlavors = [
