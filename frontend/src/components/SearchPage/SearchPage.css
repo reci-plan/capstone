@@ -2,8 +2,10 @@
     padding: 120px;
 }
 
-.filtered-recipes {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
+@media only screen and (max-width: 700px) {
+    .SearchPage {
+      padding: 80px 50px;
+      background-size: auto;
+      background-position-x: 85%;
+    }
+  }

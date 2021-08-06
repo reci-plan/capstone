@@ -204,6 +204,7 @@ function App() {
               <Profile 
                 user={user} 
                 profile={profile} 
+                profileTerm={profileTerm}
                 setProfileTerm={setProfileTerm}
               />
             }

@@ -10,6 +10,7 @@ export default function SearchPage({
     handleUnsave,
 }) {
     return (
+        // add background image
         <div className="SearchPage">
             <div className="results">
                 Search Results: {searchTerm}
