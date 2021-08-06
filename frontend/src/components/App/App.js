@@ -31,21 +31,10 @@ function App() {
   const [recipes, setRecipes] = useState([]);
   const [profile, setProfile] = useState({});
   const [allProfiles, setAllProfiles] = useState([]);
-  const [flavors, setFlavors] = useState([]);
   const [saved, setSaved] = useState([]);
   const [changeSave, setChangeSave] = useState(false);
   const [profileTerm, setProfileTerm] = useState("");
   const [profileId, setProfileId] = useState(-1)
-
-  const allFlavors = [
-    "spicy",
-    "salty",
-    "sweet",
-    "sour",
-    "bitter",
-    "savory",
-    "fatty",
-  ];
 
   // const [recipes, setRecipes] = useState({})
 
@@ -98,17 +87,6 @@ function App() {
       const { data, error } = await apiClient.fetchProfile();
       if (data) {
         setProfile(data);
-        if (data.fav_flavors) {
-          var flavors = [];
-          data.fav_flavors.split("").forEach((c) => {
-            let num = Number(c);
-            var obj = { flavor: allFlavors[num], id: c };
-            flavors.push(obj);
-          });
-          setFlavors(flavors);
-        } else {
-          setFlavors([]);
-        }
       }
       if (error) {
         console.log(error, "Profile.js");
@@ -226,7 +204,6 @@ function App() {
               <Profile 
                 user={user} 
                 profile={profile} 
-                flavors={flavors} 
                 setProfileTerm={setProfileTerm}
               />
             }
@@ -250,7 +227,6 @@ function App() {
                 user={user}
                 handleUpdateUser={handleUpdateUser}
                 profile={profile}
-                flavors={flavors}
               />
             }
           />

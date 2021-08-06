@@ -8,11 +8,9 @@ import location from "../../assets/location.svg";
 import profileBackground from "../../assets/profile.png";
 import "./Profile.css";
 
-export default function Profile({ user, profile = {}, flavors = [], setProfileTerm, isCurrentUser = true }) {
-    console.log(user)
-    console.log(profile)
-    
+export default function Profile({ user, profile = {}, setProfileTerm, isCurrentUser = true }) {
     const navigate = useNavigate()
+    const [flavors, setFlavors] = useState("")
 
     const handleOnChange = (e) => {
         setProfileTerm(e.target.value)
@@ -22,6 +20,29 @@ export default function Profile({ user, profile = {}, flavors = [], setProfileTe
         e.preventDefault()
         navigate("/profileResults")
     }
+    const allFlavors = [
+        "spicy",
+        "salty",
+        "sweet",
+        "sour",
+        "bitter",
+        "savory",
+        "fatty",
+    ];
+
+    useEffect(() => {
+        if (profile?.fav_flavors) {
+            var flavors = [];
+            profile.fav_flavors.split("").forEach((c) => {
+              let num = Number(c);
+              var obj = { flavor: allFlavors[num], id: c };
+              flavors.push(obj);
+            });
+            setFlavors(flavors);
+          } else {
+            setFlavors([]);
+          }
+    }, [profile])
 
     return (
         <div
@@ -36,7 +57,7 @@ export default function Profile({ user, profile = {}, flavors = [], setProfileTe
             ) : (
                 <div className="profile-display">
                     <div className="profile-left">
-                        {user.id === profile.id ?
+                        {isCurrentUser ?
                             <form className="profile-search" onSubmit={handleOnSubmit}>
                                 <div>
                                     <img src={searchIcon} alt="search icon"></img>
@@ -88,7 +109,7 @@ export default function Profile({ user, profile = {}, flavors = [], setProfileTe
                                     ) : null}
                                 </div>
                             </div>
-                            {user.id === profile.id ?
+                            {isCurrentUser ?
                                 <Link to="/profile/edit" className="edit-btn">
                                     . . .
                                 </Link>

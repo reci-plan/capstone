@@ -10,8 +10,7 @@ import "./EditProfile.css";
 export default function EditProfile({
   user,
   handleUpdateUser,
-  profile,
-  flavors,
+  profile
 }) {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -27,6 +26,7 @@ export default function EditProfile({
     image_url: "",
   });
   const [errors, setErrors] = useState({});
+  const [flavors, setFlavors] = useState("");
   const [addFlavors, setAddFlavors] = useState(flavors);
   const [image, setImage] = useState("");
 
@@ -114,6 +114,29 @@ export default function EditProfile({
     }
     setAddFlavors(list);
   };
+
+  const allFlavors = [
+    "spicy",
+    "salty",
+    "sweet",
+    "sour",
+    "bitter",
+    "savory",
+    "fatty",
+  ];
+  useEffect(() => {
+    if (profile?.fav_flavors) {
+        var flavors = [];
+        profile.fav_flavors.split("").forEach((c) => {
+          let num = Number(c);
+          var obj = { flavor: allFlavors[num], id: c };
+          flavors.push(obj);
+        });
+        setFlavors(flavors);
+      } else {
+        setFlavors([]);
+      }
+  }, [profile])
 
   const style = {
     multiselectContainer: {
