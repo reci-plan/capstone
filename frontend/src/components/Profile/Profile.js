@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
 import searchIcon from "../../assets/search-icon.svg"
@@ -8,7 +8,10 @@ import location from "../../assets/location.svg";
 import profileBackground from "../../assets/profile.png";
 import "./Profile.css";
 
-export default function Profile({ user, profile, flavors, setProfileTerm }) {
+export default function Profile({ user, profile = {}, flavors = [], setProfileTerm, isCurrentUser = true }) {
+    console.log(user)
+    console.log(profile)
+    
     const navigate = useNavigate()
 
     const handleOnChange = (e) => {
@@ -19,6 +22,7 @@ export default function Profile({ user, profile, flavors, setProfileTerm }) {
         e.preventDefault()
         navigate("/profileResults")
     }
+
     return (
         <div
             className="Profile"
@@ -32,12 +36,15 @@ export default function Profile({ user, profile, flavors, setProfileTerm }) {
             ) : (
                 <div className="profile-display">
                     <div className="profile-left">
-                        <form className="profile-search" onSubmit={handleOnSubmit}>
-                            <div>
-                                <img src={searchIcon} alt="search icon"></img>
-                            </div>
-                            <input type="text" placeholder="search users..." onChange={handleOnChange}></input>
-                        </form>
+                        {user.id === profile.id ?
+                            <form className="profile-search" onSubmit={handleOnSubmit}>
+                                <div>
+                                    <img src={searchIcon} alt="search icon"></img>
+                                </div>
+                                <input type="text" placeholder="search users..." onChange={handleOnChange}></input>
+                            </form>
+                            : null
+                        }
                         <div className="profile-img">
                             {profile.image_url ? (
                                 <img
@@ -52,8 +59,8 @@ export default function Profile({ user, profile, flavors, setProfileTerm }) {
                             <span className="input-type">fav flavors: </span>
                             <div className="fav-flavors">
                                 {flavors?.length > 0
-                                    ? flavors.map((element) => (
-                                          <div className="flavor">
+                                    ? flavors.map((element, i) => (
+                                          <div key={i} className="flavor">
                                               {element.flavor}
                                           </div>
                                       ))
@@ -81,9 +88,13 @@ export default function Profile({ user, profile, flavors, setProfileTerm }) {
                                     ) : null}
                                 </div>
                             </div>
-                            <Link to="/profile/edit" className="edit-btn">
-                                . . .
-                            </Link>
+                            {user.id === profile.id ?
+                                <Link to="/profile/edit" className="edit-btn">
+                                    . . .
+                                </Link>
+                                : 
+                                <button>Add Friend</button>
+                            }
                         </div>
                         <div className="input">
                             <span className="input-type">username: </span>

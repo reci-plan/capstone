@@ -35,6 +35,7 @@ function App() {
   const [saved, setSaved] = useState([]);
   const [changeSave, setChangeSave] = useState(false);
   const [profileTerm, setProfileTerm] = useState("");
+  const [profileId, setProfileId] = useState(-1)
 
   const allFlavors = [
     "spicy",
@@ -50,7 +51,7 @@ function App() {
 
   const [{ colors }, dispatch] = useDataLayerValue();
 
-  console.log("On App.js component, colors is: ", colors);
+  // console.log("On App.js component, colors is: ", colors);
 
   // Remain logged in
   useEffect(() => {
@@ -118,7 +119,7 @@ function App() {
   }, [user]);
 
 
-  // Fetch all profiles
+  // Fetch all users & profiles
   useEffect(() => {
     const fetchProfile = async () => {
       const { data, error } = await apiClient.fetchAllProfiles();
@@ -232,6 +233,17 @@ function App() {
           />
 
           <Route
+            path="/profile/:id"
+            element={
+              <Profile 
+                user={profileId > 0 ? allProfiles[0].filter((p) => p.id === profileId)[0] : user} 
+                profile={profileId > 0 ? allProfiles[1].filter((p) => p.id === profileId)[0] : profile} 
+                isCurrentUser={false}
+              />
+            }
+          />
+
+          <Route
             path="/profile/edit"
             element={
               <EditProfile
@@ -251,6 +263,7 @@ function App() {
                 profile={profile}
                 allProfiles={allProfiles}
                 profileTerm={profileTerm}
+                setProfileId={setProfileId}
               />
             }
           />

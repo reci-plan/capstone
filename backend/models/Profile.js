@@ -46,14 +46,19 @@ class Profile {
       throw new UnauthorizedError(`No user logged in.`);
     }
 
-    const results = await db.query(`
+    const users = await db.query(`
+        SELECT * FROM users 
+        WHERE username != $1
+      `, [user.username]
+    );
+
+    const profiles = await db.query(`
         SELECT * FROM profile 
         WHERE user_id != (SELECT id from users where username = $1)
       `, [user.username]
     );
 
-    console.log(results.rows)
-    return results.rows;
+    return [users.rows, profiles.rows];
   }
 
   /** Update user profile
