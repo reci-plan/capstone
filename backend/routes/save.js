@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Save = require("../models/save");
+const Save = require("../models/Save");
 const { requireAuthenticatedUser } = require("../middleware/security");
 
 router.get("/recipes", requireAuthenticatedUser, async (req, res, next) => {

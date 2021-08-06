@@ -2,8 +2,13 @@ import "./SearchPage.css";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import apiClient from "../../services/apiClient";
 
-export default function SearchPage({ searchTerm, recipes, user, handleSave, handleUnsave }) {
-
+export default function SearchPage({
+    searchTerm,
+    recipes,
+    user,
+    handleSave,
+    handleUnsave,
+}) {
     return (
         <div className="SearchPage">
             <div className="results">
