@@ -43,6 +43,7 @@ input {
   border: 2px solid #B3C1D5;
   background-color: #B3C1D5;
   font-size: 15px;
+  margin-top: 10px;
 }
 
 .error-border {

@@ -163,7 +163,7 @@ export default function Generator({user}) {
         </div>
       ) : (
       <div className="Generator">
-        <div className="header">Spin the wheel to plan your meal</div>
+        <div className="header-text">Spin the wheel to plan your meal</div>
         <div className="fullPage">
           <div className="menuView">
             <div className="fake-input">

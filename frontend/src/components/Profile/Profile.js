@@ -42,7 +42,8 @@ export default function Profile({ user, profile, flavors }) {
                                               {element.flavor}
                                           </div>
                                       ))
-                                    : null}
+                                    : <>none</>
+                                }
                             </div>
                         </div>
                     </div>
