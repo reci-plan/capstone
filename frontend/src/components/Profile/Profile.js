@@ -1,15 +1,24 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
+import searchIcon from "../../assets/search-icon.svg"
 import tempImg from "../../assets/tempProfileImg.png";
 import location from "../../assets/location.svg";
 import profileBackground from "../../assets/profile.png";
 import "./Profile.css";
 
-export default function Profile({ user, profile, flavors }) {
-    const colors = [{}];
+export default function Profile({ user, profile, flavors, setProfileTerm }) {
+    const navigate = useNavigate()
 
+    const handleOnChange = (e) => {
+        setProfileTerm(e.target.value)
+    }
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault()
+        navigate("/profileResults")
+    }
     return (
         <div
             className="Profile"
@@ -23,6 +32,12 @@ export default function Profile({ user, profile, flavors }) {
             ) : (
                 <div className="profile-display">
                     <div className="profile-left">
+                        <form className="profile-search" onSubmit={handleOnSubmit}>
+                            <div>
+                                <img src={searchIcon} alt="search icon"></img>
+                            </div>
+                            <input type="text" placeholder="search users..." onChange={handleOnChange}></input>
+                        </form>
                         <div className="profile-img">
                             {profile.image_url ? (
                                 <img

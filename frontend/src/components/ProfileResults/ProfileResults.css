@@ -1,0 +1,9 @@
+.ProfileResults {
+  padding: 0 150px;
+  padding-top: 100px;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-position: center;
+  background-size: 100%;
+}

@@ -24,6 +24,7 @@ import Footer from "../Footer/Footer";
 import { useDataLayerValue } from "../../context/DataLayer";
 
 import "./App.css";
+import ProfileResults from "../ProfileResults/ProfileResults";
 function App() {
   const [user, setUser] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,6 +33,7 @@ function App() {
   const [flavors, setFlavors] = useState([]);
   const [saved, setSaved] = useState([]);
   const [changeSave, setChangeSave] = useState(false);
+  const [profileTerm, setProfileTerm] = useState("");
 
   const allFlavors = [
     "spicy",
@@ -203,7 +205,12 @@ function App() {
           <Route
             path="/profile"
             element={
-              <Profile user={user} profile={profile} flavors={flavors} />
+              <Profile 
+                user={user} 
+                profile={profile} 
+                flavors={flavors} 
+                setProfileTerm={setProfileTerm}
+              />
             }
           />
 
@@ -215,6 +222,17 @@ function App() {
                 handleUpdateUser={handleUpdateUser}
                 profile={profile}
                 flavors={flavors}
+              />
+            }
+          />
+
+          <Route 
+            path="/profileResults"
+            element={
+              <ProfileResults
+                user={user}
+                profile={profile}
+                profileTerm={profileTerm}
               />
             }
           />
