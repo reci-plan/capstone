@@ -8,13 +8,14 @@ import heartFill from "../../assets/heart-fill.svg";
 
 import "./SavedGallery.css";
 
-export default function SavedGallery({ user, saved, savePlan, mealPlanInfo, handleSave, handleUnsave, handleUnsavePlan }) {
+export default function SavedGallery({ user, saved, savePlan, mealPlanInfo, mealPlanIds, handleSave, handleUnsave, handleUnsavePlan }) {
     const [likes, setLikes] = useState(true);
 
-    const handleOnClick = () => {
+    const handleOnClick = async (mealPlanId) => {
+        console.log("CLICK ID", mealPlanId)
         if (user?.email) {
           if (likes) {
-            handleUnsavePlan(savePlan);
+            handleUnsavePlan(mealPlanId);
             setLikes(false);
           } else {
             setLikes(true);
@@ -45,6 +46,7 @@ export default function SavedGallery({ user, saved, savePlan, mealPlanInfo, hand
             {/* {console.log("SAVE PLAN", savePlan, "M PLAN INFO", mealPlanInfo, "EX: ", mealPlanInfo[0][0])} */}
                 {savePlan ?
                     savePlan.map((s, i) => (
+                        <div className={mealPlanIds[i]}>
                         <div className="mealPlan saveRow">
                         {s.map((meal, j) => (
                             typeof mealPlanInfo[i] != 'undefined' ?
@@ -66,10 +68,10 @@ export default function SavedGallery({ user, saved, savePlan, mealPlanInfo, hand
                             <>
                             <button
                                 className="save-btn"
-                                onClick={handleOnClick}
+                                onClick={()=>handleOnClick(mealPlanIds[i])}
                             >
                                 {saved ? (
-                                <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
+                                <img src={heartFill} className={mealPlanIds[i]} alt="Solid Heart to unsave recipe"></img>
                                 ) : (
                                 <img src={heart} alt="Heart to save recipe"></img>
                                 )}
@@ -77,6 +79,7 @@ export default function SavedGallery({ user, saved, savePlan, mealPlanInfo, hand
                             </>
                             : ""
                         }
+                        </div>
                         </div>
                     )) : null
                     }

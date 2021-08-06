@@ -152,13 +152,12 @@ class Save {
     }
 
     static async unsaveMealPlan(user, mealPlan) {
-      console.log("START PROCESS", mealPlan)
       if (!user) {
         throw new UnauthorizedError(`No user logged in.`);
       }
   
       if (!mealPlan) {
-        throw new BadRequestError("no recipe in request.body");
+        throw new BadRequestError("no meal plan in request.body");
       }
   
       if (!mealPlan.hasOwnProperty("title")) {
@@ -174,6 +173,22 @@ class Save {
         [mealPlan.id, user.username]
       );
       return results.rows[0];
+    }
+
+    static async fetchSavedMealPlan(user, mealPlanId) {
+      mealPlanId = Number(mealPlanId, 10)
+      if (!user) {
+        throw new UnauthorizedError(`No user logged in.`);
+      }
+  
+      const query = `
+        SELECT * FROM saved_meal_plans
+        WHERE user_id = (SELECT id FROM users WHERE username = $1) AND id = $2
+      `;
+  
+      const results = await db.query(query, [user.username, mealPlanId]);
+  
+      return results.rows;
     }
 }
 

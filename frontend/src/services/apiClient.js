@@ -275,6 +275,10 @@ class ApiCalls {
     async fetchSavedMealPlans() {
         return await this.request({ endpoint: `save/mealPlans`, method: `GET` });
     }
+
+    async fetchSavedMealPlan(planId) {
+        return await this.request({ endpoint: `save/mealPlan/${planId}`, method: `GET` });
+    }
 }
 
 const API = new ApiCalls(
