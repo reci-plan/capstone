@@ -264,6 +264,14 @@ class ApiCalls {
         return await this.request({ endpoint: `save/recipe/x`, method:`POST`, data: mealPlan});
     }
 
+    async unsavePlan(mealPlan) {
+        return await this.request({
+            endpoint: `save/mealPlan`,
+            method: `DELETE`,
+            data: mealPlan,
+        });
+    }
+
     async fetchSavedMealPlans() {
         return await this.request({ endpoint: `save/mealPlans`, method: `GET` });
     }

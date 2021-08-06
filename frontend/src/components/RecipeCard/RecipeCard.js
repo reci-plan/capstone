@@ -12,15 +12,18 @@ import apiClient from "../../services/apiClient";
 export default function RecipeCard({
   user,
   recipeInfo,
+  meal,
   handleSave,
   handleUnsave,
   handleLinks,
-  handleLikes
+  handleLikes,
+  handleMealInfo
 }) {
   const [saved, setSaved] = useState(false);
   const [links, setLinks] = useState(true);
   
   const [likes, setLikes] = useState(true);
+  const [mealInfo, setMealInfo] = useState(true);
 
   useEffect(() => {
     const checkRecipe = async () => {
@@ -38,10 +41,13 @@ export default function RecipeCard({
       if (handleLikes === false) {
         setLikes(false)
       }
+      if (handleMealInfo === false) {
+        setMealInfo(false)
+      }
     };
 
     checkRecipe();
-  }, [recipeInfo, handleLinks, handleLikes]);
+  }, [recipeInfo, handleLinks, handleLikes, handleMealInfo]);
 
   const limit = 17;
 
@@ -104,6 +110,17 @@ export default function RecipeCard({
             </>
             : ""
           }
+        </div>
+        <div className="mealInfo">
+        {meal ? 
+            <>
+              <p>{meal[0]}</p>
+              &nbsp;
+              <p>{meal[1]}</p>
+            </>
+            :
+            ""
+        }
         </div>
     </div>
   );

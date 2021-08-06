@@ -150,6 +150,31 @@ class Save {
   
       return results.rows;
     }
+
+    static async unsaveMealPlan(user, mealPlan) {
+      console.log("START PROCESS", mealPlan)
+      if (!user) {
+        throw new UnauthorizedError(`No user logged in.`);
+      }
+  
+      if (!mealPlan) {
+        throw new BadRequestError("no recipe in request.body");
+      }
+  
+      if (!mealPlan.hasOwnProperty("title")) {
+        throw new BadRequestError(`Missing title in request body.`);
+      }
+  
+      const results = await db.query(
+        `
+          DELETE FROM saved_meal_plans
+          WHERE id = $1 AND user_id = (SELECT id FROM users WHERE username = $2)
+          RETURNING id, user_id
+        `,
+        [mealPlan.id, user.username]
+      );
+      return results.rows[0];
+    }
 }
 
 module.exports = Save;

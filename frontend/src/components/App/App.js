@@ -32,6 +32,7 @@ function App() {
   const [saved, setSaved] = useState([]);
   const [changeSavePlan, setChangeSavePlan] = useState(false);
   const [savePlan, setSavePlan] = useState([]);
+  const [mealPlanInfo, setMealPlanInfo] = useState([]);
   const [changeSave, setChangeSave] = useState(false);
 
   const array1 = [1, 2, 3, 4]
@@ -164,22 +165,7 @@ function App() {
   const handleUpdateUser = async (user) => {
     setUser(user);
   };
-
-  const fetchRecipeInfo = async (id) => {
-    // console.log("ID------------>", id)
-    if ( id != null) {
-        console.log("ID------------>", id)
-        const { data, error } = await apiClient.fetchLocalDbRecipe(id);
-        
-        if (data) {
-            console.log("MY SAVED RECIPE DATA TO PASS TO CARD: ", data.recipe)
-            return data.recipe;
-        }
-        else {
-            console.log("ERROR IN SAVED GALLERY")
-        }
-    }
-}
+  
   // Fetch saved meal plans
   useEffect(() => {
     const fetchPlans = async () => {
@@ -193,19 +179,28 @@ function App() {
       }
       var setMealPlans = []
       var recData = []
+      var setMealInfo = []
+      //Iterate over each recipe in each meal plan, and create a set of meal plans, where each set contains
+      //recipe id numbers.
       data.savedMealPlans.forEach((s) => {
         var mealPlan = []
+        var mealInfo = []
         for (let i = 0; i < 4; i++) {
           if (s[`recipe_id${i}`] !== null && typeof s[`recipe_id${i}`] != 'undefined') {
             mealPlan.push(s[`recipe_id${i}`])
+            mealInfo.push([s[`time${i}`], s[`meal_name${i}`]])
           }
         }
         setMealPlans.push(mealPlan)
-        console.log("SET PLANS", setMealPlans)
+        setMealInfo.push(mealInfo)
+        console.log("SET PLANS", setMealPlans, "SET MEAL INFOS", setMealInfo)
       })
       //const dataOne = await apiClient.fetchLocalDbRecipe(recId[0]);
       //console.log("FIRST REC", dataOne.data.recipe, recId[0])
+
+      //Iterate over each set of meal plans and get the meal plan info
       for (const rec of setMealPlans) {
+        console.log("MGMT", rec)
         var temp =[]
         for (let i = 0; i < rec.length; i++) {
           const recipeInfo = await apiClient.fetchLocalDbRecipe(rec[i])
@@ -220,9 +215,27 @@ function App() {
       if (recData) {
         setSavePlan(recData);
       }
+
+      if (setMealInfo) {
+        setMealPlanInfo(setMealInfo);
+      }
     };
     fetchPlans();
   }, [user, changeSavePlan]);
+
+  // Handle unsave mealPlan
+  const handleUnsavePlan = async (p) => {
+    const { data, error } = await apiClient.unsavePlan(p);
+
+    if (data) {
+      setChangeSavePlan(!changeSave);
+      console.log("Unsave: ", data);
+    }
+
+    if (error) {
+      alert(error);
+    }
+  };
 
   return (
     <div className="App">
@@ -300,8 +313,10 @@ function App() {
                 user={user}
                 saved={saved}
                 savePlan={savePlan}
+                mealPlanInfo={mealPlanInfo}
                 handleSave={handleSave}
                 handleUnsave={handleUnsave}
+                handleUnsavePlan={handleUnsavePlan}
               />
             }
           />
