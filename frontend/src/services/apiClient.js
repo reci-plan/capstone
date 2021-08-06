@@ -211,6 +211,12 @@ class ApiCalls {
         });
     }
 
+    async fetchAllProfiles() {
+        return await this.request({
+            endpoint: `profile/all`,
+        });
+    }
+
     async updateProfile(info) {
         return await this.request({
             endpoint: `profile/`,

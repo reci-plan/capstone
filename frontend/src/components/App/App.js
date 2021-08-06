@@ -30,6 +30,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [profile, setProfile] = useState({});
+  const [allProfiles, setAllProfiles] = useState([]);
   const [flavors, setFlavors] = useState([]);
   const [saved, setSaved] = useState([]);
   const [changeSave, setChangeSave] = useState(false);
@@ -110,6 +111,22 @@ function App() {
       }
       if (error) {
         console.log(error, "Profile.js");
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
+
+
+  // Fetch all profiles
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const { data, error } = await apiClient.fetchAllProfiles();
+      if (data) {
+        setAllProfiles(data);
+      }
+      if (error) {
+        console.log(error, "ProfileResults.js");
       }
     };
 
@@ -232,6 +249,7 @@ function App() {
               <ProfileResults
                 user={user}
                 profile={profile}
+                allProfiles={allProfiles}
                 profileTerm={profileTerm}
               />
             }

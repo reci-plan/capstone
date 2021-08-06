@@ -40,6 +40,22 @@ class Profile {
     return results.rows[0];
   }
 
+  /** Fetch all profiles except user */
+  static async fetchAllProfiles(user) {
+    if (!user) {
+      throw new UnauthorizedError(`No user logged in.`);
+    }
+
+    const results = await db.query(`
+        SELECT * FROM profile 
+        WHERE user_id != (SELECT id from users where username = $1)
+      `, [user.username]
+    );
+
+    console.log(results.rows)
+    return results.rows;
+  }
+
   /** Update user profile
    * If the column value is null or empty, then keep original information
    * If the column value is valid, then change it
