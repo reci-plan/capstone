@@ -5,8 +5,7 @@ import apiClient from "../../services/apiClient";
 import searchIcon from "../../assets/search-icon.svg"
 import tempImg from "../../assets/tempProfileImg.png";
 import location from "../../assets/location.svg";
-import profileBackground from "../../assets/profile.png";
-import navbar from "../../assets/navbar.jpg"
+import profileBackground from "../../assets/profile.jpg";
 import "./Profile.css";
 
 export default function Profile({ user }) {
@@ -72,17 +71,14 @@ export default function Profile({ user }) {
     return (
         <div
             className="Profile"
+            style={{ backgroundImage: `url(${profileBackground})` }}
         >
             {!user.email ? (
-                <div className="unloggedin">
+                <div>
                     Login <Link to="/login">here</Link> to view your profile
                     page
                 </div>
             ) : (
-                <>
-                <div className="profile-bg">
-                    <img src={profileBackground} alt=""></img>
-                </div>
                 <div className="profile-display">
                     <div className="profile-left">
                         <div className="profile-img">
@@ -165,7 +161,7 @@ export default function Profile({ user }) {
                         null
                     }
                 </div>
-            </>)}
+            )}
         </div>
     );
 }

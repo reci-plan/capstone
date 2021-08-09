@@ -4,7 +4,7 @@ import apiClient from "../../services/apiClient";
 import Multiselect from "multiselect-react-dropdown";
 
 import tempImg from "../../assets/tempProfileImg.png";
-import profileBackground from "../../assets/edit-profile.png";
+import profileBackground from "../../assets/edit-profile.jpg";
 import "./EditProfile.css";
 
 export default function EditProfile({
