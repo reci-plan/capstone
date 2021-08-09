@@ -4,6 +4,7 @@ import apiClient from "../../services/apiClient";
 
 import "./SampleLayout.css";
 import SocialMediaShare from "./SocialMediaShare/SocialMediaShare";
+import RecipeCard from "../RecipeCard/RecipeCard";
 
 import {
     Paper,
@@ -22,6 +23,8 @@ import veganIcon from "../../assets/vegan-icon.svg";
 import vegetarianIcon from "../../assets/vegetarian-icon.svg";
 import dairyfreeIcon from "../../assets/dairyfree-icon.svg";
 import glutenfreeIcon from "../../assets/glutenfree-icon.svg";
+import heart from "../../assets/heart.svg";
+import heartFill from "../../assets/heart-fill.svg";
 
 export default function SampleLayout({
     recipeInfo,
@@ -30,7 +33,11 @@ export default function SampleLayout({
     EXTRA_INFO_ARRAY,
     extraInformation,
     recipes,
+    handleSave,
+    handleUnsave,
+    user,
 }) {
+    const [saved, setSaved] = useState(false);
     const { recipeId } = useParams();
     const [recommendedRecipes, setRecommendedRecipes] = useState([]);
 
@@ -50,6 +57,37 @@ export default function SampleLayout({
 
     const classes = useStyles();
 
+    useEffect(() => {
+        const checkRecipe = async () => {
+            console.log("here : ", recipeInfo?.id);
+            const { data, error } = await apiClient.checkSavedRecipe(
+                recipeInfo?.id
+            );
+            if (data) {
+                console.log("DATA from checkrecipe: ", data);
+                setSaved(data);
+            }
+
+            if (error) {
+                console.log("Check saved recipe error.......RecipeCard.js");
+            }
+        };
+
+        checkRecipe();
+    }, [recipeInfo]);
+
+    const handleOnClick = () => {
+        if (user?.email) {
+            if (saved) {
+                handleUnsave(recipeInfo);
+                setSaved(false);
+            } else {
+                handleSave(recipeInfo);
+                setSaved(true);
+            }
+        }
+    };
+
     // from the recipes state,
     // have a new state containing all of recipes, but shuffled for randomized results
 
@@ -65,7 +103,27 @@ export default function SampleLayout({
         <div style={{ marginTop: "50px" }}>
             <div className="LayoutDivWrapper">
                 <div className="Layout_Title">
-                    <div className="Layout_Title_Real">{recipeInfo.title}</div>
+                    <div className="Layout_Title_Real">
+                        {recipeInfo.title}{" "}
+                        {user?.email ? (
+                            <button
+                                className="save-btn"
+                                onClick={handleOnClick}
+                            >
+                                {saved ? (
+                                    <img
+                                        src={heartFill}
+                                        alt="Solid Heart to unsave recipe"
+                                    ></img>
+                                ) : (
+                                    <img
+                                        src={heart}
+                                        alt="Heart to save recipe"
+                                    />
+                                )}
+                            </button>
+                        ) : null}
+                    </div>
                     <div className="Layout_Title_Share">
                         <span style={{ marginRight: "20px" }}>
                             {" "}
@@ -179,7 +237,19 @@ export default function SampleLayout({
                         </div>
 
                         <div className="Layout_Recommended_Recipes_Wrapper">
-                            test
+                            {[...Array(4)].map((x, i) => {
+                                let rng = Math.floor(
+                                    Math.random() * recipes.length
+                                );
+                                return (
+                                    <RecipeCard
+                                        recipeInfo={recipes[rng]}
+                                        user={user}
+                                        handleSave={handleSave}
+                                        handleUnsave={handleUnsave}
+                                    />
+                                );
+                            })}
                         </div>
 
                         <div

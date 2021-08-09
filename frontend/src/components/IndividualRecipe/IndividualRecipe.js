@@ -48,7 +48,12 @@ const stringToArray = (str, setState) => {
   }
 };
 
-export default function IndividualRecipe({ user, recipes }) {
+export default function IndividualRecipe({
+  user,
+  recipes,
+  handleSave,
+  handleUnsave,
+}) {
   // console.log(user);
   const { recipeId } = useParams();
   const [recipeInstructions, setRecipeInstructions] = useState([]);
@@ -246,6 +251,9 @@ export default function IndividualRecipe({ user, recipes }) {
             EXTRA_INFO_ARRAY={EXTRA_INFO_ARRAY}
             extraInformation={extraInformation}
             recipes={recipes}
+            handleSave={handleSave}
+            handleUnsave={handleUnsave}
+            user={user}
           />
         </div>
         <div style={{ marginTop: "300px" }}> </div>

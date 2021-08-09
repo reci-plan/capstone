@@ -192,7 +192,14 @@ function App() {
           />
           <Route
             path="/recipes/:recipeId"
-            element={<IndividualRecipe user={user} recipes={recipes} />}
+            element={
+              <IndividualRecipe
+                user={user}
+                recipes={recipes}
+                handleSave={handleSave}
+                handleUnsave={handleUnsave}
+              />
+            }
           />
 
           <Route path="/wheel" element={<Generator user={user} />} />
