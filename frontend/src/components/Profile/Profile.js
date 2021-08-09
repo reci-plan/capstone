@@ -6,6 +6,7 @@ import searchIcon from "../../assets/search-icon.svg"
 import tempImg from "../../assets/tempProfileImg.png";
 import location from "../../assets/location.svg";
 import profileBackground from "../../assets/profile.png";
+import navbar from "../../assets/navbar.jpg"
 import "./Profile.css";
 
 export default function Profile({ user }) {
@@ -71,25 +72,19 @@ export default function Profile({ user }) {
     return (
         <div
             className="Profile"
-            style={{ backgroundImage: `url(${profileBackground})` }}
         >
             {!user.email ? (
-                <div>
+                <div className="unloggedin">
                     Login <Link to="/login">here</Link> to view your profile
                     page
                 </div>
             ) : (
+                <>
+                <div className="profile-bg">
+                    <img src={profileBackground} alt=""></img>
+                </div>
                 <div className="profile-display">
                     <div className="profile-left">
-                        {!username ?
-                            <form className="profile-search" onSubmit={handleOnSubmit}>
-                                <div>
-                                    <img src={searchIcon} alt="search icon"></img>
-                                </div>
-                                <input type="text" placeholder="search users..." onChange={handleOnChange}></input>
-                            </form>
-                            : null
-                        }
                         <div className="profile-img">
                             {thisProfile.image_url ? (
                                 <img
@@ -100,6 +95,15 @@ export default function Profile({ user }) {
                                 <img src={tempImg} alt="Placeholder img"></img>
                             )}
                         </div>
+                        {!username ?
+                            <form className="profile-search" onSubmit={handleOnSubmit}>
+                                <div>
+                                    <img src={searchIcon} alt="search icon"></img>
+                                </div>
+                                <input type="text" placeholder="search users..." onChange={handleOnChange}></input>
+                            </form>
+                            : null
+                        }
                         <div className="input-flavors">
                             <span className="input-type">fav flavors: </span>
                             <div className="fav-flavors">
@@ -133,13 +137,6 @@ export default function Profile({ user }) {
                                     ) : null}
                                 </div>
                             </div>
-                            {!username ?
-                                <Link to="/profile/edit" className="edit-btn">
-                                    . . .
-                                </Link>
-                                : 
-                                null
-                            }
                         </div>
                         <div className="input">
                             <span className="input-type">username: </span>
@@ -160,8 +157,15 @@ export default function Profile({ user }) {
                             </div>
                         ) : null}
                     </div>
+                    {!username ?
+                        <Link to="/profile/edit" className="edit-btn">
+                            . . .
+                        </Link>
+                        : 
+                        null
+                    }
                 </div>
-            )}
+            </>)}
         </div>
     );
 }

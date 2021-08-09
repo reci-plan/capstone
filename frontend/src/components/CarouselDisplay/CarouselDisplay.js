@@ -2,7 +2,6 @@ import "./CarouselDisplay.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import RecipeCard from "../RecipeCard/RecipeCard";
-import apiClient from "../../services/apiClient";
 
 export default function CarouselDisplay({
   user,

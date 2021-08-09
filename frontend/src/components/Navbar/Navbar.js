@@ -8,7 +8,6 @@ import wheel from "../../assets/wheel-icon.svg";
 import close from "../../assets/close.svg";
 import userlogo from "../../assets/user.svg";
 
-import SearchPage from "../SearchPage/SearchPage";
 import "./Navbar.css";
 
 export default function Navbar({ user, setUser, setSearchTerm }) {
