@@ -238,11 +238,12 @@ function App() {
     console.log("UUUU:", p)
     const { data, error } = await apiClient.fetchSavedMealPlan(p);
     //const { data, error } = await apiClient.unsavePlan(p);
-    console.log("UNSAVED: ", data, p)
+    console.log("UNSAVED: ", data.mealPlan, p)
 
     if (data) {
       setChangeSavePlan(!changeSavePlan);
-      console.log("Unsave: ", data);
+      const { dataOne, error } = await apiClient.unsavePlan(data.mealPlan[0]);
+      console.log("Unsave: ", data, dataOne);
     }
 
     if (error) {

@@ -176,6 +176,7 @@ class Save {
     }
 
     static async fetchSavedMealPlan(user, mealPlanId) {
+      console.log("FETCH SAVED")
       mealPlanId = Number(mealPlanId, 10)
       if (!user) {
         throw new UnauthorizedError(`No user logged in.`);

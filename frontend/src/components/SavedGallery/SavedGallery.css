@@ -7,9 +7,15 @@
 
 .saveRow {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .mealPlan {
   margin: 10px 0px;
+}
+
+.mealInfo {
+  justify-content: center;
+  font-family: 'Lato';
+  font-size: 20px;
 }

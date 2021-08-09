@@ -151,6 +151,7 @@ export default function Generator({user}) {
     if (data) {
       console.log("Successful load!")
       navigate("/saved");
+      window.location.reload();
     }
     console.log("Recipe list: ", recipes)
   }
