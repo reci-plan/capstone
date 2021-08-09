@@ -7,7 +7,7 @@ import "./ProfileResults.css"
 export default function ProfileResults({ user, profile, allProfiles, setProfileId }) {
   return (
     <div className="ProfileResults" style={{backgroundImage: `url(${navbar})`}}>
-      <div className="section-title">Profile Search Results: {localStorage.getItem('profile-search-term')}</div>
+      <div className="section-title">User search results: {localStorage.getItem('profile-search-term')}</div>
       <div>
         {allProfiles.length > 0 ?
           allProfiles[0]

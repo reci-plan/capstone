@@ -1,7 +1,9 @@
-import "./SearchPage.css";
+
 import RecipeCard from "../RecipeCard/RecipeCard";
 import apiClient from "../../services/apiClient";
+import navbar from "../../assets/navbar.png";
 
+import "./SearchPage.css";
 export default function SearchPage({
     searchTerm,
     recipes,
@@ -10,8 +12,7 @@ export default function SearchPage({
     handleUnsave,
 }) {
     return (
-        // add background image
-        <div className="SearchPage">
+        <div className="SearchPage" style={{backgroundImage: `url(${navbar})`}}>
             <div className="results">
                 Search Results: {searchTerm ? searchTerm : localStorage.getItem('recipe-search-term')}
             </div>

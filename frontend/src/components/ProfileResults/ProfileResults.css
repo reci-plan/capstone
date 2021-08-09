@@ -1,6 +1,5 @@
 .ProfileResults {
   padding: 150px;
-  padding-top: 100px;
   width: 100vw;
   min-height: 100vh;
   background-repeat: no-repeat;
@@ -21,4 +20,11 @@
 .user span {
   font-size: 25px;
   font-family: "Lato", sans-serif;
+}
+
+@media only screen and (max-width: 700px) {
+  .ProfileResults {
+    padding: 120px 50px;
+    background-size: auto;
+  }
 }
