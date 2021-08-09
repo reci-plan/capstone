@@ -15,6 +15,7 @@ import PublicProfile from "../PublicProfile/PublicProfile";
 import Generator from "../Generator/Generator";
 import SearchFilter from "../SearchFilter/SearchFilter";
 import FilterResults from "../SearchFilter/FilterResults/FilterResults";
+import ProfileResults from "../ProfileResults/ProfileResults";
 // import Community from "../Community/Community";
 // import CommunityEdit from "../CommunityEdit/CommunityEdit";
 import AboutUs from "../About/About";
@@ -24,7 +25,6 @@ import Footer from "../Footer/Footer";
 import { useDataLayerValue } from "../../context/DataLayer";
 
 import "./App.css";
-import ProfileResults from "../ProfileResults/ProfileResults";
 function App() {
   const [user, setUser] = useState({});
   const [searchTerm, setSearchTerm] = useState("");

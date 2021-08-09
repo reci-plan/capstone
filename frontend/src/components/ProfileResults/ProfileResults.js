@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-import navbar from "../../assets/navbar.png"
+import navbar from "../../assets/navbar.jpg"
 import tempImg from "../../assets/tempProfileImg.png";
 import "./ProfileResults.css"
 

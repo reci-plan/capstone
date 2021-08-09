@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 import "./Home.css";
-import home from "../../assets/home.png";
-import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
+import home from "../../assets/home.jpg";
 import CarouselDisplay from "../CarouselDisplay/CarouselDisplay";
 import apiClient from "../../services/apiClient";
 

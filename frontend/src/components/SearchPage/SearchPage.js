@@ -1,7 +1,6 @@
 
 import RecipeCard from "../RecipeCard/RecipeCard";
-import apiClient from "../../services/apiClient";
-import navbar from "../../assets/navbar.png";
+import navbar from "../../assets/navbar.jpg";
 
 import "./SearchPage.css";
 export default function SearchPage({

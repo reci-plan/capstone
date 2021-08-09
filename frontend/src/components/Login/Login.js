@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
 import './Login.css'
-import blueberry from '../../assets/blueberry.png'
+import blueberry from '../../assets/blueberry.jpg'
 
 
 export default function Login({ user, setUser }) {

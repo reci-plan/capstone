@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import RecipeCard from "../RecipeCard/RecipeCard";
-import search from "../../assets/search.png";
-import close from "../../assets/close.svg";
+import search from "../../assets/search.jpg";
 import "./SearchFilter.css"
 
 export default function SearchFilter({ user }) {
-  // const [show, setShow] = useState(false)
   const [category, setCategory] = useState(Number(-1))
   const [categoryName, setCategoryName] = useState("")
   const mealTypes = [
