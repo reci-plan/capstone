@@ -30,8 +30,6 @@ export default function Comment({
     setEditCommentMsg,
     setShowEdit,
     showEdit,
-    setSelectedCommentId,
-    selectedCommentId,
     user,
 }) {
     const { recipeId } = useParams();
@@ -40,6 +38,10 @@ export default function Comment({
     const [open, setOpen] = useState(false);
 
     const [authorOfComment, setAuthorOfComment] = useState("");
+
+    const [userProfileImg, setUserProfileImg] = useState("");
+
+    const [selectedCommentId, setSelectedCommentId] = useState("");
 
     const classes = useStyles();
 
@@ -62,6 +64,7 @@ export default function Comment({
     useEffect(() => {
         const checkAuthorOfComment = async () => {
             const { data, error } = await apiClient.getOwnerOfComment(comment);
+            console.log("data.ownerOfComment", data.ownerOfComment);
             if (data) {
                 // console.log("valid call", data);
                 setAuthorOfComment(
@@ -76,7 +79,7 @@ export default function Comment({
             }
         };
         checkAuthorOfComment();
-    }, []);
+    }, [comment]);
 
     // For deleting a comment.
     const handleDelete = async (e, comment) => {
@@ -120,59 +123,56 @@ export default function Comment({
         setSelectedCommentId(comment.id);
     };
 
-    // const [isLike, setIsLike] = useState(false);
-    // when user clicks "like" button
-    const handleLike = async (e, comment) => {
-        setSelectedCommentId(comment.id);
-
-        // setIsLike(!isLike);
-        console.log("The comment u clicked on", comment);
-
-        const updatedComment = alreadyLiked
-            ? { ...comment, amount: comment.amount - 1 }
-            : { ...comment, amount: comment.amount + 1 };
-
-        console.log(updatedComment);
-        const { data, error } = alreadyLiked
-            ? await apiClient.unlikeComment(updatedComment)
-            : await apiClient.likeComment(updatedComment);
-
-        if (data) {
-            setCurComments(
-                curComments.map((c) =>
-                    c.id === updatedComment.id
-                        ? { ...c, amount: updatedComment.amount }
-                        : c
-                )
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            const { data, error } = await apiClient.getProfileFromUserId(
+                comment.user_id
             );
-            setAlreadyLiked(!alreadyLiked);
-        }
+            if (data) {
+                setUserProfileImg(data.image_url);
+            }
+            if (error) {
+                alert(error);
+            }
+        };
+        fetchUserProfile();
+    }, [comment.user_id]);
 
-        if (error) {
-            alert(error);
-        }
-    };
+    // return (
+    //     <div>
+    //         {" "}
+    //         comment: {comment?.comment}, date: {comment?.date}, user id:
+    //         {comment?.user_id}, ID (primary key): {comment?.id}, posted by:{" "}
+    //         {comment.username},{" "}
+    //     </div>
+    // );
+
     return (
         <div>
-            {/*   comment: {comment?.comment}, date: {comment?.date}, user id:
-            {comment?.user_id}, ID (primary key): {comment?.id}, likes{" "}
-            {comment?.amount}, posted by: {comment.username}, alreadyLiked:
-            {alreadyLiked ? "true" : "false"}*/}
             <div className="comment_div">
                 <div className="comment_div_div">
                     <div className="comment_headers">
                         <div className="comment_flex">
                             <img
-                                src="https://i.imgur.com/hepj9ZS.png"
-                                alt="User avatar"
+                                src={
+                                    userProfileImg
+                                        ? userProfileImg
+                                        : "https://i.imgur.com/hepj9ZS.png"
+                                }
                             />
                             <h3 className="comment_flex_h3">
                                 <b>
                                     <Link
                                         style={{ textDecoration: "none" }}
-                                        to={`/publicProfile/${comment.user_id}`}
+                                        to={
+                                            user.id === comment.user_id
+                                                ? "/profile"
+                                                : `/publicProfile/${comment.user_id}`
+                                        }
                                     >
-                                        {authorOfComment}.
+                                        {authorOfComment}. user_id: {user.id} ,
+                                        comment.user_id: {comment.user_id},
+                                        comment.id: {comment.id}
                                     </Link>
                                 </b>
                             </h3>
@@ -180,76 +180,70 @@ export default function Comment({
                                 {moment(comment.date).fromNow()}{" "}
                             </div>
                         </div>
-                        <div className="comment_flex_menu">
-                            {user.id === comment.user_id ? (
-                                <>
-                                    <IconButton
-                                        aria-label="more"
-                                        aria-controls="long-menu"
-                                        aria-haspopup="true"
-                                        onClick={handleClick}
-                                    >
-                                        <MoreVertIcon />
-                                    </IconButton>
-                                    <Menu
-                                        id="long-menu"
-                                        anchorEl={anchorEl}
-                                        keepMounted
-                                        open={isOpen}
-                                        onClose={handleCloseMenu}
-                                        PaperProps={{
-                                            style: {
-                                                maxHeight: 20 * 4.5,
-                                                width: "9.5ch",
-                                            },
-                                        }}
-                                        anchorOrigin={{
-                                            vertical: "bottom",
-                                            horizontal: "right",
-                                        }}
-                                        transformOrigin={{
-                                            vertical: "top",
-                                            horizontal: "left",
-                                        }}
-                                    >
-                                        <MenuItem
-                                            key={"edit"}
-                                            onClick={(e, c) =>
-                                                handleShowEdit(e, comment)
-                                            }
-                                        >
-                                            {showEdit &&
-                                            comment.id === selectedCommentId
-                                                ? "Unedit"
-                                                : "Edit"}
-                                        </MenuItem>
-                                        <MenuItem
-                                            key={"delete"}
-                                            onClick={() => setOpen(true)}
-                                        >
-                                            Delete
-                                        </MenuItem>
-                                    </Menu>{" "}
-                                </>
-                            ) : (
-                                <> </>
-                            )}
-                        </div>
-                        <ConfirmDialog
+                        {/*<div className="comment_flex_menu">
+    {user.id === comment.user_id ? (
+        <>
+            <IconButton
+                aria-label="more"
+                aria-controls="long-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+            >
+                <MoreVertIcon />
+            </IconButton>
+            <Menu
+                id="long-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={isOpen}
+                onClose={handleCloseMenu}
+                PaperProps={{
+                    style: {
+                        maxHeight: 20 * 4.5,
+                        width: "9.5ch",
+                    },
+                }}
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                }}
+                transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                }}
+            >
+                <MenuItem
+                    key={"edit"}
+                    onClick={(e, c) => handleShowEdit(e, comment)}
+                >
+                    {showEdit && comment.id === selectedCommentId
+                        ? "Unedit"
+                        : "Edit"}
+                </MenuItem>
+                <MenuItem key={"delete"} onClick={() => setOpen(true)}>
+                    Delete
+                </MenuItem>
+            </Menu>{" "}
+        </>
+    ) : (
+        <> </>
+    )}
+</div>;*/}
+                        {/*      <ConfirmDialog
                             open={open}
                             onClose={handleClose}
                             selectedValue={"hi"}
                             handleDelete={handleDelete}
                             comment={comment}
                             setAnchorEl={setAnchorEl}
-                        />
+                        />*/}
                     </div>
 
                     <div className="comment_desc" style={{ color: "#575757" }}>
                         {comment?.comment}
                     </div>
 
-                    {/*<div
+                    <div
                         className="comment_footer"
                         style={{ marginRight: "20px" }}
                     >
@@ -278,15 +272,8 @@ export default function Comment({
                         ) : (
                             <> </>
                         )}
-                    </div>*/}
+                    </div>
 
-                    {/*{
-    alreadyLiked ? (
-        <button onClick={(e, c) => handleLike(e, comment)}>downvote</button>
-    ) : (
-        <button onClick={(e, c) => handleLike(e, comment)}>like</button>
-    );
-}*/}
                     {showEdit && comment.id === selectedCommentId ? (
                         <form
                             onSubmit={(e, commentParameter) =>

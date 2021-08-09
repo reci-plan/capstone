@@ -133,6 +133,8 @@
 .Layout_Recommended_Recipes_Wrapper {
     display: flex;
     justify-content: flex-end;
+    border: 1px solid black;
+    flex-wrap: wrap;
 }
 
 .Layout_Bottom_Flex_Wrapper {

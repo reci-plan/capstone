@@ -69,8 +69,9 @@ class Profile {
     // });
 
     // const image_url = result;
-    
-    const userResults = await db.query(`
+
+    const userResults = await db.query(
+      `
       UPDATE users
       SET first_name = CASE WHEN COALESCE($1, '') = '' THEN first_name ELSE $1 END,
           last_name = CASE WHEN COALESCE($2, '') = '' THEN last_name ELSE $2 END,
@@ -109,6 +110,18 @@ class Profile {
     );
     const userResult = User.makeUser(userResults.rows[0]);
     return [userResult, profileResults.rows[0]];
+  }
+
+  /** Fetch another user's, based on user_id*/
+  static async getProfileInformation(user_id) {
+    const results = await db.query(
+      `
+      SELECT * FROM profile
+      WHERE user_id = $1
+    `,
+      [user_id]
+    );
+    return results.rows[0];
   }
 
   static async getPublicProfileInformation(user_id) {

@@ -21,8 +21,6 @@ import AboutUs from "../About/About";
 import ContactUs from "../Contact/Contact";
 import Footer from "../Footer/Footer";
 
-import { useDataLayerValue } from "../../context/DataLayer";
-
 import "./App.css";
 function App() {
   const [user, setUser] = useState({});
@@ -42,12 +40,6 @@ function App() {
     "savory",
     "fatty",
   ];
-
-  // const [recipes, setRecipes] = useState({})
-
-  const [{ colors }, dispatch] = useDataLayerValue();
-
-  console.log("On App.js component, colors is: ", colors);
 
   // Remain logged in
   useEffect(() => {
@@ -132,7 +124,7 @@ function App() {
   // Handle save recipe
   const handleSave = async (r) => {
     const { data, error } = await apiClient.saveRecipe(r);
-
+    console.log("hello");
     if (data) {
       setChangeSave(!changeSave);
       console.log("Save: ", data);
@@ -192,7 +184,14 @@ function App() {
           />
           <Route
             path="/recipes/:recipeId"
-            element={<IndividualRecipe user={user} recipes={recipes} />}
+            element={
+              <IndividualRecipe
+                user={user}
+                recipes={recipes}
+                handleSave={handleSave}
+                handleUnsave={handleUnsave}
+              />
+            }
           />
 
           <Route path="/wheel" element={<Generator user={user} />} />
@@ -218,7 +217,7 @@ function App() {
 
           <Route
             path="/publicProfile/:user_id_here"
-            element={<PublicProfile />}
+            element={<PublicProfile allFlavors={allFlavors}/>}
           />
 
           <Route

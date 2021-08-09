@@ -157,7 +157,7 @@ class Recipe {
     static async getIndividualRecipe(api_id) {
         const results = await db.query(
             `
-            SELECT title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree FROM all_recipes
+            SELECT id, api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree FROM all_recipes
             WHERE api_id = $1
         `,
             [api_id]

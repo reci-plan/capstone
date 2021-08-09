@@ -15,12 +15,10 @@ class Comment {
             `;
 
         const results = await db.query(query, [api_id]);
-        console.log(results.rows);
         return results.rows;
     }
 
     static async postComment(user, comment, api_id) {
-        console.log(user.username);
         if (!user) {
             throw new UnauthorizedError(`No user logged in.`);
         }
@@ -32,20 +30,6 @@ class Comment {
 
         const results = await db.query(query, [user.username, api_id, comment]);
 
-        const insert_to_likes_table_query = `
-            INSERT INTO likes (amount, user_id, comment_id)
-            VALUES ($1, (SELECT id FROM users WHERE username = $2), (SELECT id FROM comments WHERE id = $3))
-            RETURNING id, amount, user_id, comment_id
-        `;
-
-        const insert_to_likes = await db.query(insert_to_likes_table_query, [
-            0,
-            user.username,
-            results.rows[0].id,
-        ]);
-
-        console.log(`insert_to_likes: `, insert_to_likes.rows[0]);
-
         return results.rows[0];
     }
 
@@ -54,20 +38,13 @@ class Comment {
             throw new UnauthorizedError(`No user logged in`);
         }
 
-        console.log(
-            "user.username: ",
-            user.username,
-            " comment_id: ",
-            comment_id
-        );
-
         const checkIfExisting = await db.query(
             `SELECT * FROM comments
             WHERE user_id = (SELECT id FROM users WHERE username = $1)
             AND id = $2`,
             [user.username, comment_id]
         );
-        console.log("testing", checkIfExisting.rows.length === 0);
+
         if (checkIfExisting.rows.length === 0) {
             throw new BadRequestError("You don't own this comment");
         }

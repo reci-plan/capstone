@@ -8,8 +8,7 @@ import profileBackground from "../../assets/profile.png";
 import "./Profile.css";
 
 export default function Profile({ user, profile, flavors }) {
-    const colors = [{}];
-
+    console.log(flavors);
     return (
         <div
             className="Profile"
@@ -36,14 +35,15 @@ export default function Profile({ user, profile, flavors }) {
                         <div className="input-flavors">
                             <span className="input-type">fav flavors: </span>
                             <div className="fav-flavors">
-                                {flavors?.length > 0
-                                    ? flavors.map((element) => (
-                                          <div className="flavor">
-                                              {element.flavor}
-                                          </div>
-                                      ))
-                                    : <>none</>
-                                }
+                                {flavors?.length > 0 ? (
+                                    flavors.map((element) => (
+                                        <div className="flavor">
+                                            {element.flavor}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <>none</>
+                                )}
                             </div>
                         </div>
                     </div>

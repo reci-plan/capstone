@@ -10,7 +10,7 @@ export default function SocialMediaShare({ recipeInfo }) {
     // const params = useParams();
     const current_path = window.location.href;
     // recipeInfo.title;
-    console.log(current_path);
+    // console.log(current_path);
 
     const sampleUrl = "google.com";
 

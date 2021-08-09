@@ -41,14 +41,20 @@ const stringToArray = (str, setState) => {
         tmp_str += str[i];
         i++;
       }
-      // translated_arr.push(tmp_str);
+      console.log(tmp_str);
       setState((prevState) => [...prevState, tmp_str]);
+      // setState(tmp_str);
     }
     i++;
   }
 };
 
-export default function IndividualRecipe({ user, recipes }) {
+export default function IndividualRecipe({
+  user,
+  recipes,
+  handleSave,
+  handleUnsave,
+}) {
   // console.log(user);
   const { recipeId } = useParams();
   const [recipeInstructions, setRecipeInstructions] = useState([]);
@@ -59,8 +65,6 @@ export default function IndividualRecipe({ user, recipes }) {
   const [showEdit, setShowEdit] = useState(false);
   const [usersComment, setUsersComment] = useState(false);
   const [editCommentMsg, setEditCommentMsg] = useState("");
-
-  const [selectedCommentId, setSelectedCommentId] = useState("");
 
   const [postedBy, setPostedBy] = useState();
 
@@ -91,6 +95,11 @@ export default function IndividualRecipe({ user, recipes }) {
     setComment("");
     setIsExpanded(false);
   };
+
+  useEffect(() => {
+    setRecipeIngredients([]);
+    setRecipeInstructions([]);
+  }, [recipeId]);
 
   // Method 1:
 
@@ -179,19 +188,14 @@ export default function IndividualRecipe({ user, recipes }) {
   // When user post new comment
 
   const handleSubmit = async (e) => {
+    console.log("???");
     setIsExpanded(false);
     e.preventDefault();
+
     const { data, error } = await apiClient.postComment({ comment }, recipeId);
     if (data) {
       console.log("data.publishComment: >>>>>>>>> ", data.publishComment);
-      const published_comment_with_zero_likes = {
-        ...data.publishComment,
-        amount: 0,
-      };
-      setCurComments((prevState) => [
-        published_comment_with_zero_likes,
-        ...prevState,
-      ]);
+      setCurComments((prevState) => [...prevState, data.publishComment]);
     }
     if (error) {
       alert(error);
@@ -232,9 +236,9 @@ export default function IndividualRecipe({ user, recipes }) {
     "servings",
     "pricePerServing",
   ];
-
   // console.log(recipeInfo);
   // console.log(recipeInfo.description);
+  console.log(curComments);
   return (
     <>
       <div style={{ padding: "0 80px" }}>
@@ -246,6 +250,9 @@ export default function IndividualRecipe({ user, recipes }) {
             EXTRA_INFO_ARRAY={EXTRA_INFO_ARRAY}
             extraInformation={extraInformation}
             recipes={recipes}
+            handleSave={handleSave}
+            handleUnsave={handleUnsave}
+            user={user}
           />
         </div>
         <div style={{ marginTop: "300px" }}> </div>
@@ -532,7 +539,27 @@ export default function IndividualRecipe({ user, recipes }) {
               <> </>
             )}
             {curComments.map((comment) => (
-              <Comment
+              <div>
+                comment: {comment?.comment}, date: {comment?.date}, user id:
+                {comment?.user_id}, ID (primary key): {comment?.id}, posted by:{" "}
+                {comment.username},{" "}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+{
+  /*   comment: {comment?.comment}, date: {comment?.date}, user id:
+                {comment?.user_id}, ID (primary key): {comment?.id}, posted by:{" "}
+                {comment.username},{" "}*/
+}
+
+{
+  /*         <Comment
                 comment={comment}
                 setCurComments={setCurComments}
                 curComments={curComments}
@@ -540,14 +567,7 @@ export default function IndividualRecipe({ user, recipes }) {
                 setEditCommentMsg={setEditCommentMsg}
                 showEdit={showEdit}
                 setShowEdit={setShowEdit}
-                setSelectedCommentId={setSelectedCommentId}
-                selectedCommentId={selectedCommentId}
+
                 user={user}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </>
-  );
+              />*/
 }
