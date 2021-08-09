@@ -15,7 +15,7 @@ export default function SocialMediaShare({ recipeInfo }) {
     const sampleUrl = "google.com";
 
     return (
-        <div className="share-btn-container">
+        <span className="share-btn-container">
             <a
                 href={`https://www.facebook.com/sharer.php?u=${sampleUrl}`}
                 target="_blank"
@@ -59,6 +59,6 @@ export default function SocialMediaShare({ recipeInfo }) {
                     id="tumblrLogo"
                 />
             </a>
-        </div>
+        </span>
     );
 }

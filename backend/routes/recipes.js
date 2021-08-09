@@ -40,7 +40,7 @@ router.get("/getRecipes", async (req, res, next) => {
 
   try {
     // const result_arr = [];
-    let number = 100;
+    let number = 1;
 
     for (let i = 0; i < 5; i++) {
     const options = {
@@ -64,9 +64,9 @@ router.get("/getRecipes", async (req, res, next) => {
     axios
       .request(options)
       .then(async function (response) {
-        const recipes = await Recipe.extractInfo(response.data);
-        res.status(200).json({ result: recipes });
-        // res.status(200).json({ result: response.data });
+        // const recipes = await Recipe.extractInfo(response.data);
+        // res.status(200).json({ result: recipes });
+        res.status(200).json({ result: response.data });
       })
       .catch(function (error) {
         console.error(error);

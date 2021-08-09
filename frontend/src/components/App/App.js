@@ -192,13 +192,10 @@ function App() {
           />
           <Route
             path="/recipes/:recipeId"
-            element={<IndividualRecipe user={user} />}
+            element={<IndividualRecipe user={user} recipes={recipes} />}
           />
 
-          <Route 
-            path="/wheel" 
-            element={<Generator user={user}/>}
-          />
+          <Route path="/wheel" element={<Generator user={user} />} />
 
           <Route
             path="/profile"
@@ -236,14 +233,7 @@ function App() {
             }
           />
 
-          <Route
-            path="/search"
-            element={
-              <SearchFilter
-                user={user}
-              />
-            }
-          />
+          <Route path="/search" element={<SearchFilter user={user} />} />
 
           <Route
             path="/search/:categoryType"

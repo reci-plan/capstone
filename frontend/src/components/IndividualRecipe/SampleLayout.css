@@ -1,0 +1,148 @@
+* {
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.Layout_Title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Layout_Title_Real {
+    font-size: 30px;
+    line-height: 37px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.Layout_Title_Share {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+}
+
+.Layout_Flex_Wrapper {
+    display: flex;
+}
+
+.Layout_Left_Side {
+    flex: 1;
+    margin: 10px 10px;
+}
+
+.Layout_Image_Div {
+    border: 2px solid black;
+    margin: 10px 0px;
+    width: 714px;
+    overflow: hidden;
+}
+
+.Layout_Image {
+    display: block;
+    height: 464px;
+    width: 100%;
+    object-fit: cover;
+
+    /*position: absolute;*/
+    /*    width: 714px;
+    height: 464px;
+    left: 147px;
+    top: 296px;*/
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.Layout_Ingredients_Heading {
+    display: flex;
+    margin-top: 50px;
+}
+
+.Layout_Horizontal_Line {
+    letter-spacing: -2px;
+}
+
+.Layout_Ingredients_Title {
+    font-size: 30px;
+    margin: 0 20px;
+}
+
+.Layout_Ingredients_RealIngredients {
+    font-size: 20px;
+    display: flex;
+    margin: 15px 80px;
+}
+
+.Layout_Ingredients_ul {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    list-style-position: outside;
+    /*    display: flex;
+    flex-flow: row wrap;
+    align-items:  stretch;*/
+}
+
+.Layout_Ingredients_li {
+    width: 300px;
+    display: inline-block;
+    text-align: left;
+    padding-bottom: 20px;
+    font-size: 15px;
+    line-height: 19px;
+
+    margin-bottom: 20px;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+
+    padding-left: 2em;
+    text-indent: -2em;
+    word-wrap: break-word;
+}
+
+.test123 {
+    border: 5px solid blue;
+    display: inline-block;
+}
+
+.Layout_Ingredients_li:before {
+    /*    content: "\ffed";
+    margin-right: 0.5em;*/
+}
+
+.Layout_Instructions_Div {
+    font-size: 30px;
+    margin: 0 80px;
+}
+
+.Layout_Right_Side {
+    flex: 0.7;
+}
+
+.Layout_Ingredients_Title_Right {
+    font-size: 30px;
+}
+
+.Layout_Space_BetweenLines {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Layout_Stats_And_Data_Real,
+.Layout_Recommended_Recipes_Wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Layout_Bottom_Flex_Wrapper {
+    display: flex;
+}
+
+.Layout_Bottom_Left {
+    flex: 1;
+}
+
+.Layout_Bottom_Right {
+    flex: 0.7;
+}
