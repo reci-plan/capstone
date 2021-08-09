@@ -35,8 +35,6 @@ function App() {
   const [changeSave, setChangeSave] = useState(false);
   const [profileId, setProfileId] = useState(-1)
 
-  // const [recipes, setRecipes] = useState({})
-
   const [{ colors }, dispatch] = useDataLayerValue();
 
   // console.log("On App.js component, colors is: ", colors);
@@ -208,7 +206,7 @@ function App() {
           />
 
           <Route
-            path="/profile/:id"
+            path="/profile/:username"
             element={
               <Profile 
                 user={profileId > 0 ? allProfiles[0].filter((p) => p.id === profileId)[0] : user} 

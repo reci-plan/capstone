@@ -40,6 +40,26 @@ class Profile {
     return results.rows[0];
   }
 
+  static async fetchUserAndProfile(user, username) {
+    if (!user) {
+      throw new UnauthorizedError(`No user logged in.`);
+    }
+
+    const userResult = await db.query(`
+      SELECT * FROM users
+      WHERE username = $1
+    `, [username]
+    );
+
+    const profileResult = await db.query(`
+      SELECT * FROM profile
+      WHERE user_id = (SELECT id FROM users WHERE username = $1)
+    `, [username]
+    );
+
+    return [userResult.rows[0], profileResult.rows[0]];
+  }
+
   /** Fetch all profiles except user */
   static async fetchAllProfiles(user) {
     if (!user) {

@@ -34,6 +34,17 @@ router.get("/", requireAuthenticatedUser, async (req, res, next) => {
   }
 });
 
+router.get("/username/:username", requireAuthenticatedUser, async (req, res, next) => {
+  try {
+    const user = res.locals.user;
+    const { username } = req.params;
+    const profile = await Profile.fetchUserAndProfile(user, username)
+    res.status(200).json(profile);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get("/all", requireAuthenticatedUser, async (req, res, next) => {
   try {
     const user = res.locals.user;

@@ -8,10 +8,28 @@ import location from "../../assets/location.svg";
 import profileBackground from "../../assets/profile.png";
 import "./Profile.css";
 
-export default function Profile({ user, profile, isCurrentUser = true }) {
+export default function Profile({ user }) {
     const navigate = useNavigate()
+    const { username } = useParams()
+    const [thisUser, setThisUser] = useState({})
+    const [thisProfile, setThisProfile] = useState({})
     const [flavors, setFlavors] = useState("")
     const [profileTerm, setProfileTerm] =  useState("")
+
+    useEffect(() => {
+        const fetchUserAndProfile = async () => {
+            const { data, error } = await apiClient.fetchUserAndProfile(username ? username : (user.username))
+            if (data) {
+                setThisUser(data[0])
+                setThisProfile(data[1])
+            }
+            if (error) {
+                console.log(error, "Profile.js")
+            }
+        }
+
+        fetchUserAndProfile()
+    }, [user, username])
 
     const handleOnChange = (e) => {
         setProfileTerm(e.target.value)
@@ -35,9 +53,9 @@ export default function Profile({ user, profile, isCurrentUser = true }) {
     ];
 
     useEffect(() => {
-        if (profile?.fav_flavors) {
+        if (thisProfile?.fav_flavors) {
             var flavors = [];
-            profile.fav_flavors.split("").forEach((c) => {
+            thisProfile.fav_flavors.split("").forEach((c) => {
               let num = Number(c);
               var obj = { flavor: allFlavors[num], id: c };
               flavors.push(obj);
@@ -46,7 +64,7 @@ export default function Profile({ user, profile, isCurrentUser = true }) {
           } else {
             setFlavors([]);
           }
-    }, [profile])
+    }, [thisProfile])
 
     return (
         <div
@@ -61,7 +79,7 @@ export default function Profile({ user, profile, isCurrentUser = true }) {
             ) : (
                 <div className="profile-display">
                     <div className="profile-left">
-                        {isCurrentUser ?
+                        {!username ?
                             <form className="profile-search" onSubmit={handleOnSubmit}>
                                 <div>
                                     <img src={searchIcon} alt="search icon"></img>
@@ -71,9 +89,9 @@ export default function Profile({ user, profile, isCurrentUser = true }) {
                             : null
                         }
                         <div className="profile-img">
-                            {profile.image_url ? (
+                            {thisProfile.image_url ? (
                                 <img
-                                    src={profile.image_url}
+                                    src={thisProfile.image_url}
                                     alt="User profile img"
                                 ></img>
                             ) : (
@@ -99,21 +117,21 @@ export default function Profile({ user, profile, isCurrentUser = true }) {
                         <div className="profile-basic">
                             <div>
                                 <div className="profile-name">
-                                    {user.first_name} {user.last_name}
+                                    {thisUser.first_name} {thisUser.last_name}
                                 </div>
                                 <div className="location">
-                                    {profile.region ? (
+                                    {thisProfile.region ? (
                                         <>
                                             <img
                                                 src={location}
                                                 alt="Location Icon"
                                             ></img>
-                                            <span>{profile.region}</span>
+                                            <span>{thisProfile.region}</span>
                                         </>
                                     ) : null}
                                 </div>
                             </div>
-                            {isCurrentUser ?
+                            {!username ?
                                 <Link to="/profile/edit" className="edit-btn">
                                     . . .
                                 </Link>
@@ -124,18 +142,18 @@ export default function Profile({ user, profile, isCurrentUser = true }) {
                         <div className="input">
                             <span className="input-type">username: </span>
                             <span className="input-type-res">
-                                {user.username}
+                                {thisUser.username}
                             </span>
                         </div>
                         <div className="input">
                             <span className="input-type">email: </span>
-                            <span className="input-type-res">{user.email}</span>
+                            <span className="input-type-res">{thisUser.email}</span>
                         </div>
-                        {profile.short_bio ? (
+                        {thisProfile.short_bio ? (
                             <div className="input">
                                 <span className="input-type">short bio: </span>
                                 <span className="input-type-res">
-                                    {profile.short_bio}
+                                    {thisProfile.short_bio}
                                 </span>
                             </div>
                         ) : null}

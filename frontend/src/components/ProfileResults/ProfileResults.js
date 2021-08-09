@@ -18,12 +18,12 @@ export default function ProfileResults({ user, profile, allProfiles, setProfileI
             ))
             
             .map((r, i) => (
-              <Link key={r.id} to={`/profile/${r.id}`} onClick={e => setProfileId(r.id)} className="user">
+              <Link key={r.id} to={`/profile/${r.username}`} onClick={e => setProfileId(r.id)} className="user">
                 <span>{i + 1}. </span>
                 {allProfiles[1]
                   .filter((p) => p.id === r.id)
                   .map((p) => (
-                    <img src={p.image_url ? p.image_url : tempImg} alt={`${r.first_name} profile img`}></img>
+                    <img key={p.id} src={p.image_url ? p.image_url : tempImg} alt={`${r.first_name} profile img`}></img>
                   ))
                 } 
                 <span>{r.first_name} {r.last_name}</span>
