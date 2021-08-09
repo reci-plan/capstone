@@ -4,17 +4,17 @@ import navbar from "../../assets/navbar.png"
 import tempImg from "../../assets/tempProfileImg.png";
 import "./ProfileResults.css"
 
-export default function ProfileResults({ user, profile, allProfiles, profileTerm, setProfileId }) {
+export default function ProfileResults({ user, profile, allProfiles, setProfileId }) {
   return (
     <div className="ProfileResults" style={{backgroundImage: `url(${navbar})`}}>
-      <div className="section-title">Profile Search Results: {profileTerm}</div>
+      <div className="section-title">Profile Search Results: {localStorage.getItem('profile-search-term')}</div>
       <div>
         {allProfiles.length > 0 ?
           allProfiles[0]
             .filter((r) => (
-              r.first_name.toLowerCase().includes(profileTerm.toLowerCase()) ||
-              r.last_name.toLowerCase().includes(profileTerm.toLowerCase()) ||
-              r.username.toLowerCase().includes(profileTerm.toLowerCase())
+              r.first_name.toLowerCase().includes(localStorage.getItem('profile-search-term').toLowerCase()) ||
+              r.last_name.toLowerCase().includes(localStorage.getItem('profile-search-term').toLowerCase()) ||
+              r.username.toLowerCase().includes(localStorage.getItem('profile-search-term').toLowerCase())
             ))
             
             .map((r, i) => (

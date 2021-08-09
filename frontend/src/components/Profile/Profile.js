@@ -8,9 +8,10 @@ import location from "../../assets/location.svg";
 import profileBackground from "../../assets/profile.png";
 import "./Profile.css";
 
-export default function Profile({ user, profile, profileTerm, setProfileTerm, isCurrentUser = true }) {
+export default function Profile({ user, profile, isCurrentUser = true }) {
     const navigate = useNavigate()
     const [flavors, setFlavors] = useState("")
+    const [profileTerm, setProfileTerm] =  useState("")
 
     const handleOnChange = (e) => {
         setProfileTerm(e.target.value)
@@ -19,6 +20,7 @@ export default function Profile({ user, profile, profileTerm, setProfileTerm, is
     const handleOnSubmit = (e) => {
         e.preventDefault()
         if (profileTerm) {
+            localStorage.setItem('profile-search-term', profileTerm)
             navigate("/profileResults")
         }
     }
@@ -116,7 +118,7 @@ export default function Profile({ user, profile, profileTerm, setProfileTerm, is
                                     . . .
                                 </Link>
                                 : 
-                                <button>Add Friend</button>
+                                null
                             }
                         </div>
                         <div className="input">

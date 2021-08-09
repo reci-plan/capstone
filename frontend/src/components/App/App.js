@@ -33,7 +33,6 @@ function App() {
   const [allProfiles, setAllProfiles] = useState([]);
   const [saved, setSaved] = useState([]);
   const [changeSave, setChangeSave] = useState(false);
-  const [profileTerm, setProfileTerm] = useState("");
   const [profileId, setProfileId] = useState(-1)
 
   // const [recipes, setRecipes] = useState({})
@@ -203,9 +202,7 @@ function App() {
             element={
               <Profile 
                 user={user} 
-                profile={profile} 
-                profileTerm={profileTerm}
-                setProfileTerm={setProfileTerm}
+                profile={profile}
               />
             }
           />
@@ -239,7 +236,6 @@ function App() {
                 user={user}
                 profile={profile}
                 allProfiles={allProfiles}
-                profileTerm={profileTerm}
                 setProfileId={setProfileId}
               />
             }
