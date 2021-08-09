@@ -24,14 +24,6 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
       if (searchBox.current && !searchBox.current.contains(event.target)) {
         setIsSearch(false)
       }
-    }
-
-    window.addEventListener('click', handleOutsideClick)
-    return () => window.removeEventListener('click', handleOutsideClick)
-  }, []);
-
-  useEffect(() => {
-    function handleOutsideClick(event) {
       if (userBox.current && !userBox.current.contains(event.target)) {
         setUserIsClicked(false)
       }
@@ -71,25 +63,30 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
         <img src={logo} alt="Reciplan app logo"></img>
       </Link>
       <div className={`navbar-right ${isSearch ? 'phone-view-search': ''}`}>
-        {!isSearch ? (
-          <div className="search-btn" onClick={handleOnSearchClick}>
-            <img src={search} alt="Search icon"></img>
-          </div>
-        ) : (
-          <>
-            <form onSubmit={handleOnSubmit}>
-              <input
-                className="search-input"
-                type="text"
-                placeholder="search recipes..."
-                onChange={handleInputChange}
-              ></input>
-            </form>
-            <div className="search-btn" onClick={e => setIsSearch(false)}>
-              <img src={close} alt="Close button"></img>
+        <div ref={searchBox}>
+          {!isSearch ? (
+            <div className="search-btn" onClick={handleOnSearchClick}>
+              <img src={search} alt="Search icon"></img>
             </div>
-          </>
-        )}
+          ) : (
+            <>
+              <div className="search-btn hidden" onClick={handleOnSearchClick}>
+                <img src={search} alt="Search icon"></img>
+              </div>
+              <form onSubmit={handleOnSubmit}>
+                <input
+                  className="search-input"
+                  type="text"
+                  placeholder="search recipes..."
+                  onChange={handleInputChange}
+                ></input>
+              </form>
+              <div className="search-btn" onClick={e => setIsSearch(false)}>
+                <img src={close} alt="Close button"></img>
+              </div>
+            </>
+          )}
+        </div>
         <Link
           to="/wheel"
           className={`wheel-link ${user?.email ? 'margin-right' : ''} ${isSearch ? 'phone-view': ''}`}

@@ -1,24 +1,26 @@
 
 import navbar from "../../assets/navbar.png"
-import profile from "../../assets/tempProfileImg.png"
+import ann from "../../assets/ann.png"
+import maritza from "../../assets/maritza.png"
+import andrew from "../../assets/andrew.png"
 import "./About.css"
 
 export default function About() {
   const aboutus = [
     {
       name: "Maritza Padilla",
-      image: profile,
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque efficitur odio, sit amet viverra sem tincidunt id. In in feugiat massa. Ut in consectetur elit, at rutrum velit. Etiam ut ligula odio."
+      image: maritza,
+      bio: "https://github.com/mpadil18"
     },
     {
       name: "Andrew Lee",
-      image: profile,
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque efficitur odio, sit amet viverra sem tincidunt id. In in feugiat massa. Ut in consectetur elit, at rutrum velit. Etiam ut ligula odio."
+      image: andrew,
+      bio: "https://github.com/f1rstpr"
     },
     {
       name: "Ann Wang",
-      image: profile,
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque efficitur odio, sit amet viverra sem tincidunt id. In in feugiat massa. Ut in consectetur elit, at rutrum velit. Etiam ut ligula odio."
+      image: ann,
+      bio: "https://github.com/awang2330"
     }
   ];
 
@@ -28,9 +30,9 @@ export default function About() {
       <section className="mission">
         <div>Our Mission</div>
         <p>
-          To provide a place where working people can quickly and easily access inexpensive 
-          recipes that align with their needs, as well as plan out meals using a random recipe 
-          generator specific to their inputted criteria.
+          We want to provide a place where working people can quickly and easily access inexpensive 
+          recipes that align with their needs. They can search for, as well as plan out meals using a random recipe 
+          generator specific to their criteria.
         </p>
       </section>
 
@@ -43,7 +45,7 @@ export default function About() {
                 <img src={item.image} alt={item.name}></img>
               </div>
               <div>{item.name}</div>
-              <p>{item.bio}</p>
+              <a href={item.bio}>{item.bio}</a>
             </div>
           ))}
         </div>

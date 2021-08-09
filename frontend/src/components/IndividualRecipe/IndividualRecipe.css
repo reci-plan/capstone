@@ -6,8 +6,7 @@ html {
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 75px;
-  padding-top: 100px;
+  padding: 120px 75px;
   font-family: 'Lato', sans-serif;
 }
 .heading {
@@ -68,9 +67,14 @@ html {
 .recipe-additional-info {
   /*border: 1px solid black;*/
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   /*padding: 20px;*/
   padding: 20px 0px;
+  flex-wrap: wrap;
+}
+
+.recipe-additional-info div {
+  margin: 10px;
 }
 
 * {
@@ -107,7 +111,7 @@ button:disabled {
 }
 
 button[type="submit"] {
-  background: #1a8917;
+  background: #6210f5;
   color: #fff;
   border-radius: 5px;
 }
@@ -117,6 +121,10 @@ button[type="submit"] {
   color: #aaa;
   justify-content: space-between;
   /*width: 400px;*/
+}
+
+.shareThoughts_notLoggedIn {
+  color: #aaa;
 }
 
 .shareThoughtsBtn {
@@ -171,6 +179,10 @@ button[type="submit"] {
   transform: translateY(-32px);
   line-height: 1;
   background-color: white;
+}
+
+.comment-box.expanded {
+  border: 1px solid black;
 }
 
 .comment-box.expanded .comment-field {
@@ -230,4 +242,83 @@ button[type="submit"] {
 
 .active {
   background-color: #a7d2c5;
+}
+
+.loadingIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /*align-items: center;*/
+}
+
+.boxGrayBig {
+  width: 180px;
+  height: 22px;
+  left: 20px;
+  top: 33px;
+
+  background: #e5e5e5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.boxGraySmall {
+  width: 56px;
+  height: 19px;
+  left: 20px;
+  top: 91px;
+
+  background: #e5e5e5;
+}
+
+.sampleClass {
+  border: 1px solid black;
+}
+
+.imagePlaceholder {
+  width: 550px;
+  height: 406px;
+  left: 131px;
+  top: 437px;
+
+  border: 1px solid #525252;
+  box-sizing: border-box;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 10px;
+}
+
+.instructionsPlaceholder {
+  width: 150px;
+  height: 61px;
+  left: 0px;
+  top: 0px;
+
+  background: #e6e6e6;
+}
+
+.boxGrayDescription {
+  width: 360px;
+  height: 35px;
+  background: #e5e5e5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@media only screen and (max-width: 700px) {
+  .IndividualRecipe {
+    padding: 75px 10px;
+  }
+  .recipe-top {
+    flex-direction: column;
+    align-items: center;
+  }
+  .recipe-display {
+    flex-direction: column;
+  }
+  .recipe-left, .recipe-right {
+    width: auto;
+  } 
+  .steps_div {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }

@@ -28,6 +28,11 @@ export default function Home({ user, handleSave, handleUnsave }) {
         fetchRecipes();
     }, []);
 
+    const toggleRecBtn = () => {
+        setDisplayByRec(true)
+        setDropdownIsOpen(false);
+    }
+    
     const toggleSortbyBtn = () => {
         setDropdownIsOpen(!dropdownIsOpen);
         setDisplayByRec(false)
@@ -74,9 +79,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
             <div className="home-header">
                 {user.email ? (
                     <div>
-                        <div>
-                            {getGreeting()}, {user.first_name} {user.last_name}!
-                        </div>
+                        {getGreeting()}, {user.first_name} {user.last_name}!
                     </div>
                 ) : (
                     <div>
@@ -86,7 +89,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
             </div>
 
             <div className="btn-display">
-                <button className="rec-btn" onClick={e => setDisplayByRec(true)}>
+                <button className="rec-btn" onClick={toggleRecBtn}>
                     Recommendations
                 </button>
                 <div>
@@ -130,37 +133,38 @@ export default function Home({ user, handleSave, handleUnsave }) {
                 </div>
                 :
                 <>
+                {/* fix price */}
                 {sortby === "price" ? (
                     <>
-                        <div className="category-header">Under $30</div>
+                        <div className="category-header">Under $5</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}
                             type={"expense"}
                             rangeA={0}
-                            rangeB={30}
+                            rangeB={500}
                             handleSave={handleSave}
                             handleUnsave={handleUnsave}
                         />
     
-                        <div className="category-header">Under $40</div>
+                        <div className="category-header">Under $10</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}
                             type={"expense"}
-                            rangeA={30}
-                            rangeB={40}
+                            rangeA={500}
+                            rangeB={1000}
                             handleSave={handleSave}
                             handleUnsave={handleUnsave}
                         />
     
-                        <div className="category-header">Under $50</div>
+                        <div className="category-header">Under $15</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}
                             type={"expense"}
-                            rangeA={40}
-                            rangeB={50}
+                            rangeA={1000}
+                            rangeB={1500}
                             handleSave={handleSave}
                             handleUnsave={handleUnsave}
                         />
@@ -206,7 +210,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
     
                 {sortby === "rating" ? (
                     <>
-                        <div className="category-header">Over 80 points</div>
+                        <div className="category-header">Over 4 Stars</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}
@@ -217,7 +221,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
                             handleUnsave={handleUnsave}
                         />
     
-                        <div className="category-header">Over 60 points</div>
+                        <div className="category-header">Over 3 Stars</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}
@@ -228,7 +232,7 @@ export default function Home({ user, handleSave, handleUnsave }) {
                             handleUnsave={handleUnsave}
                         />
     
-                        <div className="category-header">Over 40 points</div>
+                        <div className="category-header">Over 2 Stars</div>
                         <CarouselDisplay
                             user={user}
                             recipes={recipes}

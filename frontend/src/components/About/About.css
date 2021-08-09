@@ -4,31 +4,29 @@
   font-size: 30px;
   background-repeat: no-repeat;
   background-position-x: 40%;
+  background-size: 100%;
 }
-.mission p, .aboutus p {
+.mission p, .aboutus a {
   font-family: 'Lato', sans-serif;
   font-size: 25px;
   font-weight: 300;
 }
 .mission {
-  padding: 10px 100px;
-  background-color: #f9dcc4;
+  padding: 30px 100px;
+  min-height: 300px;
+  background-color: #D7E1EA;
 }
 
 .aboutus {
   padding: 10px 100px;
-  margin: 10px 0;
-  background-color: #e2ece9;
 }
 .people {
   display: flex;
   justify-content: space-evenly;
 }
 .person {
-  max-width: 300px;
+  max-width: 250px;
   margin: 20px;
-  /* border: 2px solid rgb(100, 100, 100);
-  border-radius: 10px; */
 }
 .person div { 
   font-size: 28px;

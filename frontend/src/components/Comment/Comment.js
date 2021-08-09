@@ -5,6 +5,23 @@ import moment from "moment";
 import apiClient from "../../services/apiClient";
 import "./Comment.css";
 
+import { makeStyles } from "@material-ui/core/styles";
+import Popover from "@material-ui/core/Popover";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Menu from "@material-ui/core/Menu";
+import Grid from "@material-ui/core/Grid";
+import MenuItem from "@material-ui/core/MenuItem";
+
+import ConfirmDialog from "./ConfirmDialog";
+
+const useStyles = makeStyles((theme) => ({
+    typography: {
+        padding: theme.spacing(2),
+    },
+}));
+
 export default function Comment({
     comment,
     setCurComments,
@@ -17,18 +34,42 @@ export default function Comment({
     selectedCommentId,
     user,
 }) {
-    // console.log("comment is", comment);
     const { recipeId } = useParams();
     const [alreadyLiked, setAlreadyLiked] = useState(false);
 
+    const [open, setOpen] = useState(false);
+
     const [authorOfComment, setAuthorOfComment] = useState("");
+
+    const classes = useStyles();
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseMenu = () => {
+        setAnchorEl(null);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+    };
+
+    const isOpen = Boolean(anchorEl);
 
     useEffect(() => {
         const checkAuthorOfComment = async () => {
             const { data, error } = await apiClient.getOwnerOfComment(comment);
             if (data) {
                 // console.log("valid call", data);
-                setAuthorOfComment(data.ownerOfComment.username);
+                setAuthorOfComment(
+                    data.ownerOfComment.first_name[0].toUpperCase() +
+                        data.ownerOfComment.first_name.slice(1) +
+                        " " +
+                        data.ownerOfComment.last_name[0].toUpperCase()
+                );
             }
             if (error) {
                 alert(`Comment.js checkAuthorOfComment(): ${error}`);
@@ -37,25 +78,9 @@ export default function Comment({
         checkAuthorOfComment();
     }, []);
 
-    // Pseudo Code
-    // useEffect(() => {
-    //     const checkCommentAlreadyLiked = async () => {
-    //         const { data, error } = await apiClient.checkIfUserIsInLikes(
-    //             recipeId
-    //         );
-    //         if (data) {
-    //             setAlreadyLiked(data.isUserInLikes);
-    //         }
-
-    //         if (error) {
-    //             alert(error);
-    //         }
-    //     };
-    //     checkCommentAlreadyLiked();
-    // }, [comment, curComments]);
-
     // For deleting a comment.
     const handleDelete = async (e, comment) => {
+        handleCloseMenu();
         // console.log("Before api call", comment);
         const { data, error } = await apiClient.deleteComment(comment);
         if (data) {
@@ -89,6 +114,7 @@ export default function Comment({
 
     // when user clicks "Edit" or "Unedit" button
     const handleShowEdit = (e, comment) => {
+        handleCloseMenu();
         setShowEdit(!showEdit);
         setEditCommentMsg(comment.comment);
         setSelectedCommentId(comment.id);
@@ -143,20 +169,87 @@ export default function Comment({
                             <h3 className="comment_flex_h3">
                                 <b>
                                     <Link
+                                        style={{ textDecoration: "none" }}
                                         to={`/publicProfile/${comment.user_id}`}
                                     >
-                                        {authorOfComment}
+                                        {authorOfComment}.
                                     </Link>
                                 </b>
                             </h3>
+                            <div style={{ color: "#B8B7B4" }}>
+                                {moment(comment.date).fromNow()}{" "}
+                            </div>
                         </div>
+                        <div className="comment_flex_menu">
+                            {user.id === comment.user_id ? (
+                                <>
+                                    <IconButton
+                                        aria-label="more"
+                                        aria-controls="long-menu"
+                                        aria-haspopup="true"
+                                        onClick={handleClick}
+                                    >
+                                        <MoreVertIcon />
+                                    </IconButton>
+                                    <Menu
+                                        id="long-menu"
+                                        anchorEl={anchorEl}
+                                        keepMounted
+                                        open={isOpen}
+                                        onClose={handleCloseMenu}
+                                        PaperProps={{
+                                            style: {
+                                                maxHeight: 20 * 4.5,
+                                                width: "9.5ch",
+                                            },
+                                        }}
+                                        anchorOrigin={{
+                                            vertical: "bottom",
+                                            horizontal: "right",
+                                        }}
+                                        transformOrigin={{
+                                            vertical: "top",
+                                            horizontal: "left",
+                                        }}
+                                    >
+                                        <MenuItem
+                                            key={"edit"}
+                                            onClick={(e, c) =>
+                                                handleShowEdit(e, comment)
+                                            }
+                                        >
+                                            {showEdit &&
+                                            comment.id === selectedCommentId
+                                                ? "Unedit"
+                                                : "Edit"}
+                                        </MenuItem>
+                                        <MenuItem
+                                            key={"delete"}
+                                            onClick={() => setOpen(true)}
+                                        >
+                                            Delete
+                                        </MenuItem>
+                                    </Menu>{" "}
+                                </>
+                            ) : (
+                                <> </>
+                            )}
+                        </div>
+                        <ConfirmDialog
+                            open={open}
+                            onClose={handleClose}
+                            selectedValue={"hi"}
+                            handleDelete={handleDelete}
+                            comment={comment}
+                            setAnchorEl={setAnchorEl}
+                        />
                     </div>
+
                     <div className="comment_desc" style={{ color: "#575757" }}>
                         {comment?.comment}
                     </div>
 
-                    <div> {moment(comment.date).fromNow()} </div>
-                    <div
+                    {/*<div
                         className="comment_footer"
                         style={{ marginRight: "20px" }}
                     >
@@ -185,7 +278,7 @@ export default function Comment({
                         ) : (
                             <> </>
                         )}
-                    </div>
+                    </div>*/}
 
                     {/*{
     alreadyLiked ? (

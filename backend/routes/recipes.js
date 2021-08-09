@@ -40,18 +40,19 @@ router.get("/getRecipes", async (req, res, next) => {
 
   try {
     // const result_arr = [];
-    // let offset = 0;
-    // let number = 100;
+    let number = 100;
 
-    // for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
     const options = {
       method: "GET",
       url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex",
       params: {
         limitLicense: "true",
-        offset: 0,
-        number: 100,
+        offset: number - 100,
+        number: number,
         addRecipeInformation: "true",
+        instructionsRequired: "true",
+        fillIngredients: "true",
       },
       headers: {
         "x-rapidapi-key": API_KEY,
@@ -64,16 +65,15 @@ router.get("/getRecipes", async (req, res, next) => {
       .request(options)
       .then(async function (response) {
         const recipes = await Recipe.extractInfo(response.data);
-        // console.log(recipes);
         res.status(200).json({ result: recipes });
+        // res.status(200).json({ result: response.data });
       })
       .catch(function (error) {
         console.error(error);
       });
 
-    // offset += 1;
-    // number += 100;
-    // }
+    number += 100;
+    }
   } catch (e) {
     next(e);
   }
@@ -121,6 +121,16 @@ router.get("/getMoreInfo/:recipeId", async (req, res, next) => {
       .catch(function (error) {
         console.error(error);
       });
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get("/individualRecipe/:recipeId", async (req, res, next) => {
+  try {
+    const { recipeId } = req.params;
+    const recipe = await Recipe.getIndividualRecipe(recipeId);
+    res.status(200).json(recipe);
   } catch (e) {
     next(e);
   }

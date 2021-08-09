@@ -1,0 +1,9 @@
+.FilterResults {
+  padding: 120px;
+  background-repeat: no-repeat;
+  background-position-x: 40%;
+  background-size: 100%;
+
+  display: flex;
+  justify-content: center;
+}

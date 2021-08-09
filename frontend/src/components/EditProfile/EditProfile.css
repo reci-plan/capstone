@@ -15,6 +15,9 @@
 .form-input label {
   font-family: 'Lato', sans-serif;
   margin: 0;
+  visibility: visible;
+  height: auto;
+  width: auto;
 }
 .form-input input {
   margin: 8px;
