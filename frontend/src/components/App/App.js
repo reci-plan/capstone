@@ -90,7 +90,9 @@ function App() {
       }
     };
 
-    fetchProfile();
+    if (user.email) {
+      fetchProfile();
+    }
   }, [user]);
 
 
@@ -106,7 +108,9 @@ function App() {
       }
     };
 
-    fetchProfile();
+    if (user.email) {
+      fetchProfile();
+    }
   }, [user]);
 
   // Fetch saved recipes
@@ -121,7 +125,10 @@ function App() {
         console.log(error, "fetch saved recipes");
       }
     };
-    fetchRecipes();
+
+    if (user.email) {
+      fetchRecipes();
+    }
   }, [user, changeSave]);
 
   // Handle save recipe

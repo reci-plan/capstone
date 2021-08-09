@@ -28,7 +28,9 @@ export default function Profile({ user }) {
             }
         }
 
-        fetchUserAndProfile()
+        if (user.email) {
+            fetchUserAndProfile()
+        }
     }, [user, username])
 
     const handleOnChange = (e) => {

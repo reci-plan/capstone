@@ -18,7 +18,6 @@ export default function Home({ user, handleSave, handleUnsave }) {
         const fetchRecipes = async () => {
             const { data, error } = await apiClient.fetchAllRecipes();
             if (data) {
-                console.log(data.recipes);
                 setRecipes(data.recipes);
             }
             if (error) {
