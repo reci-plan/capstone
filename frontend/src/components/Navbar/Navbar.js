@@ -11,7 +11,7 @@ import userlogo from "../../assets/user.svg";
 import SearchPage from "../SearchPage/SearchPage";
 import "./Navbar.css";
 
-export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
+export default function Navbar({ user, setUser, setSearchTerm }) {
   const navigate = useNavigate();
 
   const searchBox = useRef(null);
@@ -49,6 +49,7 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
+    localStorage.setItem('recipe-search-term', e.target.value)
     navigate("/searchResults");
   };
 

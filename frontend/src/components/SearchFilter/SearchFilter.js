@@ -33,8 +33,8 @@ export default function SearchFilter({ user }) {
           <div className="filter-name">Meal Types</div>
           <ul className="list-flex">
             {mealTypes.map((item, idx) => (
-            <Link to={`/search/${item}`}>
-              <li key={idx}>{item}</li>
+            <Link key={idx} to={`/search/${item}`}>
+              <li>{item}</li>
             </Link>
             ))}
           </ul>

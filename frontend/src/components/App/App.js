@@ -33,7 +33,6 @@ function App() {
   const [allProfiles, setAllProfiles] = useState([]);
   const [saved, setSaved] = useState([]);
   const [changeSave, setChangeSave] = useState(false);
-  const [profileId, setProfileId] = useState(-1)
 
   const [{ colors }, dispatch] = useDataLayerValue();
 
@@ -169,7 +168,6 @@ function App() {
         <Navbar
           user={user}
           setUser={setUser}
-          searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
         />
         <Routes>
@@ -207,7 +205,6 @@ function App() {
             element={
               <Profile 
                 user={user} 
-                profile={profile}
               />
             }
           />
@@ -216,9 +213,7 @@ function App() {
             path="/profile/:username"
             element={
               <Profile 
-                user={profileId > 0 ? allProfiles[0].filter((p) => p.id === profileId)[0] : user} 
-                profile={profileId > 0 ? allProfiles[1].filter((p) => p.id === profileId)[0] : profile} 
-                isCurrentUser={false}
+                user={user}
               />
             }
           />
@@ -241,7 +236,6 @@ function App() {
                 user={user}
                 profile={profile}
                 allProfiles={allProfiles}
-                setProfileId={setProfileId}
               />
             }
           />

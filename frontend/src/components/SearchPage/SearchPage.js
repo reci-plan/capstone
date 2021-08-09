@@ -13,15 +13,16 @@ export default function SearchPage({
         // add background image
         <div className="SearchPage">
             <div className="results">
-                Search Results: {searchTerm}
+                Search Results: {searchTerm ? searchTerm : localStorage.getItem('recipe-search-term')}
             </div>
             <div className="filter-display">
                 {recipes
                     .filter((r) =>
-                        r.title.toLowerCase().includes(searchTerm.toLowerCase())
+                        r.title.toLowerCase().includes(searchTerm ? searchTerm.toLowerCase() : localStorage.getItem('recipe-search-term').toLowerCase())
                     )
                     .map((filteredRecipes) => (
                         <RecipeCard
+                            key={filteredRecipes.id}
                             user={user}
                             recipeInfo={filteredRecipes}
                             handleSave={handleSave}

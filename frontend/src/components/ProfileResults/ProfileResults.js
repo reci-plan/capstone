@@ -18,7 +18,7 @@ export default function ProfileResults({ user, profile, allProfiles, setProfileI
             ))
             
             .map((r, i) => (
-              <Link key={r.id} to={`/profile/${r.username}`} onClick={e => setProfileId(r.id)} className="user">
+              <Link key={r.id} to={`/profile/${r.username}`} className="user">
                 <span>{i + 1}. </span>
                 {allProfiles[1]
                   .filter((p) => p.id === r.id)
