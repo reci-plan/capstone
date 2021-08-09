@@ -170,9 +170,11 @@ export default function Comment({
                                                 : `/publicProfile/${comment.user_id}`
                                         }
                                     >
-                                        {authorOfComment}. user_id: {user.id} ,
+                                        {authorOfComment}.
+{/*
+                                        user_id: {user.id} ,
                                         comment.user_id: {comment.user_id},
-                                        comment.id: {comment.id}
+                                        comment.id: {comment.id}*/}
                                     </Link>
                                 </b>
                             </h3>
@@ -180,7 +182,7 @@ export default function Comment({
                                 {moment(comment.date).fromNow()}{" "}
                             </div>
                         </div>
-                        {/*<div className="comment_flex_menu">
+                        <div className="comment_flex_menu">
     {user.id === comment.user_id ? (
         <>
             <IconButton
@@ -228,22 +230,22 @@ export default function Comment({
     ) : (
         <> </>
     )}
-</div>;*/}
-                        {/*      <ConfirmDialog
+</div>
+                              <ConfirmDialog
                             open={open}
                             onClose={handleClose}
                             selectedValue={"hi"}
                             handleDelete={handleDelete}
                             comment={comment}
                             setAnchorEl={setAnchorEl}
-                        />*/}
+                        />
                     </div>
 
                     <div className="comment_desc" style={{ color: "#575757" }}>
                         {comment?.comment}
                     </div>
 
-                    <div
+                    {/*<div
                         className="comment_footer"
                         style={{ marginRight: "20px" }}
                     >
@@ -272,7 +274,7 @@ export default function Comment({
                         ) : (
                             <> </>
                         )}
-                    </div>
+                    </div>*/}
 
                     {showEdit && comment.id === selectedCommentId ? (
                         <form

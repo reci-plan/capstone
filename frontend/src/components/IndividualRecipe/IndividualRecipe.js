@@ -539,11 +539,16 @@ export default function IndividualRecipe({
               <> </>
             )}
             {curComments.map((comment) => (
-              <div>
-                comment: {comment?.comment}, date: {comment?.date}, user id:
-                {comment?.user_id}, ID (primary key): {comment?.id}, posted by:{" "}
-                {comment.username},{" "}
-              </div>
+              <Comment
+                comment={comment}
+                setCurComments={setCurComments}
+                curComments={curComments}
+                editCommentMsg={editCommentMsg}
+                setEditCommentMsg={setEditCommentMsg}
+                showEdit={showEdit}
+                setShowEdit={setShowEdit}
+                user={user}
+              />
             ))}
           </div>
         </div>
@@ -559,7 +564,8 @@ export default function IndividualRecipe({
 }
 
 {
-  /*         <Comment
+  /*
+  <Comment
                 comment={comment}
                 setCurComments={setCurComments}
                 curComments={curComments}
