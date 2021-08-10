@@ -1,9 +1,17 @@
 .SearchPage {
-    padding: 120px;
+  padding: 120px;
+  background-repeat: no-repeat;
+  background-position-x: 40%;
+  background-size: 100%;
+  
+  width: 100vw;
+  min-height: 100vh;
 }
 
-.filtered-recipes {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+@media only screen and (max-width: 700px) {
+  .SearchPage {
+    padding: 120px 50px;
+    background-size: auto;
+    background-position-x: 85%;
+  }
 }

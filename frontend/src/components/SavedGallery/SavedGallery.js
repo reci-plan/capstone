@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
-import apiClient from "../../services/apiClient";
-import { useDataLayerValue } from "../../context/DataLayer";
+
 import RecipeCard from "../RecipeCard/RecipeCard";
-import navbar from "../../assets/navbar.png"
+import navbar from "../../assets/navbar.jpg"
 
 import "./SavedGallery.css";
 
