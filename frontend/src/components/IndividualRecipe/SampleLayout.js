@@ -30,13 +30,21 @@ export default function SampleLayout({
     recipeInfo,
     recipeIngredients,
     recipeInstructions,
-    EXTRA_INFO_ARRAY,
     extraInformation,
     recipes,
     handleSave,
     handleUnsave,
     user,
 }) {
+    const EXTRA_STATS_ARR = [
+        "Ingredients Count",
+        "Rating",
+        "Prep Time",
+        "Servings",
+        "Price Per Serving",
+        "Calories",
+    ];
+
     const [saved, setSaved] = useState(false);
     const { recipeId } = useParams();
     const [recommendedRecipes, setRecommendedRecipes] = useState([]);
@@ -196,30 +204,28 @@ export default function SampleLayout({
                         >
                             <div className="Layout_Stats_Card">
                                 <Grid container spacing={2}>
-                                    {EXTRA_INFO_ARRAY.map((r, i) => (
-                                        <Grid item xs={12} sm={6} md={4}>
-                                            <div style={{ margin: "20px" }}>
-                                                <Typography
-                                                    align="center"
-                                                    gutterBottom
-                                                >
-                                                    <Box fontWeight="fontWeightBold">
-                                                        {EXTRA_INFO_ARRAY[i]}
-                                                    </Box>
-                                                </Typography>
-                                                <Typography
-                                                    className={classes.test}
-                                                    align="center"
-                                                >
-                                                    {
-                                                        extraInformation[
-                                                            EXTRA_INFO_ARRAY[i]
-                                                        ]
-                                                    }
-                                                </Typography>
-                                            </div>
-                                        </Grid>
-                                    ))}
+                                    {Object.entries(extraInformation).map(
+                                        ([key, val], i) => (
+                                            <Grid item xs={12} sm={6} md={4}>
+                                                <div style={{ margin: "20px" }}>
+                                                    <Typography
+                                                        align="center"
+                                                        gutterBottom
+                                                    >
+                                                        <Box fontWeight="fontWeightBold">
+                                                            {EXTRA_STATS_ARR[i]}
+                                                        </Box>
+                                                    </Typography>
+                                                    <Typography
+                                                        className={classes.test}
+                                                        align="center"
+                                                    >
+                                                        {val}
+                                                    </Typography>
+                                                </div>
+                                            </Grid>
+                                        )
+                                    )}
                                 </Grid>
                             </div>
                         </div>
@@ -242,44 +248,31 @@ export default function SampleLayout({
                                     Math.random() * recipes.length
                                 );
                                 return (
-                                    <RecipeCard
-                                        recipeInfo={recipes[rng]}
-                                        user={user}
-                                        handleSave={handleSave}
-                                        handleUnsave={handleUnsave}
-                                    />
+                                    <div style={{ margin: "3px 8px" }}>
+                                        <RecipeCard
+                                            recipeInfo={recipes[rng]}
+                                            user={user}
+                                            handleSave={handleSave}
+                                            handleUnsave={handleUnsave}
+                                        />
+                                    </div>
                                 );
                             })}
                         </div>
+                    </div>
+                </div>
 
-                        <div
-                            className="Layout_Space_BetweenLines"
-                            style={{ margin: "100px 0" }}
-                        >
+                <div className="Layout_Bottom_Flex_Wrapper">
+                    <div className="Layout_Bottom_Left">
+                        <div className="Layout_Ingredients_Heading">
                             <div className="Layout_Horizontal_Line">
                                 &#x2015;&#x2015;&#x2015;&#x2015;
                             </div>
-                            <div className="Layout_Ingredients_Title_Right">
-                                Top Rated Recipes
+
+                            <div className="Layout_Ingredients_Title">
+                                Instructions
                             </div>
                         </div>
-
-                        <div className="Layout_Recommended_Recipes_Wrapper">
-                            test
-                        </div>
-                    </div>
-                </div>
-                <div className="Layout_Ingredients_Heading">
-                    <div className="Layout_Horizontal_Line">
-                        &#x2015;&#x2015;&#x2015;&#x2015;
-                    </div>
-                    <div className="Layout_Ingredients_Title">Instructions</div>
-                </div>
-                <div className="Layout_Bottom_Flex_Wrapper">
-                    <div
-                        className="Layout_Bottom_Left"
-                        style={{ border: "1px solid black" }}
-                    >
                         <div className="Layout_Instructions_Div">
                             {recipeInstructions.map((instruction, i) => (
                                 <Paper
@@ -297,12 +290,68 @@ export default function SampleLayout({
                             ))}
                         </div>
                     </div>
-                    <div
-                        className="Layout_Bottom_Right"
-                        style={{ border: "1px solid black" }}
-                    ></div>
+                    <div className="Layout_Bottom_Right">
+                        <div
+                            className="Layout_Space_BetweenLines"
+                            style={{ margin: "50px 0" }}
+                        >
+                            <div className="Layout_Horizontal_Line">
+                                &#x2015;&#x2015;&#x2015;&#x2015;
+                            </div>
+                            <div className="Layout_Ingredients_Title_Right">
+                                Top Recipes
+                            </div>
+                        </div>
+                        <div className="Layout_Recommended_Recipes_Wrapper">
+                            {[...Array(4)].map((x, i) => {
+                                let rng = Math.floor(
+                                    Math.random() * recipes.length
+                                );
+                                return (
+                                    <div style={{ margin: "3px 8px" }}>
+                                        <RecipeCard
+                                            recipeInfo={recipes[rng]}
+                                            user={user}
+                                            handleSave={handleSave}
+                                            handleUnsave={handleUnsave}
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
+
+// <div
+//                            className="Layout_Space_BetweenLines"
+//                            style={{ margin: "100px 0" }}
+//                        >
+//                            <div className="Layout_Horizontal_Line">
+//                                &#x2015;&#x2015;&#x2015;&#x2015;
+//                            </div>
+//                            <div className="Layout_Ingredients_Title_Right">
+//                                Top Rated Recipes
+//                            </div>
+//                        </div>
+
+//                        <div className="Layout_Recommended_Recipes_Wrapper">
+//                            {[...Array(4)].map((x, i) => {
+//                                let rng = Math.floor(
+//                                    Math.random() * recipes.length
+//                                );
+//                                return (
+//                                    <div style={{ margin: "3px 8px" }}>
+//                                        <RecipeCard
+//                                            recipeInfo={recipes[rng]}
+//                                            user={user}
+//                                            handleSave={handleSave}
+//                                            handleUnsave={handleUnsave}
+//                                        />
+//                                    </div>
+//                                );
+//                            })}
+//                        </div>

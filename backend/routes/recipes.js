@@ -42,14 +42,14 @@ router.get("/getRecipes", async (req, res, next) => {
     // const result_arr = [];
     let number = 1;
 
-    for (let i = 0; i < 5; i++) {
+    // for (let i = 0; i < 5; i++) {
     const options = {
       method: "GET",
       url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex",
       params: {
         limitLicense: "true",
-        offset: number - 100,
-        number: number,
+        offset: 100,
+        number: 100,
         addRecipeInformation: "true",
         instructionsRequired: "true",
         fillIngredients: "true",
@@ -64,16 +64,16 @@ router.get("/getRecipes", async (req, res, next) => {
     axios
       .request(options)
       .then(async function (response) {
-        // const recipes = await Recipe.extractInfo(response.data);
-        // res.status(200).json({ result: recipes });
-        res.status(200).json({ result: response.data });
+        const recipes = await Recipe.extractInfo(response.data);
+        res.status(200).json({ result: recipes });
+        // res.status(200).json({ result: response.data });
       })
       .catch(function (error) {
         console.error(error);
       });
 
     number += 100;
-    }
+    // }
   } catch (e) {
     next(e);
   }

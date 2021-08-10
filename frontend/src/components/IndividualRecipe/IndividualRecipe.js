@@ -48,6 +48,28 @@ const stringToArray = (str, setState) => {
   }
 };
 
+const getCalories = (str) => {
+  // search for "calories" in the str
+  // minus one to not count the space at the end of the number, this is our index
+  let j = str.search(" calories") - 1;
+
+  // if calories not found in the string
+  if (j === -1) {
+    return "calories not found";
+  }
+
+  // keep going through the string backwards until we finish retrieving calories amount
+  let calories_amount = "";
+  while (j >= 0 && str[j] !== ">") {
+    calories_amount += str[j];
+    j -= 1;
+  }
+
+  // gotta reverse it , its backwards right now
+  // turn to list, reverse the list, join back to string
+  return calories_amount.split("").reverse().join("");
+};
+
 export default function IndividualRecipe({
   user,
   recipes,
@@ -145,10 +167,11 @@ export default function IndividualRecipe({
         setRecipeInfo(data);
         setExtraInformation({
           ingredients: data.ingredients.split("[").length - 1,
-          healthScore: "healthScore",
+          rating: data.rating,
           readyInMinutes: data.prep_time,
-          servings: "servings",
+          servings: data.servings,
           pricePerServing: data.expense / 100,
+          calories: getCalories(data.description),
         });
       }
 
@@ -162,6 +185,8 @@ export default function IndividualRecipe({
     };
     fetchCurrentRecipe();
   }, [recipeId]);
+
+  console.log(recipeInfo.description);
 
   // get comments for cur recipe.
   useEffect(() => {
