@@ -7,8 +7,13 @@ html {
   display: flex;
   flex-direction: column;
   padding: 120px 75px;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
 }
+
+.IndividualRecipeWrapper {
+  padding: 0 80px;
+}
+
 .heading {
   font-size: 30px;
 }
@@ -314,9 +319,10 @@ button[type="submit"] {
   .recipe-display {
     flex-direction: column;
   }
-  .recipe-left, .recipe-right {
+  .recipe-left,
+  .recipe-right {
     width: auto;
-  } 
+  }
   .steps_div {
     display: flex;
     flex-wrap: wrap;

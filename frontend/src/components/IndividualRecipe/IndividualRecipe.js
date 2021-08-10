@@ -119,6 +119,11 @@ export default function IndividualRecipe({
     setIsExpanded(false);
   };
 
+  useEffect(() => {
+    setRecipeIngredients([]);
+    setRecipeInstructions([]);
+  }, [recipeId]);
+
   // Method 1:
 
   // useEffect(() => {
@@ -262,7 +267,7 @@ export default function IndividualRecipe({
   // console.log(recipeInfo.description);
   return (
     <>
-      <div style={{ padding: "0 80px" }}>
+      <div className="IndividualRecipeWrapper">
         <div>
           <SampleLayout
             recipeInfo={recipeInfo}
