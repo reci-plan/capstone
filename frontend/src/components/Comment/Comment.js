@@ -77,7 +77,7 @@ export default function Comment({
             }
         };
         checkAuthorOfComment();
-    }, []);
+    }, [comment]);
 
     // For deleting a comment.
     const handleDelete = async (e, comment) => {
@@ -185,7 +185,7 @@ export default function Comment({
                                         ? userProfileImg
                                         : "https://i.imgur.com/hepj9ZS.png"
                                 }
-                                style={{height: "30px", width: "30px"}}
+                                style={{ height: "30px", width: "30px" }}
                             />
                             <h3 className="comment_flex_h3">
                                 <b>
@@ -301,13 +301,6 @@ export default function Comment({
                         )}
                     </div>*/}
 
-                    {/*{
-    alreadyLiked ? (
-        <button onClick={(e, c) => handleLike(e, comment)}>downvote</button>
-    ) : (
-        <button onClick={(e, c) => handleLike(e, comment)}>like</button>
-    );
-}*/}
                     {showEdit && comment.id === selectedCommentId ? (
                         <form
                             onSubmit={(e, commentParameter) =>

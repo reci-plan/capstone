@@ -36,16 +36,7 @@ const theme = createTheme({
     },
 });
 
-const emails = ["username@gmail.com", "user02@gmail.com"];
-const useStyles = makeStyles({
-    avatar: {
-        backgroundColor: blue[100],
-        color: blue[600],
-    },
-});
-
 export default function ConfirmDialog(props) {
-    const classes = useStyles();
     const { onClose, selectedValue, open, handleDelete, comment, setAnchorEl } =
         props;
 
@@ -57,7 +48,7 @@ export default function ConfirmDialog(props) {
         onClose(value);
     };
 
-    const _handleDelete = (e) => {
+    const _handleDelete = (e, comment) => {
         handleDelete(e, comment);
         handleClose();
     };
@@ -72,7 +63,6 @@ export default function ConfirmDialog(props) {
             onClose={handleClose}
             aria-labelledby="simple-dialog-title"
             open={open}
-            // TransitionComponent={Transition}
         >
             <DialogTitle id="simple-dialog-title">
                 Are you sure you want to delete this comment?
@@ -86,12 +76,13 @@ export default function ConfirmDialog(props) {
             <DialogActions>
                 <ThemeProvider theme={theme}>
                     <Button onClick={handleClickNo} color="secondary">
-                        {" "}
-                        Disagree{" "}
+                        Disagree
                     </Button>
-                    <Button onClick={(e) => _handleDelete(e)} color="primary">
-                        {" "}
-                        Agree{" "}
+                    <Button
+                        onClick={(e) => _handleDelete(e, comment)}
+                        color="primary"
+                    >
+                        Agree
                     </Button>
                 </ThemeProvider>
             </DialogActions>

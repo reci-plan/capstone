@@ -189,20 +189,15 @@ export default function IndividualRecipe({
     const { data, error } = await apiClient.postComment({ comment }, recipeId);
     if (data) {
       console.log("data.publishComment: >>>>>>>>> ", data.publishComment);
-      const published_comment_with_zero_likes = {
-        ...data.publishComment,
-        amount: 0,
-      };
-      setCurComments((prevState) => [
-        published_comment_with_zero_likes,
-        ...prevState,
-      ]);
+      setCurComments((prevState) => [data.publishComment, ...prevState]);
     }
     if (error) {
       alert(error);
     }
     setComment("");
   };
+
+  console.log(curComments);
 
   const handleTextAreaChange = (e) => {
     setComment(e.target.value);
