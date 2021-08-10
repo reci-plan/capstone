@@ -85,9 +85,6 @@
     -webkit-columns: 2;
     -moz-columns: 2;
     list-style-position: outside;
-    /*    display: flex;
-    flex-flow: row wrap;
-    align-items:  stretch;*/
 }
 
 .Layout_Ingredients_li {
@@ -113,14 +110,13 @@
     display: inline-block;
 }
 
-.Layout_Ingredients_li:before {
-    /*    content: "\ffed";
-    margin-right: 0.5em;*/
-}
-
 .Layout_Instructions_Div {
     font-size: 30px;
     margin: 0 80px;
+}
+
+.Layout_Instructions_Paper {
+    margin: 30px;
 }
 
 .Layout_Right_Side {
@@ -156,10 +152,19 @@
     flex: 0.7;
 }
 
-@media only screen and (max-width: 812px) {
+.TypographyMargin {
+    margin-top: 20px;
+}
+
+.DialogStyle {
+    width: auto;
+}
+
+@media only screen and (max-width: 815px) {
     .Layout_Flex_Wrapper {
         flex-direction: column;
     }
+
     .IndividualRecipeWrapper {
         padding: 0 20px;
     }
@@ -167,10 +172,58 @@
     .Layout_Image_Div {
         width: 600px;
     }
+
     .Layout_Image {
         height: 464px;
         width: 60%;
         object-fit: cover;
+    }
+
+    .Layout_Ingredients_Heading {
+        display: flex;
+        margin-top: 0px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .LayoutHorizontal_hr {
+        width: 0px;
+        border: 0px;
+    }
+
+    .Layout_Ingredients_ul {
+        columns: 1;
+        -webkit-columns: 1;
+        -moz-columns: 1;
+        list-style-position: outside;
+    }
+
+    .Layout_Ingredients_li {
+        width: 300px;
+        display: inline-block;
+        text-align: left;
+        font-size: 20px;
+        line-height: 19px;
+
+        margin-bottom: 5px;
+    }
+
+    .Layout_Ingredients_RealIngredients {
+        margin: 0px;
+    }
+
+    .Layout_Instructions_Div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0px;
+        font-size: 15px;
+    }
+
+    .Layout_Instructions_Paper {
+        margin: 10px 0px;
+        width: 95%;
     }
 }
 

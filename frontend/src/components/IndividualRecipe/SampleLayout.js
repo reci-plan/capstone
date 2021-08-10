@@ -55,6 +55,7 @@ export default function SampleLayout({
         },
         paper: {
             padding: theme.spacing(1.5),
+            backgroundColor: "#D4D4D4",
             // height: 140,
             // width: 100,
         },
@@ -200,13 +201,9 @@ export default function SampleLayout({
                         {recipeInstructions.map((instruction, i) => (
                             <Paper
                                 elevation={2}
-                                className={classes.paper}
-                                style={{
-                                    margin: "30px",
-                                    backgroundColor: "#D4D4D4",
-                                }}
+                                className={`${classes.paper} Layout_Instructions_Paper`}
                             >
-                                <Typography variant="h5">
+                                <Typography variant="h6">
                                     {i + 1}. {instruction}
                                 </Typography>
                             </Paper>

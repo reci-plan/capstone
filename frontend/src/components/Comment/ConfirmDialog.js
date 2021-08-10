@@ -20,6 +20,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Typography from "@material-ui/core/Typography";
 import { blue, purple, green } from "@material-ui/core/colors";
 import Slide from "@material-ui/core/Slide";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -37,6 +38,8 @@ const theme = createTheme({
 });
 
 export default function ConfirmDialog(props) {
+    const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
     const { onClose, selectedValue, open, handleDelete, comment, setAnchorEl } =
         props;
 
