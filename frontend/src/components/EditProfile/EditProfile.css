@@ -35,6 +35,7 @@
 }
 .upload-btn {
   cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .highlightOption, .highlight {
@@ -63,7 +64,6 @@
 
 @media only screen and (max-width: 1400px) {
   .EditProfile {
-    background-size: cover;
     height: 100%;
     overflow: unset;
   }

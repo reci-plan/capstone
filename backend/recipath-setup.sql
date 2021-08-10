@@ -14,4 +14,4 @@ DROP DATABASE recipath_test;
 CREATE DATABASE recipath_test;
 \connect recipath_test
 
-\i kavholm-schema.sql
+\i recipath-schema.sql

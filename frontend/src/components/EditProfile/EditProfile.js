@@ -200,11 +200,6 @@ export default function EditProfile({
       ) : (
         <div className="profile-display">
           <div className="profile-left">
-            <input
-              type="file"
-              name="image_url"
-              onChange={(e) => setImage(e.target.files[0])}
-            />
             <div className="profile-img">
               {form.image_url ? (
                 <img src={form.image_url} alt=""></img>
@@ -218,6 +213,11 @@ export default function EditProfile({
                 </>
               )}
             </div>
+            <input
+              type="file"
+              name="image_url"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
             <button className="upload-btn" onClick={uploadImage}>
               Upload
             </button>
