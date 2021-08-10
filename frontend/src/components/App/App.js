@@ -225,7 +225,7 @@ function App() {
 
           <Route
             path="/publicProfile/:user_id_here"
-            element={<PublicProfile />}
+            element={<PublicProfile allFlavors={allFlavors} />}
           />
 
           <Route

@@ -40,6 +40,7 @@ export default function Comment({
     const [open, setOpen] = useState(false);
 
     const [authorOfComment, setAuthorOfComment] = useState("");
+    const [userProfileImg, setUserProfileImg] = useState("");
 
     const classes = useStyles();
 
@@ -152,6 +153,22 @@ export default function Comment({
             alert(error);
         }
     };
+
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            const { data, error } = await apiClient.getProfileFromUserId(
+                comment.user_id
+            );
+            if (data) {
+                setUserProfileImg(data.image_url);
+            }
+            if (error) {
+                alert(error);
+            }
+        };
+        fetchUserProfile();
+    }, [comment.user_id]);
+
     return (
         <div>
             {/*   comment: {comment?.comment}, date: {comment?.date}, user id:
@@ -163,8 +180,12 @@ export default function Comment({
                     <div className="comment_headers">
                         <div className="comment_flex">
                             <img
-                                src="https://i.imgur.com/hepj9ZS.png"
-                                alt="User avatar"
+                                src={
+                                    userProfileImg
+                                        ? userProfileImg
+                                        : "https://i.imgur.com/hepj9ZS.png"
+                                }
+                                style={{height: "30px", width: "30px"}}
                             />
                             <h3 className="comment_flex_h3">
                                 <b>

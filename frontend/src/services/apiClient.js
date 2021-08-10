@@ -58,6 +58,13 @@ class ApiCalls {
         return await this.request({ endpoint: `auth/user`, method: `GET` });
     }
 
+    async fetchUserById(userId) {
+        return await this.request({
+            endpoint: `auth/fetchCustomUser/${userId}`,
+            method: `GET`,
+        });
+    }
+
     async logout() {
         this.setToken(null);
         localStorage.setItem(this.tokenName, "");
@@ -222,6 +229,13 @@ class ApiCalls {
     async getPublicUserInformation(user_id) {
         return await this.request({
             endpoint: `profile/getProfile/${user_id}`,
+            method: `GET`,
+        });
+    }
+
+    async getProfileFromUserId(user_id) {
+        return await this.request({
+            endpoint: `profile/getProfileFromUserId/${user_id}`,
             method: `GET`,
         });
     }

@@ -1,0 +1,4 @@
+1. Add back photos for user comments
+
+2. Add back public profile page
+

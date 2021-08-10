@@ -14,6 +14,16 @@ router.get("/getProfile/:user_id", async (req, res, next) => {
   }
 });
 
+router.get("/getProfileFromUserId/:user_id", async (req, res, next) => {
+  try {
+    const { user_id } = req.params;
+    const theProfile = await Profile.getProfileInformation(user_id);
+    res.status(200).json(theProfile);
+  } catch (e) {
+    next(e);
+  }
+});
+
 router.post("/create", requireAuthenticatedUser, async (req, res, next) => {
   try {
     const user = res.locals.user;
