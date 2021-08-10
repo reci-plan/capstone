@@ -1,5 +1,5 @@
-import navbar from "../../assets/navbar.png"
-import envelope from "../../assets/envelope.png"
+import navbar from "../../assets/navbar.jpg"
+import envelope from "../../assets/envelope.jpg"
 
 import "./Contact.css"
 

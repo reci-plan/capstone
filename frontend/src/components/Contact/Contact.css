@@ -2,6 +2,7 @@
   padding: 75px;
   background-repeat: no-repeat;
   background-position-x: 40%;
+  background-size: 100%;
   
   width: 100vw;
   min-height: 100vh;
@@ -50,7 +51,7 @@
 }
 
 .contact-btn {
-  background-color: #A1E1D2;
+  background-color: #65AA91;
   border: none;
   border-radius: 10px;
   padding: 10px;
@@ -61,9 +62,9 @@
   .Contact {
     padding: 120px;
     flex-direction: column;
+    background-size: auto;
   }
   .contact-img {
     display: none;
   }
-  background-size: 100%;
 }

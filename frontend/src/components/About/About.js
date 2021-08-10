@@ -1,8 +1,8 @@
 
-import navbar from "../../assets/navbar.png"
-import ann from "../../assets/ann.png"
-import maritza from "../../assets/maritza.png"
-import andrew from "../../assets/andrew.png"
+import navbar from "../../assets/navbar.jpg"
+import ann from "../../assets/ann.jpg"
+import maritza from "../../assets/maritza.jpg"
+import andrew from "../../assets/andrew.jpg"
 import "./About.css"
 
 export default function About() {

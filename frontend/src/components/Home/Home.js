@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 import "./Home.css";
-import home from "../../assets/home.png";
-import DisplayAllRecipes from "../DisplayAllRecipes/DisplayAllRecipes";
+import home from "../../assets/home.jpg";
 import CarouselDisplay from "../CarouselDisplay/CarouselDisplay";
 import apiClient from "../../services/apiClient";
 
@@ -18,7 +16,6 @@ export default function Home({ user, handleSave, handleUnsave }) {
         const fetchRecipes = async () => {
             const { data, error } = await apiClient.fetchAllRecipes();
             if (data) {
-                console.log(data.recipes);
                 setRecipes(data.recipes);
             }
             if (error) {
