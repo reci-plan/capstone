@@ -193,12 +193,18 @@ export default function Comment({
                                         style={{ textDecoration: "none" }}
                                         to={`/publicProfile/${comment.user_id}`}
                                     >
-                                        {authorOfComment}.
+                                        <span className="authorOfComment">
+                                            {" "}
+                                            {authorOfComment}.{" "}
+                                        </span>
                                     </Link>
                                 </b>
                             </h3>
                             <div style={{ color: "#B8B7B4" }}>
-                                {moment(comment.date).fromNow()}{" "}
+                                <span className="comment_date">
+                                    {" "}
+                                    {moment(comment.date).fromNow()}{" "}
+                                </span>
                             </div>
                         </div>
                         <div className="comment_flex_menu">

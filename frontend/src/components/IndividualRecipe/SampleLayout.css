@@ -20,9 +20,10 @@
 }
 
 .Layout_Title_Share {
+    margin: 15px 0px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
 
     font-size: 23px;
 }
@@ -125,6 +126,7 @@
 
 .Layout_Ingredients_Title_Right {
     font-size: 30px;
+    font-weight: 700;
 }
 
 .Layout_Space_BetweenLines {
@@ -152,12 +154,18 @@
     flex: 0.7;
 }
 
+/*.ExtraInformationHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}*/
+
 .TypographyMargin {
     margin-top: 20px;
 }
 
-.DialogStyle {
-    width: auto;
+.ShareThisRecipe {
+    margin-right: 20px;
 }
 
 @media only screen and (max-width: 815px) {
@@ -175,7 +183,7 @@
 
     .Layout_Image {
         height: 464px;
-        width: 60%;
+        width: 55%;
         object-fit: cover;
     }
 
@@ -225,17 +233,60 @@
         margin: 10px 0px;
         width: 95%;
     }
+
+    .Layout_Space_BetweenLines {
+        justify-content: center;
+    }
+
+    .Layout_Recommended_Recipes_Wrapper {
+        justify-content: center;
+    }
+
+    .comment_flex_h3 {
+        margin-right: 30px;
+    }
+    .authorOfComment {
+        font-size: 13.5px;
+    }
+    .comment_date {
+        font-size: 12.5px;
+    }
+    .comment_desc {
+        font-size: 12.5px;
+    }
+    .comment_flex_menu {
+        margin-right: 0px;
+    }
+    .ShareThisRecipe {
+        font-size: 18px;
+    }
 }
 
 @media only screen and (min-width: 780px) and (max-width: 1023px) {
 }
 
-@media only screen and (max-width: 1350px) {
-    .Layout_Horizontal_Line {
-        letter-spacing: -3px;
+@media only screen and (max-width: 1250px) {
+    .ExtraInformationHeader {
+        font-size: 15px;
+        flex-wrap: wrap;
     }
-    .Layout_Space_BetweenLines {
-        /*display: flex;*/
-        /*justify-content: space-between;*/
+}
+
+@media only screen and (max-width: 1380px) {
+    .LayoutHorizontal_hr {
+        width: 25px;
+    }
+    .ShareThisRecipe {
+        font-size: 20px;
+    }
+    .share-btn-container a {
+        margin: 3px;
+    }
+    .logo {
+        height: 20px;
+    }
+
+    .Layout_Ingredients_Title_Right {
+        font-size: 20px;
     }
 }

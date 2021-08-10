@@ -219,9 +219,9 @@ export default function SampleLayout({
                         className="Layout_Title_Share"
                         style={{ margin: "15px 0px" }}
                     >
-                        <span style={{ marginRight: "20px" }}>
+                        <div className="ShareThisRecipe">
                             Share this recipe:
-                        </span>
+                        </div>
                         <SocialMediaShare recipeInfo={recipeInfo} />
                     </div>
                     <div className="Layout_Space_BetweenLines">
@@ -237,26 +237,38 @@ export default function SampleLayout({
                         style={{ margin: "50px 0px" }}
                     >
                         <div className="Layout_Stats_Card">
-                            <Grid container spacing={2}>
+                            <Grid container spacing={1}>
                                 {Object.entries(extraInformation).map(
                                     ([key, val], i) => (
-                                        <Grid item xs={12} sm={6} md={4}>
-                                            <div style={{ margin: "20px" }}>
-                                                <Typography
-                                                    align="center"
-                                                    gutterBottom
-                                                >
-                                                    <Box fontWeight="fontWeightBold">
-                                                        {EXTRA_STATS_ARR[i]}
-                                                    </Box>
-                                                </Typography>
-                                                <Typography
-                                                    className={classes.test}
-                                                    align="center"
-                                                >
-                                                    {val}
-                                                </Typography>
-                                            </div>
+                                        <Grid
+                                            item
+                                            xs={12}
+                                            sm={6}
+                                            md={6}
+                                            wrap="wrap"
+                                            // style={{
+                                            //     border: "1px solid black",
+                                            // }}
+                                        >
+                                            <Typography
+                                                align="center"
+                                                gutterBottom
+                                                className="ExtraInformationHeader"
+                                                // style={{
+                                                //     wordWrap: "break-word",
+                                                // }}
+                                            >
+                                                <Box fontWeight="fontWeightBold">
+                                                    {EXTRA_STATS_ARR[i]}
+                                                </Box>
+                                            </Typography>
+
+                                            <Typography
+                                                className={classes.test}
+                                                align="center"
+                                            >
+                                                {val}
+                                            </Typography>
                                         </Grid>
                                     )
                                 )}
