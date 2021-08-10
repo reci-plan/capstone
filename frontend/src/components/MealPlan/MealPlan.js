@@ -9,12 +9,27 @@ import heartFill from "../../assets/heart-fill.svg";
 import "./MealPlan.css";
 
 export default function MealPlan({ user, mealPlanInfo, plan, mealPlanId, handleSave, handleUnsave, handleUnsavePlan }) {
-    const [likes, setLikes] = useState(true);
     const [saved, setSaved] = useState(true);
+
+    useEffect(() => {
+        const checkPlan = async () => {
+          const { data, error } = await apiClient.fetchSavedMealPlan(mealPlanId);
+          if (data) {
+            setSaved(data);
+          }
+    
+          if (error) {
+            console.log("Check saved recipe error.......RecipeCard.js");
+          }
+        };
+    
+        checkPlan();
+      }, [mealPlanId]);
+
     const handleOnClick = async () => {
         console.log("CLICK ID", mealPlanId)
         if (user?.email) {
-          if (likes) {
+          if (saved) {
             handleUnsavePlan(mealPlanId);
             setSaved(false);
           } else {
@@ -43,8 +58,6 @@ export default function MealPlan({ user, mealPlanInfo, plan, mealPlanId, handleS
                         : ""
                     )) : null
                 }
-
-                {likes ?
                 <>
                 <button
                     className="save-btn"
@@ -56,9 +69,7 @@ export default function MealPlan({ user, mealPlanInfo, plan, mealPlanId, handleS
                     <img src={heart} alt="Heart to save meal plan"></img>
                     )}
                 </button>
-                </>
-                : ""
-            }                
+                </>     
             </div>
     );
 }

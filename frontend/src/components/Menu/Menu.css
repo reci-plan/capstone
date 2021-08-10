@@ -3,20 +3,22 @@
 
 .menu {
     font-family: 'Josefin Sans', sans-serif;
+    background-color: #FFF;
+    border-radius: 0px 0px 20px 20px;
 }
 
 .menuLine {
     display: flex;
     flex-direction: row;
-    background-color: #C4C4C4;
     align-items:center;
-    padding-left:23px;
-    font-size: 20px;
+    justify-content: space-around;
+    font-size: 30px;
+    padding: 10px 0px
 }
 
 .userInput {
-    padding-left: 20px;
-    width: 200px;
+    width: 280px;
+    justify-content: center;
 }
 
 #time {
@@ -25,9 +27,9 @@
 }
 
 .menu-input {
-    background-color: #CECECE;
     display:flex;
     align-items: center;
+    max-width:280px;
 }
 
 .text {
@@ -39,14 +41,41 @@
     flex-wrap: wrap;
     height: 60px;
     font-size: 23px;
+    z-index: 40;
+}
+
+.optionListContainer {
+    width:300px;
+}
+.optionContainer {
+    height: 200px;
 }
 
 .setWidth {
-    font-size:23px;
+    font-size: 26px;
+    height: 70px;
+    border-radius: 20px;
+    border: 2px solid black;
+    width: 280px;
 }
 
 .submit-but {
     display: flex;
     justify-content: center;
     background-color: #C4C4C4;
+}
+
+.searchWrapper {
+    border: 2px solid black;
+    width: 280px;
+    min-height:70px;
+    border-radius: 20px;
+}
+
+#category_input {
+    margin: 0px;
+}
+
+.chip {
+    background-color: #6F9CEB
 }

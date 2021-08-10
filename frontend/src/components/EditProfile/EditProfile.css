@@ -35,6 +35,7 @@
 
 .highlightOption, .highlight {
   background-color: transparent;
+  color:black;
 }
 .option:hover {
   background-color: #6F9CEB !important;

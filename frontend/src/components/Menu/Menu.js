@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Menu.css'
 import { TextField } from '@material-ui/core';
 import Multiselect from 'multiselect-react-dropdown';
@@ -32,6 +32,14 @@ export default function Menu(props) {
 
     const [options] = useState(data)
     const [submitIsVisible, setSubmitIsVisible] = useState(false)
+    // const [myState, setMyState] = useState(null)
+    // useEffect(() => {
+    //     if (myState === null) {
+    //         return
+    //     }
+    //     passToParent(myState)
+    // }, [myState])
+    // const handleThisClick = () => setMyState(['eggs', 'coffee'])
 
     const handleOpenButton = () => {
         // var categoryCode = 0;
@@ -109,18 +117,18 @@ export default function Menu(props) {
             
             <div className="menuLine">
                 <p>Time to eat: </p>
-                <div className="userInput"><TextField type="time" id="time" onChange={(handleButton)}/></div>
+                <div className="box fake-input userInput"><input type="time" id="time" onChange={(handleButton)}/></div>
             </div>
             <div className="menuLine">
                 <p>Meal Name: </p>
                 <div className="fake-input menu-input">
-                    <input type="text" id="meal-name" required placeholder="Ex: Breakfast, lunch..." onChange={(handleButton)} onClick={(handleButton)}></input>
+                    <input type="text" id="meal-name" required placeholder="Breakfast, lunch..." onChange={(handleButton)} onClick={(handleButton)}></input>
                     <img src={pencil} width="25" alt="Edit your plan name"></img>
                 </div>
             </div>
             <div className="menuLine">
                 <p>Categories: </p>
-                <div onClick={(handleButton)}><div className="setWidth"><Multiselect options={data} displayValue={"Category"} onSelect={onSelect} id="category"></Multiselect></div></div>
+                <div onClick={(handleButton)}><div className=""><Multiselect options={data} displayValue={"Category"} onSelect={onSelect} id="category"></Multiselect></div></div>
             </div>
             
             {submitIsVisible ?
