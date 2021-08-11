@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useParams } from "react-router"
 import RecipeCard from "../../RecipeCard/RecipeCard";
-import navbar from "../../../assets/navbar.png"
+import navbar from "../../../assets/navbar.jpg"
 import "./FilterResults.css"
 
 export default function FilterResults({ user, recipes, handleSave, handleUnsave }) {

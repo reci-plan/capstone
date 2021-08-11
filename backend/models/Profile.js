@@ -40,6 +40,47 @@ class Profile {
     return results.rows[0];
   }
 
+  static async fetchUserAndProfile(user, username) {
+    if (!user) {
+      throw new UnauthorizedError(`No user logged in.`);
+    }
+
+    const userResult = await db.query(`
+      SELECT * FROM users
+      WHERE username = $1
+    `, [username]
+    );
+
+    const profileResult = await db.query(`
+      SELECT * FROM profile
+      WHERE user_id = (SELECT id FROM users WHERE username = $1)
+    `, [username]
+    );
+
+    return [userResult.rows[0], profileResult.rows[0]];
+  }
+
+  /** Fetch all profiles except user */
+  static async fetchAllProfiles(user) {
+    if (!user) {
+      throw new UnauthorizedError(`No user logged in.`);
+    }
+
+    const users = await db.query(`
+        SELECT * FROM users 
+        WHERE username != $1
+      `, [user.username]
+    );
+
+    const profiles = await db.query(`
+        SELECT * FROM profile 
+        WHERE user_id != (SELECT id from users where username = $1)
+      `, [user.username]
+    );
+
+    return [users.rows, profiles.rows];
+  }
+
   /** Update user profile
    * If the column value is null or empty, then keep original information
    * If the column value is valid, then change it

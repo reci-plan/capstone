@@ -35,7 +35,9 @@ export default function RecipeCard({
       }
     };
 
-    checkRecipe();
+    if (user.email) {
+      checkRecipe();
+    }
   }, [recipeInfo]);
 
   const limit = 17;

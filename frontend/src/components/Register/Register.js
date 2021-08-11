@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
 import './Register.css'
-import orange from '../../assets/orange.png'
+import orange from '../../assets/orange.jpg'
 
 export default function Register({ user, setUser }) {
   const navigate = useNavigate();

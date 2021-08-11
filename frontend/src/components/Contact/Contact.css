@@ -1,7 +1,70 @@
 .Contact {
-  padding: 0 75px;
-  padding-top: 100px;
+  padding: 75px;
   background-repeat: no-repeat;
   background-position-x: 40%;
   background-size: 100%;
+  
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.Contact label {
+  visibility: visible;
+  margin: 10px;
+}
+
+.Contact input {
+  border: 1px solid #707070;
+}
+
+.contact-img {
+  overflow: hidden;
+  width: 400px;
+}
+.contact-img img {
+  width: 100%;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
+}
+
+.contact-form input {
+  width: 100%;
+}
+
+.contact-form div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-name {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.contact-btn {
+  background-color: #65AA91;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 15px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .Contact {
+    padding: 120px;
+    flex-direction: column;
+    background-size: auto;
+  }
+  .contact-img {
+    display: none;
+  }
 }

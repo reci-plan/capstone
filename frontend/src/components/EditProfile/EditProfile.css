@@ -1,11 +1,9 @@
 .EditProfile {
-  padding: 0 150px;
-  padding-top: 100px;
-  width: 100vw;
-  height: 100vh;
-  overflow-x: hidden;
+  padding: 100px 150px;
   padding-bottom: 80px;
-  background-position: center;
+  width: 100vw;
+  min-height: 100vh;
+  background-repeat: no-repeat;
   background-size: 100%;
 }
 .form-input {
@@ -22,7 +20,7 @@
 .form-input input {
   margin: 8px;
   width: auto;
-  border: 1.5px solid #ffffff;
+  border: 1.5px solid #a79595;
 }
 
 .profile-left {
@@ -34,10 +32,10 @@
   cursor: pointer;
   width: 100%;
   margin: 0;
-  border: none;
 }
 .upload-btn {
   cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .highlightOption, .highlight {
@@ -66,7 +64,6 @@
 
 @media only screen and (max-width: 1400px) {
   .EditProfile {
-    background-size: cover;
     height: 100%;
     overflow: unset;
   }
@@ -76,17 +73,45 @@
   }
 
   .profile-right {
-    min-width: 370px;
+    min-width: 320px;
     
+  }
+}
+
+
+@media only screen and (max-width: 2500px) {
+  .EditProfile {
+    background-position-y: -200px;
+  }
+}
+
+
+@media only screen and (max-width: 1900px) {
+  .EditProfile {
+    background-position-y: -100px;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .EditProfile {
+    background-position-y: -30px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .EditProfile {
+    background-position-y: 0;
+    background-size: 120%;
   }
 }
 
 @media only screen and (max-width: 700px) {
   .EditProfile {
     padding: 80px 50px;
-    background-position-x: 60%;
-    background-size: cover;
+    background-position-x: 70%;
+    background-size: auto;
     height: 100%;
+    background-position-y: -50px;
     overflow: unset;
   }
   .profile-right {

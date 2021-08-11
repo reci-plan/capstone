@@ -42,7 +42,7 @@
 
 @media only screen and (max-width: 700px) {
   .About {
-    padding: 50px 0;
+    background-size: auto;
   }
   .people {
     flex-direction: column;
