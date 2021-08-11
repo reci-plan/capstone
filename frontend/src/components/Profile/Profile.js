@@ -11,11 +11,12 @@ import "./Profile.css";
 export default function Profile({ user, isSameUser }) {
     const navigate = useNavigate();
     const { username } = useParams();
+
     const [thisUser, setThisUser] = useState({});
     const [thisProfile, setThisProfile] = useState({});
     const [flavors, setFlavors] = useState("");
     const [profileTerm, setProfileTerm] = useState("");
-
+    console.log(window.location.href.split("0/"));
     useEffect(() => {
         const fetchUserAndProfile = async () => {
             const { data, error } = await apiClient.fetchUserAndProfile(
@@ -170,7 +171,8 @@ export default function Profile({ user, isSameUser }) {
                         ) : null}
                     </div>
 
-                    {isSameUser && !username ? (
+                    {isSameUser ||
+                    window.location.href.split("0/")[1] === "profile" ? (
                         <Link to="/profile/edit" className="edit-btn">
                             . . .
                         </Link>
