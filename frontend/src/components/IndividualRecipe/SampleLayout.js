@@ -26,6 +26,21 @@ import glutenfreeIcon from "../../assets/glutenfree-icon.svg";
 import heart from "../../assets/heart.svg";
 import heartFill from "../../assets/heart-fill.svg";
 
+const shuffle = (state_arr) => {
+    let ctr = state_arr.length,
+        temp,
+        index;
+    while (ctr > 0) {
+        index = Math.floor(Math.random() * ctr);
+        ctr--;
+        temp = state_arr[ctr];
+        state_arr[ctr] = state_arr[index];
+        state_arr[index] = temp;
+    }
+    console.log(">> state_arr", state_arr);
+    return state_arr;
+};
+
 export default function SampleLayout({
     recipeInfo,
     recipeIngredients,
@@ -51,7 +66,6 @@ export default function SampleLayout({
     const [recommendedRecipes, setRecommendedRecipes] = useState([]);
     const [topRecipes, setTopRecipes] = useState([]);
     const [bitValue, setBitValue] = useState();
-
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -145,22 +159,28 @@ export default function SampleLayout({
     }, [recipeId]);
 
     useEffect(() => {
-        setRecommendedRecipes(
-            recipes.filter((r) => (r.category & bitValue) === bitValue)
+        const recommended_shuffled = shuffle(
+            recipes.filter(
+                (r) =>
+                    (r.category & bitValue) === bitValue &&
+                    r.api_id !== recipeInfo.api_id
+            )
         );
-    }, [recipeId, bitValue]);
-
-    console.log(recommendedRecipes);
+        setRecommendedRecipes([...recommended_shuffled]);
+    }, [recipeId, bitValue, recipes]);
 
     useEffect(() => {
-        setTopRecipes(recipes.filter((r) => r.rating >= 75));
-    }, []);
+        const top_shuffled = shuffle(
+            recipes.filter(
+                (r) => r.rating >= 75 && r.api_id !== recipeInfo.api_id
+            )
+        );
 
-    console.log("top: ", topRecipes);
+        console.log(top_shuffled, ": topshuffled");
+        setTopRecipes([...top_shuffled]);
+    }, [recipeId, recipes]);
 
-
-
-
+    console.log(topRecipes, recommendedRecipes);
 
     return (
         // Give some space below the navbar
@@ -345,13 +365,10 @@ export default function SampleLayout({
 
                     <div className="Layout_Recommended_Recipes_Wrapper">
                         {[...Array(2)].map((x, i) => {
-                            let rng = Math.floor(
-                                Math.random() * recipes.length
-                            );
                             return (
                                 <div style={{ margin: "3px 8px" }}>
                                     <RecipeCard
-                                        recipeInfo={recipes[rng]}
+                                        recipeInfo={recommendedRecipes[i]}
                                         user={user}
                                         handleSave={handleSave}
                                         handleUnsave={handleUnsave}
@@ -373,13 +390,10 @@ export default function SampleLayout({
                     </div>
                     <div className="Layout_Recommended_Recipes_Wrapper">
                         {[...Array(2)].map((x, i) => {
-                            let rng = Math.floor(
-                                Math.random() * recipes.length
-                            );
                             return (
                                 <div style={{ margin: "3px 8px" }}>
                                     <RecipeCard
-                                        recipeInfo={recipes[rng]}
+                                        recipeInfo={topRecipes[i]}
                                         user={user}
                                         handleSave={handleSave}
                                         handleUnsave={handleUnsave}
