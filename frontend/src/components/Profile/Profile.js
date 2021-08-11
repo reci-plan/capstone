@@ -2,48 +2,50 @@ import { useState, useEffect } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
-import searchIcon from "../../assets/search-icon.svg"
+import searchIcon from "../../assets/search-icon.svg";
 import tempImg from "../../assets/tempProfileImg.png";
 import location from "../../assets/location.svg";
 import profileBackground from "../../assets/profile.jpg";
 import "./Profile.css";
 
-export default function Profile({ user }) {
-    const navigate = useNavigate()
-    const { username } = useParams()
-    const [thisUser, setThisUser] = useState({})
-    const [thisProfile, setThisProfile] = useState({})
-    const [flavors, setFlavors] = useState("")
-    const [profileTerm, setProfileTerm] =  useState("")
+export default function Profile({ user, isSameUser }) {
+    const navigate = useNavigate();
+    const { username } = useParams();
+    const [thisUser, setThisUser] = useState({});
+    const [thisProfile, setThisProfile] = useState({});
+    const [flavors, setFlavors] = useState("");
+    const [profileTerm, setProfileTerm] = useState("");
 
     useEffect(() => {
         const fetchUserAndProfile = async () => {
-            const { data, error } = await apiClient.fetchUserAndProfile(username ? username : (user.username))
+            const { data, error } = await apiClient.fetchUserAndProfile(
+                username ? username : user.username
+            );
             if (data) {
-                setThisUser(data[0])
-                setThisProfile(data[1])
+                setThisUser(data[0]);
+                setThisProfile(data[1]);
             }
             if (error) {
-                console.log(error, "Profile.js")
+                console.log(error, "Profile.js");
             }
-        }
+        };
 
         if (user.email) {
-            fetchUserAndProfile()
+            fetchUserAndProfile();
         }
-    }, [user, username])
+    }, [user, username]);
 
     const handleOnChange = (e) => {
-        setProfileTerm(e.target.value)
-    }
+        setProfileTerm(e.target.value);
+    };
 
     const handleOnSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         if (profileTerm) {
-            localStorage.setItem('profile-search-term', profileTerm)
-            navigate("/profileResults")
+            localStorage.setItem("profile-search-term", profileTerm);
+            navigate("/profileResults");
         }
-    }
+    };
     const allFlavors = [
         "spicy",
         "salty",
@@ -58,15 +60,15 @@ export default function Profile({ user }) {
         if (thisProfile?.fav_flavors) {
             var flavors = [];
             thisProfile.fav_flavors.split("").forEach((c) => {
-              let num = Number(c);
-              var obj = { flavor: allFlavors[num], id: c };
-              flavors.push(obj);
+                let num = Number(c);
+                var obj = { flavor: allFlavors[num], id: c };
+                flavors.push(obj);
             });
             setFlavors(flavors);
-          } else {
+        } else {
             setFlavors([]);
-          }
-    }, [thisProfile])
+        }
+    }, [thisProfile]);
 
     return (
         <div
@@ -91,26 +93,36 @@ export default function Profile({ user }) {
                                 <img src={tempImg} alt="Placeholder img"></img>
                             )}
                         </div>
-                        {!username ?
-                            <form className="profile-search" onSubmit={handleOnSubmit}>
+                        {!username ? (
+                            <form
+                                className="profile-search"
+                                onSubmit={handleOnSubmit}
+                            >
                                 <div>
-                                    <img src={searchIcon} alt="search icon"></img>
+                                    <img
+                                        src={searchIcon}
+                                        alt="search icon"
+                                    ></img>
                                 </div>
-                                <input type="text" placeholder="search users..." onChange={handleOnChange}></input>
+                                <input
+                                    type="text"
+                                    placeholder="search users..."
+                                    onChange={handleOnChange}
+                                ></input>
                             </form>
-                            : null
-                        }
+                        ) : null}
                         <div className="input-flavors">
                             <span className="input-type">fav flavors: </span>
                             <div className="fav-flavors">
-                                {flavors?.length > 0
-                                    ? flavors.map((element, i) => (
-                                          <div key={i} className="flavor">
-                                              {element.flavor}
-                                          </div>
-                                      ))
-                                    : <>none</>
-                                }
+                                {flavors?.length > 0 ? (
+                                    flavors.map((element, i) => (
+                                        <div key={i} className="flavor">
+                                            {element.flavor}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <>none</>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -140,10 +152,14 @@ export default function Profile({ user }) {
                                 {thisUser.username}
                             </span>
                         </div>
-                        <div className="input">
-                            <span className="input-type">email: </span>
-                            <span className="input-type-res">{thisUser.email}</span>
-                        </div>
+                        {isSameUser ? (
+                            <div className="input">
+                                <span className="input-type">email: </span>
+                                <span className="input-type-res">
+                                    {thisUser.email}
+                                </span>
+                            </div>
+                        ) : null}
                         {thisProfile.short_bio ? (
                             <div className="input">
                                 <span className="input-type">short bio: </span>
@@ -153,13 +169,12 @@ export default function Profile({ user }) {
                             </div>
                         ) : null}
                     </div>
-                    {!username ?
+
+                    {isSameUser && !username ? (
                         <Link to="/profile/edit" className="edit-btn">
                             . . .
                         </Link>
-                        : 
-                        null
-                    }
+                    ) : null}
                 </div>
             )}
         </div>

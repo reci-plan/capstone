@@ -101,6 +101,7 @@ class Recipe {
                 vegetarian: r.vegetarian,
                 dairyFree: r.dairyFree,
                 glutenFree: r.glutenFree,
+                servings: r.servings,
             });
         });
 
@@ -113,9 +114,9 @@ class Recipe {
             }
 
             const queryString = `
-            INSERT INTO all_recipes (api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
-                RETURNING id, api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree
+            INSERT INTO all_recipes (api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree, servings)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+                RETURNING id, api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree, servings
             `;
             const results = await db.query(queryString, [
                 arr[i].id,
@@ -132,6 +133,7 @@ class Recipe {
                 arr[i].vegetarian,
                 arr[i].glutenFree,
                 arr[i].dairyFree,
+                arr[i].servings,
             ]);
             result_arr.push(results.rows);
         }
@@ -157,7 +159,7 @@ class Recipe {
     static async getIndividualRecipe(api_id) {
         const results = await db.query(
             `
-            SELECT title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree FROM all_recipes
+            SELECT id, api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree, servings FROM all_recipes
             WHERE api_id = $1
         `,
             [api_id]

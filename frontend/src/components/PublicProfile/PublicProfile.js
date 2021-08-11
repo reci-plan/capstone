@@ -1,40 +1,67 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import apiClient from "../../services/apiClient";
-import moment from "moment";
 
-export default function PublicProfile() {
+import tempImg from "../../assets/tempProfileImg.png";
+import location from "../../assets/location.svg";
+import profileBackground from "../../assets/profile.jpg";
+
+import Profile from "../Profile/Profile";
+
+export default function PublicProfile({ allFlavors, user }) {
     const { user_id_here } = useParams();
-    console.log(user_id_here);
-    const [userYouAreViewing, setUserYouAreViewing] = useState({});
+    const [curProfile, setCurProfile] = useState({});
+    const [curUser, setCurUser] = useState({});
+    const [curFlavors, setCurFlavors] = useState([]);
+    const [isDi] = useState();
+
+    // Fetches the profile
     useEffect(() => {
-        const fetchUser = async () => {
-            const { data, error } = await apiClient.getPublicUserInformation(
+        const fetchProfileFromUserId = async () => {
+            const { data, error } = await apiClient.getProfileFromUserId(
                 user_id_here
             );
             if (data) {
-                setUserYouAreViewing(data.theUser);
+                setCurProfile(data);
+                if (data.fav_flavors) {
+                    let flavors = [];
+                    data.fav_flavors.split("").forEach((c) => {
+                        let num = Number(c);
+                        let obj = { flavor: allFlavors[num], id: c };
+                        flavors.push(obj);
+                    });
+                    setCurFlavors(flavors);
+                } else {
+                    setCurFlavors([]);
+                }
             }
-            console.log(data);
             if (error) {
-                alert(`PublicProfile.js fetchUser: ${error}`);
+                console.log(error);
             }
         };
-        fetchUser();
+        fetchProfileFromUserId();
     }, [user_id_here]);
-    console.log(userYouAreViewing);
+
+    // Fetches the user
+    useEffect(() => {
+        const fetchUserFromUserId = async () => {
+            const { data, error } = await apiClient.fetchUserById(user_id_here);
+            if (data) {
+                setCurUser(data);
+            }
+            if (error) {
+                alert(error);
+            }
+        };
+        fetchUserFromUserId();
+    }, [user_id_here]);
+
     return (
-        <div style={{ margin: "250px" }}>
-            This is the public profile page
-            <div>
-                {Object.entries(userYouAreViewing).map(([key, value]) => (
-                    <div>
-                        {key}: {value}
-                    </div>
-                ))}
-                When the account was created:{" "}
-                <b> {moment(userYouAreViewing.created_at).fromNow()} </b>
-            </div>
-        </div>
+        <Profile
+            user={curUser}
+            profile={curProfile}
+            flavors={curFlavors}
+            isSameUser={user.username === curUser.username ? true : false}
+        />
     );
 }

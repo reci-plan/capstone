@@ -1,5 +1,5 @@
 .Footer {
-  position: absolute;
+    position: absolute;
   bottom: 0;
 
   display: flex;
@@ -8,9 +8,13 @@
   background-color: #65AA91;
   width: 100vw;
   height: 50px;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 .Footer a {
   text-decoration: none;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   margin: 10px;
 }
