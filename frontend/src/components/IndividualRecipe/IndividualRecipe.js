@@ -236,13 +236,11 @@ export default function IndividualRecipe({
         if (data) {
           setUserProfileImg(data.image_url);
         }
-        if (error) {
-          alert(error);
-        }
+
       }
     };
     fetchUserProfile();
-  }, [user.id]);
+  }, [user?.id]);
 
   console.log(curComments);
 
