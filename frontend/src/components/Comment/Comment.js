@@ -239,7 +239,7 @@ export default function Comment({
                                             horizontal: "left",
                                         }}
                                     >
-                                        <MenuItem
+                                       {/* <MenuItem
                                             key={"edit"}
                                             onClick={(e, c) =>
                                                 handleShowEdit(e, comment)
@@ -249,7 +249,7 @@ export default function Comment({
                                             comment.id === selectedCommentId
                                                 ? "Unedit"
                                                 : "Edit"}
-                                        </MenuItem>
+                                        </MenuItem>*/}
                                         <MenuItem
                                             key={"delete"}
                                             onClick={() => setOpen(true)}
@@ -276,38 +276,7 @@ export default function Comment({
                         {comment?.comment}
                     </div>
 
-                    {/*<div
-                        className="comment_footer"
-                        style={{ marginRight: "20px" }}
-                    >
-                        {user.id === comment.user_id ? (
-                            <>
-                                <button
-                                    className="btnStyle"
-                                    id="deleteBtn"
-                                    onClick={(e) => handleDelete(e, comment)}
-                                >
-                                    Delete
-                                </button>
-                                <button
-                                    className="btnStyle"
-                                    id="editBtn"
-                                    onClick={(e, c) =>
-                                        handleShowEdit(e, comment)
-                                    }
-                                >
-                                    {showEdit &&
-                                    comment.id === selectedCommentId
-                                        ? "Unedit"
-                                        : "Edit"}
-                                </button>
-                            </>
-                        ) : (
-                            <> </>
-                        )}
-                    </div>*/}
-
-                    {showEdit && comment.id === selectedCommentId ? (
+              {/*      {showEdit && comment.id === selectedCommentId ? (
                         <form
                             onSubmit={(e, commentParameter) =>
                                 handleEditSubmit(e, comment)
@@ -324,7 +293,7 @@ export default function Comment({
                         </form>
                     ) : (
                         <> </>
-                    )}
+                    )}*/}
                 </div>
             </div>
         </div>

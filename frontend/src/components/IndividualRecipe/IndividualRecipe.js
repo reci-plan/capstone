@@ -99,6 +99,8 @@ export default function IndividualRecipe({
   // loading gif, when api is still fetching data
   const [isLoading, setIsLoading] = useState(false);
 
+  const [userProfileImg, setUserProfileImg] = useState("");
+
   // comment box
   const INITIAL_HEIGHT = 75;
   const [isExpanded, setIsExpanded] = useState(false);
@@ -227,6 +229,21 @@ export default function IndividualRecipe({
     setComment("");
   };
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (user) {
+        const { data, error } = await apiClient.getProfileFromUserId(user.id);
+        if (data) {
+          setUserProfileImg(data.image_url);
+        }
+        if (error) {
+          alert(error);
+        }
+      }
+    };
+    fetchUserProfile();
+  }, [user.id]);
+
   console.log(curComments);
 
   const handleTextAreaChange = (e) => {
@@ -263,8 +280,6 @@ export default function IndividualRecipe({
     "pricePerServing",
   ];
 
-  // console.log(recipeInfo);
-  // console.log(recipeInfo.description);
   return (
     <>
       <div className="IndividualRecipeWrapper">
@@ -286,188 +301,8 @@ export default function IndividualRecipe({
           className="IndividualRecipe"
           style={isLoading ? { filter: "blur(2px)" } : {}}
         >
-          {/*<div className="recipe-top">
-            <div className="recipe-title">{recipeInfo.title}</div>
-            <div className="recipe-diet">
-              {recipeInfo.vegan ? (
-                <img src={veganIcon} alt="Vegan Icon"></img>
-              ) : null}
-              {recipeInfo.vegetarian ? (
-                <img src={vegetarianIcon} alt="Vegetarian Icon"></img>
-              ) : null}
-              {recipeInfo.dairyfree ? (
-                <img src={dairyfreeIcon} alt="Dairy Free Icon"></img>
-              ) : null}
-              {recipeInfo.glutenfree ? (
-                <img src={glutenfreeIcon} alt="Gluten Free Icon"></img>
-              ) : null}
-            </div>
-          </div>*/}
-          {/*This is where the additional info go. E.g: ready in minutes, calories, etc*/}
-          {/*<div className="recipe-additional-info">
-            {EXTRA_INFO_ARRAY.map((r, i) => (
-              <>
-                <MuiThemeProvider theme={additionalInfoTheme}>
-                  <Paper
-                    elevation={3}
-                    className={classes.paper}
-                    style={{ minWidth: "280px" }}
-                  >
-                    {isLoading ? (
-                      <Typography
-                        variant="h4"
-                        color={i % 2 == 0 ? "primary" : "secondary"}
-                        gutterBottom
-                        className="boxGrayBig"
-                      ></Typography>
-                    ) : (
-                      <Typography
-                        variant="h4"
-                        color={i % 2 == 0 ? "primary" : "secondary"}
-                        gutterBottom
-                      >
-                        {EXTRA_INFO_ARRAY[i]}
-                      </Typography>
-                    )}
-
-                    {isLoading ? (
-                      <Typography
-                        variant="body1"
-                        color={i % 2 == 0 ? "secondary" : "primary"}
-                        className={`${isLoading} ? boxGraySmall : ""`}
-                      ></Typography>
-                    ) : (
-                      <Typography
-                        variant="body1"
-                        color={i % 2 == 0 ? "secondary" : "primary"}
-                      >
-                        {extraInformation[EXTRA_INFO_ARRAY[i]]}
-                      </Typography>
-                    )}
-                  </Paper>
-                  <br />
-                </MuiThemeProvider>
-              </>
-            ))}
-          </div>*/}
-          {/*  <div className="recipe-display">*/}
-          {/* Left Side */}
-          {/*<div className="recipe-left">
-              <div className="recipe-img">
-                {isLoading ? (
-                  <div className="imagePlaceholder">
-                    <CircularProgress
-                      color="primary"
-                      style={{
-                        position: "absolute",
-                        left: "50%",
-                        top: "50%",
-                        transform: "translate(-50%, -50%)",
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <img src={recipeInfo.image_url} alt={recipeInfo.title}></img>
-                )}
-              </div>
-              <div className="recipe-ingre">
-                <div className="heading">Ingredients</div>
-                {recipeIngredients.length > 0
-                  ? recipeIngredients.map((element, idx) => (
-                      <div key={idx}>{element} </div>
-                    ))
-                  : null}
-              </div>
-            </div>*/}
-
-          {/* Right Side */}
-          {/*<div className="recipe-right"> */}
-          {/*<div className="heading">Instructions</div>
-              {isLoading
-                ? [...Array(5)].map((x) => (
-                    <>
-                      <Paper
-                        elevation={3}
-                        className={classes.paper}
-                        style={{ minWidth: "280px" }}
-                      >
-                        <Typography
-                          variant="body1"
-                          className={`${isLoading} ? boxGrayDescription : ""`}
-                        ></Typography>
-                      </Paper>
-                      <br />
-                    </>
-                  ))
-                : recipeInstructions.length > 0
-                ? recipeInstructions.map((element, idx) => (
-                    <>
-                      <Paper key={idx} id={`${element.idx}`} elevation={3}>
-                        <Typography
-                          variant="h6"
-                          className={`${classes.paper} ${
-                            numPicked === idx ? "active" : ""
-                          }`}
-                        >
-                          {idx + 1}. {element}
-                        </Typography>
-                      </Paper>
-                      <br />
-                    </>
-                  ))
-                : null}
-            </div>*/}
-
-          {/*  <SocialMediaShare recipeInfo={recipeInfo} />*/}
-          {/*<div className="heading">Steps</div>
-            <div className="steps_div">
-              {isLoading
-                ? [...Array(5)].map((x) => (
-                    <>
-                      <Paper
-                        elevation={3}
-                        className={classes.paper}
-                        style={{ minWidth: "120px" }}
-                      >
-                        <Typography
-                          variant="body1"
-                          className={`${isLoading} ? boxGraySmall : ""`}
-                        ></Typography>
-                      </Paper>
-                      <br />
-                    </>
-                  ))
-                : recipeInstructions.length > 0
-                ? recipeInstructions.map((element, idx) => (
-                    <>
-                      <a
-                        onClick={() => setNumPicked(idx)}
-                        href={`#${idx}`}
-                        style={{ textDecoration: "none", maxHeight: "100px" }}
-                        className="steps_div_a"
-                      >
-                        <Paper key={idx}>
-                          <Typography
-                            variant="h6"
-                            className={`${classes.paper} ${
-                              numPicked === idx ? "active" : ""
-                            }`}
-                            onClick={(e) => console.log(e.target.className)}
-                          >
-                            Step {idx + 1}
-                          </Typography>
-                        </Paper>
-                      </a>
-                      <br />
-                    </>
-                  ))
-                : null}
-            </div>
-          </div>
-*/}
           {/*<b> summary </b> : {recipeInfo.summary}*/}
 
-          {/*Ignore for now*/}
           <div>
             comment section:
             <div className="container">
@@ -513,9 +348,13 @@ export default function IndividualRecipe({
                   <div className="header">
                     <div className="user">
                       <img
-                        src="https://i.imgur.com/hepj9ZS.png"
+                        src={
+                          userProfileImg
+                            ? userProfileImg
+                            : "https://i.imgur.com/hepj9ZS.png"
+                        }
                         alt="User avatar"
-                        style={{ maxHeight: "30px" }}
+                        style={{ maxHeight: "30px", maxWidth: "30px" }}
                       />
                       <div className="user_info">
                         {user?.email ? (
