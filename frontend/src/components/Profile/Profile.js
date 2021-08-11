@@ -153,14 +153,12 @@ export default function Profile({ user, isSameUser }) {
                                 {thisUser.username}
                             </span>
                         </div>
-                        {isSameUser ? (
-                            <div className="input">
-                                <span className="input-type">email: </span>
-                                <span className="input-type-res">
-                                    {thisUser.email}
-                                </span>
-                            </div>
-                        ) : null}
+                        <div className="input">
+                            <span className="input-type">email: </span>
+                            <span className="input-type-res">
+                                {thisUser.email}
+                            </span>
+                        </div>
                         {thisProfile.short_bio ? (
                             <div className="input">
                                 <span className="input-type">short bio: </span>

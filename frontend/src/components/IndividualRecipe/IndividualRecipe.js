@@ -13,10 +13,7 @@ import {
 import green from "@material-ui/core/colors/green";
 
 import apiClient from "../../services/apiClient";
-import veganIcon from "../../assets/vegan-icon.svg";
-import vegetarianIcon from "../../assets/vegetarian-icon.svg";
-import dairyfreeIcon from "../../assets/dairyfree-icon.svg";
-import glutenfreeIcon from "../../assets/glutenfree-icon.svg";
+import navbar from "../../assets/navbar.jpg"
 import "./IndividualRecipe.css";
 
 import Comment from "../Comment/Comment";
@@ -279,7 +276,7 @@ export default function IndividualRecipe({
   ];
 
   return (
-    <>
+    <div className="IndividualRecipe" style={{backgroundImage: `url(${navbar})`}}>
       <div className="IndividualRecipeWrapper">
         <div>
           <SampleLayout
@@ -418,6 +415,6 @@ export default function IndividualRecipe({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

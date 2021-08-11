@@ -55,7 +55,7 @@ export default function SearchFilter({ user }) {
           </ul>
         </div>
         <div className="phone-visible">
-          <hr></hr>
+          <hr className="search-hr"></hr>
           <Link to={`/search/viewall`}>
             <div className="viewall">View all</div>
           </Link>

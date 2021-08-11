@@ -4,11 +4,11 @@
   align-items: center;
   max-width: 100vw;
   background-color: transparent;
-  /*position: absolute;*/
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  padding: 0 75px;
+  margin: 0 75px;
 }
 .user-btn {
   position: absolute;
@@ -87,7 +87,7 @@
     margin: 0 40px;
   }
   .phone-view {
-    display: none;
+    display: none !important;
   }
   .phone-view-search {
     width: 100%;
