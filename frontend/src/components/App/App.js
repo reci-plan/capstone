@@ -34,7 +34,15 @@ function App() {
   const [saved, setSaved] = useState([]);
   const [changeSave, setChangeSave] = useState(false);
 
-  const [{ colors }, dispatch] = useDataLayerValue();
+  const allFlavors = [
+    "spicy",
+    "salty",
+    "sweet",
+    "sour",
+    "bitter",
+    "savory",
+    "fatty",
+  ];
 
   // console.log("On App.js component, colors is: ", colors);
 
@@ -93,7 +101,6 @@ function App() {
       fetchProfile();
     }
   }, [user]);
-
 
   // Fetch all users & profiles
   useEffect(() => {
@@ -165,11 +172,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar
-          user={user}
-          setUser={setUser}
-          setSearchTerm={setSearchTerm}
-        />
+        <Navbar user={user} setUser={setUser} setSearchTerm={setSearchTerm} />
         <Routes>
           <Route
             path="/"
@@ -204,23 +207,9 @@ function App() {
 
           <Route path="/wheel" element={<Generator user={user} />} />
 
-          <Route
-            path="/profile"
-            element={
-              <Profile 
-                user={user} 
-              />
-            }
-          />
+          <Route path="/profile" element={<Profile user={user} />} />
 
-          <Route
-            path="/profile/:username"
-            element={
-              <Profile 
-                user={user}
-              />
-            }
-          />
+          <Route path="/profile/:username" element={<Profile user={user} />} />
 
           <Route
             path="/profile/edit"
@@ -233,7 +222,7 @@ function App() {
             }
           />
 
-          <Route 
+          <Route
             path="/profileResults"
             element={
               <ProfileResults
@@ -246,7 +235,7 @@ function App() {
 
           <Route
             path="/publicProfile/:user_id_here"
-            element={<PublicProfile allFlavors={allFlavors} />}
+            element={<PublicProfile allFlavors={allFlavors} user={user} />}
           />
 
           <Route
