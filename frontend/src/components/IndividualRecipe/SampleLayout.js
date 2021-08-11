@@ -37,17 +37,20 @@ export default function SampleLayout({
     user,
 }) {
     const EXTRA_STATS_ARR = [
-        "Ingredients Count",
-        "Rating",
         "Prep Time",
-        "Servings",
+        "Rating",
         "Price Per Serving",
+        "Servings",
+        "Ingredients Count",
         "Calories",
     ];
 
     const [saved, setSaved] = useState(false);
     const { recipeId } = useParams();
+
     const [recommendedRecipes, setRecommendedRecipes] = useState([]);
+    const [topRecipes, setTopRecipes] = useState([]);
+    const [bitValue, setBitValue] = useState();
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -106,6 +109,53 @@ export default function SampleLayout({
     //     );
 
     // }, []);
+
+    console.log(recipes);
+
+    const getGreeting = () => {
+        var today = new Date();
+        var curHr = today.getHours();
+
+        if (curHr < 12) {
+            // setTheCurrentTime("morning");
+            return "Good Morning";
+        } else if (curHr < 18) {
+            // setTheCurrentTime("afternoon");
+            return "Good Afternoon";
+        } else {
+            // setTheCurrentTime("evening");
+            return "Good Evening";
+        }
+    };
+
+    useEffect(() => {
+        const time = getGreeting();
+
+        // Main course || side dish || salad || appetizer || soup
+        const meals = [64, 32, 16, 8, 4];
+        if (time === "Good Morning") {
+            // breakfast
+            setBitValue(128);
+        } else if (time === "Good Afternoon") {
+            setBitValue(meals[Math.floor(Math.random() * meals.length)]);
+        } else {
+            setBitValue(meals[Math.floor(Math.random() * meals.length)]);
+        }
+    }, [recipeId]);
+
+    useEffect(() => {
+        setRecommendedRecipes(
+            recipes.filter((r) => (r.category & bitValue) === bitValue)
+        );
+    }, [recipeId, bitValue]);
+
+    console.log(recommendedRecipes);
+
+    useEffect(() => {
+        setTopRecipes(recipes.filter((r) => r.rating >= 75));
+    }, []);
+
+    console.log("top: ", topRecipes);
 
     return (
         // Give some space below the navbar
