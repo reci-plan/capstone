@@ -52,6 +52,7 @@ export default function SampleLayout({
     const [topRecipes, setTopRecipes] = useState([]);
     const [bitValue, setBitValue] = useState();
 
+
     const useStyles = makeStyles((theme) => ({
         root: {
             flexGrow: 1,
@@ -156,6 +157,10 @@ export default function SampleLayout({
     }, []);
 
     console.log("top: ", topRecipes);
+
+
+
+
 
     return (
         // Give some space below the navbar
