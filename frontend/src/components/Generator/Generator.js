@@ -73,14 +73,19 @@ export default function Generator({user}) {
   }
 
   const dummyLoadWheel = (passToParent) => {
-    console.log("SELECTED CATEGORIES TO LOAD", Promise.resolve(passToParent))
+    console.log("TEST ON VAL", passToParent)
+    //console.log("SELECTED CATEGORIES TO LOAD", Promise.resolve(passToParent))
     console.log("---------- TESTING ----------")
-    if (passToParent) {
+    setLoadWheel(passToParent[2].rows)
+    times[numMeal] = passToParent[0]
+    meals[numMeal] = passToParent[1]
+    console.log("TEST ON VALE", times, meals)
+    // if (passToParent) {
 
-      passToParent.then(result => setLoadWheel(result[2].rows)).catch( err => console.log(err))
-      passToParent.then(result => times[numMeal] = result[0]).catch( err => console.log(err))
-      passToParent.then(result => meals[numMeal] = result[1]).catch( err => console.log(err))
-    }
+    //   passToParent.then(result => setLoadWheel(result[2].rows)).catch( err => console.log(err))
+    //   passToParent.then(result => times[numMeal] = result[0]).catch( err => console.log(err))
+    //   passToParent.then(result => meals[numMeal] = result[1]).catch( err => console.log(err))
+    // }
   }
 
   //Should return values to display for current recipe popup.
@@ -209,7 +214,7 @@ export default function Generator({user}) {
             <div className="menuItem">Recipe Criteria</div>
             <div className="close"><div onClick={(handleCloseForm)}><img src="https://svgshare.com/i/ZL_.svg" width="30px"></img></div></div>
             </div>
-            <Menu data={handleCloseForm} onClick2={setSpinIsVisible} passToParent={dummyLoadWheel}></Menu>
+            <Menu handleCloseForm={handleCloseForm} setSpinIsVisible={setSpinIsVisible} dummyLoadWheel={dummyLoadWheel}></Menu>
           </div>
           }
         </div>
