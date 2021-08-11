@@ -186,7 +186,7 @@ function App() {
         data.savedMealPlans.forEach((s) => {
           var mealPlan = []
           var mealInfo = []
-          for (let i = 0; i < 4; i++) {
+          for (let i = 0; i < 5; i++) {
             if (s[`recipe_id${i}`] !== null && typeof s[`recipe_id${i}`] != 'undefined') {
               if (!planIds.includes(s[`id`])) {
                 planIds.push(s[`id`])

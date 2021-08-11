@@ -62,7 +62,7 @@
 .submit-but {
     display: flex;
     justify-content: center;
-    background-color: #C4C4C4;
+    padding: 10px 0px;
 }
 
 .searchWrapper {

@@ -18,14 +18,28 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    padding: 10px;
 }
 
 .popup-inner .close-btn {
-    position:absolute;
-    top: 0px;
-    right: 0px
+    right: 0px;
+    align-self: flex-end;
+    width:50px;
+    margin: 0px 0px 10px 0px;
 }
 
 .keep {
     width: 56px;
+}
+
+.keepBut { 
+    width: 100px;
+    align-self: center;
+    background-color: #C7CCFF;
+    border: 2px solid;
+}
+
+.fullTitle {
+    align-self: center;
+    font-size: 20px;
 }

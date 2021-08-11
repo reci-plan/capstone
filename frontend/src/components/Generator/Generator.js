@@ -37,9 +37,9 @@ export default function Generator({user}) {
   const [boxVals, setBoxVals] = useState(-1)
   const navigate = useNavigate();
   const [loadWheel, setLoadWheel] = useState([
-    { option: "meal to", style: { backgroundColor: 'red', textColor: 'black' }},
-    { option: "begin", style: { backgroundColor: 'green', textColor: 'black' }},
-    { option: "Add a new", style: { backgroundColor: 'blue', textColor: 'black' }},
+    { option: "meal to", style: { backgroundColor: 'rgba(73, 116, 165)', textColor: 'black' }},
+    { option: "begin", style: { backgroundColor: 'rgba(122, 73, 165)', textColor: 'black' }},
+    { option: "Add a new", style: { backgroundColor: 'rgba(101,170,145)', textColor: 'black' }},
   ])
 
   const increment = () => {
@@ -183,7 +183,7 @@ export default function Generator({user}) {
             <div className="leftMenuArea"><RenderBox handleOpenForm = {handleOpenForm} dataWheelToBox={dum} renderMealData={[times, meals, titles]}/></div>
             {dum >= 1 ?
                   <>
-                    <div onClick={()=>setMealPlanPopup(true)}><button className="saveMealPlan">Save Meal Plan</button></div>
+                    <button className="saveMealPlan" onClick={()=>setMealPlanPopup(true)}>Save Meal Plan</button>
                   </> : 
                   ""
             }
@@ -204,7 +204,7 @@ export default function Generator({user}) {
             />
             {spinIsVisible ?
                   <>
-                  <button onClick={handleSpinClick}>SPIN</button>
+                  <div className="spinBut" onClick={handleSpinClick}>SPIN</div>
                   </> : 
                   ""
             }
@@ -237,7 +237,7 @@ export default function Generator({user}) {
                       {typeof recipes[numMeal] !== 'undefined' ?
                       <>
                         {console.log("RECX", recipes[numMeal], recipes[numMeal].title, recipes[numMeal])}
-                        {recipes[numMeal].title}
+                        <div className="fullTitle">{recipes[numMeal].title}</div>
                         <RecipeCard
                           user={user}
                           recipeInfo={recipes[numMeal]}

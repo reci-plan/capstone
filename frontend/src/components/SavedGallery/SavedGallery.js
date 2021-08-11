@@ -34,6 +34,8 @@ export default function SavedGallery({ user, saved, savePlan, mealPlanInfo, meal
                 {savePlan ?
                     savePlan.map((s, i) => (
                         <div className="saveRow">
+                            
+                        {console.log("SI", savePlan,s, i)}
                             <div className={mealPlanIds[i]}>
                                     <MealPlan
                                     key={s.id}

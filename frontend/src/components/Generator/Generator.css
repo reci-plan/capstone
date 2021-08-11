@@ -33,7 +33,7 @@
 .subHeader {
     font-size: 30px;
     font-family: 'Josefin Sans', sans-serif;
-    padding: 10px 0px 10px 0px;
+    padding: 25px 0px 0px 0px;
 }
 
 .fullPage {
@@ -141,4 +141,27 @@
 
 #meal-name {
     font-size:20px;
+}
+
+.spinBut {
+    background-color: #C7CCFF;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 10px;
+    align-items: baseline;
+    border: 2px solid;
+}
+
+.saveMealPlan {
+    background-color: #C7CCFF;
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    padding: 10px;
+    border-radius: 10px;
+    align-items: baseline;
+    border: 2px solid;
 }
