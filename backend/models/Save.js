@@ -134,6 +134,63 @@ class Save {
   
       return results.rows[0];
     }
+
+    static async fetchSavedMealPlans(user) {
+      if (!user) {
+        throw new UnauthorizedError(`No user logged in.`);
+      }
+  
+      const query = `
+        SELECT * FROM saved_meal_plans
+        WHERE user_id = (SELECT id FROM users WHERE username = $1)
+        ORDER BY saved_meal_plans.date DESC
+      `;
+  
+      const results = await db.query(query, [user.username]);
+  
+      return results.rows;
+    }
+
+    static async unsaveMealPlan(user, mealPlan) {
+      if (!user) {
+        throw new UnauthorizedError(`No user logged in.`);
+      }
+  
+      if (!mealPlan) {
+        throw new BadRequestError("no meal plan in request.body");
+      }
+  
+      if (!mealPlan.hasOwnProperty("title")) {
+        throw new BadRequestError(`Missing title in request body.`);
+      }
+  
+      const results = await db.query(
+        `
+          DELETE FROM saved_meal_plans
+          WHERE id = $1 AND user_id = (SELECT id FROM users WHERE username = $2)
+          RETURNING id, user_id
+        `,
+        [mealPlan.id, user.username]
+      );
+      return results.rows[0];
+    }
+
+    static async fetchSavedMealPlan(user, mealPlanId) {
+      console.log("FETCH SAVED")
+      mealPlanId = Number(mealPlanId, 10)
+      if (!user) {
+        throw new UnauthorizedError(`No user logged in.`);
+      }
+  
+      const query = `
+        SELECT * FROM saved_meal_plans
+        WHERE user_id = (SELECT id FROM users WHERE username = $1) AND id = $2
+      `;
+  
+      const results = await db.query(query, [user.username, mealPlanId]);
+  
+      return results.rows;
+    }
 }
 
 module.exports = Save;
