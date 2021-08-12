@@ -69,20 +69,22 @@ export default function RecipeCard({
 
   return (
     <div className="RecipeCard">
-      {/* {Promise.resolve(recipeInfo).then(function(val) {console.log(val)})} */}
-      {console.log("RECINFO", recipeInfo)}
-      <div className="card-img">
-        <img src={recipeInfo?.image_url} alt={recipeInfo?.title}></img>
-      </div>
-      <div className="card-info">
-        <div className="card-title">
-          {recipeInfo?.title.length > limit
-            ? recipeInfo?.title.substring(0, limit) + "..."
-            : recipeInfo?.title}
+      <Link to={`/recipes/${recipeInfo.api_id}`}>
+        <div className="card-img">
+          <img src={recipeInfo?.image_url} alt={recipeInfo?.title}></img>
         </div>
+     </Link>
+      <div className="card-info">
+        <Link to={`/recipes/${recipeInfo.api_id}`}>
+          <div className="card-title">
+            {recipeInfo?.title.length > limit
+              ? recipeInfo?.title.substring(0, limit) + "..."
+              : recipeInfo?.title}
+          </div>
+        </Link>
         <div className="card-tips">
           <img src={budgetIcon} alt="Money sign"></img>
-          <span> Budget ($/serv): {recipeInfo?.expense / 100}</span>
+          <span>Budget ($/serv): {recipeInfo?.expense / 100}</span>
         </div>
         <div className="card-tips">
           <img src={timeIcon} alt="Time sign"></img>
@@ -94,25 +96,14 @@ export default function RecipeCard({
         </div>
       </div>
 
-      {/*    <Link to={`/recipes/${recipeInfo?.api_id}`}>View more &#8594;</Link>
-            {!dontDisplaySave ? (
-              <button className="save-btn" onClick={handleOnClick}>
-                {saved ? (
-                  <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
-                ) : (
-                  <img src={heart} alt="Heart to save recipe"></img>
-                )}
-              </button>
-            ): ""
-*/}
-      <div className="card-links">
-        {links ? (
-          <>
-            <Link to={`/recipes/${recipeInfo?.api_id}`}>View more &#8594;</Link>
-          </>
-        ) : (
-          ""
-        )}
+        <div className="card-links">
+          {links ? 
+            <>
+              <Link to={`/recipes/${recipeInfo.api_id}`}>View more &#8594;</Link>
+            </>
+            :
+            ""
+          }
 
         {likes ? (
           <>

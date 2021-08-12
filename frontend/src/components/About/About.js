@@ -3,24 +3,31 @@ import navbar from "../../assets/navbar.jpg"
 import ann from "../../assets/ann.jpg"
 import maritza from "../../assets/maritza.jpg"
 import andrew from "../../assets/andrew.jpg"
+import github from "../../assets/github.svg"
 import "./About.css"
 
 export default function About() {
   const aboutus = [
     {
-      name: "Maritza Padilla",
-      image: maritza,
-      bio: "https://github.com/mpadil18"
-    },
-    {
       name: "Andrew Lee",
       image: andrew,
-      bio: "https://github.com/f1rstpr"
+      github: "https://github.com/f1rstpr",
+      linkedin: "https://www.linkedin.com/in/andrew-l-2538b0208/",
+      bio: ""
+    },
+    {
+      name: "Maritza Padilla",
+      image: maritza,
+      github: "https://github.com/mpadil18",
+      linkedin: "https://www.linkedin.com/in/maritza-padilla/",
+      bio: ""
     },
     {
       name: "Ann Wang",
       image: ann,
-      bio: "https://github.com/awang2330"
+      github: "https://github.com/awang2330",
+      linkedin: "https://www.linkedin.com/in/awang2330/",
+      bio: ""
     }
   ];
 
@@ -28,7 +35,10 @@ export default function About() {
     <div className="About" style={{backgroundImage: `url(${navbar})`}}>
 
       <section className="mission">
-        <div>Our Mission</div>
+        <span>Our Mission</span>
+        <a href="https://github.com/reci-plan/capstone">
+          <img src={github} alt="Github Icon"></img>
+        </a>
         <p>
           We want to provide a place where working people can quickly and easily access inexpensive 
           recipes that align with their needs. They can search for, as well as plan out meals using a random recipe 

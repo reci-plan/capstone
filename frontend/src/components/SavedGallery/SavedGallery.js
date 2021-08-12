@@ -26,32 +26,29 @@ export default function SavedGallery({ user, saved, savePlan, mealPlanInfo, meal
                 )) : null
                 }
             </div>
-            <h3> Saved Meal Plans </h3>
-            {/* {console.log("SAVE PLAN", savePlan, "M PLAN INFO", mealPlanInfo, "EX: ", mealPlanInfo[0][0])} */}
-                {savePlan ?
-                    savePlan.map((s, i) => (
-                        <div className="saveRow">
-                            
-                        {console.log("SI", savePlan,s, i)}
-                            <div className={mealPlanIds[i]}>
-                                    <MealPlan
-                                    key={s.id}
-                                    user={user}
-                                    mealPlanInfo={mealPlanInfo[i]}
-                                    
-                                    plan={s}
-                                    handleSave={handleSave}
-                                    handleUnsave={handleUnsave}
-                                    handleUnsavePlan={handleUnsavePlan}
-                                    mealPlanId={mealPlanIds[i]}
-                                    handleLinks={(true)}
-                                    handleLikes={(false)}
-                                    handleMealInfo={(true)}
-                                    />
-                            </div>
+            <div className="section-title">Saved Meal Plans</div>
+            {savePlan ?
+                savePlan.map((s, i) => (
+                    <div className="saveRow">
+                        <div className={mealPlanIds[i]}>
+                            <MealPlan
+                                key={s.id}
+                                user={user}
+                                mealPlanInfo={mealPlanInfo[i]}
+                                
+                                plan={s}
+                                handleSave={handleSave}
+                                handleUnsave={handleUnsave}
+                                handleUnsavePlan={handleUnsavePlan}
+                                mealPlanId={mealPlanIds[i]}
+                                handleLinks={(true)}
+                                handleLikes={(false)}
+                                handleMealInfo={(true)}
+                            />
                         </div>
-                    )) : null
-                    }
-            </div>
+                    </div>
+                )) : null
+            }
+        </div>
     );
 }
