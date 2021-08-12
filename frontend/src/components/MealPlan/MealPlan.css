@@ -1,3 +1,17 @@
 .MealPlan {
     display: flex;
+    background-color: #E3D8C8;
+    flex-direction: column;
+    border-radius: 10px;
+}
+.meals {
+    display: flex;
+    flex-direction: row;
+}
+
+.mr {
+    display: flex;
+    flex-direction: row;
+    vertical-align: baseline;
+    padding: 10px;
 }

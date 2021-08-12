@@ -26,13 +26,11 @@ export default function SavedGallery({ user, saved, savePlan, mealPlanInfo, meal
                 )) : null
                 }
             </div>
-            <h3> Saved Meal Plans </h3>
+            <div className="section-title">Saved Meal Plans</div>
             {/* {console.log("SAVE PLAN", savePlan, "M PLAN INFO", mealPlanInfo, "EX: ", mealPlanInfo[0][0])} */}
                 {savePlan ?
                     savePlan.map((s, i) => (
                         <div className="saveRow">
-                            
-                        {console.log("SI", savePlan,s, i)}
                             <div className={mealPlanIds[i]}>
                                     <MealPlan
                                     key={s.id}
