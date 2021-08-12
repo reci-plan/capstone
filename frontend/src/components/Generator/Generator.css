@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;300;400;500&display=swap');
 .Generator {
     font-family: 'Josefin Sans', sans-serif;
+    margin: 0 80px;
 }
 .Wheel {
     padding: 0 150px;
@@ -16,7 +17,6 @@
 .Wheel {
     min-height: 100vh;
     padding: 100px 0;
-    margin: 0 80px;
 }
 
 .header-text {
