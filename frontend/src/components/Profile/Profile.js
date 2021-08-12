@@ -169,7 +169,7 @@ export default function Profile({ user, isSameUser }) {
                         ) : null}
                     </div>
 
-                    {isSameUser ||
+                    {isSameUser || !username || 
                     window.location.href.split("0/")[1] === "profile" ? (
                         <Link to="/profile/edit" className="edit-btn">
                             . . .
