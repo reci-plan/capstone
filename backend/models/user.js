@@ -41,7 +41,9 @@ class User {
             );
         }
 
-        const existingUsername = await User.fetchUserByUsername(credentials.username);
+        const existingUsername = await User.fetchUserByUsername(
+            credentials.username
+        );
         if (existingUsername) {
             throw new BadRequestError(
                 `User already exists: ${credentials.username}`
@@ -113,7 +115,18 @@ class User {
             `SELECT * FROM users WHERE username = $1`,
             [username]
         );
-    
+
+        return result.rows[0];
+    }
+
+    static async fetchUserByUserId(userId) {
+        if (!userId) {
+            throw new BadRequestError("No user id given in req.params");
+        }
+
+        const result = await db.query(`SELECT * FROM users WHERE id = $1`, [
+            userId,
+        ]);
 
         return result.rows[0];
     }

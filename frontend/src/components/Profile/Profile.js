@@ -1,16 +1,75 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
+import searchIcon from "../../assets/search-icon.svg";
 import tempImg from "../../assets/tempProfileImg.png";
 import location from "../../assets/location.svg";
-import profileBackground from "../../assets/profile.png";
+import profileBackground from "../../assets/profile.jpg";
 import "./Profile.css";
 
-export default function Profile({ user, profile, flavors }) {
-    const colors = [{}];
+export default function Profile({ user, isSameUser }) {
+    const navigate = useNavigate();
+    const { username } = useParams();
 
+    const [thisUser, setThisUser] = useState({});
+    const [thisProfile, setThisProfile] = useState({});
+    const [flavors, setFlavors] = useState("");
+    const [profileTerm, setProfileTerm] = useState("");
+    console.log(window.location.href.split("0/"));
+    useEffect(() => {
+        const fetchUserAndProfile = async () => {
+            const { data, error } = await apiClient.fetchUserAndProfile(
+                username ? username : user.username
+            );
+            if (data) {
+                setThisUser(data[0]);
+                setThisProfile(data[1]);
+            }
+            if (error) {
+                console.log(error, "Profile.js");
+            }
+        };
 
+        if (user.email) {
+            fetchUserAndProfile();
+        }
+    }, [user, username]);
+
+    const handleOnChange = (e) => {
+        setProfileTerm(e.target.value);
+    };
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+        if (profileTerm) {
+            localStorage.setItem("profile-search-term", profileTerm);
+            navigate("/profileResults");
+        }
+    };
+    const allFlavors = [
+        "spicy",
+        "salty",
+        "sweet",
+        "sour",
+        "bitter",
+        "savory",
+        "fatty",
+    ];
+
+    useEffect(() => {
+        if (thisProfile?.fav_flavors) {
+            var flavors = [];
+            thisProfile.fav_flavors.split("").forEach((c) => {
+                let num = Number(c);
+                var obj = { flavor: allFlavors[num], id: c };
+                flavors.push(obj);
+            });
+            setFlavors(flavors);
+        } else {
+            setFlavors([]);
+        }
+    }, [thisProfile]);
 
     return (
         <div
@@ -26,25 +85,45 @@ export default function Profile({ user, profile, flavors }) {
                 <div className="profile-display">
                     <div className="profile-left">
                         <div className="profile-img">
-                            {profile.image_url ? (
+                            {thisProfile.image_url ? (
                                 <img
-                                    src={profile.image_url}
+                                    src={thisProfile.image_url}
                                     alt="User profile img"
                                 ></img>
                             ) : (
                                 <img src={tempImg} alt="Placeholder img"></img>
                             )}
                         </div>
+                        {!username ? (
+                            <form
+                                className="profile-search"
+                                onSubmit={handleOnSubmit}
+                            >
+                                <div>
+                                    <img
+                                        src={searchIcon}
+                                        alt="search icon"
+                                    ></img>
+                                </div>
+                                <input
+                                    type="text"
+                                    placeholder="search users..."
+                                    onChange={handleOnChange}
+                                ></input>
+                            </form>
+                        ) : null}
                         <div className="input-flavors">
                             <span className="input-type">fav flavors: </span>
                             <div className="fav-flavors">
-                                {flavors?.length > 0
-                                    ? flavors.map((element) => (
-                                          <div className="flavor">
-                                              {element.flavor}
-                                          </div>
-                                      ))
-                                    : null}
+                                {flavors?.length > 0 ? (
+                                    flavors.map((element, i) => (
+                                        <div key={i} className="flavor">
+                                            {element.flavor}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <>none</>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -53,43 +132,49 @@ export default function Profile({ user, profile, flavors }) {
                         <div className="profile-basic">
                             <div>
                                 <div className="profile-name">
-                                    {user.first_name} {user.last_name}
+                                    {thisUser.first_name} {thisUser.last_name}
                                 </div>
                                 <div className="location">
-                                    {profile.region ? (
+                                    {thisProfile.region ? (
                                         <>
                                             <img
                                                 src={location}
                                                 alt="Location Icon"
                                             ></img>
-                                            <span>{profile.region}</span>
+                                            <span>{thisProfile.region}</span>
                                         </>
                                     ) : null}
                                 </div>
                             </div>
-                            <Link to="/profile/edit" className="edit-btn">
-                                . . .
-                            </Link>
                         </div>
                         <div className="input">
                             <span className="input-type">username: </span>
                             <span className="input-type-res">
-                                {user.username}
+                                {thisUser.username}
                             </span>
                         </div>
                         <div className="input">
                             <span className="input-type">email: </span>
-                            <span className="input-type-res">{user.email}</span>
+                            <span className="input-type-res">
+                                {thisUser.email}
+                            </span>
                         </div>
-                        {profile.short_bio ? (
+                        {thisProfile.short_bio ? (
                             <div className="input">
                                 <span className="input-type">short bio: </span>
                                 <span className="input-type-res">
-                                    {profile.short_bio}
+                                    {thisProfile.short_bio}
                                 </span>
                             </div>
                         ) : null}
                     </div>
+
+                    {isSameUser ||
+                    window.location.href.split("0/")[1] === "profile" ? (
+                        <Link to="/profile/edit" className="edit-btn">
+                            . . .
+                        </Link>
+                    ) : null}
                 </div>
             )}
         </div>

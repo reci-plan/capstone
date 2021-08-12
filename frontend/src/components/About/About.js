@@ -1,23 +1,26 @@
 
-import navbar from "../../assets/navbar.png"
+import navbar from "../../assets/navbar.jpg"
+import ann from "../../assets/ann.jpg"
+import maritza from "../../assets/maritza.jpg"
+import andrew from "../../assets/andrew.jpg"
 import "./About.css"
 
 export default function About() {
   const aboutus = [
     {
       name: "Maritza Padilla",
-      image: "",
-      bio: "this is maritza"
+      image: maritza,
+      bio: "https://github.com/mpadil18"
     },
     {
       name: "Andrew Lee",
-      image: "",
-      bio: "this is andrew"
+      image: andrew,
+      bio: "https://github.com/f1rstpr"
     },
     {
       name: "Ann Wang",
-      image: "",
-      bio: "this is ann"
+      image: ann,
+      bio: "https://github.com/awang2330"
     }
   ];
 
@@ -27,9 +30,9 @@ export default function About() {
       <section className="mission">
         <div>Our Mission</div>
         <p>
-          To provide a place where working people can quickly and easily access inexpensive 
-          recipes that align with their needs, as well as plan out meals using a random recipe 
-          generator specific to their inputted criteria.
+          We want to provide a place where working people can quickly and easily access inexpensive 
+          recipes that align with their needs. They can search for, as well as plan out meals using a random recipe 
+          generator specific to their criteria.
         </p>
       </section>
 
@@ -38,9 +41,11 @@ export default function About() {
         <div className="people">
           {aboutus.map((item, i) => (
             <div key={i} className="person">
-              <img src={item.image} alt={item.name}></img>
+              <div className="about-img">
+                <img src={item.image} alt={item.name}></img>
+              </div>
               <div>{item.name}</div>
-              <p>{item.bio}</p>
+              <a href={item.bio}>{item.bio}</a>
             </div>
           ))}
         </div>

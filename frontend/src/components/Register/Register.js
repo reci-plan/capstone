@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
 import './Register.css'
-import orange from '../../assets/orange.png'
+import orange from '../../assets/orange.jpg'
 
 export default function Register({ user, setUser }) {
   const navigate = useNavigate();
@@ -117,6 +117,7 @@ export default function Register({ user, setUser }) {
           </div>
           <div>
             <input
+              className={`${errors.email ? `error-border` : ``}`}
               type="email"
               name="email"
               placeholder="email"
@@ -124,7 +125,7 @@ export default function Register({ user, setUser }) {
               onChange={handleInputChange}
             />
           </div>
-          {errors.email}
+          <div className="error">{errors.email}</div>
           <div>
             <input
               type="text"
@@ -136,6 +137,7 @@ export default function Register({ user, setUser }) {
           </div>
           <div>
             <input
+              className={`${errors.password ? `error-border` : ``}`}
               type="password"
               name="password"
               placeholder="password"
@@ -145,6 +147,7 @@ export default function Register({ user, setUser }) {
           </div>
           <div>
             <input
+              className={`${errors.passwordConfirm ? `error-border` : ``}`}
               type="password"
               name="passwordConfirm"
               placeholder="confirm password"
@@ -152,8 +155,8 @@ export default function Register({ user, setUser }) {
               onChange={handleInputChange}
             />
           </div>
-          {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
-          <div>{errors.form}</div>
+          <div className="error">{errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}</div>
+          <div className="error">{errors.form}</div>
           <button className="btn register-btn" onClick={handleSubmit}>register</button>
         </div>
       </div>

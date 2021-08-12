@@ -39,7 +39,7 @@
   margin-right: 40px;
 }
 
-.navbar-right {
+.navbar-right, .navbar-right > div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,6 +71,34 @@
 }
 
 .search-input {
-  width: auto;
+  width: 200px;
   margin: 0 0;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+}
+
+.hidden {
+  display: none;
+}
+
+@media only screen and (max-width: 700px) {
+  .Navbar {
+    margin: 0 40px;
+  }
+  .phone-view {
+    display: none !important;
+  }
+  .phone-view-search {
+    width: 100%;
+  }
+  .navbar-right {
+    height: 80px;
+  }
+  .user-btn {
+    top: 20px;
+  }
+  .search-input {
+    width: 150px;
+  }
 }

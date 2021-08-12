@@ -50,33 +50,73 @@ class Recipe {
                 }
             });
 
+            // console.log(r.analyzedInstructions[0].steps.forEach(s=>console.log(s)));
+
+            //
+            // Step[instructionsHere]
+            // E.g: 1[Get sugar]
+
+            let steps_str = "";
+
+            r.analyzedInstructions[0].steps.forEach(
+                (c, i) => (steps_str += i + 1 + "[" + c.step + "]")
+            );
+
+            console.log("steps_str: ", steps_str);
+
+            let ingredients_str = "";
+            r.missedIngredients.forEach((i, idx) => {
+                if (i.amount && i.unitLong) {
+                    ingredients_str +=
+                        idx +
+                        "[" +
+                        parseFloat(i.amount).toFixed(2).toString() +
+                        " " +
+                        i.unitLong +
+                        " " +
+                        i.originalName +
+                        "]";
+                } else {
+                    ingredients_str += idx + "[" + i.originalString + "]";
+                }
+            });
+
+            // vegan
+            // vegetarian
+            // dairyFree
+            // glutenFree
+
             arr.push({
                 id: r.id,
                 title: r.title,
                 category: catCode,
                 expense: parseInt(r.pricePerServing),
                 prep_time: parseInt(r.readyInMinutes),
-                // description: r.instructions,
                 description: r.summary,
                 image_url: r.image ? r.image : "no_image",
                 rating: parseInt(r.spoonacularScore),
+                steps: steps_str,
+                ingredients: ingredients_str,
+                vegan: r.vegan,
+                vegetarian: r.vegetarian,
+                dairyFree: r.dairyFree,
+                glutenFree: r.glutenFree,
+                servings: r.servings,
             });
         });
 
-        // console.log("supposed to look like this:", [category[0]]);
-        // console.log(category);
         let result_arr = [];
         for (let i = 0; i < arr.length; i++) {
-            const isExisting = Recipe.checkIfExistingRecipe(arr[i].id);
+            const isExisting = await Recipe.checkIfExistingRecipe(arr[i].id);
 
             if (isExisting.length > 0) {
                 continue;
             }
 
             const queryString = `
-            INSERT INTO all_recipes (api_id, title, category, image_url, prep_time, description, rating, expense)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-                RETURNING id, api_id, title, category, image_url, prep_time, description, rating, expense
+            INSERT INTO all_recipes (api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree, servings)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+                RETURNING id, api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree, servings
             `;
             const results = await db.query(queryString, [
                 arr[i].id,
@@ -87,10 +127,16 @@ class Recipe {
                 arr[i].description,
                 arr[i].rating,
                 arr[i].expense,
+                arr[i].ingredients,
+                arr[i].steps,
+                arr[i].vegan,
+                arr[i].vegetarian,
+                arr[i].glutenFree,
+                arr[i].dairyFree,
+                arr[i].servings,
             ]);
             result_arr.push(results.rows);
         }
-        // console.log(result_arr[0][0].category);
         return result_arr;
     }
 
@@ -103,10 +149,21 @@ class Recipe {
 
     static async checkIfExistingRecipe(apiId) {
         const results = await db.query(
-            `SELECT * FROM all_recipes WHERE api_id = $1`,
+            `SELECT api_id, title FROM all_recipes WHERE api_id = $1`,
             [apiId]
         );
 
+        return results.rows;
+    }
+
+    static async getIndividualRecipe(api_id) {
+        const results = await db.query(
+            `
+            SELECT id, api_id, title, category, image_url, prep_time, description, rating, expense, ingredients, steps, vegan, vegetarian, glutenFree, dairyFree, servings FROM all_recipes
+            WHERE api_id = $1
+        `,
+            [api_id]
+        );
         return results.rows[0];
     }
 

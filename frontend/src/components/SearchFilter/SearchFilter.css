@@ -1,12 +1,12 @@
 .SearchFilter {
-  padding: 0 120px;
+  padding: 120px;
+  padding-bottom: 0;
   background-repeat: no-repeat;
-  max-width: 100vw;
+  width: 100vw;
   overflow: hidden;
-  background-size: 100%;
-  width: 100%;
-  padding-top: 120px;
   height: 360px;
+  background-size: cover;
+  background-position: center;
 
   display: flex;
   justify-content: center;
@@ -16,7 +16,8 @@ ul {
 }
 
 .searchoff {
-  background-position-y: -300px;
+  padding-bottom: 120px;
+  background-position-y: -380px;
   height: auto;
 }
 .filter-by {
@@ -25,11 +26,15 @@ ul {
   align-items: center;
 }
 .filter-name {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 28px;
 }
+ul a,
+.center a {
+  text-decoration: none;
+}
 .filter-by li {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   list-style-type: none;
   font-size: 20px;
   cursor: pointer;
@@ -52,6 +57,7 @@ ul {
 .filter-display {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .center {
@@ -61,11 +67,63 @@ ul {
 }
 .viewall {
   cursor: pointer;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   text-transform: uppercase;
+  margin-bottom: 10px;
 }
 .results {
   margin-top: 10px;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.close-btn {
+  cursor: pointer;
+  border: 2px solid #000;
+  border-radius: 10px;
+  width: 30px;
+  margin: 0 10px;
+}
+
+.phone-visible {
+  display: none;
+}
+
+/* .search-hr {
+  min-width: 200px;
+  border: 1px solid #000;
+} */
+
+@media only screen and (max-width: 700px) {
+  .SearchFilter {
+    padding: 80px 50px;
+    background-size: cover;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .searchoff {
+    background-position-y: -400px;
+    background-size: auto;
+  }
+
+  .list-flex {
+    max-height: 150px;
+  }
+  .center {
+    display: none;
+  }
+
+  .phone-visible {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .phone-visible a {
+    text-decoration: none;
+  }
 }

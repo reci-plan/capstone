@@ -1,0 +1,30 @@
+.ProfileResults {
+  padding: 150px;
+  width: 100vw;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+.user {
+  text-decoration: none;
+  display: flex;
+  margin: 20px 0;
+}
+
+.user img {
+  width: 100px;
+  border: 2px solid #cecece;
+  margin-left: 20px;
+}
+
+.user span {
+  font-size: 25px;
+  font-family: "Lato", sans-serif;
+}
+
+@media only screen and (max-width: 700px) {
+  .ProfileResults {
+    padding: 120px 50px;
+    background-size: auto;
+  }
+}

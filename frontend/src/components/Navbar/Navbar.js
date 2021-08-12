@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import apiClient from "../../services/apiClient";
@@ -8,29 +8,35 @@ import wheel from "../../assets/wheel-icon.svg";
 import close from "../../assets/close.svg";
 import userlogo from "../../assets/user.svg";
 
-import SearchPage from "../SearchPage/SearchPage";
 import "./Navbar.css";
 
-export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
+export default function Navbar({ user, setUser, setSearchTerm }) {
   const navigate = useNavigate();
 
+  const searchBox = useRef(null);
+  const userBox = useRef(null);
   const [isSearch, setIsSearch] = useState(false);
   const [userIsClicked, setUserIsClicked] = useState(false);
+  
+  useEffect(() => {
+    function handleOutsideClick(event) {
+      if (searchBox.current && !searchBox.current.contains(event.target)) {
+        setIsSearch(false)
+      }
+      if (userBox.current && !userBox.current.contains(event.target)) {
+        setUserIsClicked(false)
+      }
+    }
+
+    window.addEventListener('click', handleOutsideClick)
+    return () => window.removeEventListener('click', handleOutsideClick)
+  }, []);
 
   const handleOnSearchClick = () => {
-    setIsSearch(!isSearch);
+    setIsSearch(true)
     navigate("/search");
   };
-
-  const handleOnInputClick = () => {
-    navigate("/search");
-  };
-
-  const handleOnClose = () => {
-    setIsSearch(!isSearch);
-    navigate("/");
-  };
-
+  
   const handleOnUserClick = () => {
     setUserIsClicked(!userIsClicked);
   };
@@ -42,6 +48,7 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
+    localStorage.setItem('recipe-search-term', e.target.value)
     navigate("/searchResults");
   };
 
@@ -52,42 +59,43 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
 
   return (
     <div className="Navbar">
-      <Link to="/" className="logo-link">
+      <Link to="/" className={`logo-link ${isSearch ? 'phone-view': ''}`}>
         <img src={logo} alt="Reciplan app logo"></img>
       </Link>
-      <div className="navbar-right">
-        {!isSearch ? (
-          <div className="search-btn" onClick={handleOnSearchClick}>
-            <img src={search} alt="Search icon"></img>
-          </div>
-        ) : (
-          <>
-            <div className="search-btn">
+      <div className={`navbar-right ${isSearch ? 'phone-view-search': ''}`}>
+        <div ref={searchBox}>
+          {!isSearch ? (
+            <div className="search-btn" onClick={handleOnSearchClick}>
               <img src={search} alt="Search icon"></img>
             </div>
-            <form onSubmit={handleOnSubmit}>
-              <input
-                className="search-input"
-                type="text"
-                placeholder="search recipes..."
-                onChange={handleInputChange}
-                onClick={handleOnInputClick}
-              ></input>
-            </form>
-            <div className="search-btn" onClick={handleOnClose}>
-              <img src={close} alt="Close button"></img>
-            </div>
-          </>
-        )}
+          ) : (
+            <>
+              <div className="search-btn hidden" onClick={handleOnSearchClick}>
+                <img src={search} alt="Search icon"></img>
+              </div>
+              <form onSubmit={handleOnSubmit}>
+                <input
+                  className="search-input"
+                  type="text"
+                  placeholder="search recipes..."
+                  onChange={handleInputChange}
+                ></input>
+              </form>
+              <div className="search-btn" onClick={e => setIsSearch(false)}>
+                <img src={close} alt="Close button"></img>
+              </div>
+            </>
+          )}
+        </div>
         <Link
           to="/wheel"
-          className={`wheel-link ${user?.email ? "margin-right" : ""}`}
+          className={`wheel-link ${user?.email ? 'margin-right' : ''} ${isSearch ? 'phone-view': ''}`}
         >
           <img src={wheel} alt="Wheel icon"></img>
         </Link>
 
         {user?.email ? (
-          <div className="user-btn">
+          <div className={`user-btn ${isSearch ? 'phone-view': ''}`} ref={userBox}>
             <img
               onClick={handleOnUserClick}
               src={userlogo}
@@ -111,7 +119,7 @@ export default function Navbar({ user, setUser, searchTerm, setSearchTerm }) {
             ) : null}
           </div>
         ) : (
-          <Link to="/login" className="login-link">
+          <Link to="/login" className={`login-link ${isSearch ? 'phone-view': ''}`}>
             Login
           </Link>
         )}

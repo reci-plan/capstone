@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
 import './Login.css'
-import blueberry from '../../assets/blueberry.png'
+import blueberry from '../../assets/blueberry.jpg'
 
 
 export default function Login({ user, setUser }) {
@@ -59,6 +59,7 @@ export default function Login({ user, setUser }) {
         <div className="form">
           <div>
             <input
+              className={`${errors.email ? `error-border` : ``}`}
               type="email"
               name="email"
               placeholder="email"
@@ -66,7 +67,7 @@ export default function Login({ user, setUser }) {
               onChange={handleInputChange}
             />
           </div>
-          {errors.email}
+          <div className="error">{errors.email}</div>
           <div>
             <input
               type="password"
@@ -76,7 +77,7 @@ export default function Login({ user, setUser }) {
               onChange={handleInputChange}
             />
           </div>
-          <div>{errors.form}</div>
+          <div className="error">{errors.form}</div>
           <button className="btn login-btn" onClick={handleLogin}>login</button>
 
           <div className="login-footer">

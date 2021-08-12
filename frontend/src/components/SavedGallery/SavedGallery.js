@@ -1,23 +1,20 @@
-import { useState, useEffect } from "react";
-import apiClient from "../../services/apiClient";
-import { useDataLayerValue } from "../../context/DataLayer";
+
 import RecipeCard from "../RecipeCard/RecipeCard";
 import MealPlan from "../MealPlan/MealPlan";
 
 import heart from "../../assets/heart.svg";
 import heartFill from "../../assets/heart-fill.svg";
+import navbar from "../../assets/navbar.jpg"
 
 import "./SavedGallery.css";
 
 export default function SavedGallery({ user, saved, savePlan, mealPlanInfo, mealPlanIds, handleSave, handleUnsave, handleUnsavePlan }) {
 
     return (
-        <div className="SavedGallery">
-            {console.log("SAVED", saved)}
-            <div className="saveCol">
-            <h3> Saved Recipes </h3>
-            <div className="saveRow">
-                {saved ?
+        <div className="SavedGallery" style={{backgroundImage: `url(${navbar})`}}>
+            <div className="section-title">Saved Recipes</div>
+            <div className="filter-display">
+            {saved ?
                 saved.map((s) => (
                     <RecipeCard
                         key={s.id}
@@ -56,6 +53,5 @@ export default function SavedGallery({ user, saved, savePlan, mealPlanInfo, meal
                     )) : null
                     }
             </div>
-        </div>
     );
 }

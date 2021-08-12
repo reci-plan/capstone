@@ -1,0 +1,289 @@
+
+.LayoutDivWrapper {
+    margin-top: 50px;
+}
+
+.Layout_Title {
+    /*border: 1px solid black;*/
+    display: flex;
+    justify-content: space-between;
+}
+
+.Layout_Title_Real {
+    font-size: 30px;
+    line-height: 37px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.Layout_Title_Share {
+    margin: 15px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 23px;
+}
+
+.Layout_Flex_Wrapper {
+    display: flex;
+}
+
+.Layout_Left_Side {
+    flex: 1;
+    margin: 10px 10px;
+}
+
+.Layout_Image_Div {
+    margin: 10px 0px;
+    width: 714px;
+    overflow: hidden;
+}
+
+.Layout_Image {
+    display: block;
+    height: 464px;
+    width: 100%;
+    object-fit: cover;
+
+    /*position: absolute;*/
+    /*    width: 714px;
+    height: 464px;
+    left: 147px;
+    top: 296px;*/
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.Layout_Ingredients_Heading {
+    display: flex;
+    margin-top: 50px;
+}
+
+.LayoutHorizontal_hr {
+    letter-spacing: -2px;
+    width: 80px;
+    border: 1px solid black;
+}
+
+.Layout_Ingredients_Title {
+    font-size: 30px;
+    margin: 0 20px;
+}
+
+.Layout_Ingredients_RealIngredients {
+    font-size: 20px;
+    display: flex;
+    margin: 15px 80px;
+}
+
+.Layout_Ingredients_ul {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    list-style-position: outside;
+}
+
+.Layout_Ingredients_li {
+    width: 300px;
+    display: inline-block;
+    text-align: left;
+    padding-bottom: 20px;
+    font-size: 15px;
+    line-height: 19px;
+
+    margin-bottom: 20px;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+
+    padding-left: 2em;
+    text-indent: -2em;
+    word-wrap: break-word;
+}
+
+.test123 {
+    border: 5px solid blue;
+    display: inline-block;
+}
+
+.Layout_Instructions_Div {
+    font-size: 30px;
+    margin: 0 80px;
+}
+
+.Layout_Instructions_Paper {
+    margin: 30px;
+}
+
+.Layout_Right_Side {
+    flex: 0.7;
+}
+
+.Layout_Ingredients_Title_Right {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.Layout_Space_BetweenLines {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Layout_Stats_And_Data_Real,
+.Layout_Recommended_Recipes_Wrapper {
+    display: flex;
+    justify-content: flex-end;
+    /*border: 1px solid black;*/
+    flex-wrap: wrap;
+}
+
+.Layout_Bottom_Flex_Wrapper {
+    display: flex;
+}
+
+.Layout_Bottom_Left {
+    flex: 1;
+}
+
+.Layout_Bottom_Right {
+    flex: 0.7;
+}
+
+/*.ExtraInformationHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}*/
+
+.TypographyMargin {
+    margin-top: 20px;
+}
+
+.ShareThisRecipe {
+    margin-right: 20px;
+}
+
+@media only screen and (max-width: 815px) {
+    .Layout_Flex_Wrapper {
+        flex-direction: column;
+    }
+
+    .IndividualRecipeWrapper {
+        padding: 0 20px;
+    }
+
+    .Layout_Image_Div {
+        width: 600px;
+    }
+
+    .Layout_Image {
+        height: 464px;
+        width: 55%;
+        object-fit: cover;
+    }
+
+    .Layout_Ingredients_Heading {
+        display: flex;
+        margin-top: 0px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .LayoutHorizontal_hr {
+        width: 0px;
+        border: 0px;
+    }
+
+    .Layout_Ingredients_ul {
+        columns: 1;
+        -webkit-columns: 1;
+        -moz-columns: 1;
+        list-style-position: outside;
+    }
+
+    .Layout_Ingredients_li {
+        width: 300px;
+        display: inline-block;
+        text-align: left;
+        font-size: 20px;
+        line-height: 19px;
+
+        margin-bottom: 5px;
+    }
+
+    .Layout_Ingredients_RealIngredients {
+        margin: 0px;
+    }
+
+    .Layout_Instructions_Div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0px;
+        font-size: 15px;
+    }
+
+    .Layout_Instructions_Paper {
+        margin: 10px 0px;
+        width: 95%;
+    }
+
+    .Layout_Space_BetweenLines {
+        justify-content: center;
+    }
+
+    .Layout_Recommended_Recipes_Wrapper {
+        justify-content: center;
+    }
+
+    .comment_flex_h3 {
+        margin-right: 30px;
+    }
+    .authorOfComment {
+        font-size: 13.5px;
+    }
+    .comment_date {
+        font-size: 12.5px;
+    }
+    .comment_desc {
+        font-size: 12.5px;
+    }
+    .comment_flex_menu {
+        margin-right: 0px;
+    }
+    .ShareThisRecipe {
+        font-size: 18px;
+    }
+}
+
+@media only screen and (min-width: 780px) and (max-width: 1023px) {
+}
+
+@media only screen and (max-width: 1250px) {
+    .ExtraInformationHeader {
+        font-size: 15px;
+        flex-wrap: wrap;
+    }
+}
+
+@media only screen and (max-width: 1380px) {
+    .LayoutHorizontal_hr {
+        width: 25px;
+    }
+    .ShareThisRecipe {
+        font-size: 20px;
+    }
+    .share-btn-container a {
+        margin: 3px;
+    }
+    .logo {
+        height: 20px;
+    }
+
+    .Layout_Ingredients_Title_Right {
+        font-size: 20px;
+    }
+}

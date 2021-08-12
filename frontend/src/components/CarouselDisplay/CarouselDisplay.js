@@ -2,7 +2,6 @@ import "./CarouselDisplay.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import RecipeCard from "../RecipeCard/RecipeCard";
-import apiClient from "../../services/apiClient";
 
 export default function CarouselDisplay({
   user,
@@ -16,12 +15,16 @@ export default function CarouselDisplay({
   bitValue,
 }) {
   const responsive = {
+    extraLargeDesktop: {
+      breakpoint: { max: 4000, min: 2500 },
+      items: 7,
+    },
     largeDesktop: {
-      breakpoint: { max: 4000, min: 2000 },
+      breakpoint: { max: 2500, min: 1500 },
       items: 5,
     },
     desktop: {
-      breakpoint: { max: 2000, min: 1024 },
+      breakpoint: { max: 1500, min: 1024 },
       items: 4,
     },
     tablet: {

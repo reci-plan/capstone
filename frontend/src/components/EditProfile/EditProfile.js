@@ -4,14 +4,13 @@ import apiClient from "../../services/apiClient";
 import Multiselect from "multiselect-react-dropdown";
 
 import tempImg from "../../assets/tempProfileImg.png";
-import profileBackground from "../../assets/edit-profile.png";
+import profileBackground from "../../assets/edit-profile.jpg";
 import "./EditProfile.css";
 
 export default function EditProfile({
   user,
   handleUpdateUser,
-  profile,
-  flavors,
+  profile
 }) {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -27,7 +26,7 @@ export default function EditProfile({
     image_url: "",
   });
   const [errors, setErrors] = useState({});
-  const [addFlavors, setAddFlavors] = useState(flavors);
+  const [flavors, setFlavors] = useState("");
   const [image, setImage] = useState("");
 
   const handleInputChange = (e) => {
@@ -70,7 +69,7 @@ export default function EditProfile({
       setErrors((e) => ({ ...e, passwordConfirm: null }));
     }
 
-    addFlavors.forEach((item) => (form.fav_flavors += item.id));
+    flavors.forEach((item) => (form.fav_flavors += item.id));
 
     const { data, error } = await apiClient.updateProfile({
       first_name: form.first_name,
@@ -104,22 +103,44 @@ export default function EditProfile({
   ];
 
   const onSelect = (list, item) => {
-    setAddFlavors(list);
+    setFlavors(list);
   };
 
   const onRemove = (list, item) => {
     if (list.length == 0) {
-      setAddFlavors([]);
+      setFlavors([]);
       return;
     }
-    setAddFlavors(list);
+    setFlavors(list);
   };
+
+  const allFlavors = [
+    "spicy",
+    "salty",
+    "sweet",
+    "sour",
+    "bitter",
+    "savory",
+    "fatty",
+  ];
+  useEffect(() => {
+    if (profile?.fav_flavors) {
+        var flavors = [];
+        profile.fav_flavors.split("").forEach((c) => {
+          let num = Number(c);
+          var obj = { flavor: allFlavors[num], id: c };
+          flavors.push(obj);
+        });
+        setFlavors(flavors);
+      } else {
+        setFlavors([]);
+      }
+  }, [profile])
 
   const style = {
     multiselectContainer: {
       fontFamily: "Lato, sans-serif",
       width: "200px",
-      height: "80px",
       margin: "20px",
     },
     searchBox: {
@@ -132,10 +153,6 @@ export default function EditProfile({
     inputField: {
       margin: "0px",
       width: "100%",
-    },
-    chips: {
-      background: "#98B9F2",
-      color: "#000",
     },
     optionContainer: {
       background: "#fff",
@@ -183,11 +200,6 @@ export default function EditProfile({
       ) : (
         <div className="profile-display">
           <div className="profile-left">
-            <input
-              type="file"
-              name="image_url"
-              onChange={(e) => setImage(e.target.files[0])}
-            />
             <div className="profile-img">
               {form.image_url ? (
                 <img src={form.image_url} alt=""></img>
@@ -201,6 +213,11 @@ export default function EditProfile({
                 </>
               )}
             </div>
+            <input
+              type="file"
+              name="image_url"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
             <button className="upload-btn" onClick={uploadImage}>
               Upload
             </button>
@@ -255,6 +272,7 @@ export default function EditProfile({
               <div className="form-input">
                 <label>email</label>
                 <input
+                  className={`${errors.email ? `error-border` : ``}`}
                   type="email"
                   name="email"
                   placeholder="email"
@@ -262,7 +280,7 @@ export default function EditProfile({
                   onChange={handleInputChange}
                 />
               </div>
-              {errors.email}
+              <div className="error">{errors.email}</div>
               <div className="form-input">
                 <label>username</label>
                 <input
@@ -276,6 +294,7 @@ export default function EditProfile({
               <div className="form-input">
                 <label>password</label>
                 <input
+                  className={`${errors.password ? `error-border` : ``}`}
                   type="password"
                   name="password"
                   placeholder="password"
@@ -285,6 +304,7 @@ export default function EditProfile({
               </div>
               <div className="form-input">
                 <input
+                  className={`${errors.passwordConfirm ? `error-border` : ``}`}
                   type="password"
                   name="passwordConfirm"
                   placeholder="confirm password"

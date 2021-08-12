@@ -14,11 +14,18 @@ CREATE TABLE all_recipes (
     api_id          INTEGER NOT NULL,
     title           TEXT NOT NULL,
     category        INTEGER NOT NULL,
+    servings        INTEGER NOT NULL,
     image_url       TEXT NOT NULL,
     prep_time       INTEGER NOT NULL,
     description     TEXT,
     rating          INTEGER NOT NULL,
-    expense         INTEGER NOT NULL
+    expense         INTEGER NOT NULL,
+    ingredients     TEXT,
+    steps           TEXT,
+    vegan           BOOLEAN DEFAULT FALSE,
+    vegetarian      BOOLEAN DEFAULT FALSE,
+    glutenFree      BOOLEAN DEFAULT FALSE,
+    dairyFree       BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE community_all_recipes (

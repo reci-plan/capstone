@@ -1,23 +1,17 @@
 .SearchPage {
-    padding-top: 150px;
-    margin-left: 150px;
-    margin-right: 150px;
+  padding: 120px;
+  background-repeat: no-repeat;
+  background-position-x: 40%;
+  background-size: 100%;
+  
+  width: 100vw;
+  min-height: 100vh;
 }
 
-.filtered-recipes {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.placeholder {
-    display: grid;
-    place-items: center;
-
-    font-family: Roboto Slab;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 50px;
-    line-height: 106px;
-    color: #0e0755;
+@media only screen and (max-width: 700px) {
+  .SearchPage {
+    padding: 120px 50px;
+    background-size: auto;
+    background-position-x: 85%;
+  }
 }

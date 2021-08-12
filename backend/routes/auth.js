@@ -4,6 +4,17 @@ const security = require("../middleware/security");
 const User = require("../models/user");
 const { createUserJwt } = require("../utils/tokens");
 
+router.get("/fetchCustomUser/:userId", async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+        const theUser = await User.fetchUserByUserId(userId);
+        console.log(theUser);
+        return res.status(200).json(theUser);
+    } catch (e) {
+        next(e);
+    }
+});
+
 // In INSOMINA: Headers -> Authorization: Bearer ${Insert token here}
 router.get(
     "/user",

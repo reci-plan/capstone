@@ -58,6 +58,13 @@ class ApiCalls {
         return await this.request({ endpoint: `auth/user`, method: `GET` });
     }
 
+    async fetchUserById(userId) {
+        return await this.request({
+            endpoint: `auth/fetchCustomUser/${userId}`,
+            method: `GET`,
+        });
+    }
+
     async logout() {
         this.setToken(null);
         localStorage.setItem(this.tokenName, "");
@@ -93,6 +100,12 @@ class ApiCalls {
     async fetchIndividualRecipeInfo(recipeId) {
         return await this.request({
             endpoint: `recipes/getMoreInfo/${recipeId}`,
+        });
+    }
+
+    async getIndividualRecipe(recipeId) {
+        return await this.request({
+            endpoint: `recipes/individualRecipe/${recipeId}`,
         });
     }
 
@@ -206,6 +219,18 @@ class ApiCalls {
         });
     }
 
+    async fetchUserAndProfile(username) {
+        return await this.request({
+            endpoint: `profile/username/${username}`,
+        });
+    }
+
+    async fetchAllProfiles() {
+        return await this.request({
+            endpoint: `profile/all`,
+        });
+    }
+
     async updateProfile(info) {
         return await this.request({
             endpoint: `profile/`,
@@ -217,6 +242,13 @@ class ApiCalls {
     async getPublicUserInformation(user_id) {
         return await this.request({
             endpoint: `profile/getProfile/${user_id}`,
+            method: `GET`,
+        });
+    }
+
+    async getProfileFromUserId(user_id) {
+        return await this.request({
+            endpoint: `profile/getProfileFromUserId/${user_id}`,
             method: `GET`,
         });
     }
@@ -260,8 +292,12 @@ class ApiCalls {
     }
 
     async saveMealPlan(mealPlan) {
-        console.log("WAAIT", mealPlan)
-        return await this.request({ endpoint: `save/recipe/x`, method:`POST`, data: mealPlan});
+        console.log("WAAIT", mealPlan);
+        return await this.request({
+            endpoint: `save/recipe/x`,
+            method: `POST`,
+            data: mealPlan,
+        });
     }
 
     async unsavePlan(mealPlan) {

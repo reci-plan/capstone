@@ -13,18 +13,13 @@
     background-size: 100%;
   }
 
-.WheelMessage {
-    max-height: 100px;
+.Wheel {
+    min-height: 100vh;
+    padding: 100px 0;
     margin: 0 80px;
-    padding-top: 100px;
-}
-.Generator {
-    max-height: 100px;
-    margin: 0 80px;
-    padding-top: 100px;
 }
 
-.heade {
+.header-text {
     font-size: 40px;
     font-family: 'Josefin Sans', sans-serif;
     padding: 25px 0px 20px 0px;
@@ -164,4 +159,17 @@
     border-radius: 10px;
     align-items: baseline;
     border: 2px solid;
+}
+
+@media only screen and (max-width: 700px) {
+    .Wheel {
+        padding: 75px 0;
+    }
+    .header-text {
+        font-size: 25px;
+        padding: 0;
+    }
+    .menuParent {
+        width: auto;
+    }
 }
