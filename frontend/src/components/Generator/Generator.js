@@ -204,7 +204,7 @@ export default function Generator({user}) {
             />
             {spinIsVisible ?
                   <>
-                  <div className="spinBut" onClick={handleSpinClick}>SPIN</div>
+                  <button className="spinBut" onClick={handleSpinClick}>SPIN</button>
                   </> : 
                   ""
             }

@@ -4,13 +4,45 @@
 
   display: flex;
   padding: 0 75px;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   background-color: #65AA91;
   width: 100vw;
   height: 50px;
+  overflow-x: hidden;
 }
 .Footer a {
   text-decoration: none;
   font-family: "Lato", sans-serif;
   margin: 10px;
+}
+.Footer > div {
+  display: flex;
+}
+.account-link {
+  display: flex;
+  align-items: center;
+  margin: 6px;
+}
+.account-link span {
+  margin: 5px;
+}
+.account-link img {
+  width: 30px;
+}
+
+@media only screen and (max-width: 700px) {
+  .Footer {
+    padding: 0 20px;
+  }
+  .account-link {
+    margin: 4px;
+  }
+  .account-link img {
+    width: 20px;
+  }
+  .account-link span {
+    margin: 2px;
+    font-size: 15px;
+  }
 }

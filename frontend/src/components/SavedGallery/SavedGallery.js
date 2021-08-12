@@ -27,29 +27,28 @@ export default function SavedGallery({ user, saved, savePlan, mealPlanInfo, meal
                 }
             </div>
             <div className="section-title">Saved Meal Plans</div>
-            {/* {console.log("SAVE PLAN", savePlan, "M PLAN INFO", mealPlanInfo, "EX: ", mealPlanInfo[0][0])} */}
-                {savePlan ?
-                    savePlan.map((s, i) => (
-                        <div className="saveRow">
-                            <div className={mealPlanIds[i]}>
-                                    <MealPlan
-                                    key={s.id}
-                                    user={user}
-                                    mealPlanInfo={mealPlanInfo[i]}
-                                    
-                                    plan={s}
-                                    handleSave={handleSave}
-                                    handleUnsave={handleUnsave}
-                                    handleUnsavePlan={handleUnsavePlan}
-                                    mealPlanId={mealPlanIds[i]}
-                                    handleLinks={(true)}
-                                    handleLikes={(false)}
-                                    handleMealInfo={(true)}
-                                    />
-                            </div>
+            {savePlan ?
+                savePlan.map((s, i) => (
+                    <div className="saveRow">
+                        <div className={mealPlanIds[i]}>
+                            <MealPlan
+                                key={s.id}
+                                user={user}
+                                mealPlanInfo={mealPlanInfo[i]}
+                                
+                                plan={s}
+                                handleSave={handleSave}
+                                handleUnsave={handleUnsave}
+                                handleUnsavePlan={handleUnsavePlan}
+                                mealPlanId={mealPlanIds[i]}
+                                handleLinks={(true)}
+                                handleLikes={(false)}
+                                handleMealInfo={(true)}
+                            />
                         </div>
-                    )) : null
-                    }
-            </div>
+                    </div>
+                )) : null
+            }
+        </div>
     );
 }
