@@ -13,13 +13,19 @@ import apiClient from "../../services/apiClient";
 export default function RecipeCard({
   user,
   recipeInfo,
+  meal,
   handleSave,
   handleUnsave,
   handleLinks,
   dontDisplaySave,
+  handleLikes,
+  handleMealInfo,
 }) {
   const [saved, setSaved] = useState(false);
   const [links, setLinks] = useState(true);
+
+  const [likes, setLikes] = useState(true);
+  const [mealInfo, setMealInfo] = useState(true);
 
   useEffect(() => {
     const checkRecipe = async () => {
@@ -34,12 +40,18 @@ export default function RecipeCard({
       if (handleLinks === false) {
         setLinks(false);
       }
+      if (handleLikes === false) {
+        setLikes(false);
+      }
+      if (handleMealInfo === false) {
+        setMealInfo(false);
+      }
     };
 
     if (user.email) {
       checkRecipe();
     }
-  }, [recipeInfo]);
+  }, [recipeInfo, handleLinks, handleLikes, handleMealInfo]);
 
   const limit = 17;
 
@@ -57,6 +69,8 @@ export default function RecipeCard({
 
   return (
     <div className="RecipeCard">
+      {/* {Promise.resolve(recipeInfo).then(function(val) {console.log(val)})} */}
+      {console.log("RECINFO", recipeInfo)}
       <div className="card-img">
         <img src={recipeInfo?.image_url} alt={recipeInfo?.title}></img>
       </div>
@@ -79,10 +93,8 @@ export default function RecipeCard({
           <span>Rating: {parseFloat(recipeInfo?.rating / 20)}/5</span>
         </div>
       </div>
-      {links ? (
-        <>
-          <div className="card-links">
-            <Link to={`/recipes/${recipeInfo?.api_id}`}>View more &#8594;</Link>
+
+      {/*    <Link to={`/recipes/${recipeInfo?.api_id}`}>View more &#8594;</Link>
             {!dontDisplaySave ? (
               <button className="save-btn" onClick={handleOnClick}>
                 {saved ? (
@@ -91,12 +103,46 @@ export default function RecipeCard({
                   <img src={heart} alt="Heart to save recipe"></img>
                 )}
               </button>
-            ) : null}
-          </div>
-        </>
-      ) : (
-        ""
-      )}
+            ): ""
+*/}
+      <div className="card-links">
+        {links ? (
+          <>
+            <Link to={`/recipes/${recipeInfo?.api_id}`}>View more &#8594;</Link>
+          </>
+        ) : (
+          ""
+        )}
+
+        {likes ? (
+          <>
+            {!dontDisplaySave ? (
+              <button className="save-btn" onClick={handleOnClick}>
+                {saved ? (
+                  <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
+                ) : (
+                  <img src={heart} alt="Heart to save recipe"></img>
+                )}
+              </button>
+            ) : (
+              ""
+            )}
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+      <div className="mealInfo">
+        {meal ? (
+          <>
+            <p>{meal[0]}</p>
+            &nbsp;
+            <p>{meal[1]}</p>
+          </>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 }

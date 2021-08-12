@@ -63,4 +63,51 @@ router.post("/recipe/x", requireAuthenticatedUser, async (req, res, next) => {
     }
 });
 
+router.delete("/mealPlan", requireAuthenticatedUser, async (req, res, next) => {
+    try {
+        const user = res.locals.user;
+        const mealPlan = req.body;
+        console.log("PREP TO DEL", mealPlan)
+        const unsaveMealPlan = await Save.unsaveMealPlan(user, mealPlan);
+        res.status(200).json({ unsaveMealPlan });
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get("/mealPlans", requireAuthenticatedUser, async (req, res, next) => {
+    try {
+        const user = res.locals.user;
+        const savedMealPlans = await Save.fetchSavedMealPlans(user);
+        res.status(200).json({ savedMealPlans });
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get("/mealPlan", requireAuthenticatedUser, async (req, res, next) => {
+    try {
+        const user = res.locals.user;
+        const mealId = req
+        console.log("MEEEAL", mealId)
+        const savedMealPlan = await Save.fetchSavedMealPlan(user, mealId);
+        res.status(200).json({ savedMealPlan });
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/mealPlan/:planId', requireAuthenticatedUser, async (req, res, next) => {
+    try {
+        const user = res.locals.user
+        const mealPlanId = Number(req.params.planId)
+        console.log("HERE ID", mealPlanId, user)
+        const mealPlan = await Save.fetchSavedMealPlan(user, mealPlanId)
+        console.log("AAAA", mealPlan)
+        res.status(200).json({mealPlan})
+    } catch(err) {
+        next(err)
+    }
+  })
+
 module.exports = router;

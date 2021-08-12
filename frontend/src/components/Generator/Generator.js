@@ -8,6 +8,8 @@ import apiClient from "../../services/apiClient";
 import RenderBox from "../RenderBox/renderBox";
 import RecipeCard from '../RecipeCard/RecipeCard'
 
+import spoonpic from '../../assets/spoonpic.png'
+
 import pencil from '../../assets/pencil.svg'
 
 var times = [''];
@@ -35,9 +37,9 @@ export default function Generator({user}) {
   const [boxVals, setBoxVals] = useState(-1)
   const navigate = useNavigate();
   const [loadWheel, setLoadWheel] = useState([
-    { option: "meal to"},
-    { option: "begin"},
-    { option: "Add a new"},
+    { option: "meal to", style: { backgroundColor: 'rgba(73, 116, 165)', textColor: 'black' }},
+    { option: "begin", style: { backgroundColor: 'rgba(122, 73, 165)', textColor: 'black' }},
+    { option: "Add a new", style: { backgroundColor: 'rgba(101,170,145)', textColor: 'black' }},
   ])
 
   const increment = () => {
@@ -71,26 +73,31 @@ export default function Generator({user}) {
   }
 
   const dummyLoadWheel = (passToParent) => {
-    console.log("SELECTED CATEGORIES TO LOAD", Promise.resolve(passToParent))
+    console.log("TEST ON VAL", passToParent)
+    //console.log("SELECTED CATEGORIES TO LOAD", Promise.resolve(passToParent))
     console.log("---------- TESTING ----------")
-    if (passToParent) {
+    setLoadWheel(passToParent[2].rows)
+    times[numMeal] = passToParent[0]
+    meals[numMeal] = passToParent[1]
+    console.log("TEST ON VALE", times, meals)
+    // if (passToParent) {
 
-      passToParent.then(result => setLoadWheel(result[2].rows)).catch( err => console.log(err))
-      passToParent.then(result => times[numMeal] = result[0]).catch( err => console.log(err))
-      passToParent.then(result => meals[numMeal] = result[1]).catch( err => console.log(err))
-    }
+    //   passToParent.then(result => setLoadWheel(result[2].rows)).catch( err => console.log(err))
+    //   passToParent.then(result => times[numMeal] = result[0]).catch( err => console.log(err))
+    //   passToParent.then(result => meals[numMeal] = result[1]).catch( err => console.log(err))
+    // }
   }
 
   //Should return values to display for current recipe popup.
   const displayRecipePopup = async (recipeId) => {
     console.log("------------------------->", Promise.resolve(recipeId))
-    var promise = Promise.resolve(recipeId);
-    promise.then(function(val) {
-      console.log("TRY PROMISE ----------->")
-      console.log(val)
-      console.log("Recipe Id", val)
-      recipeId = val;
-    });
+    // var promise = Promise.resolve(recipeId);
+    // promise.then(function(val) {
+    //   console.log("TRY PROMISE ----------->")
+    //   console.log(val)
+    //   console.log("Recipe Id", val)
+    //   recipeId = val;
+    // });
     console.log("FETCHED: ", recipeId)
     const { data, err } = await apiClient.fetchLocalDbRecipe(recipeId);
     if (data) {
@@ -112,7 +119,7 @@ export default function Generator({user}) {
   }
   
   const keepMeal = () => {
-    console.log("TRY KEEP MEAL", times[numMeal], meals[numMeal])
+    console.log("TRY KEEP MEAL", times[numMeal], meals[numMeal], titles[numMeal])
     console.log("---------- TESTING ----------")
     increment();
     setButtonPopup();
@@ -151,12 +158,13 @@ export default function Generator({user}) {
     if (data) {
       console.log("Successful load!")
       navigate("/saved");
+      window.location.reload();
     }
     console.log("Recipe list: ", recipes)
   }
 
   return (
-    <div className="Wheel">
+    <div className="Wheel" style={{backgroundImage: `url(${spoonpic})`}}>
       {!user.email ? (
         <div className="WheelMessage">
           Login <Link to="/login">here</Link> to spin the wheel and plan your meal!
@@ -172,10 +180,10 @@ export default function Generator({user}) {
             </div>
             <div className="subHeader">Meals</div>
             {/*<div className="box"><p>{times[dum]}</p><p>{meals[dum]}</p><div className="penIc"><div onClick={(handleOpenForm)}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div></div>*/}
-            <div className="leftMenuArea"><RenderBox handleOpenForm = {handleOpenForm} dataWheelToBox={dum} renderMealData={[times, meals]}/></div>
+            <div className="leftMenuArea"><RenderBox handleOpenForm = {handleOpenForm} dataWheelToBox={dum} renderMealData={[times, meals, titles]}/></div>
             {dum >= 1 ?
                   <>
-                    <div onClick={()=>setMealPlanPopup(true)}><button className="saveMealPlan">Save Meal Plan</button></div>
+                    <button className="saveMealPlan" onClick={()=>setMealPlanPopup(true)}>Save Meal Plan</button>
                   </> : 
                   ""
             }
@@ -196,17 +204,17 @@ export default function Generator({user}) {
             />
             {spinIsVisible ?
                   <>
-                  <button onClick={handleSpinClick}>SPIN</button>
+                  <div className="spinBut" onClick={handleSpinClick}>SPIN</div>
                   </> : 
                   ""
             }
           </> : 
           <div className="menuParent">
             <div className="menuHeader">
-            <div className="close"><div onClick={(handleCloseForm)}><img src="https://svgshare.com/i/ZL_.svg"></img></div></div>
-              <div className="menuItem">Edit a meal</div>
+            <div className="menuItem">Recipe Criteria</div>
+            <div className="close"><div onClick={(handleCloseForm)}><img src="https://svgshare.com/i/ZL_.svg" width="30px"></img></div></div>
             </div>
-            <Menu data={handleCloseForm} onClick2={setSpinIsVisible} passToParent={dummyLoadWheel}></Menu>
+            <Menu handleCloseForm={handleCloseForm} setSpinIsVisible={setSpinIsVisible} dummyLoadWheel={dummyLoadWheel}></Menu>
           </div>
           }
         </div>
@@ -229,10 +237,12 @@ export default function Generator({user}) {
                       {typeof recipes[numMeal] !== 'undefined' ?
                       <>
                         {console.log("RECX", recipes[numMeal], recipes[numMeal].title, recipes[numMeal])}
+                        <div className="fullTitle">{recipes[numMeal].title}</div>
                         <RecipeCard
                           user={user}
                           recipeInfo={recipes[numMeal]}
                           handleLinks={(false)}
+                          handleLikes={(false)}
                         />
                         <button className="keepBut" onClick={keepMeal}>Keep</button>
                       </> :
@@ -243,16 +253,25 @@ export default function Generator({user}) {
         </Popup>
 
         <Popup trigger={mealPlanPopup} setTrigger={setMealPlanPopup}>
-          <h3 className="mealPlanHead">You did it! (almost)</h3>
+          {(document.getElementById('mealPlanTitle') != null) ?
+                <>
+                <h3 className="mealPlanHead">Congratulations! Here's your meal plan for {document.getElementById('mealPlanTitle').value}:</h3>
+                </> : 
+                ""
+          }
           {/* {mapMealPlan()} */}
           <div className="mealPlan">
           {titles.length > 0
           ? titles.map((element, idx) => (
             <div className="mod-box">
+              {times[idx]}
+              &nbsp;
+              {meals[idx]}
               <RecipeCard
                 user={user}
                 recipeInfo={recipes[idx]}
                 handleLinks={(false)}
+                handleLikes={(false)}
               />
               {/* {times[idx]} {meals[idx]} {titles[idx]} <img src={images[idx]}></img> {preps[idx]} {ratings[idx]} */}
             </div>

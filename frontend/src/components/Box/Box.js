@@ -23,9 +23,12 @@ export default function Box(props) {
             {console.log("TRY: ", props.renderMealData)}
             {test === (lines.length - 1) ?
                 <>
-                <div className="box"><div className="penIc" onClick={() => props.handleOpenForm()}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div></div>
+                <div className="just">
+                    <div onClick={() => props.handleOpenForm()}><img src="https://i.imgur.com/SR5qJxc.png" className="add" alt="add meal"></img></div>
+                    <p>add a meal to your plan!</p>
+                </div>
                 </> : 
-                <div className="box"><div className= {caption} onClick={() => setLines([...lines, lines.length])}>{props.renderMealData[0][test]}&nbsp;{props.renderMealData[1][test]}</div></div>
+                <div className="box"><div className= {caption}>{props.renderMealData[0][test]}&nbsp;{props.renderMealData[1][test]}<br></br>{props.renderMealData[2][test]}</div></div>
             }
             
         </div>

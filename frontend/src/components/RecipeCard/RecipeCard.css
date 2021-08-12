@@ -74,3 +74,8 @@
     min-height: 100px;
   }
 }
+
+.mealInfo {
+  display:flex;
+  flex-direction: row;
+}
