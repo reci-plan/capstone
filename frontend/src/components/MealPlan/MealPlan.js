@@ -40,7 +40,25 @@ export default function MealPlan({ user, mealPlanInfo, plan, mealPlanId, handleS
 
     return (
         <div className="MealPlan">
-            {console.log("MP INFO", plan)}
+            {console.log("MP INFO", plan, mealPlanInfo)}
+              <div className="mr">
+                {mealPlanInfo ?
+                    
+                  <div className="plan-title">{mealPlanInfo[0][2]}</div> :
+                  ""
+                }
+                <button
+                    className="save-btn"
+                    onClick={handleOnClick}
+                >
+                    {saved ? (
+                    <img src={heartFill} alt="Solid Heart to unsave meal plan"></img>
+                    ) : (
+                    <img src={heart} alt="Heart to save meal plan"></img>
+                    )}
+                </button>
+                </div>
+                <div className="meals">
                 {mealPlanInfo ?
                     plan.map((meal, j) => (
                         typeof plan[j] != 'undefined' ?
@@ -58,17 +76,8 @@ export default function MealPlan({ user, mealPlanInfo, plan, mealPlanId, handleS
                         : ""
                     )) : null
                 }
+                </div>
                 <>
-                <button
-                    className="save-btn"
-                    onClick={handleOnClick}
-                >
-                    {saved ? (
-                    <img src={heartFill} alt="Solid Heart to unsave meal plan"></img>
-                    ) : (
-                    <img src={heart} alt="Heart to save meal plan"></img>
-                    )}
-                </button>
                 </>     
             </div>
     );

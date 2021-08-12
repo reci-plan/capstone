@@ -201,7 +201,7 @@ function App() {
                 planIds.push(s[`id`])
               }
               mealPlan.push(s[`recipe_id${i}`])
-              mealInfo.push([s[`time${i}`], s[`meal_name${i}`]])
+              mealInfo.push([s[`time${i}`], s[`meal_name${i}`], s[`title`]])
             }
           }
           setMealPlans.push(mealPlan)

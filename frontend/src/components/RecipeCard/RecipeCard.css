@@ -3,6 +3,7 @@
   overflow: hidden;
   border: 2px solid #cccbcb;
   max-width: 235px;
+  background-color: white;
 }
 
 .card-img {
@@ -51,6 +52,11 @@
   font-weight: 300;
   text-decoration: none;
 }
+
+.card-info a {
+  text-decoration: none;
+}
+
 
 @media only screen and (max-width: 1100px) {
   .RecipeCard {

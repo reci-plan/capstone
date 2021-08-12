@@ -5,6 +5,18 @@
   background-size: 100%;
 }
 
+.section-title {
+  font-size: 30px;
+  font-family: 'Lato';
+  font-weight: bold;
+  padding: 10px 0 10px 0px;
+}
+
+.plan-title {
+  font-size: 20px;
+  font-family: 'Lato';
+}
+
 .saveRow {
   display: flex;
   flex-direction: row;
