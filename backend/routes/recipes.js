@@ -40,16 +40,16 @@ router.get("/getRecipes", async (req, res, next) => {
 
   try {
     // const result_arr = [];
-    let number = 1;
+    let number = 100;
 
-    // for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
     const options = {
       method: "GET",
       url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex",
       params: {
         limitLicense: "true",
-        offset: 100,
-        number: 100,
+        offset: number - 100,
+        number: number,
         addRecipeInformation: "true",
         instructionsRequired: "true",
         fillIngredients: "true",
@@ -73,7 +73,7 @@ router.get("/getRecipes", async (req, res, next) => {
       });
 
     number += 100;
-    // }
+    }
   } catch (e) {
     next(e);
   }

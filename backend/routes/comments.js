@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { requireAuthenticatedUser } = require("../middleware/security");
-const Comment = require("../models/comment");
+const Comment = require("../models/Comment");
 
 router.post("/getOwnerOfComment", async (req, res, next) => {
   try {
