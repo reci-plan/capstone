@@ -190,7 +190,6 @@ export default function IndividualRecipe({
     fetchCurrentRecipe();
   }, [recipeId]);
 
-  console.log(recipeInfo.description);
 
   // get comments for cur recipe.
   useEffect(() => {
@@ -229,7 +228,7 @@ export default function IndividualRecipe({
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (user) {
-        const { data, error } = await apiClient.getProfileFromUserId(user.id);
+        const { data, error } = await apiClient.getProfileFromUserId(user?.id);
         if (data) {
           setUserProfileImg(data.image_url);
         }
@@ -239,7 +238,6 @@ export default function IndividualRecipe({
     fetchUserProfile();
   }, [user?.id]);
 
-  console.log(curComments);
 
   const handleTextAreaChange = (e) => {
     setComment(e.target.value);

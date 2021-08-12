@@ -16,6 +16,7 @@ export default function RecipeCard({
   handleSave,
   handleUnsave,
   handleLinks,
+  dontDisplaySave,
 }) {
   const [saved, setSaved] = useState(false);
   const [links, setLinks] = useState(true);
@@ -82,13 +83,15 @@ export default function RecipeCard({
         <>
           <div className="card-links">
             <Link to={`/recipes/${recipeInfo?.api_id}`}>View more &#8594;</Link>
-            <button className="save-btn" onClick={handleOnClick}>
-              {saved ? (
-                <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
-              ) : (
-                <img src={heart} alt="Heart to save recipe"></img>
-              )}
-            </button>
+            {!dontDisplaySave ? (
+              <button className="save-btn" onClick={handleOnClick}>
+                {saved ? (
+                  <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
+                ) : (
+                  <img src={heart} alt="Heart to save recipe"></img>
+                )}
+              </button>
+            ) : null}
           </div>
         </>
       ) : (

@@ -2,4 +2,4 @@
 
 2. Add back public profile page
 
-3. Fix responsive right side below 1250px
+3. Fix responsive right side below 1250px, make new section

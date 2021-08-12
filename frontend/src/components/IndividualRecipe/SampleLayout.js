@@ -86,14 +86,11 @@ export default function SampleLayout({
 
     useEffect(() => {
         const checkRecipe = async () => {
-            console.log("here : ", recipeInfo?.id);
             const { data, error } = await apiClient.checkSavedRecipe(
                 recipeInfo?.id
             );
-            if (data) {
-                console.log("DATA from checkrecipe: ", data);
-                setSaved(data);
-            }
+
+            setSaved(data);
 
             if (error) {
                 console.log("Check saved recipe error.......RecipeCard.js");
@@ -101,7 +98,10 @@ export default function SampleLayout({
         };
 
         checkRecipe();
-    }, [recipeInfo]);
+    }, [recipeInfo, recipeId]);
+
+    console.log("saved in samplelayout: ", saved);
+    console.log("saved in samplelayout: ", recipeInfo);
 
     const handleOnClick = () => {
         if (user?.email) {
@@ -124,8 +124,6 @@ export default function SampleLayout({
     //     );
 
     // }, []);
-
-    console.log(recipes);
 
     const getGreeting = () => {
         var today = new Date();
@@ -162,8 +160,8 @@ export default function SampleLayout({
         const recommended_shuffled = shuffle(
             recipes.filter(
                 (r) =>
-                    (r.category & bitValue) === bitValue &&
-                    r.api_id !== recipeInfo.api_id
+                    (r?.category & bitValue) === bitValue &&
+                    r?.api_id !== recipeInfo?.api_id
             )
         );
         setRecommendedRecipes([...recommended_shuffled]);
@@ -176,11 +174,11 @@ export default function SampleLayout({
             )
         );
 
-        console.log(top_shuffled, ": topshuffled");
+        // console.log(top_shuffled, ": topshuffled");
         setTopRecipes([...top_shuffled]);
     }, [recipeId, recipes]);
 
-    console.log(topRecipes, recommendedRecipes);
+    // console.log(topRecipes, recommendedRecipes);
 
     return (
         // Give some space below the navbar
@@ -355,26 +353,33 @@ export default function SampleLayout({
                         className="Layout_Space_BetweenLines"
                         style={{ margin: "50px 0" }}
                     >
-                        <div className="Layout_Horizontal_Line">
-                            <hr className="LayoutHorizontal_hr" />
-                        </div>
-                        <div className="Layout_Ingredients_Title_Right">
-                            Recommended Recipes
-                        </div>
+                        {recommendedRecipes.length > 0 ? (
+                            <>
+                                <div className="Layout_Horizontal_Line">
+                                    <hr className="LayoutHorizontal_hr" />
+                                </div>
+                                <div className="Layout_Ingredients_Title_Right">
+                                    Recommended Recipes
+                                </div>
+                            </>
+                        ) : null}
                     </div>
 
                     <div className="Layout_Recommended_Recipes_Wrapper">
                         {[...Array(2)].map((x, i) => {
-                            return (
-                                <div style={{ margin: "3px 8px" }}>
-                                    <RecipeCard
-                                        recipeInfo={recommendedRecipes[i]}
-                                        user={user}
-                                        handleSave={handleSave}
-                                        handleUnsave={handleUnsave}
-                                    />
-                                </div>
-                            );
+                            if (i < recommendedRecipes.length) {
+                                return (
+                                    <div style={{ margin: "3px 8px" }}>
+                                        <RecipeCard
+                                            recipeInfo={recommendedRecipes[i]}
+                                            user={user}
+                                            handleSave={handleSave}
+                                            handleUnsave={handleUnsave}
+                                            dontDisplaySave={true}
+                                        />
+                                    </div>
+                                );
+                            }
                         })}
                     </div>
                     <div
@@ -397,6 +402,7 @@ export default function SampleLayout({
                                         user={user}
                                         handleSave={handleSave}
                                         handleUnsave={handleUnsave}
+                                        dontDisplaySave={true}
                                     />
                                 </div>
                             );
