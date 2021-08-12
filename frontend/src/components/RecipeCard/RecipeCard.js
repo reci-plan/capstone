@@ -69,13 +69,13 @@ export default function RecipeCard({
 
   return (
     <div className="RecipeCard">
-      <Link to={`/recipes/${recipeInfo.api_id}`}>
+      <Link to={`/recipes/${recipeInfo?.api_id}`}>
         <div className="card-img">
           <img src={recipeInfo?.image_url} alt={recipeInfo?.title}></img>
         </div>
-     </Link>
+      </Link>
       <div className="card-info">
-        <Link to={`/recipes/${recipeInfo.api_id}`}>
+        <Link to={`/recipes/${recipeInfo?.api_id}`}>
           <div className="card-title">
             {recipeInfo?.title.length > limit
               ? recipeInfo?.title.substring(0, limit) + "..."
@@ -96,14 +96,14 @@ export default function RecipeCard({
         </div>
       </div>
 
-        <div className="card-links">
-          {links ? 
-            <>
-              <Link to={`/recipes/${recipeInfo.api_id}`}>View more &#8594;</Link>
-            </>
-            :
-            ""
-          }
+      <div className="card-links">
+        {links ? (
+          <>
+            <Link to={`/recipes/${recipeInfo?.api_id}`}>View more &#8594;</Link>
+          </>
+        ) : (
+          ""
+        )}
 
         {likes ? (
           <>

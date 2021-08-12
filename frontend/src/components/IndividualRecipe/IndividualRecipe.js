@@ -13,7 +13,7 @@ import {
 import green from "@material-ui/core/colors/green";
 
 import apiClient from "../../services/apiClient";
-import navbar from "../../assets/navbar.jpg"
+import navbar from "../../assets/navbar.jpg";
 import "./IndividualRecipe.css";
 
 import Comment from "../Comment/Comment";
@@ -190,7 +190,6 @@ export default function IndividualRecipe({
     fetchCurrentRecipe();
   }, [recipeId]);
 
-
   // get comments for cur recipe.
   useEffect(() => {
     const fetchCurrentComments = async () => {
@@ -232,12 +231,10 @@ export default function IndividualRecipe({
         if (data) {
           setUserProfileImg(data.image_url);
         }
-
       }
     };
     fetchUserProfile();
   }, [user?.id]);
-
 
   const handleTextAreaChange = (e) => {
     setComment(e.target.value);
@@ -274,7 +271,10 @@ export default function IndividualRecipe({
   ];
 
   return (
-    <div className="IndividualRecipe" style={{backgroundImage: `url(${navbar})`}}>
+    <div
+      className="IndividualRecipe"
+      style={{ backgroundImage: `url(${navbar})` }}
+    >
       <div className="IndividualRecipeWrapper">
         <div>
           <SampleLayout
@@ -297,7 +297,7 @@ export default function IndividualRecipe({
           {/*<b> summary </b> : {recipeInfo.summary}*/}
 
           <div>
-            comment section:
+            <Typography variant="h5"> Share your thoughts </Typography>
             <div className="container">
               {!user?.email ? (
                 <div className="comment-box">
@@ -388,11 +388,13 @@ export default function IndividualRecipe({
               )}
             </div>
             <div>
-              {curComments.length} comment
-              {curComments.length !== 1 ? "s" : ""}{" "}
+              <Typography variant="h6">
+                {curComments.length} comment
+                {curComments.length !== 1 ? "s" : ""}{" "}
+              </Typography>
             </div>
             {curComments.length === 0 ? (
-              <div> Be the first to comment </div>
+              <Typography variant="h6"> Be the first to comment </Typography>
             ) : (
               <> </>
             )}
