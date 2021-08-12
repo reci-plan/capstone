@@ -3,6 +3,7 @@ import navbar from "../../assets/navbar.jpg"
 import ann from "../../assets/ann.jpg"
 import maritza from "../../assets/maritza.jpg"
 import andrew from "../../assets/andrew.jpg"
+import github from "../../assets/github.svg"
 import "./About.css"
 
 export default function About() {
@@ -34,7 +35,10 @@ export default function About() {
     <div className="About" style={{backgroundImage: `url(${navbar})`}}>
 
       <section className="mission">
-        <div>Our Mission</div>
+        <span>Our Mission</span>
+        <a href="https://github.com/reci-plan/capstone">
+          <img src={github} alt="Github Icon"></img>
+        </a>
         <p>
           We want to provide a place where working people can quickly and easily access inexpensive 
           recipes that align with their needs. They can search for, as well as plan out meals using a random recipe 
