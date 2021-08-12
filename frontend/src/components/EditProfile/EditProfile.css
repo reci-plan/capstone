@@ -37,6 +37,15 @@
   cursor: pointer;
   margin-bottom: 20px;
 }
+#profile-select .search-wrapper, #profile-select .optionListContainer{
+  width: 200px !important;
+}
+#profile-select .search-wrapper {
+  border: 2px solid #cecece;
+}
+#profile-select .optionContainer {
+  height: auto;
+}
 
 .highlightOption, .highlight {
   background-color: transparent;

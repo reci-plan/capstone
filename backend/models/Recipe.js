@@ -67,13 +67,25 @@ class Recipe {
             let ingredients_str = "";
             r.missedIngredients.forEach((i, idx) => {
                 if (i.amount && i.unitLong) {
+                    let to_float = parseFloat(i.amount).toFixed(2);
+                    console.log(to_float);
+                    const to_float_arr = to_float.split("");
+                    const n = to_float.length;
+
+                    if (
+                        to_float_arr[n - 1] === "0" &&
+                        to_float_arr[n - 2] === "0"
+                    ) {
+                        to_float = parseInt(to_float);
+                    }
+
                     ingredients_str +=
                         idx +
                         "[" +
-                        parseFloat(i.amount).toFixed(2).toString() +
+                        to_float.toString() +
                         " " +
                         i.unitLong +
-                        " " +
+                        " of " +
                         i.originalName +
                         "]";
                 } else {

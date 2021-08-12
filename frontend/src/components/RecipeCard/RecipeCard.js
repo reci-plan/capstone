@@ -17,12 +17,13 @@ export default function RecipeCard({
   handleSave,
   handleUnsave,
   handleLinks,
+  dontDisplaySave,
   handleLikes,
-  handleMealInfo
+  handleMealInfo,
 }) {
   const [saved, setSaved] = useState(false);
   const [links, setLinks] = useState(true);
-  
+
   const [likes, setLikes] = useState(true);
   const [mealInfo, setMealInfo] = useState(true);
 
@@ -40,10 +41,10 @@ export default function RecipeCard({
         setLinks(false);
       }
       if (handleLikes === false) {
-        setLikes(false)
+        setLikes(false);
       }
       if (handleMealInfo === false) {
-        setMealInfo(false)
+        setMealInfo(false);
       }
     };
 
@@ -68,13 +69,13 @@ export default function RecipeCard({
 
   return (
     <div className="RecipeCard">
-      <Link to={`/recipes/${recipeInfo.api_id}`}>
+      <Link to={`/recipes/${recipeInfo?.api_id}`}>
         <div className="card-img">
           <img src={recipeInfo?.image_url} alt={recipeInfo?.title}></img>
         </div>
-     </Link>
+      </Link>
       <div className="card-info">
-        <Link to={`/recipes/${recipeInfo.api_id}`}>
+        <Link to={`/recipes/${recipeInfo?.api_id}`}>
           <div className="card-title">
             {recipeInfo?.title.length > limit
               ? recipeInfo?.title.substring(0, limit) + "..."
@@ -95,42 +96,44 @@ export default function RecipeCard({
         </div>
       </div>
 
-        <div className="card-links">
-          {links ? 
-            <>
-              <Link to={`/recipes/${recipeInfo.api_id}`}>View more &#8594;</Link>
-            </>
-            :
-            ""
-          }
+      <div className="card-links">
+        {links ? (
+          <>
+            <Link to={`/recipes/${recipeInfo?.api_id}`}>View more &#8594;</Link>
+          </>
+        ) : (
+          ""
+        )}
 
-          {likes ?
-            <>
-              <button
-                className="save-btn"
-                onClick={handleOnClick}
-              >
+        {likes ? (
+          <>
+            {!dontDisplaySave ? (
+              <button className="save-btn" onClick={handleOnClick}>
                 {saved ? (
                   <img src={heartFill} alt="Solid Heart to unsave recipe"></img>
                 ) : (
                   <img src={heart} alt="Heart to save recipe"></img>
                 )}
               </button>
-            </>
-            : ""
-          }
-        </div>
-        <div className="mealInfo">
-        {meal ? 
-            <>
-              <p>{meal[0]}</p>
-              &nbsp;
-              <p>{meal[1]}</p>
-            </>
-            :
-            ""
-        }
-        </div>
+            ) : (
+              ""
+            )}
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+      <div className="mealInfo">
+        {meal ? (
+          <>
+            <p>{meal[0]}</p>
+            &nbsp;
+            <p>{meal[1]}</p>
+          </>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,3 @@
-
 .LayoutDivWrapper {
     margin-top: 50px;
 }
@@ -163,6 +162,10 @@
 
 .ShareThisRecipe {
     margin-right: 20px;
+}
+
+.Green_Background_When_Clicked {
+    background-color: black;
 }
 
 @media only screen and (max-width: 815px) {

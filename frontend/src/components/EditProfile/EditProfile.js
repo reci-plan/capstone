@@ -140,7 +140,7 @@ export default function EditProfile({
   const style = {
     multiselectContainer: {
       fontFamily: "Lato, sans-serif",
-      width: "200px",
+      width: "50%",
       margin: "20px",
     },
     searchBox: {
@@ -222,6 +222,7 @@ export default function EditProfile({
               Upload
             </button>
             <Multiselect
+              id="profile-select"
               options={flavorOptions} // Options to display in the dropdown
               selectedValues={flavors}
               onSelect={onSelect} // Function will trigger on select event
