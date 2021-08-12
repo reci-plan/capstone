@@ -66,6 +66,7 @@ export default function SampleLayout({
     const [recommendedRecipes, setRecommendedRecipes] = useState([]);
     const [topRecipes, setTopRecipes] = useState([]);
     const [bitValue, setBitValue] = useState();
+    const [numPicked, setNumPicked] = useState(0);
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -273,8 +274,12 @@ export default function SampleLayout({
                     <div className="Layout_Instructions_Div">
                         {recipeInstructions.map((instruction, i) => (
                             <Paper
+                                onClick={() => setNumPicked(i)}
                                 elevation={2}
                                 className={`${classes.paper} Layout_Instructions_Paper`}
+                                style={{
+                                    backgroundColor: numPicked === i && "#A7D2C5",
+                                }}
                             >
                                 <Typography variant="h6">
                                     {i + 1}. {instruction}
