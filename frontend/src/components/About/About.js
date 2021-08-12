@@ -8,19 +8,25 @@ import "./About.css"
 export default function About() {
   const aboutus = [
     {
-      name: "Maritza Padilla",
-      image: maritza,
-      bio: "https://github.com/mpadil18"
-    },
-    {
       name: "Andrew Lee",
       image: andrew,
-      bio: "https://github.com/f1rstpr"
+      github: "https://github.com/f1rstpr",
+      linkedin: "https://www.linkedin.com/in/andrew-l-2538b0208/",
+      bio: ""
+    },
+    {
+      name: "Maritza Padilla",
+      image: maritza,
+      github: "https://github.com/mpadil18",
+      linkedin: "https://www.linkedin.com/in/maritza-padilla/",
+      bio: ""
     },
     {
       name: "Ann Wang",
       image: ann,
-      bio: "https://github.com/awang2330"
+      github: "https://github.com/awang2330",
+      linkedin: "https://www.linkedin.com/in/awang2330/",
+      bio: ""
     }
   ];
 
