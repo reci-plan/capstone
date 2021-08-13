@@ -52,13 +52,15 @@ export default function SampleLayout({
     user,
 }) {
     const EXTRA_STATS_ARR = [
-        "Prep Time",
-        "Rating",
-        "Price Per Serving",
-        "Servings",
         "Ingredients Count",
+        "Rating",
+        "Prep Time",
+        "Servings",
+        "Price Per Serving",
         "Calories",
     ];
+
+    console.log("extra information:", extraInformation);
 
     const [saved, setSaved] = useState(false);
     const { recipeId } = useParams();
@@ -278,7 +280,8 @@ export default function SampleLayout({
                                 elevation={2}
                                 className={`${classes.paper} Layout_Instructions_Paper`}
                                 style={{
-                                    backgroundColor: numPicked === i && "#A7D2C5",
+                                    backgroundColor:
+                                        numPicked === i && "#A7D2C5",
                                 }}
                             >
                                 <Typography variant="h6">
@@ -324,17 +327,11 @@ export default function SampleLayout({
                                             sm={6}
                                             md={6}
                                             wrap="wrap"
-                                            // style={{
-                                            //     border: "1px solid black",
-                                            // }}
                                         >
                                             <Typography
                                                 align="center"
                                                 gutterBottom
                                                 className="ExtraInformationHeader"
-                                                // style={{
-                                                //     wordWrap: "break-word",
-                                                // }}
                                             >
                                                 <Box fontWeight="fontWeightBold">
                                                     {EXTRA_STATS_ARR[i]}
