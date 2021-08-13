@@ -171,10 +171,10 @@ export default function IndividualRecipe({
         setRecipeInfo(data);
         setExtraInformation({
           ingredients: data.ingredients.split("[").length - 1,
-          rating: data.rating,
-          readyInMinutes: data.prep_time,
+          rating: data.rating + "%",
+          readyInMinutes: data.prep_time + " mins",
           servings: data.servings,
-          pricePerServing: data.expense / 100,
+          pricePerServing: "$" + data.expense / 100,
           calories: getCalories(data.description),
         });
       }

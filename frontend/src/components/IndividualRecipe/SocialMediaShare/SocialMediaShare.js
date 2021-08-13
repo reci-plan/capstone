@@ -12,7 +12,9 @@ export default function SocialMediaShare({ recipeInfo }) {
     // recipeInfo.title;
     console.log(current_path);
 
-    const sampleUrl = "google.com";
+    const sampleUrl = `http://reciplan.surge.sh/recipes/${recipeInfo.api_id}`;
+
+    const title = `Check out this cool recipe: ${recipeInfo.title}`;
 
     return (
         <span className="share-btn-container">
@@ -25,7 +27,7 @@ export default function SocialMediaShare({ recipeInfo }) {
             </a>
 
             <a
-                href={`https://twitter.com/share?url=${sampleUrl}&text=${recipeInfo.title}`}
+                href={`https://twitter.com/share?url=${sampleUrl}&text=${title}`}
                 target="_blank"
             >
                 <img
