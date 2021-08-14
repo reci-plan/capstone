@@ -12,7 +12,7 @@ Mentors Names: **Lisa Felten, Thinh Vu, Varun Patel**
 
 To provide a place where working people can quickly and easily access inexpensive recipes that align with their needs, as well as plan out meals using a random recipe generator specific to their inputted criteria.
 
-Deployment Website: **Add Link to Deployed Project**
+Deployment Website: **[http://reciplan.surge.sh](http://reciplan.surge.sh)**
 
 ### Open-source libraries used
 
